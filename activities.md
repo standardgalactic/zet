@@ -17,13 +17,13 @@ permalink: /activities/
 
 I have served on the following program committees.
 
-- SPIN 2012
-- RTAS 2012
-- LCTES 2011
-- LCTES 2008
-- RTAS 2007
+- [SPIN 2012](http://qav.cs.ox.ac.uk/spin2012/)
+- [RTAS 2012](http://2014.rtas.org/wp-content/uploads/archives/2012/)
+- [LCTES 2011](http://lctes2011.elis.ugent.be/?file=kop1.php)
+- [LCTES 2008](http://lctes08.flux.utah.edu)
+- [RTAS 2007](http://2014.rtas.org/wp-content/uploads/archives/2007/)
 - HiPEAC 2007
-- RTAS 2006
+- [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm)
 
 ## ARM Ltd. Projects (selected)
 
