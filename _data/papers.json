@@ -1,0 +1,23 @@
+{
+    "DBLP:conf/fp/Reid89" : { "file": "designing.pdf" },
+    "haskellrecords" : { "file": "records.pdf" },
+    "malloc" : { "file": "malloc.pdf" },
+    "budgets" : { "file": "budgets.pdf" },
+    "DBLP:conf/cases/ReidFGL08" : { "file": "SoC-Cpaper(cases2008).pdf" },
+    "conf/cav/Reid16" : { "file": "cav2016_isa_formal.pdf" },
+    "DBLP:conf/date/BoettcherAEGR14" : { "file": "date2014_adv_simd.pdf" },
+    "DBLP:conf/pldi/JonesRHHM99" : { "file": "except.pdf" },
+    "DBLP:conf/icse/ReidPHH99" : { "file": "fvision-icse99-2.pdf" },
+    "DBLP:conf/padl/PetersonHRH01" : { "file": "fvision-padl01-2.pdf" },
+    "greencard": { "file": "green-card.ps" },
+    "http://www.cs.utah.edu/flux/papers/knit-icse01-wasc-base.html" : { "file": "knit-icse01-wasc.pdf" },
+    "DBLP:conf/icse/EideRRL02" : { "file": "knit-icse02.pdf" },
+    "DBLP:conf/osdi/ReidFSLE00" : { "file": "knit-osdi00.pdf" },
+    "spex" : { "file": "lin-sdr06.pdf" },
+    "DBLP:conf/sips/LinMMCRF06" : { "file": "lin-sips06.pdf" },
+    "DBLP:conf/micro/WohLSMMCBKRWF08" : { "file": "mwoh-micro08.pdf" },
+    "DBLP:conf/asplos/RegehrR04" : { "file": "p021-regehr.pdf" },
+    "DBLP:conf/emsoft/RegehrRW03" : { "file": "p751-regehr.pdf" },
+    "DBLP:conf/rtss/RegehrRWPL03" : { "file": "rtss03-preprint.pdf" },
+    "DBLP:conf/ifl/Reid98" : { "file": "spine-ifl98.pdf" }
+}
