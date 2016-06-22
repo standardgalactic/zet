@@ -3,6 +3,8 @@ layout: post
 title: Building Keyboards
 ---
 
+![Ergo from above][22]
+
 What better way to spend Xmas than to build yourself a new keyboard?
 
 I have been using [Kinesis Advantage][1] keyboards at home and work for a couple of years now. They are great keyboards, much more comfortable, the layout of the keys in columns is a much more sensible design for touch-typing and the thumb keys are incredible. 
@@ -123,11 +125,9 @@ So I can touch-type on it without getting discombobulated every time I need punc
 
 _And I think it looks great!_
 
-_
 
 ![Ergo from above][22]
 
-_
 
 [1]: http://www.kinesis-ergo.com/shop/advantage-for-pc-mac/
 [2]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939666/news/buildingkeyboards/Kinesis%20Advantage.jpg?height=266&width=400
