@@ -13,7 +13,7 @@
     "http://www.cs.utah.edu/flux/papers/knit-icse01-wasc-base.html" : { "file": "knit-icse01-wasc.pdf" },
     "DBLP:conf/icse/EideRRL02" : { "file": "knit-icse02.pdf" },
     "DBLP:conf/osdi/ReidFSLE00" : { "file": "knit-osdi00.pdf" },
-    "spex" : { "file": "lin-sdr06.pdf" },
+    "conf:SDR:LinMW2006" : { "file": "lin-sdr06.pdf" },
     "DBLP:conf/sips/LinMMCRF06" : { "file": "lin-sips06.pdf" },
     "DBLP:conf/micro/WohLSMMCBKRWF08" : { "file": "mwoh-micro08.pdf" },
     "DBLP:conf/asplos/RegehrR04" : { "file": "p021-regehr.pdf" },
