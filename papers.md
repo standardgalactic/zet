@@ -15,27 +15,20 @@ pages)
     <br>
     {{ paper.author }},
     <br>
-    In <i>{{ paper.booktitle }}</i>,
+    {% if paper.booktitle %} In <i>{{ paper.booktitle }}</i>, {% endif %}
     {% if paper.acceptance %} {{ paper.acceptance }}% acceptance rate, {% endif %}
     {% if paper.journal %} {{ paper.journal }}, {% endif %}
     {% if paper.number %} {{ paper.number }}, {% endif %}
     {% if paper.publisher %} {{ paper.publisher }}, {% endif %}
     {% if paper.pages %} pp. {{ paper.pages }}, {% endif %}
     {{ paper.year }}.
-    {% if paper.doi %} doi: <a href="{{ paper.link }}">{{ paper.doi }}</a> {% endif %}
+    {% if paper.doi %} doi: <a href="{{ paper.link }}">{{ paper.doi }}</a>
+    {% elsif paper.link %} url: <a href="{{ paper.link }}">{{ paper.link }}</a>
+    {% endif %}
     <br>
     <br>
   </div>
 {% endfor %}
-
-The Haskell 98 Foreign Function Interface 1.0 An Addendum to the Haskell 98
-Report
-2003
-Authors: Manuel Chakravarty, Sigbjorn Finne, Fergus Henderson, Marcin
-Kowalczyk, 
-Daan Leijen, Simon Marlow, Erik Meijer, Sven Panne, Simon Peyton Jones,
-Alastair Reid, 
-Malcolm Wallace, Michael Weber
 
 Lock inference for systems software
 Proceedings of the Second AOSD Workshop on Aspects, Components, and Patterns
@@ -57,14 +50,6 @@ Authors: Alastair Reid
 Adding Records to Haskell
 1998
 Authors: Alastair Reid, John Peterson
-
-Report on the programming language Haskell, a non-strict purely-functional
-programming language, version 1.3
-1997
-Authors: 
-John Peterson, Kevin Hammond, Lennart Augustsson, Joseph Fasel, Andrew D.
-Gordon, John Hughes, Paul Hudak, Thomas Johnsson, Mark Jones, Simon Peyton
-Jones, Alastair Reid, Philip Wadler
 
 Green Card: a foreign-language interface for Haskell
 Proceedings of the Haskell Workshop, Amsterdam, June 1997, January 1997
