@@ -36,7 +36,8 @@ pages.
 
 {% for paper in site.data.patents %}
   <div class="biblio">
-    {{ paper.title }}
+    {% if paper.link %} <a href="{{ paper.link }}">{{ paper.title }}</a>
+    {% else %} {{ paper.title }} {% endif %}
     <br>
     {{ paper.author }},
     <br>
