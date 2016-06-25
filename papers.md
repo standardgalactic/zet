@@ -1,13 +1,15 @@
 ---
 layout: page
-title: Publications
+title: Papers and Patents
 permalink: /papers/
 ---
 
-(my [Google Scholar](http://scholar.google.co.uk/citations?hl=en&user=oT8RhJgAAAAJ)
+My [Google Scholar](http://scholar.google.co.uk/citations?hl=en&user=oT8RhJgAAAAJ)
 and
 [DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David)
-pages)
+pages.
+
+## Papers
 
 {% for paper in site.data.biblio %}
   <div class="biblio">
@@ -25,6 +27,22 @@ pages)
     {% if paper.doi %} doi: <a href="{{ paper.link }}">{{ paper.doi }}</a>
     {% elsif paper.link %} url: <a href="{{ paper.link }}">{{ paper.link }}</a>
     {% endif %}
+    <br>
+    <br>
+  </div>
+{% endfor %}
+
+## Patents
+
+{% for paper in site.data.patents %}
+  <div class="biblio">
+    {{ paper.title }}
+    <br>
+    {{ paper.author }},
+    <br>
+    {{ paper.note }},
+    <br>
+    {{ paper.year }}.
     <br>
     <br>
   </div>
