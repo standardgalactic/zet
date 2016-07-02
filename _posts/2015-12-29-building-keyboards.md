@@ -110,6 +110,8 @@ The firmware is a classic Arduino structure - some initialisation code and an in
 
 Since the original keyboard had so few keys, the firmware has lots of funky features like keys that behave differently if you tap them or if you hold them down and then press another key. I don't need any of that complexity in the new keyboard - but I haven't got round to removing/disabling the tapping support yet.  In fact, all I have done so far is add a single keyboard map and added a software fix for the fact that some of the column wires had been swapped while I was soldering it.
 
+The code is [on github](https://github.com/alastairreid/teensykey).
+
 **Evaluation**
 
 So, is the second keyboard any better than the first?
@@ -130,24 +132,24 @@ _And I think it looks great!_
 
 
 [1]: http://www.kinesis-ergo.com/shop/advantage-for-pc-mac/
-[2]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939666/news/buildingkeyboards/Kinesis%20Advantage.jpg?height=266&width=400
+[2]: {{ site.baseurl }}/images/Kinesis%20Advantage.jpg?height=266&width=400
 [3]: http://atreus.technomancy.us/
 [4]: http://ortholinearkeyboards.com/planck
 [5]: http://ergodox.org/
-[6]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939286/news/buildingkeyboards/AtreusOnMac.jpg
-[7]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939329/news/buildingkeyboards/ErgoOnMac.jpg
+[6]: {{ site.baseurl }}/images/AtreusOnMac.jpg
+[7]: {{ site.baseurl }}/images/ErgoOnMac.jpg
 [8]: https://inkscape.org/
-[9]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939396/news/buildingkeyboards/IMG_0911.jpg?height=201&width=400
-[10]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939433/news/buildingkeyboards/IMG_0913.jpg?height=300&width=400
-[11]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939413/news/buildingkeyboards/IMG_0912.jpg?height=385&width=400
-[12]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939525/news/buildingkeyboards/IMG_0915.jpg?height=300&width=400
-[13]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939355/news/buildingkeyboards/ErgoUnderside.jpg?height=237&width=400
-[14]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939544/news/buildingkeyboards/IMG_0919.jpg?height=199&width=400
-[15]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939563/news/buildingkeyboards/IMG_0920.jpg?height=194&width=400
+[9]: {{ site.baseurl }}/images/IMG_0911.jpg?height=201&width=400
+[10]: {{ site.baseurl }}/images/IMG_0913.jpg?height=300&width=400
+[11]: {{ site.baseurl }}/images/IMG_0912.jpg?height=385&width=400
+[12]: {{ site.baseurl }}/images/IMG_0915.jpg?height=300&width=400
+[13]: {{ site.baseurl }}/images/ErgoUnderside.jpg?height=237&width=400
+[14]: {{ site.baseurl }}/images/IMG_0919.jpg?height=199&width=400
+[15]: {{ site.baseurl }}/images/IMG_0920.jpg?height=194&width=400
 [16]: http://deskthority.net/workshop-f7/brownfox-step-by-step-t6050.html
-[17]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939581/news/buildingkeyboards/IMG_0923.jpg?height=300&width=400
-[18]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939602/news/buildingkeyboards/IMG_0924.jpg?height=300&width=400
+[17]: {{ site.baseurl }}/images/IMG_0923.jpg?height=300&width=400
+[18]: {{ site.baseurl }}/images/IMG_0924.jpg?height=300&width=400
 [19]: http://pjrc.com/teensy/
-[20]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939623/news/buildingkeyboards/IMG_0925.jpg?height=300&width=400
+[20]: {{ site.baseurl }}/images/IMG_0925.jpg?height=300&width=400
 [21]: https://github.com/sparkfun/Micro_OLED_Breakout
-[22]: https://sites.google.com/site/alastairdreid/_/rsrc/1451388939305/news/buildingkeyboards/Ergo.jpg
+[22]: {{ site.baseurl }}/images/Ergo.jpg
