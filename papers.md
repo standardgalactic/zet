@@ -26,7 +26,7 @@ pages.
     {% if paper.number %} {{ paper.number }}, {% endif %}
     {% if paper.publisher %} {{ paper.publisher }}, {% endif %}
     {% if paper.pages %} pp. {{ paper.pages }}, {% endif %}
-    {{ paper.year }}.
+    {{ paper.month }} {{ paper.year }}.
     {% if paper.doi %} doi: <a href="{{ paper.link }}">{{ paper.doi }}</a>
     {% elsif paper.link %} url: <a href="{{ paper.link }}">{{ paper.link }}</a>
     {% endif %}
