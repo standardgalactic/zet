@@ -16,7 +16,7 @@ pages.
 
 {% for paper in site.data.biblio %}
   <div class="biblio">
-    <a href="{{ site.baseurl }}/papers/{{ paper.file }}">{{ paper.title }}</a>
+    <a class="papertitle" href="{{ site.baseurl }}/papers/{{ paper.file }}">{{ paper.title }}</a>
     <br>
     {{ paper.author }},
     <br>
