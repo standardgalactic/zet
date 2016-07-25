@@ -29,6 +29,7 @@ with open(extra) as data_file:
             if paper['ID'] in extra:
                 info = extra[paper['ID']]
                 paper['file'] = info['file']
+                if 'slides' in info: paper['slides'] = info['slides']
 
         # print(papers)
         print(json.dumps(papers))

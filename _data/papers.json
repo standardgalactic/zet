@@ -1,5 +1,6 @@
 {
     "conf/fmcad/Reid16":    { "file": "fmcad2016-trustworthy.pdf" },
+    "conf/cav/Reid16" : { "file": "cav2016_isa_formal.pdf", "slides": "ISA-Formal-CAV2016.pdf" },
     "DBLP:conf/fp/Reid89" : { "file": "designing.pdf" },
     "Peterson95addingrecords" : { "file": "records.pdf" },
     "Reid98haskelllibraries" : { "file": "libraries.pdf" },
@@ -13,7 +14,6 @@
     "report:haskell98report:jones1999": { "file": "haskell98-report.pdf" },
     "report:haskell98libraries:jones1999": { "file": "haskell98-library.pdf" },
     "DBLP:conf/cases/ReidFGL08" : { "file": "SoC-Cpaper(cases2008).pdf" },
-    "conf/cav/Reid16" : { "file": "cav2016_isa_formal.pdf" },
     "DBLP:conf/date/BoettcherAEGR14" : { "file": "date2014_adv_simd.pdf" },
     "ReidThesis93": { "file" : "ReidThesis93.pdf" },
     "DBLP:conf/sbac-pad/OzerRB07" : { "file": "SBACPAD07.pdf" },

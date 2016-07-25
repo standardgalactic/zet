@@ -30,6 +30,7 @@ pages.
     {% if paper.doi %} doi: <a href="{{ paper.link }}">{{ paper.doi }}</a>
     {% elsif paper.link %} url: <a href="{{ paper.link }}">{{ paper.link }}</a>
     {% endif %}
+    {% if paper.slides %} <br><a class="paperslides" href="{{ site.baseurl }}/papers/{{ paper.slides }}">slides</a> {% endif %}
     <br>
     <br>
   </div>
