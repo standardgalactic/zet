@@ -93,7 +93,7 @@ the processor but we also find bugs in the specification.  So the specification
 formalizations of the (informal) architecture specification expressed in the
 rest of the ARM Architecture Reference Manual.
 
-
+---
 
 _This is one of several notes I am writing about the key ideas in our
 paper ["End-to-End Verification of ARM Processors with ISA-Formal"]({{ site.url

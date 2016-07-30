@@ -41,6 +41,7 @@ cycles deep.
 
 So, for now, we are focussing on finding bugs.
 
+---
 
 _This is the first of several notes I am writing about the key ideas in our
 paper ["End-to-End Verification of ARM Processors with ISA-Formal"]({{ site.url
