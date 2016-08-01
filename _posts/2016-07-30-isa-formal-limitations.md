@@ -18,7 +18,7 @@ ISA-Formal method.)
    In the paper, we have this table of where we found bugs in processors
    so you might think that we are checking the floating point unit.
 
-    | **Defect Area** || **Fraction** |
+    | Defect Area     || Fraction     |
     | --------------- || -----------: |
     | FP/SIMD         ||          25% |
     | Memory          ||          21% |

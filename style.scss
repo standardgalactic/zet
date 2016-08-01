@@ -71,10 +71,14 @@ p {
 a {
   color: $blue;
   text-decoration: none;
-	cursor: pointer;
+  cursor: pointer;
   &:hover, &:active {
     color: $blue;
   }
+}
+
+a:hover {
+  background: #f0f0ff;
 }
 
 ul, ol {
@@ -112,6 +116,8 @@ img {
 
 th {
   border-top: 1px solid #aaa;
+  font-weight: bold;
+  color: #3d5cbb;
 }
 
 th {

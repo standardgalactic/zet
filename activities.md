@@ -4,7 +4,7 @@ title: Professional Experience
 permalink: /activities/
 ---
 
-| **Position**                || **Institution**                  || **Date-**      |
+| Position                    || Institution                      || Date           |
 | :-------------------------- || :------------------------------- || :------------- |
 | Principal Research Engineer || ARM Ltd                          || 2004 - present |
 | - Patent Review Committee   || ARM Ltd                          || 2014 - present |
@@ -27,6 +27,8 @@ I have served on the following program committees.
 - [RTAS 2007](http://2014.rtas.org/wp-content/uploads/archives/2007/)
 - HiPEAC 2007
 - [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm)
+
+---
 
 ## ARM Ltd. Projects (selected)
 
@@ -150,6 +152,8 @@ the partner uses.
 
 1 tool released.
 
+---
+
 ## University of Utah Projects
 
 I joined the University of Utah's Flux research group in 1999 where I worked on
@@ -172,6 +176,8 @@ version of the operating system toolkit 'OSKit' previously developed at Utah.
 
 3 papers published, 2 open source projects released.
 
+---
+
 ## Yale University Projects
 
 I joined Yale University's Haskell research group in 1994.
@@ -191,6 +197,8 @@ handling and the foreign function interface.
 
 6 papers published, 1 open source project released, 1 open source project
 maintained.
+
+---
 
 ## University of Glasgow Projects
 
