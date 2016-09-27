@@ -1,4 +1,5 @@
 {
+    "conf/srepls4/Reid16":    { "file": "srepls4-trustworthy.pdf" },
     "conf/fmcad/Reid16":    { "file": "fmcad2016-trustworthy.pdf" },
     "conf/cav/Reid16" : { "file": "cav2016_isa_formal.pdf", "slides": "ISA-Formal-CAV2016.pdf" },
     "DBLP:conf/fp/Reid89" : { "file": "designing.pdf" },
