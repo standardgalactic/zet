@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-I do research on the interplay between software, compilers, architecture and
+My research revolves around the interplay between software, compilers, architecture and
 microarchitecture in microprocessors resulting in system prototypes, patents
 and papers.
 I have worked on formal verification of ARM processors, formalising ARM's
