@@ -23,7 +23,7 @@ with open(extra) as data_file:
 
         # Apply minor cleanups to the data: removing {}, newline, adding a file
         for paper in papers:
-            for key, value in paper.iteritems():
+            for key, value in paper.items():
                 paper[key] = value.replace("{", "").replace("}", "").replace("\n", " ")
             paper['author'] = paper['author'].replace(" and ", ", ")
             if paper['ID'] in extra:
