@@ -4,14 +4,15 @@ title: Professional Experience
 permalink: /activities/
 ---
 
-| Position                    || Institution                      || Date           |
-| :-------------------------- || :------------------------------- || :------------- |
-| Principal Research Engineer || ARM Ltd                          || 2004 - present |
-| - Patent Review Committee   || ARM Ltd                          || 2014 - present |
-| - Skill Group Leader        || ARM Ltd                          || 2011 - 2014    |
-| Director                    || Reid Consulting (UK) Ltd         || 2002 - 2004    |
-| Research Associate          || Flux group, University of Utah   || 1998 - 2001    |
-| Systems Programmer          || Haskell Project, Yale University || 1994 - 1998    |
+| Position                           || Institution                      || Date           |
+| :--------------------------------- || :------------------------------- || :------------- |
+| Senior Principal Research Engineer || ARM Ltd                          || 2017 - present |
+| - Patent Review Committee          || ARM Ltd                          || 2014 - present |
+| Principal Research Engineer        || ARM Ltd                          || 2004 - 2017    |
+| - Skill Group Leader               || ARM Ltd                          || 2011 - 2014    |
+| Director                           || Reid Consulting (UK) Ltd         || 2002 - 2004    |
+| Research Associate                 || Flux group, University of Utah   || 1998 - 2001    |
+| Systems Programmer                 || Haskell Project, Yale University || 1994 - 1998    |
 
 * Table of contents
 {:toc}
@@ -78,7 +79,7 @@ to be tested as they are being designed and for specifications to undergo
 regression testing during maintenance.
 
 2 architecture specifications mechanised, 2 major architecture extensions mechanised,
-1 tool tech transferred.
+1 tool tech transferred, 1 paper published.
 
 
 ### Vector Processing
