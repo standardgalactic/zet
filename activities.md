@@ -7,9 +7,9 @@ permalink: /activities/
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
 | Senior Principal Research Engineer || ARM Ltd                          || 2017 - present |
-| - Patent Review Committee          || ARM Ltd                          || 2014 - present |
+| - Patent Review Committee          ||                                  || 2014 - present |
 | Principal Research Engineer        || ARM Ltd                          || 2004 - 2017    |
-| - Skill Group Leader               || ARM Ltd                          || 2011 - 2014    |
+| - Skill Group Leader               ||                                  || 2011 - 2014    |
 | Director                           || Reid Consulting (UK) Ltd         || 2002 - 2004    |
 | Research Associate                 || Flux group, University of Utah   || 1998 - 2001    |
 | Systems Programmer                 || Haskell Project, Yale University || 1994 - 1998    |
@@ -19,7 +19,7 @@ permalink: /activities/
 
 ## Program committees
 
-I have served on the following program committees.
+I have served on the following conference program committees.
 
 - [SPIN 2012](http://qav.cs.ox.ac.uk/spin2012/)
 - [RTAS 2012](http://2014.rtas.org/wp-content/uploads/archives/2012/)
