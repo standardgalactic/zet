@@ -22,34 +22,37 @@ behave.
 The companies that design processors all provide specifications of their
 products that detail the processor architecture in excruciating detail.
 These specifications are usually in the form of books or PDF documents.
-Very large books: ARM's 64-bit architecture (aka the ARM v8-A architecture)
+Very large books: [ARM's 64-bit
+architecture](https://static.docs.arm.com/ddi0487/b/DDI0487B_a_armv8_arm.pdf) (aka the ARM v8-A architecture)
 is over 6000 pages thick.
 And these specifications usually contain English text, pseudocode and diagrams
 that illustrate the binary format of instructions and of system control/status
 registers.
 It is then up to diligent engineers and academics around the world to
 read those documents and transcribe the relevant parts into computer languages
-such as C, C++, Verilog, O'Caml, Coq, Isobel, ... to implement tools
+such as C, C++, Verilog, O'Caml, Coq, Isabelle, ... to implement tools
 that generate, dissect or analyse programs for those processors.
 This is a very tedious, error-prone process.  But worse, all the popular
 architectures are growing at a steady rate so just keeping up with the latest
 architecture extensions and bugfixes since the last release is a full time job.
 
-Today ARM released the ARM v8-A processor specification in machine readable
+Today ARM released version 8.2 of the ARM v8-A processor specification in machine readable
 form.
 This specification describes almost all of the architecture: instructions,
 page table walks, taking interrupts, taking synchronous exceptions such as page faults,
 taking asynchronous exceptions such as bus faults, user mode, system mode,
 hypervisor mode, secure mode, debug mode.  It details all the instruction
 formats and system register formats.
-It is all executable and has been tested very thoroughly using the same
+The semantics is written in [ARM's ASL Specification Language]({% post_url
+2016-08-17-specification_languages %}) so
+it is all executable and has been tested very thoroughly using the same
 architecture conformance tests that ARM uses to test its processors.
 (See my paper ["Trustworthy Specifications of ARM v8-A and v8-M
 System Level Architecture"]({{ site.url }}/papers/fmcad2016-trustworthy.pdf).)
 
 The specification is [being released in three sets of XML files](https://developer.arm.com/products/architecture/a-profile/exploration-tools):
 
-* The [System Register Specification](https://developer.arm.com/-/media/developer/products/architecture/armv8-a-architecture/AArch32_v82A_ISA_xml_00bet3.1.tar.gz)
+* The [System Register Specification](https://developer.arm.com/-/media/developer/products/architecture/armv8-a-architecture/ARMv82A-SysReg-00bet3.1.tar.gz)
   consists of an XML file for each system register in the architecture.
   For each register, the XML details all the fields within the register, how to
   access the register and which privilege levels can access the register.
@@ -78,6 +81,11 @@ things that I have done with it in the past:
 * I wrote a transpiler for ASL that converts ASL to C, wrote another ELF loader
   and I had a faster simulator for the architecture.
   (Still not all that fast: I am sure you can do better!)
+  I used that to let me [run ARM's internal architecture conformance test suite
+  on the spec]({{ site.url }}/papers/fmcad2016-trustworthy.pdf):
+  getting the ISA to pass was a lot of work - but it was nothing
+  compared with getting all those fiddly parts of the different privilege
+  levels working.
 
 * I modified my interpreter to generate a symbolic representation of its
   actions then used a symbolic expression solver (aka an SMT solver) to
@@ -95,7 +103,9 @@ things that I have done with it in the past:
   (Surprisingly, this simulator ran faster than the C simulator: Verilog
   simulators are very good - or my C generation is very bad.)
   This was the basis for the [ISA-Formal technique for verifying ARM processors]({{ site.url }}/papers/cav2016_isa_formal.pdf)
-  that we use to formally verify parts of ARM processors.
+  that we use to [formally verify parts of ARM processors]({ post.url 2016-07-26-using-armarm }) or,
+  more accurately, to let us use formal verification tools as the best [bug-hunting]({ post.url 2016-07-18-finding-bugs })
+  tools we have ever found.
 
 * This year, I wrote yet another transpiler for ASL that converts ASL directly to SMT,
   skipped the ELF loader for a change and I can now prove properties about
