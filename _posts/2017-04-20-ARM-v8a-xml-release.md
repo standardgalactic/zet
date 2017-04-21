@@ -112,6 +112,12 @@ things that I have done with it in the past:
   the architecture.  For example, is it possible for a low priority interrupt
   to preempt high priority code?   My tool says no.
 
+* Kathy Gray at Cambridge University has been writing a tool to convert ARM's
+  ASL specs to their specification language SAIL - from which they can then
+  generate O'Caml to use as a simulator and Isabelle to use for proofs.
+  The translated spec is tantalisingly close to working well enough for
+  release.
+
 But the specification can be used for much, much more - so download it and do
 something surprising with it.
 
