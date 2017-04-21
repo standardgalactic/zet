@@ -176,5 +176,5 @@ choices;
 
 This article was inspired by one of the questions asked on [Hacker
 News](https://news.ycombinator.com/item?id=12168894) in response to my article
-about [Formal Verification of ARM Processors]({% post_url
+about [Formal Verification of ARM Processors]({{ site.baseurl }}{% post_url
 2016-07-26-using-armarm %}).

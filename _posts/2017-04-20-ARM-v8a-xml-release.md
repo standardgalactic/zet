@@ -43,8 +43,8 @@ page table walks, taking interrupts, taking synchronous exceptions such as page 
 taking asynchronous exceptions such as bus faults, user mode, system mode,
 hypervisor mode, secure mode, debug mode.  It details all the instruction
 formats and system register formats.
-The semantics is written in [ARM's ASL Specification Language]({% post_url
-2016-08-17-specification_languages %}) so
+The semantics is written in [ARM's ASL Specification Language]({{ site.baseurl
+}}{% post_url 2016-08-17-specification_languages %}) so
 it is all executable and has been tested very thoroughly using the same
 architecture conformance tests that ARM uses to test its processors.
 (See my paper ["Trustworthy Specifications of ARM v8-A and v8-M
@@ -104,7 +104,7 @@ things that I have done with it in the past:
   simulators are very good - or my C generation is very bad.)
   This was the basis for the [ISA-Formal technique for verifying ARM processors]({{ site.url }}/papers/cav2016_isa_formal.pdf)
   that we use to [formally verify parts of ARM processors]({ post.url 2016-07-26-using-armarm }) or,
-  more accurately, to let us use formal verification tools as the best [bug-hunting]({ post.url 2016-07-18-finding-bugs })
+  more accurately, to let us use formal verification tools as the best [bug-hunting]({{ site.baseurl }}{% post_url 2016-07-18-finding-bugs %})
   tools we have ever found.
 
 * This year, I wrote yet another transpiler for ASL that converts ASL directly to SMT,
