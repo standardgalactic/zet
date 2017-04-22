@@ -103,7 +103,7 @@ things that I have done with it in the past:
   (Surprisingly, this simulator ran faster than the C simulator: Verilog
   simulators are very good - or my C generation is very bad.)
   This was the basis for the [ISA-Formal technique for verifying ARM processors]({{ site.url }}/papers/cav2016_isa_formal.pdf)
-  that we use to [formally verify parts of ARM processors]({ post.url 2016-07-26-using-armarm }) or,
+  that we use to [formally verify parts of ARM processors]({{ site.baseurl }}{% post_url 2016-07-26-using-armarm %}) or,
   more accurately, to let us use formal verification tools as the best [bug-hunting]({{ site.baseurl }}{% post_url 2016-07-18-finding-bugs %})
   tools we have ever found.
 

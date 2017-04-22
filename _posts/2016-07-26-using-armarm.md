@@ -81,7 +81,7 @@ quirks --- but the semantic gap to be bridged is not too large.)
 
 Once we had figured out how to generate Verilog and how to attach it to the
 processor and verification framework, we could finally start
-[bug hunting]({% post_url 2016-07-18-finding-bugs %})
+[bug hunting]({{ site.baseurl }}{% post_url 2016-07-18-finding-bugs %})
 and after a few weeks of warmup, we started detecting bugs at
 a steady rate.
 
