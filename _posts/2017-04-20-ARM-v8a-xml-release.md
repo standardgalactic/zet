@@ -122,3 +122,8 @@ But the specification can be used for much, much more - so download it and do
 something surprising with it.
 
 Enjoy!
+
+------
+
+This post was discussed on [reddit](https://www.reddit.com/r/programming/comments/66kyez/arm_releases_machine_readable_architecture/)
+and on [Hacker News](https://news.ycombinator.com/item?id=14174533).
