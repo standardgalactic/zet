@@ -125,5 +125,11 @@ Enjoy!
 
 ------
 
+I have written a followup post about [dissecting the ARM Machine Readable
+Architecture files]({{ site.baseurl }}{% post_url 2017-04-29-dissecting-ARM-MRA
+%}) and I have written [some
+scripts](https://github.com/alastairreid/mra_tools) that demonstrate how to do
+it.
+
 This post was discussed on [reddit](https://www.reddit.com/r/programming/comments/66kyez/arm_releases_machine_readable_architecture/)
 and on [Hacker News](https://news.ycombinator.com/item?id=14174533).
