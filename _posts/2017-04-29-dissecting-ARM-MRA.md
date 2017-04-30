@@ -344,3 +344,14 @@ And if the SAIL version does not suit your needs, then you might want want to
 know how to lex, parse, typecheck and execute ASL code yourself.  I will
 describe those in future posts.
 
+### Related posts and papers
+
+* Paper: [End-to-End Verification of ARM Processors with ISA-Formal]({{ site.url }}/papers/cav2016_isa_formal.pdf), CAV 2016.
+* [Verifying against the official ARM specification]({{ site.baseurl }}{% post_url 2016-07-26-using-armarm %})
+* [Finding Bugs versus Proving Absence of Bugs]({{ site.baseurl }}{% post_url 2016-07-18-finding-bugs %})
+* [Limitations of ISA-Formal]({{ site.baseurl }}{% post_url 2016-07-30-isa-formal-limitations %})
+* Paper: [Trustworthy Specifications of ARM v8-A and v8-M System Level Architecture]({{ site.url }}/papers/fmcad2016-trustworthy.pdf)), FMCAD 2016.
+* [ARM's ASL Specification Language]({{ site.baseurl }}{% post_url 2016-08-17-specification_languages %})
+* [ARM Releases Machine Readable Architecture Specification]({{ site.baseurl }}{% post_url 2017-04-20-ARM-v8a-xml-release %})
+* This post: [Dissecting the ARM Machine Readable Architecture files]({{ site.baseurl }}{% post_url 2017-04-29-dissecting-ARM-MRA %})
+* Code: [MRA Tools](https://github.com/alastairreid/mra_tools)
