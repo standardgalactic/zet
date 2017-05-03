@@ -28,7 +28,8 @@ with open(extra) as data_file:
             paper['author'] = paper['author'].replace(" and ", ", ")
             if paper['ID'] in extra:
                 info = extra[paper['ID']]
-                paper['file'] = info['file']
+                link = info['file'] if 'file' in info else info['slides']
+                paper['file'] = link
                 if 'slides' in info: paper['slides'] = info['slides']
 
         # print(papers)

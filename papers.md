@@ -12,7 +12,7 @@ and
 [DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David)
 pages.
 
-## Papers
+## Papers and Talks
 
 {% for paper in site.data.biblio %}
   <div class="biblio">
