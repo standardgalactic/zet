@@ -1,4 +1,5 @@
 {
+    "conf/oopsla/Reid17": { "file": "oopsla2017-whoguardstheguards.pdf" },
     "journal/micro/sve2017": { "file": "sve-ieee-micro-2017.pdf" },
     "talk/cucl/Reid17":    { "slides": "trusting-verified-software-CUCL-2017-05-02.pdf" },
     "conf/fmcad/Reid16":    { "file": "fmcad2016-trustworthy.pdf", "slides": "fmcad2016-trustworthy-slides.pdf" },
