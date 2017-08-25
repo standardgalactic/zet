@@ -21,13 +21,14 @@ permalink: /activities/
 
 I have served on the following conference program committees.
 
-- [SPIN 2012](http://qav.cs.ox.ac.uk/spin2012/)
-- [RTAS 2012](http://2014.rtas.org/wp-content/uploads/archives/2012/)
-- [LCTES 2011](http://lctes2011.elis.ugent.be/?file=kop1.php)
-- [LCTES 2008](http://lctes08.flux.utah.edu)
-- [RTAS 2007](http://2014.rtas.org/wp-content/uploads/archives/2007/)
-- HiPEAC 2007
-- [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm)
+- [PLDI 2018](http://conf.researchr.org/home/pldi-2018) External Review Committee
+- [SPIN 2012](http://qav.cs.ox.ac.uk/spin2012/) PC
+- [RTAS 2012](http://2014.rtas.org/wp-content/uploads/archives/2012/) PC
+- [LCTES 2011](http://lctes2011.elis.ugent.be/?file=kop1.php) PC
+- [LCTES 2008](http://lctes08.flux.utah.edu) PC
+- [RTAS 2007](http://2014.rtas.org/wp-content/uploads/archives/2007/) PC
+- HiPEAC 2007 PC
+- [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm) PC
 
 ---
 
@@ -79,7 +80,8 @@ to be tested as they are being designed and for specifications to undergo
 regression testing during maintenance.
 
 2 architecture specifications mechanised, 2 major architecture extensions mechanised,
-1 tool tech transferred, 1 paper published.
+1 tool tech transferred, 2 papers published, 1 architecture specification
+publicly released.
 
 
 ### Vector Processing
@@ -94,7 +96,7 @@ Since vector architecture projects always lead to large ISA extensions, I also
 created a language and tool to describe large ISAs in a compact, structured
 way.
 
-4 patents granted, 4 patents pending, 1 paper published, 1 tool tech
+7 patents granted, 1 patents pending, 2 papers published, 1 tool tech
 transferred.
 
 
