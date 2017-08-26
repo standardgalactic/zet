@@ -224,6 +224,11 @@ find a way to formalize them.
 So, are natural language specifications useful?  Yes, but they would be even
 more useful if they were a bit more formal.
 
+------
+
+This post was discussed on
+[reddit](https://www.reddit.com/r/programming/comments/6uyd0j/are_natural_language_specifications_useful/?st=j6tdagae&sh=d88098f4)
+and on [Hacker News](https://news.ycombinator.com/item?id=15060355).
 
 ### Related posts and papers
 
