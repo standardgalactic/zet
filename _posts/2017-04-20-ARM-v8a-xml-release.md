@@ -147,3 +147,6 @@ and on [Hacker News](https://news.ycombinator.com/item?id=14174533).
 * Code: [MRA Tools](https://github.com/alastairreid/mra_tools)
 * [ASL Lexical Syntax]({{ site.baseurl }}{% post_url 2017-05-07-asl-lexical-syntax %})
 * [Arm v8.3 Machine Readable Specifications]({{ site.baseurl }}{% post_url 2017-07-31-arm-v8_3 %})
+* Paper: [Who guards the guards?  Formal Validation of the Arm v8-M Architecture Specification]({{ site.url }}/papers/oopsla2017-whoguardstheguards.pdf)), OOPSLA 2017.
+* [Are Natural Language Specifications Useful?]({{ site.baseurl }}{% post_url 2017-08-19-natural-specs %})
+* [Formal validation of the Arm v8-M specification]({{ site.baseurl }}{% post_url 2017-09-24-validating-specs %})
