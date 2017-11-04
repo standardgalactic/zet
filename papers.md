@@ -12,7 +12,7 @@ and
 [DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David)
 pages.
 
-## Papers and Talks
+## Papers
 
 {% for paper in site.data.biblio %}
   <div class="biblio">
@@ -31,6 +31,25 @@ pages.
     {% elsif paper.link %} url: <a href="{{ paper.link }}">{{ paper.link }}</a>
     {% endif %}
     {% if paper.slides %} <br><a class="paperslides" href="{{ site.baseurl }}/papers/{{ paper.slides }}">slides</a> {% endif %}
+    <br>
+    <br>
+  </div>
+{% endfor %}
+
+## Talks
+
+{% for paper in site.data.talks %}
+  <div class="biblio">
+    <a class="papertitle" href="{{ site.baseurl }}/papers/{{ paper.slides }}">{{ paper.title }}</a>
+    <br>
+    {% if paper.link %}
+        <a href="{{ paper.link }}">{{ paper.venue }}</a>
+    {% else %}
+        {{ paper.venue }},
+    {% endif %}
+    <br>
+    {{ paper.city }},
+    {{ paper.day }} {{ paper.month }}, {{ paper.year }}.
     <br>
     <br>
   </div>

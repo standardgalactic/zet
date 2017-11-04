@@ -1,0 +1,56 @@
+[
+    {
+        "ID":     "talk/gla/Reid17",
+        "title":  "How can you trust formally verified software? (Invited Talk)",
+        "venue":  "Formal Aspects of Computing Science (British Computer Society)",
+        "city":   "London, UK",
+        "day":    "29th",
+        "month":  "September",
+        "year":   "2017",
+        "link":   "https://www.bcs.org/content/ConWebDoc/58298",
+        "slides": "trusting-verified-software-BCS-2017-09-29.pdf"
+    },
+    {
+        "ID":     "talk/gla/Reid17",
+        "title":  "How can you trust formally verified software? (Invited Talk)",
+        "venue":  "Reliable, Secure and Scalable Software Systems (RS4) Workshop",
+        "city":   "Glasgow, UK",
+        "day":    "1st",
+        "month":  "September",
+        "year":   "2017",
+        "link":   "https://www.sicsa.ac.uk/events/reliable-secure-scalable-software-systems-rs4-workshop/",
+        "slides": "trusting-verified-software-GLA-2017-09-01.pdf"
+    },
+    {
+        "ID":     "talk/cucl/Reid17",
+        "title":  "How can you trust formally verified software?",
+        "venue":  "Cambridge University Computer Laboratory",
+        "city":   "Cambridge, UK",
+        "day":    "2nd",
+        "month":  "May",
+        "year":   "2017",
+        "link":   "http://talks.cam.ac.uk/talk/index/72325",
+        "slides": "trusting-verified-software-CUCL-2017-05-02.pdf"
+    },
+    {
+        "ID":     "talk/qmu/Reid16",
+        "title":  "Trusting Large Specifications: The Virtuous Cycle",
+        "venue":  "Queen Mary University",
+        "city":   "London, UK",
+        "day":    "30th",
+        "month":  "November",
+        "year":   "2016",
+        "slides": "trustworthy-specs-QMU-2016-11-30.pdf"
+    },
+    {
+        "ID":     "talk/srepls4/Reid16",
+        "title":  "Trusting Large Specifications: The Virtuous Cycle",
+        "venue":  "The 4th South of England Regional Programming Language Seminar (S-REPLS 4)",
+        "city":   "Imperial College London, UK",
+        "day":    "27th",
+        "month":  "September",
+        "year":   "2016",
+        "link":   "http://srepls4.doc.ic.ac.uk/abstracts/reid/",
+        "slides": "srepls4-trustworthy.pdf"
+    }
+]
