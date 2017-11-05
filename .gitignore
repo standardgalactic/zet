@@ -2,3 +2,4 @@
 .*.*un~
 .sass-cache
 _site
+images/papers/*.png

@@ -1,0 +1,37 @@
+---
+layout: default
+---
+
+<article class="biblio">
+  <center>
+  <h1>{{ page.title }}</h1>
+  <div style="font-size:larger;">{{ page.author }}</div>
+    {{ page.affiliation }}
+    <br>
+    {% if page.file %} <a class="pagefile" href="{{ site.baseurl }}/papers/{{ page.file }}">[pdf]</a> {% endif %}
+    {% if page.slides %} <a class="pageslides" href="{{ site.baseurl }}/papers/{{ page.slides }}">[slides]</a> {% endif %}
+    {% if page.doi %} <a href="https://doi.org/{{ page.doi }}">[doi]</a>
+    {% elsif page.link %} <a href="{{ page.link }}">[url]</a>
+    {% endif %}
+  </center>
+
+  <br>
+  {% if page.booktitle %}
+      {{ page.booktitle }}
+      <br>
+      {% if page.series %} {{ page.series }}{% if page.volume %}, volume {{ page.volume }} {% endif %} <br>
+      {% elsif page.volume %} Volume {{ page.volume }} {% if page.series %}, series {{ page.series }} {% endif %} <br>
+      {% endif %}
+  {% elsif page.journal %}
+      {{ page.journal }}
+      {{ page.volume }}({{ page.number }})<br>
+  {% endif %}
+  {% if page.location %} {{ page.location }}<br> {% endif %}
+  {{ page.month }} {{ page.year }}
+
+  <h2>Abstract</h2>
+  {{ page.abstract | markdownify }}
+
+  <h2>BibTeX</h2>
+  <span style="display: block; font-family: monospace; white-space: pre; font-size:50%">{{ page.bibtex }}</span>
+</article>
