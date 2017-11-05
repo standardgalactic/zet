@@ -18,7 +18,7 @@
     "tsl-acp4is2003": { "file": "tsl-acp4is.pdf" },
     "report:haskell98report:jones1999": { "file": "haskell98-report.pdf" },
     "report:haskell98libraries:jones1999": { "file": "haskell98-library.pdf" },
-    "DBLP:conf/cases/ReidFGL08" : { "file": "SoC-Cpaper(cases2008).pdf" },
+    "DBLP:conf/cases/ReidFGL08" : { "file": "cases2008-SoC-C.pdf" },
     "DBLP:conf/date/BoettcherAEGR14" : { "file": "date2014_adv_simd.pdf" },
     "ReidThesis93": { "file" : "ReidThesis93.pdf" },
     "DBLP:conf/sbac-pad/OzerRB07" : { "file": "SBACPAD07.pdf" },
