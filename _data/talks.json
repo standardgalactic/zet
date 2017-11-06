@@ -1,6 +1,16 @@
 [
     {
-        "ID":     "talk/gla/Reid17",
+        "ID":     "talk/icl/Reid17",
+        "title":  "How can you trust formally verified software? (Invited Talk)",
+        "venue":  "High Performance Embedded and Distributed Systems (HiPEDS) seminar series, Imperial College London",
+        "city":   "London, UK",
+        "day":    "6th",
+        "month":  "November",
+        "year":   "2017",
+        "slides": "trusting-verified-software-ICL-2017-11-06.pdf"
+    },
+    {
+        "ID":     "talk/bcs/Reid17",
         "title":  "How can you trust formally verified software? (Invited Talk)",
         "venue":  "Formal Aspects of Computing Science (British Computer Society)",
         "city":   "London, UK",
@@ -34,7 +44,7 @@
     },
     {
         "ID":     "talk/qmu/Reid16",
-        "title":  "Trusting Large Specifications: The Virtuous Cycle",
+        "title":  "Trusting Large Specifications: The Virtuous Cycle (Invited Talk)",
         "venue":  "Queen Mary University",
         "city":   "London, UK",
         "day":    "30th",
