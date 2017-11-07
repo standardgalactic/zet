@@ -5,7 +5,7 @@ abstract: |
     against specifications, but how can we verify the
     specifications themselves? This talk explores what it means to
     formally verify a specification. We solve three challenges: (1)
-    How to create a secondary, higher-level speci cation that can
+    How to create a secondary, higher-level specification that can
     be effectively reviewed by processor designers who are not
     experts in formal verification; (2) How to avoid common-mode
     failures between the specifications; and (3) How to
@@ -49,7 +49,7 @@ bibtex: |
     against specifications, but how can we verify the
     specifications themselves? This talk explores what it means to
     formally verify a specification. We solve three challenges: (1)
-    How to create a secondary, higher-level speci cation that can
+    How to create a secondary, higher-level specification that can
     be effectively reviewed by processor designers who are not
     experts in formal verification; (2) How to avoid common-mode
     failures between the specifications; and (3) How to
