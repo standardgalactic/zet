@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Papers and Patents
+title: Papers, Talks and Patents
 permalink: /papers/
 ---
 
@@ -30,13 +30,13 @@ pages.
 
 ## Talks
 
-### How can you trust formally verified software?
+<h3>How can you trust formally verified software?</h3>
 
-A gradually evolving series of talks about my work on creating
+_A gradually evolving series of talks about my work on creating
 correct formal specifications (when there are multiple implementations
 already in existence).
 Reinforces the idea of having multiple users of a single specification and
-includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks.
+includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks._
 
   - High Performance Embedded and Distributed Systems (HiPEDS) seminar series
     <br>
@@ -80,10 +80,10 @@ includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks.
     30th November, 2016.
     [[pdf](/papers/trustworthy-specs-QMU-2016-11-30.pdf)]
 
-### Trusting Large Specifications: The Virtuous Cycle
+<h3>Trusting Large Specifications: The Virtuous Cycle</h3>
 
-First talk emphasizing the importance of having multiple users of a single
-specification.
+_First talk emphasizing the importance of having multiple users of a single
+specification._
 
   - [The 4th South of England Regional Programming Language Seminar (S-REPLS 4)](http://srepls4.doc.ic.ac.uk/abstracts/reid/)
     <br>
@@ -92,7 +92,7 @@ specification.
     [[pdf](/papers/srepls4-trustworthy.pdf)]
 
 
-### Trustworthy Specifications of ARM System Level Architecture
+<h3>Trustworthy Specifications of ARM System Level Architecture</h3>
 
   - [First Deepspec Workshop](https://deepspec.org/events/workshop2016/index.html),
     Princeton, NJ, USA,
