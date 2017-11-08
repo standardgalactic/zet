@@ -48,7 +48,7 @@ number: 9780
 pages: 42-58
 publisher: Springer Verlag
 series: Lecture Notes in Computer Science
-slides: ISA-Formal-CAV2016.pdf
+slides: cav2016_isa_formal-slides.pdf
 title: End-to-End Verification of ARM Processors with ISA-Formal
 volume: 9780
 year: 2016
@@ -105,7 +105,7 @@ bibtex: |
         , pages = {42-58}
         , publisher = {Springer Verlag}
         , series = {Lecture Notes in Computer Science}
-        , slides = {ISA-Formal-CAV2016.pdf}
+        , slides = {cav2016_isa_formal-slides.pdf}
         , title = {{E}nd-to-{E}nd {V}erification of {A{R}M} {P}rocessors with {I{S}A-{F}ormal}}
         , volume = {9780}
         , year = {2016}

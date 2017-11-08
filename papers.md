@@ -43,21 +43,21 @@ includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks._
     Invited talk,
     Imperial College London, UK,
     6th November, 2017.
-    [[pdf](/papers/trusting-verified-software-ICL-2017-11-06.pdf)]
+    [[pdf](/talks/trusting-verified-software-ICL-2017-11-06.pdf)]
 
   - [Formal Aspects of Computing Science (British Computer Society)](https://www.bcs.org/content/ConWebDoc/58298)
     <br>
     Invited talk,
     London, UK,
     29th September, 2017.
-    [[pdf](/papers/trusting-verified-software-BCS-2017-09-29.pdf)]
+    [[pdf](/talks/trusting-verified-software-BCS-2017-09-29.pdf)]
 
   - [Reliable, Secure and Scalable Software Systems (RS4) Workshop](https://www.sicsa.ac.uk/events/reliable-secure-scalable-software-systems-rs4-workshop/)
     <br>
     Invited talk,
     Glasgow, UK,
     1st September, 2017.
-    [[pdf](/papers/trusting-verified-software-GLA-2017-09-01.pdf)]
+    [[pdf](/talks/trusting-verified-software-GLA-2017-09-01.pdf)]
     <br>
     (Completely rewritten from May version.)
 
@@ -71,14 +71,14 @@ includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks._
     <br>
     Cambridge, UK,
     2nd May, 2017.
-    [[pdf](/papers/trusting-verified-software-CUCL-2017-05-02.pdf)]
+    [[pdf](/talks/trusting-verified-software-CUCL-2017-05-02.pdf)]
 
   - Queen Mary University
     <br>
     Invited talk,
     London, UK,
     30th November, 2016.
-    [[pdf](/papers/trustworthy-specs-QMU-2016-11-30.pdf)]
+    [[pdf](/talks/trustworthy-specs-QMU-2016-11-30.pdf)]
 
 <h3>Trusting Large Specifications: The Virtuous Cycle</h3>
 
@@ -89,7 +89,7 @@ specification._
     <br>
     Imperial College London, UK,
     27th September, 2016.
-    [[pdf](/papers/srepls4-trustworthy.pdf)]
+    [[pdf](/talks/srepls4-trustworthy.pdf)]
 
 
 <h3>Trustworthy Specifications of ARM System Level Architecture</h3>
@@ -106,7 +106,7 @@ _First public talk about creating formal specifications of ARM processors._
     <br>
     Cambridge, UK,
     February, 2012.
-    [[pdf](/papers/bottom-up-formalization-CUCL-2012-02.pdf)]
+    [[pdf](/talks/bottom-up-formalization-CUCL-2012-02.pdf)]
 
 
 ## Patents
