@@ -98,6 +98,16 @@ specification._
     Princeton, NJ, USA,
     7th June, 2016.
 
+<h3>Backwards compatible formalization of the ARM Architecture</h3>
+
+_First public talk about creating formal specifications of ARM processors._
+
+  - Cambridge University Computer Laboratory
+    <br>
+    Cambridge, UK,
+    February, 2012.
+    [[pdf](/papers/bottom-up-formalization-CUCL-2012-02.pdf)]
+
 
 ## Patents
 
