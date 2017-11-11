@@ -19,7 +19,7 @@ html {
 
 body {
   background: #fffff8;
-  font: 18px/1.4 $helvetica;
+  font: 18px/1.4 $palatino;
   color: $darkGray;
 }
 
@@ -32,7 +32,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
-  color: $darkerGray;
+  color: $darkGray;
   font-weight: bold;
 
   line-height: 1.7;
@@ -116,12 +116,9 @@ img {
 
 th {
   border-top: 1px solid #aaa;
+  border-bottom: 1px solid #bbb;
   font-weight: bold;
   color: #3d5cbb;
-}
-
-th {
-  border-bottom: 1px solid #bbb;
 }
 
 // Fixes images in popup boxes from Google Translate
