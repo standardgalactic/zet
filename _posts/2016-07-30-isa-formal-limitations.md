@@ -4,7 +4,7 @@ title: Limitations of ISA-Formal
 ---
 
 As I was explaining the [ISA-Formal technique for verifying ARM processors]({{
-site.url }}/papers/cav2016_isa_formal.pdf) to people, I realized that it was
+site.url }}/papers/CAV_16/) to people, I realized that it was
 important to be clear about what ISA-Formal does not verify and why.
 
 (I need to emphasize that this does not imply gaps in the overall verification
@@ -101,7 +101,7 @@ can find some other technique to fill the gaps.
 
 _This is one of several notes I am writing about the key ideas in our
 paper ["End-to-End Verification of ARM Processors with ISA-Formal"]({{ site.url
-}}/papers/cav2016_isa_formal.pdf) which I presented at the [2016
+}}/papers/CAV_16/) which I presented at the [2016
 International Conference on Computer Aided
 Verification](http://i-cav.org/2016/) on Friday 22nd July, 2016.  There is nothing
 quite like trying to squeeze a 16 page paper into a 16 minute presentation for

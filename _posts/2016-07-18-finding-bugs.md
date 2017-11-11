@@ -4,7 +4,7 @@ title: Finding Bugs versus Proving Absence of Bugs
 ---
 
 Probably the most important thing I didn't say enough in [my paper about
-verifying ARM processors]({{ site.url }}/papers/cav2016_isa_formal.pdf)
+verifying ARM processors]({{ site.url }}/papers/CAV_16/)
 is why we focus on finding bugs.
 
 As John Regehr says in his talk [SQL-Lite with a Fine-Tooth
@@ -45,7 +45,7 @@ So, for now, we are focussing on finding bugs.
 
 _This is the first of several notes I am writing about the key ideas in our
 paper ["End-to-End Verification of ARM Processors with ISA-Formal"]({{ site.url
-}}/papers/cav2016_isa_formal.pdf) which I am presenting at the [2016
+}}/papers/CAV_16/) which I am presenting at the [2016
 International Conference on Computer Aided
 Verification](http://i-cav.org/2016/) on Friday 22nd July.  There is nothing
 quite like trying to squeeze a 16 page paper into a 16 minute presentation for

@@ -4,7 +4,7 @@ title: Verifying against the official ARM specification
 ---
 
 Part of the reason why  the [ISA-Formal technique for verifying ARM
-processors]({{ site.url }}/papers/cav2016_isa_formal.pdf) is so effective and
+processors]({{ site.url }}/papers/CAV_16/) is so effective and
 so portable across different ARM processors is the fact that we directly use the
 ARM Instruction Set Architecture (ISA) Specification in our flow.
 That is, I translate ARM's official printed documentation into something that
@@ -21,7 +21,7 @@ you are fooling yourself.  So you either need to hope that you make different
 errors in the specification than in the processor or you need a plan for how
 you will test your specification.  (That is the subject of my other paper
 ["Trustworthy Specifications of ARM v8-A and v8-M System Level
-Architecture"]({{ site.url }}/papers/fmcad2016-trustworthy.pdf) that I just had
+Architecture"]({{ site.url }}/papers/FMCAD_16/) that I just had
 accepted by the [Formal Methods in Computer-Aided Design (FMCAD 2016)
 conference](http://www.cs.utexas.edu/users/hunt/FMCAD/FMCAD16/index.shtml).)
 
@@ -97,7 +97,7 @@ rest of the ARM Architecture Reference Manual.
 
 _This is one of several notes I am writing about the key ideas in our
 paper ["End-to-End Verification of ARM Processors with ISA-Formal"]({{ site.url
-}}/papers/cav2016_isa_formal.pdf) which I am presenting at the [2016
+}}/papers/CAV_16/) which I am presenting at the [2016
 International Conference on Computer Aided
 Verification](http://i-cav.org/2016/) on Friday 22nd July.  There is nothing
 quite like trying to squeeze a 16 page paper into a 16 minute presentation for

@@ -20,7 +20,7 @@ microcontrollers.
 
 (This post is based on some of the ideas in my forthcoming OOPSLA 2017 paper
 ["Who guards the guards?  Formal Validation of the Arm v8-M Architecture
-Specification"]({{ site.url }}/papers/oopsla2017-whoguardstheguards.pdf).)
+Specification"]({{ site.url }}/papers/OOPSLA_17/).)
 
 # How to prove properties of specifications
 
@@ -238,7 +238,7 @@ I can't claim that the properties are all guaranteed to hold.
 The usual way to show how fast your tool is at proving a set of properties is
 to plot a graph that shows how long it takes to prove 10%, 20%, ... 100% of all
 the properties.  In [the paper I wrote about this work]({{ site.url
-}}/papers/oopsla2017-whoguardstheguards.pdf), I split the sets of properties
+}}/papers/OOPSLA_17/), I split the sets of properties
 and invariants up into several different categories so this graph from the
 paper has several lines in it (that I won't explain here).  The main thing to
 notice is that proofs involving reset do not take very long (because the reset
@@ -286,7 +286,7 @@ specification.
 If you want to read more about this, you might want to read
 my forthcoming OOPSLA 2017 paper
 ["Who guards the guards?  Formal Validation of the Arm v8-M Architecture
-Specification"]({{ site.url }}/papers/oopsla2017-whoguardstheguards.pdf)
+Specification"]({{ site.url }}/papers/OOPSLA_17/)
 that describes the meta-specification language, the properties and the
 results in more detail.
 
@@ -299,17 +299,17 @@ But there are lots of other interesting things they can be used for...
 
 ### Related posts and papers
 
-* Paper: [End-to-End Verification of ARM Processors with ISA-Formal]({{ site.url }}/papers/cav2016_isa_formal.pdf), CAV 2016.
+* Paper: [End-to-End Verification of ARM Processors with ISA-Formal]({{ site.url }}/papers/CAV_16/), CAV 2016.
 * [Verifying against the official ARM specification]({{ site.baseurl }}{% post_url 2016-07-26-using-armarm %})
 * [Finding Bugs versus Proving Absence of Bugs]({{ site.baseurl }}{% post_url 2016-07-18-finding-bugs %})
 * [Limitations of ISA-Formal]({{ site.baseurl }}{% post_url 2016-07-30-isa-formal-limitations %})
-* Paper: [Trustworthy Specifications of ARM v8-A and v8-M System Level Architecture]({{ site.url }}/papers/fmcad2016-trustworthy.pdf), FMCAD 2016.
+* Paper: [Trustworthy Specifications of ARM v8-A and v8-M System Level Architecture]({{ site.url }}/papers/FMCAD_16/), FMCAD 2016.
 * [ARM's ASL Specification Language]({{ site.baseurl }}{% post_url 2016-08-17-specification_languages %})
 * [ARM Releases Machine Readable Architecture Specification]({{ site.baseurl }}{% post_url 2017-04-20-ARM-v8a-xml-release %})
 * [Dissecting the ARM Machine Readable Architecture files]({{ site.baseurl }}{% post_url 2017-04-29-dissecting-ARM-MRA %})
 * Code: [MRA Tools](https://github.com/alastairreid/mra_tools)
 * [ASL Lexical Syntax]({{ site.baseurl }}{% post_url 2017-05-07-asl-lexical-syntax %})
 * [Arm v8.3 Machine Readable Specifications]({{ site.baseurl }}{% post_url 2017-07-31-arm-v8_3 %})
-* Paper: [Who guards the guards?  Formal Validation of the Arm v8-M Architecture Specification]({{ site.url }}/papers/oopsla2017-whoguardstheguards.pdf)), OOPSLA 2017.
+* Paper: [Who guards the guards?  Formal Validation of the Arm v8-M Architecture Specification]({{ site.url }}/papers/OOPSLA_17/)), OOPSLA 2017.
 * [Are Natural Language Specifications Useful?]({{ site.baseurl }}{% post_url 2017-08-19-natural-specs %})
 * This post: [Formal validation of the Arm v8-M specification]({{ site.baseurl }}{% post_url 2017-09-24-validating-specs %})

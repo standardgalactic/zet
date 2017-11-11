@@ -19,7 +19,7 @@ The most important reason for not using Verilog is that it is really hard to
 create a specification that you trust.  It takes a lot of work to create
 a specification because after you write it, you have to test it in multiple
 ways (see my upcoming paper ["Trustworthy Specifications of ARM v8-A and v8-M
-System Level Architecture"]({{ site.url }}/papers/fmcad2016-trustworthy.pdf)).
+System Level Architecture"]({{ site.url }}/papers/FMCAD_16/)).
 To test it, you will have to persuade some very busy engineers to help you with
 the testing.  And then you have to fix the bugs and get the senior architects
 to approve your changes. And just when you think you are all done, you have to
