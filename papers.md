@@ -9,7 +9,7 @@ permalink: /papers/
 
 My [Google Scholar](https://scholar.google.co.uk/citations?hl=en&user=oT8RhJgAAAAJ)
 and
-[DBLP](https://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David)
+[DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David)
 pages.
 
 ## Papers
