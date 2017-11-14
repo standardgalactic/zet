@@ -30,6 +30,14 @@ pages.
 
 ## Talks
 
+<h3>Specifications: The Next Verification Bottleneck</h3>
+
+  - [ENTROPY 2018: ENabling TRust through Os Proofs...and beYond](https://entropy2018.sciencesconf.org)
+    <br>
+    Invited talk,
+    Villeneuve d'Ascq, France,
+    25-26 January, 2018.
+
 <h3>How can you trust formally verified software?</h3>
 
 _A gradually evolving series of talks about my work on creating
