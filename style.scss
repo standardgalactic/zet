@@ -214,7 +214,8 @@ th {
 .site-description {
   margin: -5px 0 0 0;
   color: $gray;
-  font-size: 16px;
+  font-family: $helveticaNeue;
+  font-size: 15px;
 
   @include mobile {
     margin: 3px 0;
