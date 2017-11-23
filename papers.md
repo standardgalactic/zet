@@ -46,6 +46,14 @@ already in existence).
 Reinforces the idea of having multiple users of a single specification and
 includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks._
 
+  - [Chaos Communication Congress (34C3)](https://events.ccc.de/2017/09/19/34c3-call-for-participation-and-submission-guidelines/)
+    <br>
+    [CCC](https://ccc.de/en/),
+    Leipzig, Germany,
+    27-30 December, 2017.
+    <br>
+    _A complete rewrite of the talk for a different audience._
+
   - High Performance Embedded and Distributed Systems (HiPEDS) seminar series
     <br>
     Invited talk,
