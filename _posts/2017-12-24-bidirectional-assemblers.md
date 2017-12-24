@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bidirectional Assembly Syntax Specifications
+title: Bidirectional ARM Assembly Syntax Specifications
 ---
 
 One of the tantalising pieces of information contained in [ARM's machine
@@ -318,3 +318,4 @@ important part of successful research projects.
 * Paper: [Who guards the guards?  Formal Validation of the Arm v8-M Architecture Specification]({{ site.url }}/papers/OOPSLA_17/)), OOPSLA 2017.
 * [Are Natural Language Specifications Useful?]({{ site.baseurl }}{% post_url 2017-08-19-natural-specs %})
 * [Formal validation of the Arm v8-M specification]({{ site.baseurl }}{% post_url 2017-09-24-validating-specs %})
+* This post: [Bidirectional ARM Assembly Syntax Specifications]({{ site.baseurl }}{% post_url 2017-12-24-bidirectional-assemblers %})
