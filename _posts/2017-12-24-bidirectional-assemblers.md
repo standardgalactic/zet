@@ -301,6 +301,14 @@ specification to change to my ASL-based syntax instead of English prose.
 That is the way it is in industrial research sometimes: timing is a very
 important part of successful research projects.
 
+-----
+
+People have written to tell me about similar projects:
+
+- Agustin Gianni wrote [retools: a reverse engineering toolkit for normies](https://github.com/agustingianni/retools) based 
+ on scraping the assembly syntax out of PDF files.
+- Nick Spinale is writing [hs-arm](https://github.com/nspin/hs-arm) based on the XML spec.
+
 
 ### Related posts and papers
 
