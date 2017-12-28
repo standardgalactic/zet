@@ -1,5 +1,15 @@
 [
     {
+        "ID":     "talk/34c3/Reid17",
+        "title":  "How can you trust formally verified software?",
+        "venue":  "Chaos Computer Congress (34C3)",
+        "city":   "Leipzig, Germany",
+        "day":    "27th",
+        "month":  "December",
+        "year":   "2017",
+        "slides": "using-arm-specs-34C3-2017-12-27.pdf"
+    },
+    {
         "ID":     "talk/icl/Reid17",
         "title":  "How can you trust formally verified software? (Invited Talk)",
         "venue":  "High Performance Embedded and Distributed Systems (HiPEDS) seminar series, Imperial College London",

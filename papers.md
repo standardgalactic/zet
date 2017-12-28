@@ -51,6 +51,7 @@ includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks._
     [CCC](https://ccc.de/en/),
     Leipzig, Germany,
     27-30 December, 2017.
+    [[pdf](/talks/using-arm-specs-34C3-2017-12-27.pdf)]
     <br>
     _A complete rewrite of the talk for a different audience._
 
