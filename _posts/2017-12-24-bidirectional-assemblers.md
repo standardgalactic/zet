@@ -13,7 +13,9 @@ At the time, this was not very useful to ARM because we already had assemblers
 and disassemblers so, although technically successful, the project died and
 the code has been slowly bitrotting ever since.
 In a few days time, I will be giving a [talk at the 34th Chaos Communication
-Congress](https://events.ccc.de/congress/2017/Fahrplan/events/8915.html) in
+Congress](https://events.ccc.de/congress/2017/Fahrplan/events/8915.html) 
+[[pdf](/talks/using-arm-specs-34C3-2017-12-27.pdf)]
+in
 Leipzig about practical things you can do with ARM's specification and
 I thought it would be a good idea to suggest that someone creates a similar
 tool.
@@ -327,3 +329,4 @@ People have written to tell me about similar projects:
 * [Are Natural Language Specifications Useful?]({{ site.baseurl }}{% post_url 2017-08-19-natural-specs %})
 * [Formal validation of the Arm v8-M specification]({{ site.baseurl }}{% post_url 2017-09-24-validating-specs %})
 * This post: [Bidirectional ARM Assembly Syntax Specifications]({{ site.baseurl }}{% post_url 2017-12-24-bidirectional-assemblers %})
+* Talk: [[How can you trust formally verified software (pdf)](/talks/using-arm-specs-34C3-2017-12-27.pdf)], Chaos Communication Congress, 2017.
