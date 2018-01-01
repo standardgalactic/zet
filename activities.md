@@ -44,7 +44,7 @@ the following is only a selection.
 I am currently looking at how to use ARM's architecture specifications to
 verify ARM's processors and related IP.  This is running concurrently with the
 project on [mechanising ARM's processor
-specifications](#mechanized-processor-specification).
+specifications](#mechanised-processor-specification).
 
 Working with verification engineers in ARM's processor division, I developed
 the ISA-Formal processor verification technique that is based on:
@@ -91,8 +91,8 @@ publicly released.
 
 ### Vector Processing
 
-Building on the experience from [NEON](#vectorizing-compiler-for-neon) and from the [Software Defined
-Radio](#software-defined-radio)
+Building on the experience from [NEON](#vectorizing-compiler-for-neon) and from the
+[Software Defined Radio](#software-defined-radio)
 project, I spent some time working on how to make vector processing more
 flexible and on how to implement it more efficiently.
 This led to a major architecture extension and multiple architecture and
@@ -144,8 +144,8 @@ circuit could be used to detect that someone is tampering with the chip.
 
 This project explored use of ideas from stream computation to structure
 a parallel H.264 decoder. Observations of the difficulty handling control in
-stream computation fed into the later development of SoC-C (see Software
-Defined Radio project).
+stream computation fed into the later development of SoC-C
+(see [Software Defined Radio](#software-defined-radio) project).
 
 1 patent filed.
 
