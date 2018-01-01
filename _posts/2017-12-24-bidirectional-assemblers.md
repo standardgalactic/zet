@@ -13,7 +13,8 @@ At the time, this was not very useful to ARM because we already had assemblers
 and disassemblers so, although technically successful, the project died and
 the code has been slowly bitrotting ever since.
 In a few days time, I will be giving a [talk at the 34th Chaos Communication
-Congress](https://events.ccc.de/congress/2017/Fahrplan/events/8915.html) 
+Congress](https://events.ccc.de/congress/2017/Fahrplan/events/8915.html)
+[[video](https://media.ccc.de/v/34c3-8915-how_can_you_trust_formally_verified_software)]
 [[pdf](/talks/using-arm-specs-34C3-2017-12-27.pdf)]
 in
 Leipzig about practical things you can do with ARM's specification and
@@ -288,12 +289,12 @@ any more of this --- but hopefully you get the idea.
 This part of the project to formalise the ARM architecture specification was
 both a technical success and a tech transfer failure.
 
-On the one hand, it worked: we test the disassembler against hand-written
+On the one hand, it worked: we tested the disassembler against hand-written
 disassemblers on all 2^32 encodings; we tested that assembling the disassembly
 of any opcode results in the same opcode on all 2^32 encodings.
 
 But, there was no demand within the company for this work because ARM already
-hand assemblers and disassemblers and because the GNU assembler contribution
+hand-written assemblers and disassemblers and because the GNU assembler contribution
 rules would have required contribution of the source files that we use to
 generate the XML and all the scripts that generate the XML and lots and lots of other parts of the
 sausage factory.
@@ -305,7 +306,7 @@ important part of successful research projects.
 
 -----
 
-People have written to tell me about similar projects:
+People have written to tell me about similar projects for ARM disassembly:
 
 - Agustin Gianni wrote [retools: a reverse engineering toolkit for normies](https://github.com/agustingianni/retools) based 
  on scraping the assembly syntax out of PDF files.

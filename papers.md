@@ -40,20 +40,26 @@ pages.
 
 <h3>How can you trust formally verified software?</h3>
 
+_A talk about practical things you can do with ARM's executable formal
+specification with an emphasis on security research.
+Despite having the same title, this is a completely different talk from the next one._
+TUWAT!
+
+  - [Chaos Communication Congress (34C3)](https://events.ccc.de/congress/2017/wiki/index.php/Main_Page)
+    <br>
+    [CCC](https://ccc.de/en/),
+    Leipzig, Germany,
+    27-30 December, 2017.
+    [[video](https://media.ccc.de/v/34c3-8915-how_can_you_trust_formally_verified_software)]
+    [[pdf](/talks/using-arm-specs-34C3-2017-12-27.pdf)]
+
+<h3>How can you trust formally verified software?</h3>
+
 _A gradually evolving series of talks about my work on creating
 correct formal specifications (when there are multiple implementations
 already in existence).
 Reinforces the idea of having multiple users of a single specification and
 includes a short version of the FMCAD16, CAV16 and OOPSLA17 talks._
-
-  - [Chaos Communication Congress (34C3)](https://events.ccc.de/2017/09/19/34c3-call-for-participation-and-submission-guidelines/)
-    <br>
-    [CCC](https://ccc.de/en/),
-    Leipzig, Germany,
-    27-30 December, 2017.
-    [[pdf](/talks/using-arm-specs-34C3-2017-12-27.pdf)]
-    <br>
-    _A complete rewrite of the talk for a different audience._
 
   - High Performance Embedded and Distributed Systems (HiPEDS) seminar series
     <br>
