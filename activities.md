@@ -53,9 +53,10 @@ the ISA-Formal processor verification technique that is based on:
 - Using model checking for end-to-end verification of processor pipelines
 
 This technique has proven very effective at detecting complex bugs early in the
-design process.
+design process.  It has been used on 8 ARM processors and the tools and
+technique will be used in all of ARM's next generation processors.
 
-1 paper published, 1 tool released.
+1 paper published ([CAV](/papers/CAV_16/)), 1 tool tech-transferred.
 
 
 ### Mechanised Processor Specification
@@ -80,7 +81,8 @@ to be tested as they are being designed and for specifications to undergo
 regression testing during maintenance.
 
 2 architecture specifications mechanised, 2 major architecture extensions mechanised,
-1 tool tech transferred, 2 papers published, 1 architecture specification
+1 tool tech-transferred, 2 papers published ([FMCAD](/papers/FMCAD_16/),
+[OOPSLA](/papers/OOPSLA_17/)), 1 architecture specification
 publicly released.
 
 
@@ -96,8 +98,8 @@ Since vector architecture projects always lead to large ISA extensions, I also
 created a language and tool to describe large ISAs in a compact, structured
 way.
 
-7 patents granted, 1 patents pending, 2 papers published, 1 tool tech
-transferred.
+7 patents granted, 1 patents pending, 2 papers published ([IEEE
+Micro](/papers/IEEE_Micro/), [DATE](/papers/DATE_14/)), 1 tool tech-transferred.
 
 
 ### Software Defined Radio
@@ -112,7 +114,8 @@ and software aspects of the trace generation system for low overhead monitoring
 of parallel real-time systems. The platform has been spun out into another
 company (http://www.cognovo.co.uk/) which has since been acquired by u-blox.
 
-7 patents granted, 1 patent pending, 4 papers published, 3 tools released,
+7 patents granted, 1 patent pending, 4 papers published ([CASES](/papers/CASES_08/),
+[MICRO](/papers/MICRO_08/), [SIPS](/papers/SIPS_06/), [SDR](/papers/SDR_06)), 3 tools released,
 numerous training sessions provided.
 
 
@@ -121,7 +124,7 @@ numerous training sessions provided.
 A chance discussion over coffee lead to an interesting idea on how to share
 resources between hardware threads of different priorities. 
 
-1 patent granted, 1 paper published.
+1 patent granted, 1 paper published ([SBAC-PAD](/papers/SBAC_PAD_07/)).
 
 
 ### Reliability/Security
@@ -168,7 +171,8 @@ I developed a variety of tools for analyzing embedded systems including
 a binary analysis tool to identify which interrupts were enabled/disabled and
 a worst-case stack-depth analysis (which accounted for interrupt-handlers).
 
-4 papers published.
+4 papers published ([ASPLOS](/papers/ASPLOS_04), [TECS](/papers/TECS_05),
+[ACP4IS](/papers/ACP4IS_03/), [EMSOFT](/papers/EMSOFT_03/)).
 
 ### Component-Based Operating Systems
 
@@ -177,7 +181,8 @@ needs of low-level code with complex interconnections and even more complex
 component initialization requirements. I used this to develop a more modular
 version of the operating system toolkit 'OSKit' previously developed at Utah.
 
-3 papers published, 2 open source projects released.
+3 papers published ([OSDI](/papers/OSDI_00/), [ICSE](/papers/ICSE_02/),
+[ASPSE](/papers/ASPSE_01/)), 2 open source projects released.
 
 ---
 
@@ -190,7 +195,7 @@ I joined Yale University's Haskell research group in 1994.
 I applied the principles of Functional Reactive Programming to the tasks of
 Visual Tracking and Robotics.
 
-2 papers published.
+2 papers published ([ICSE](/papers/ICSE_99/), [PADL](/papers/PADL_01/)).
 
 ### Haskell Compiler Development
 
@@ -198,14 +203,24 @@ I worked on the Yale Haskell Compiler, the Hugs (Haskell) Compiler, the Glasgow
 Haskell Compiler, the standard Haskell libraries, graphics libraries, exception
 handling and the foreign function interface.
 
-6 papers published, 1 open source project released, 1 open source project
+6 papers published
+([PLDI](/papers/PLDI_99),
+[IFL](/papers/IFL_98),
+[Haskell Report](/papers/Haskell_Report),
+[Haskell Library](/papers/Haskell_Lib),
+[HW](/papers/Haskell_97),
+[HW](/papers/Haskell_95a),
+[HW](/papers/Haskell_95b),
+[GFPW](/papers/Exceptions),
+[RR](/papers/StdLib_98)), 1 open source project released, 1 open source project
 maintained.
 
 ---
 
 ## University of Glasgow Projects
 
-I earned an M.Sc. by research in formal methods from the University of Glasgow.
+I earned an [M.Sc. by research](/papers/MSc_93) in formal methods from the
+University of Glasgow.
 
 ### GUIs
 
@@ -213,12 +228,11 @@ I implemented a widget library for Haskell using the recently developed 'monad
 programming' technique and an early version of Haskell's foreign function
 interface.
 
-1 paper published.
+1 paper published ([GFPW](/papers/GFPW_93)).
 
 ### Foreign Function Interface
 
 I extended the Glasgow Haskell Compiler's garbage collector to better support
 the foreign function interface,
 
-1 paper published, contributed to 1 open source project.
-
+1 paper published ([GFPW](/papers/GFPW_94)), contributed to 1 open source project.
