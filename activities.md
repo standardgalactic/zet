@@ -43,7 +43,8 @@ the following is only a selection.
 
 I am currently looking at how to use ARM's architecture specifications to
 verify ARM's processors and related IP.  This is running concurrently with the
-project on mechanising ARM's processor specifications
+project on [mechanising ARM's processor
+specifications](#mechanized-processor-specification).
 
 Working with verification engineers in ARM's processor division, I developed
 the ISA-Formal processor verification technique that is based on:
@@ -61,7 +62,8 @@ technique will be used in all of ARM's next generation processors.
 
 ### Mechanised Processor Specification
 
-Concurrently with the Processor Verification project, I work on improving and
+Concurrently with the [Processor Verification](#processor-formal-verification)
+project, I work on improving and
 extending how ARM specifies its processor architecture.
 
 - Can we make the specification more precise without reducing readability?
@@ -69,7 +71,8 @@ extending how ARM specifies its processor architecture.
   from the specification?
 - Can we detect omissions/errors in the specification?
 
-(This is an offshoot of the concurrent vector processing project. We got tired
+(This is an offshoot of the concurrent [vector processing
+project](#vector-processing). We got tired
 of having to update compilers, assemblers, simulators, etc. each time we tried
 out a new instruction.)
 
@@ -88,7 +91,8 @@ publicly released.
 
 ### Vector Processing
 
-Building on the experience from NEON and from the Software Defined Radio
+Building on the experience from [NEON](#vectorizing-compiler-for-neon) and from the [Software Defined
+Radio](#software-defined-radio)
 project, I spent some time working on how to make vector processing more
 flexible and on how to implement it more efficiently.
 This led to a major architecture extension and multiple architecture and
@@ -112,11 +116,11 @@ for individual processors. I also contributed to the initial design of the
 Vector (SIMD) instructions for the DSP engine we developed and to both hardware
 and software aspects of the trace generation system for low overhead monitoring
 of parallel real-time systems. The platform has been spun out into another
-company (http://www.cognovo.co.uk/) which has since been acquired by u-blox.
+company (Cognovo) which has since been acquired by u-blox.
 
 7 patents granted, 1 patent pending, 4 papers published ([CASES](/papers/CASES_08/),
 [MICRO](/papers/MICRO_08/), [SIPS](/papers/SIPS_06/), [SDR](/papers/SDR_06)), 3 tools released,
-numerous training sessions provided.
+numerous training sessions provided to potential customers.
 
 
 ### Thread Support

@@ -15,7 +15,7 @@ I have worked on
 [formal verification of ARM processors](/activities#processor-formal-verification),
 [formalizing ARM's architecture specification](/activities#mechanised-processor-specification),
 [vectorizing compilers](/activities#vectorizing-compiler-for-neon),
-[created a language and compiler for programming heterogeneous parallel system](/activities#software-defined-radio)
+[created a language and compiler for programming heterogeneous parallel system](/activities#software-defined-radio),
 software-defined radio,
 testcase generation,
 architectural coverage analysis,
