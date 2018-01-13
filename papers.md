@@ -7,9 +7,9 @@ permalink: /papers/
 * Table of contents
 {:toc}
 
-My [Google Scholar](https://scholar.google.co.uk/citations?hl=en&user=oT8RhJgAAAAJ)
-and
-[DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David)
+My [Google Scholar](https://scholar.google.co.uk/citations?hl=en&user=oT8RhJgAAAAJ),
+[DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David) and
+[Microsoft Academic](https://academic.microsoft.com/#/detail/2293162450)
 pages.
 
 ## Papers
