@@ -32,11 +32,17 @@ pages.
 
 <h3>Specifications: The Next Verification Bottleneck</h3>
 
+_A talk about the importance and difficulty of creating trustworthy specifications of all
+the software and protocols we will need to verify software and about the
+techniques I used to create a trustworthy specification of the ARM processor
+architecture._
+
   - [ENTROPY 2018: ENabling TRust through Os Proofs...and beYond](https://entropy2018.sciencesconf.org)
     <br>
     Invited talk,
     Villeneuve d'Ascq, France,
     25-26 January, 2018.
+    [[pdf](/talks/specs-the-next-bottleneck-ENTROPY-2018-01-26.pdf)]
 
 <h3>How can you trust formally verified software?</h3>
 
