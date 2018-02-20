@@ -30,6 +30,32 @@ pages.
 
 ## Talks
 
+<h3>Creating Specifications of Real World Artifacts (provisional title)</h3>
+
+_Creating formal specifications for real world systems is hard because there are
+usually many existing implementations that it will not be practical to formally
+verify against the formal specification you create.
+This talk is about lessons learned when creating a formal specification of the Arm
+Processor Architecture and how those lessons can be applied in other contexts._
+
+  - [ACL2 Workshop](http://www.cs.utexas.edu/users/moore/acl2/workshop-2018/index.html)
+    <br>
+    Invited keynote talk,
+    Austin, Texas, USA.
+    5-6 November, 2018.
+
+  - [Austrian Computer Science Day](https://arise.or.at/2018/01/austrian-computer-science-day-june-2018-salzburg/)
+    <br>
+    Invited talk,
+    Salzburg, Austria.
+    15 June, 2018.
+
+  - [OAuth Security Workshop](https://st.fbk.eu/osw2018)
+    <br>
+    Invited talk,
+    Fondazione Bruno Kessler, Trento, Italy.
+    14-16 March, 2018.
+
 <h3>Specifications: The Next Verification Bottleneck</h3>
 
 _A talk about the importance and difficulty of creating trustworthy specifications of all
