@@ -55,6 +55,7 @@ Processor Architecture and how those lessons can be applied in other contexts._
     Invited talk,
     Fondazione Bruno Kessler, Trento, Italy.
     14-16 March, 2018.
+    [[pdf](/talks/real-world-artifacts-OSW-2018-03-15.pdf)]
 
 <h3>Specifications: The Next Verification Bottleneck</h3>
 
