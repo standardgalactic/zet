@@ -52,7 +52,7 @@ Processor Architecture and how those lessons can be applied in other contexts._
 
   - [OAuth Security Workshop](https://st.fbk.eu/osw2018)
     <br>
-    Invited talk,
+    Invited keynote talk,
     Fondazione Bruno Kessler, Trento, Italy.
     14-16 March, 2018.
     [[pdf](/talks/real-world-artifacts-OSW-2018-03-15.pdf)]
