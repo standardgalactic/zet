@@ -30,13 +30,21 @@ pages.
 
 ## Talks
 
-<h3>Creating Specifications of Real World Artifacts (provisional title)</h3>
+<h3>Creating Formal Specifications of the Arm Processor Architecture</h3>
 
-_Creating formal specifications for real world systems is hard because there are
-usually many existing implementations that it will not be practical to formally
-verify against the formal specification you create.
-This talk is about lessons learned when creating a formal specification of the Arm
-Processor Architecture and how those lessons can be applied in other contexts._
+_A talk about why creating formal specifications for real world systems
+is hard and what we can do about it.
+Some of the key problems are the semantic gap between the architects’ intention
+and the written specification; challenges persuading different groups to adopt
+a common specification; the number and diversity of existing implementations;
+and the practical impossibility of formally verifying all implementations
+against the specification.
+I discuss lessons learned when creating a formal specification of the Arm
+Processor Architecture and using that specification to formally validate
+processors against the specification.  And I discuss how those lessons can be
+applied in other contexts.  This includes use of traditional testing, formal
+validation, social engineering and building a virtuous cycle to drive up the
+quality of the specification._
 
   - [ACL2 Workshop](http://www.cs.utexas.edu/users/moore/acl2/workshop-2018/index.html)
     <br>
