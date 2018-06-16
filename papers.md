@@ -57,6 +57,7 @@ quality of the specification._
     Invited talk,
     Salzburg, Austria.
     15 June, 2018.
+    [[pdf][/talks/formalizing-arm-specs-ACSD-2018-06-15.pdf]]
 
   - [OAuth Security Workshop](https://st.fbk.eu/osw2018)
     <br>
