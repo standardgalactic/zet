@@ -1,15 +1,15 @@
 ---
 layout: paper
-affiliation: Yale University
-ar_file: Haskell_95a
-ar_shortname: Haskell 95a
-author: John Peterson, Alastair Reid
-booktitle: Proceedings of the Haskell Workshop 1995, Yale University Research Report YALE/DCS/RR-1075
-file: records.pdf
-link: https//www.haskell.org/haskell-workshop/1995/HW1995-Proceedings.pdf
-location: Portland, Oregon, USA
-title: Adding Records to Haskell
 year: 1995
+url: https//www.haskell.org/haskell-workshop/1995/HW1995-Proceedings.pdf
+title: Adding Records to Haskell
+location: Portland, Oregon, USA
+file: records.pdf
+booktitle: Proceedings of the Haskell Workshop 1995, Yale University Research Report YALE/DCS/RR-1075
+author: John Peterson, Alastair Reid
+ar_shortname: Haskell 95a
+ar_file: Haskell_95a
+affiliation: Yale University
 ENTRYTYPE: inproceedings
 ID: Peterson95addingrecords
 bibtex: |
@@ -18,11 +18,12 @@ bibtex: |
         , ar_file = {Haskell_95a}
         , ar_shortname = {Haskell 95a}
         , author = {John Peterson and Alastair Reid}
-        , booktitle = {Proceedings of the Haskell Workshop 1995, Yale University Research Report YALE/DCS/RR-1075}
+        , booktitle = {Proceedings of the Haskell Workshop 1995,
+    Yale University Research Report YALE/DCS/RR-1075}
         , file = {records.pdf}
-        , link = {https://www.haskell.org/haskell-workshop/1995/HW1995-Proceedings.pdf}
         , location = {Portland, Oregon, USA}
         , title = {{A}dding {R}ecords to {H}askell}
+        , url = {https://www.haskell.org/haskell-workshop/1995/HW1995-Proceedings.pdf}
         , year = {1995}
     }
 ---

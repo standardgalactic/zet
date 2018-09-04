@@ -1,6 +1,18 @@
 ---
 layout: paper
+year: 2006
+title: SPEX A programming language for software defined radio
+month: November
+location: Orlando, FL, USA
+file: lin-sdr06.pdf
+day: 13-17
+booktitle: Software Defined Radio Technical Conference and Product Exposition
+authors: Yuan Lin and Robert Mullenix and Mark Woh and Scott Mahlke and Trevor Mudge Alastair Reid and Krisztián Flautner
+ar_shortname: SDR 06
+ar_file: SDR_06
+affiliation: ARM Ltd and University of Michigan
 abstract: |
+    
     High-throughput, low-power Software Defined Radio(SDR)
     solutions require multi-core SIMD DSP processors to meet
     real-time performance requirements. Given the difficulty in
@@ -22,22 +34,12 @@ abstract: |
     motivated by our experience implementing W-CDMA protocol on
     a reprogrammable substrate. In the paper, we also briefly
     explain SPEX's compilation strategies.
-affiliation: ARM Ltd and University of Michigan
-ar_file: SDR_06
-ar_shortname: SDR 06
-author: Yuan Lin, Robert Mullenix, Mark Woh, Scott Mahlke, Trevor Mudge Alastair Reid, Krisztián Flautner
-booktitle: Software Defined Radio Technical Conference and Product Exposition
-day: 13-17
-file: lin-sdr06.pdf
-location: Orlando, FL, USA
-month: November
-title: SPEX A programming language for software defined radio
-year: 2006
 ENTRYTYPE: inproceedings
 ID: confSDRLinMW2006
 bibtex: |
     @inproceedings{conf:SDR:LinMW2006
-        , abstract = {High-throughput, low-power Software Defined Radio(SDR)
+        , abstract = {
+    High-throughput, low-power Software Defined Radio(SDR)
     solutions require multi-core SIMD DSP processors to meet
     real-time performance requirements. Given the difficulty in
     programming traditional DSPs, these new multi-core signal
@@ -57,11 +59,12 @@ bibtex: |
     with synchronous language semantics. The design choices are
     motivated by our experience implementing W-CDMA protocol on
     a reprogrammable substrate. In the paper, we also briefly
-    explain SPEX\textquotesingle s compilation strategies.}
+    explain SPEX\textquotesingle s compilation strategies.
+    }
         , affiliation = {ARM Ltd and University of Michigan}
         , ar_file = {SDR_06}
         , ar_shortname = {SDR 06}
-        , author = {Yuan Lin and Robert Mullenix and Mark Woh and Scott Mahlke
+        , authors = {Yuan Lin and Robert Mullenix and Mark Woh and Scott Mahlke
     and Trevor Mudge Alastair Reid and Kriszti{\'a}n Flautner}
         , booktitle = {Software Defined Radio Technical Conference and Product Exposition}
         , day = {13-17}

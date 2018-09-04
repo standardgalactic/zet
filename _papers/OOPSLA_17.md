@@ -1,6 +1,26 @@
 ---
 layout: paper
+year: 2017
+volume: 1
+title: Who guards the guards? Formal Validation of the ARM v8-M Architecture Specification
+slides: oopsla2017-whoguardstheguards-slides.pdf
+publisher: ACM
+pages: 881--8824
+numpages: 24
+number: OOPSLA
+month: October
+location: Vancouver, BC, Canada
+journal: PACMPL
+file: oopsla2017-whoguardstheguards.pdf
+doi: 10.1145/3133912
+day: 22–27
+authors: Alastair Reid
+ar_shortname: OOPSLA 17
+ar_file: OOPSLA_17
+affiliation: ARM Ltd
+address: New York, NY, USA
 abstract: |
+    
     Software and hardware are increasingly being formally verified
     against specifications, but how can we verify the
     specifications themselves? This talk explores what it means to
@@ -22,30 +42,12 @@ abstract: |
     specification had previously been extensively tested, we found
     twelve bugs (including two security bugs) that have all been
     fixed by ARM.
-address: New York, NY, USA
-affiliation: ARM Ltd
-ar_file: OOPSLA_17
-ar_shortname: OOPSLA 17
-author: Alastair Reid
-day: 22–27
-doi: 10.1145/3133912
-file: oopsla2017-whoguardstheguards.pdf
-journal: PACMPL
-location: Vancouver, BC, Canada
-month: October
-number: OOPSLA
-numpages: 24
-pages: 881--8824
-publisher: ACM
-slides: oopsla2017-whoguardstheguards-slides.pdf
-title: Who guards the guards? Formal Validation of the ARM v8-M Architecture Specification
-volume: 1
-year: 2017
 ENTRYTYPE: inproceedings
 ID: conf/oopsla/Reid17
 bibtex: |
     @inproceedings{conf/oopsla/Reid17
-        , abstract = {Software and hardware are increasingly being formally verified
+        , abstract = {
+    Software and hardware are increasingly being formally verified
     against specifications, but how can we verify the
     specifications themselves? This talk explores what it means to
     formally verify a specification. We solve three challenges: (1)
@@ -65,12 +67,13 @@ bibtex: |
     intended to provide. Despite the fact that the ARM v8-M
     specification had previously been extensively tested, we found
     twelve bugs (including two security bugs) that have all been
-    fixed by ARM.}
+    fixed by ARM.
+    }
         , address = {New York, NY, USA}
         , affiliation = {ARM Ltd}
         , ar_file = {OOPSLA_17}
         , ar_shortname = {OOPSLA 17}
-        , author = {Alastair Reid}
+        , authors = {Alastair Reid}
         , day = {22\textendash 27}
         , doi = {10.1145/3133912}
         , file = {oopsla2017-whoguardstheguards.pdf}

@@ -1,6 +1,19 @@
 ---
 layout: paper
+year: 2005
+volume: 4
+title: Eliminating stack overflow by abstract interpretation
+pages: 751--778
+number: 4
+journal: ACM Transactions Embedded Computing Systems
+file: p751-regehr.pdf
+doi: 10.1145/1113830.1113833
+author: John Regehr, Alastair Reid, Kirk Webb
+ar_shortname: TECS 05
+ar_file: TECS_05
+affiliation: University of Utah
 abstract: |
+    
     An important correctness criterion for software running on
     embedded microcontrollers is stack safety: a guarantee that the
     call stack does not overflow. Our first contribution is a method
@@ -14,23 +27,12 @@ abstract: |
     programs that we tested. The second contribution of this paper is
     the development of two novel ways to reduce stack memory
     requirements of embedded software.
-affiliation: University of Utah
-ar_file: TECS_05
-ar_shortname: TECS 05
-author: John Regehr, Alastair Reid, Kirk Webb
-doi: 10.1145/1113830.1113833
-file: p751-regehr.pdf
-journal: ACM Transactions Embedded Computing Systems
-number: 4
-pages: 751--778
-title: Eliminating stack overflow by abstract interpretation
-volume: 4
-year: 2005
 ENTRYTYPE: article
 ID: DBLPjournals/tecs/RegehrRW05
 bibtex: |
     @article{DBLP:journals/tecs/RegehrRW05
-        , abstract = {An important correctness criterion for software running on
+        , abstract = {
+    An important correctness criterion for software running on
     embedded microcontrollers is stack safety: a guarantee that the
     call stack does not overflow. Our first contribution is a method
     for statically guaranteeing stack safety of interrupt-driven
@@ -42,7 +44,8 @@ bibtex: |
     accuracy of the tool, which runs in under 10 sec on the largest
     programs that we tested. The second contribution of this paper is
     the development of two novel ways to reduce stack memory
-    requirements of embedded software.}
+    requirements of embedded software.
+    }
         , affiliation = {University of Utah}
         , ar_file = {TECS_05}
         , ar_shortname = {TECS 05}
@@ -51,7 +54,7 @@ bibtex: |
     Kirk Webb}
         , doi = {10.1145/1113830.1113833}
         , file = {p751-regehr.pdf}
-        , journal = {{ACM} Transactions Embedded Computing Systems}
+        , journal = {ACM Transactions Embedded Computing Systems}
         , number = {4}
         , pages = {751--778}
         , title = {{E}liminating stack overflow by abstract interpretation}

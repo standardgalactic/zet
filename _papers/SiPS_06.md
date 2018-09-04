@@ -1,6 +1,21 @@
 ---
 layout: paper
+year: 2006
+title: Design and Implementation of Turbo Decoders for Software Defined Radio
+publisher: IEEE
+pages: 22--27
+month: October
+location: Banff, Alberta, Canada
+file: lin-sips06.pdf
+doi: 10.1109/SIPS.2006.352549
+day: 2-4
+booktitle: Proceedings of the IEEE Workshop on Signal Processing Systems (SiPS 2006)
+author: Yuan Lin, Scott A. Mahlke, Trevor N. Mudge, Chaitali Chakrabarti, Alastair Reid, Krisztián Flautner
+ar_shortname: SiPS 06
+ar_file: SiPS_06
+affiliation: ARM Ltd and University of Michigan and Arizona State University
 abstract: |
+    
     Software Defined Radio(SDR) is an emerging paradigm for wireless
     terminals, in which the physical layer of communication
     protocols is implemented in software rather than by ASICs. Many
@@ -16,25 +31,12 @@ abstract: |
     matches well with the DSP architecture. Finally, we present
     a software implementation of Turbo decoder for W-CDMA on the DSP
     architecture and show that it achieves 2Mbps decoding throughput.
-affiliation: ARM Ltd and University of Michigan and Arizona State University
-ar_file: SiPS_06
-ar_shortname: SiPS 06
-author: Yuan Lin, Scott A. Mahlke, Trevor N. Mudge, Chaitali Chakrabarti, Alastair Reid, Krisztián Flautner
-booktitle: Proceedings of the IEEE Workshop on Signal Processing Systems (SiPS 2006)
-day: 2-4
-doi: 10.1109/SIPS.2006.352549
-file: lin-sips06.pdf
-location: Banff, Alberta, Canada
-month: October
-pages: 22--27
-publisher: IEEE
-title: Design and Implementation of Turbo Decoders for Software Defined Radio
-year: 2006
 ENTRYTYPE: inproceedings
 ID: DBLPconf/sips/LinMMCRF06
 bibtex: |
     @inproceedings{DBLP:conf/sips/LinMMCRF06
-        , abstract = {Software Defined Radio(SDR) is an emerging paradigm for wireless
+        , abstract = {
+    Software Defined Radio(SDR) is an emerging paradigm for wireless
     terminals, in which the physical layer of communication
     protocols is implemented in software rather than by ASICs. Many
     of the current and next generation wireless protocols include
@@ -48,7 +50,8 @@ bibtex: |
     window scheduling for MAX-Log-MAP component decoder that
     matches well with the DSP architecture. Finally, we present
     a software implementation of Turbo decoder for W-CDMA on the DSP
-    architecture and show that it achieves 2Mbps decoding throughput.}
+    architecture and show that it achieves 2Mbps decoding throughput.
+    }
         , affiliation = {ARM Ltd and University of Michigan and Arizona State University}
         , ar_file = {SiPS_06}
         , ar_shortname = {SiPS 06}
@@ -58,7 +61,7 @@ bibtex: |
     Chaitali Chakrabarti and
     Alastair Reid and
     Kriszti{\'a}n Flautner}
-        , booktitle = {Proceedings of the {IEEE} Workshop on Signal Processing Systems
+        , booktitle = {Proceedings of the IEEE Workshop on Signal Processing Systems
     (SiPS 2006)}
         , day = {2-4}
         , doi = {10.1109/SIPS.2006.352549}

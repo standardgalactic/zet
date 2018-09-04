@@ -1,8 +1,26 @@
 ---
 layout: paper
+year: 2004
+title: HOIST a system for automatically deriving static analyzers for embedded systems
+publisher: ACM
+pages: 133--143
+month: October
+location: Boston, MA, USA
+file: p021-regehr.pdf
+editor: Shubu Mukherjee, Kathryn S. McKinley
+doi: 10.1145/1024393.1024410
+day: 7-13
+booktitle: Proceedings of the 11th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2004)
+author: John Regehr, Alastair Reid
+ar_shortname: ASPLOS 04
+ar_file: ASPLOS_04
+affiliation: University of Utah
+acceptance: 14
 abstract: |
+    
     Embedded software must meet conflicting requirements such as be-
-    ing highly reliable, running on resource-constrained platforms, and being developed rapidly. Static program analysis can help
+    ing highly reliable, running on resource-constrained platforms,
+    and being developed rapidly. Static program analysis can help
     meet all of these goals. People developing analyzers for embedded
     object code face a difficult problem: writing an abstract version
     of each instruction in the target architecture(s). This is
@@ -21,28 +39,14 @@ abstract: |
     be able to analyze software running on these small processors:
     they are important and ubiquitous, with many embedded and
     safety-critical systems being based on them.
-acceptance: 14
-affiliation: University of Utah
-ar_file: ASPLOS_04
-ar_shortname: ASPLOS 04
-author: John Regehr, Alastair Reid
-booktitle: Proceedings of the 11th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2004)
-day: 7-13
-doi: 10.1145/1024393.1024410
-editor: Shubu Mukherjee, Kathryn S. McKinley
-file: p021-regehr.pdf
-location: Boston, MA, USA
-month: October
-pages: 133--143
-publisher: ACM
-title: HOIST a system for automatically deriving static analyzers for embedded systems
-year: 2004
 ENTRYTYPE: inproceedings
 ID: DBLPconf/asplos/RegehrR04
 bibtex: |
     @inproceedings{DBLP:conf/asplos/RegehrR04
-        , abstract = {Embedded software must meet conflicting requirements such as be-
-    ing highly reliable, running on resource-constrained platforms, and being developed rapidly. Static program analysis can help
+        , abstract = {
+    Embedded software must meet conflicting requirements such as be-
+    ing highly reliable, running on resource-constrained platforms,
+    and being developed rapidly. Static program analysis can help
     meet all of these goals. People developing analyzers for embedded
     object code face a difficult problem: writing an abstract version
     of each instruction in the target architecture(s). This is
@@ -60,7 +64,8 @@ bibtex: |
     in the word size of the target architecture. It is essential to
     be able to analyze software running on these small processors:
     they are important and ubiquitous, with many embedded and
-    safety-critical systems being based on them.}
+    safety-critical systems being based on them.
+    }
         , acceptance = {14}
         , affiliation = {University of Utah}
         , ar_file = {ASPLOS_04}
@@ -68,7 +73,7 @@ bibtex: |
         , author = {John Regehr and
     Alastair Reid}
         , booktitle = {Proceedings of the 11th International Conference on Architectural
-    Support for Programming Languages and Operating Systems ({ASPLOS}
+    Support for Programming Languages and Operating Systems (ASPLOS
     2004)}
         , day = {7-13}
         , doi = {10.1145/1024393.1024410}
@@ -79,7 +84,7 @@ bibtex: |
         , month = {October}
         , pages = {133--143}
         , publisher = {ACM}
-        , title = {{H{O}IS{T}:} a system for automatically deriving static analyzers for
+        , title = {H{O}IS{T}: a system for automatically deriving static analyzers for
     embedded systems}
         , year = {2004}
     }

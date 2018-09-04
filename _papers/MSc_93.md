@@ -1,6 +1,16 @@
 ---
 layout: paper
+year: 1993
+title: A Precise Semantics for Ultraloose Specifications
+school: Glasgow School of Computing Science
+location: Glasgow, Scotland
+file: ReidThesis93.pdf
+author: Alastair Reid
+ar_shortname: MSc 93
+ar_file: MSc_93
+affiliation: University of Glasgow
 abstract: |
+    
     All formal specifiers face the danger of overspecification:
     accidentally writing an overly restrictive specification.
     This problem is particularly acute for axiomatic specifications
@@ -24,20 +34,12 @@ abstract: |
     ultraloose approach is semantically equivalent to the use of the ``behavioural
     abstraction operator.''  This result is rather surprising in the light of a result
     by Schoett which seems to say that such a result is impossible.
-affiliation: University of Glasgow
-ar_file: MSc_93
-ar_shortname: MSc 93
-author: Alastair Reid
-file: ReidThesis93.pdf
-location: Glasgow, Scotland
-school: Glasgow School of Computing Science
-title: A Precise Semantics for Ultraloose Specifications
-year: 1993
 ENTRYTYPE: mastersthesis
 ID: ReidThesis93
 bibtex: |
     @mastersthesis{ReidThesis93
-        , abstract = {All formal specifiers face the danger of overspecification:
+        , abstract = {
+    All formal specifiers face the danger of overspecification:
     accidentally writing an overly restrictive specification.
     This problem is particularly acute for axiomatic specifications
     because it is so easy to write axioms that hold for some of the
@@ -59,7 +61,8 @@ bibtex: |
     to other solutions?\textquotesingle \textquotesingle  The major achievement of this thesis is a proof that the
     ultraloose approach is semantically equivalent to the use of the \textasciigrave \textasciigrave behavioural
     abstraction operator.\textquotesingle \textquotesingle   This result is rather surprising in the light of a result
-    by Schoett which seems to say that such a result is impossible.}
+    by Schoett which seems to say that such a result is impossible.
+    }
         , affiliation = {University of Glasgow}
         , ar_file = {MSc_93}
         , ar_shortname = {MSc 93}

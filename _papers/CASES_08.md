@@ -1,6 +1,24 @@
 ---
 layout: paper
+year: 2008
+title: SoC-C efficient programming abstractions for heterogeneous multicore systems on chip
+slides: cases2008-SoC-C-slides.pdf
+publisher: ACM
+pages: 95--104
+month: October
+location: Atlanta, GA, USA
+file: cases2008-SoC-C.pdf
+editor: Erik R. Altman
+doi: 10.1145/1450095.1450112
+day: 19-24
+booktitle: Proceedings of the 2008 International Conference on Compilers, Architecture, and Synthesis for Embedded Systems (CASES 2008)
+author: Alastair D. Reid, Krisztián Flautner, Edmund Grimley-Evans, Yuan Lin
+ar_shortname: CASES 08
+ar_file: CASES_08
+affiliation: ARM Ltd and University of Michigan
+acceptance: 33
 abstract: |
+    
     The architectures of system-on-chip (SoC) platforms found in high-end
     consumer devices are getting more and more complex as designers strive
     to deliver increasingly compute-intensive applications on
@@ -24,28 +42,12 @@ abstract: |
     mapping.  We demonstrate the effectiveness of SoC-C and its compiler
     with a ``software defined radio'' example (the PHY layer of a Digital
     Video Broadcast receiver) achieving a 3.4x speedup on 4 cores.
-acceptance: 33
-affiliation: ARM Ltd and University of Michigan
-ar_file: CASES_08
-ar_shortname: CASES 08
-author: Alastair D. Reid, Krisztián Flautner, Edmund Grimley-Evans, Yuan Lin
-booktitle: Proceedings of the 2008 International Conference on Compilers, Architecture, and Synthesis for Embedded Systems (CASES 2008)
-day: 19-24
-doi: 10.1145/1450095.1450112
-editor: Erik R. Altman
-file: cases2008-SoC-C.pdf
-location: Atlanta, GA, USA
-month: October
-pages: 95--104
-publisher: ACM
-slides: cases2008-SoC-C-slides.pdf
-title: SoC-C efficient programming abstractions for heterogeneous multicore systems on chip
-year: 2008
 ENTRYTYPE: inproceedings
 ID: DBLPconf/cases/ReidFGL08
 bibtex: |
     @inproceedings{DBLP:conf/cases/ReidFGL08
-        , abstract = {The architectures of system-on-chip (SoC) platforms found in high-end
+        , abstract = {
+    The architectures of system-on-chip (SoC) platforms found in high-end
     consumer devices are getting more and more complex as designers strive
     to deliver increasingly compute-intensive applications on
     near-constant energy budgets.  Workloads running on these platforms
@@ -67,16 +69,18 @@ bibtex: |
     care of the complex, error-prone details required to implement that
     mapping.  We demonstrate the effectiveness of SoC-C and its compiler
     with a \textasciigrave \textasciigrave software defined radio\textquotesingle \textquotesingle  example (the PHY layer of a Digital
-    Video Broadcast receiver) achieving a 3.4x speedup on 4 cores.}
+    Video Broadcast receiver) achieving a 3.4x speedup on 4 cores.
+    }
         , acceptance = {33}
         , affiliation = {ARM Ltd and University of Michigan}
         , ar_file = {CASES_08}
         , ar_shortname = {CASES 08}
         , author = {Alastair D. Reid and
     Kriszti{\'a}n Flautner and
-    Edmund Grimley{-}Evans and
+    Edmund Grimley-Evans and
     Yuan Lin}
-        , booktitle = {Proceedings of the 2008 International Conference on Compilers, Architecture, and Synthesis for Embedded Systems ({CASES} 2008)}
+        , booktitle = {Proceedings of the 2008 International Conference on Compilers, Architecture,
+    and Synthesis for Embedded Systems (CASES 2008)}
         , day = {19-24}
         , doi = {10.1145/1450095.1450112}
         , editor = {Erik R. Altman}

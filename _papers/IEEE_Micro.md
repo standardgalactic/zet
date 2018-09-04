@@ -1,6 +1,20 @@
 ---
 layout: paper
+year: 2017
+volume: 37
+title: The ARM Scalable Vector Extension
+pages: 26--39
+number: 2
+month: March
+journal: IEEE Micro
+file: sve-ieee-micro-2017.pdf
+doi: 10.1109/MM.2017.35
+authors:  Nigel Stephens and Stuart Biles and Matthias Boettcher and Jacob Eapen and Mbou Eyole and Giacomo Gabrielli and Matt Horsnell and Grigorios Magklis and Alejandro Martinez and Nathanael Premillieu and Alastair Reid and Alejandro Rico and Paul Walker
+ar_shortname: IEEE Micro
+ar_file: IEEE_Micro
+affiliation: ARM Ltd
 abstract: |
+    
     In this paper we describe the ARM Scalable Vector Extension
     (SVE). Several goals guided the design of the architecture. First was
     the need to extend the vector processing capability associated with
@@ -22,24 +36,12 @@ abstract: |
     recompilation. Finally, it introduces several innovative features that
     begin to overcome some of the traditional barriers to
     auto-vectorization.
-affiliation: ARM Ltd
-ar_file: IEEE_Micro
-ar_shortname: IEEE Micro
-author: Nigel Stephens, Stuart Biles, Matthias Boettcher, Jacob Eapen, Mbou Eyole, Giacomo Gabrielli, Matt Horsnell, Grigorios Magklis, Alejandro Martinez, Nathanael Premillieu, Alastair Reid, Alejandro Rico, Paul Walker
-doi: 10.1109/MM.2017.35
-file: sve-ieee-micro-2017.pdf
-journal: IEEE Micro
-month: March
-number: 2
-pages: 26--39
-title: The ARM Scalable Vector Extension
-volume: 37
-year: 2017
 ENTRYTYPE: article
 ID: journal/micro/sve2017
 bibtex: |
     @article{journal/micro/sve2017
-        , abstract = {In this paper we describe the ARM Scalable Vector Extension
+        , abstract = {
+    In this paper we describe the ARM Scalable Vector Extension
     (SVE). Several goals guided the design of the architecture. First was
     the need to extend the vector processing capability associated with
     the ARM AArch64 execution state to better address the compute
@@ -59,11 +61,13 @@ bibtex: |
     and scale automatically across all vector lengths without
     recompilation. Finally, it introduces several innovative features that
     begin to overcome some of the traditional barriers to
-    auto-vectorization.}
+    auto-vectorization.
+    }
         , affiliation = {ARM Ltd}
         , ar_file = {IEEE_Micro}
         , ar_shortname = {IEEE Micro}
-        , author = {Nigel Stephens
+        , authors = {
+    Nigel Stephens
     and
     Stuart Biles
     and
@@ -87,7 +91,8 @@ bibtex: |
     and
     Alejandro Rico
     and
-    Paul Walker}
+    Paul Walker
+    }
         , doi = {10.1109/MM.2017.35}
         , file = {sve-ieee-micro-2017.pdf}
         , journal = {IEEE Micro}

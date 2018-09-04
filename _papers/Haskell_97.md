@@ -1,15 +1,15 @@
 ---
 layout: paper
-affiliation: Yale University and Oregon Graduate Institute
-ar_file: Haskell_97
-ar_shortname: Haskell 97
-author: Simon Peyton Jones, Thomas Nordin, Alastair Reid
-booktitle: Proceedings of the Haskell Workshop
-file: green-card.pdf
-location: Amsterdam, Netherlands
-month: June
-title: Green Card a foreign-language interface for Haskell
 year: 1997
+title: Green Card a foreign-language interface for Haskell
+month: June
+location: Amsterdam, Netherlands
+file: green-card.pdf
+booktitle: Proceedings of the Haskell Workshop
+author: Simon Peyton Jones, Thomas Nordin, Alastair Reid
+ar_shortname: Haskell 97
+ar_file: Haskell_97
+affiliation: Yale University and Oregon Graduate Institute
 ENTRYTYPE: inproceedings
 ID: greencard1997
 bibtex: |
