@@ -30,6 +30,29 @@ pages.
 
 ## Talks
 
+<h3>What makes processors fail - and how to prevent it</h3>
+
+A more accessible presentation of the ideas in the [ISA-Formal paper](_papers/CAV_16.md)
+for the Electromagnetic Field maker festival.
+
+_Modern processors are amazing devices: small, fast, low power and getting
+better with every generation.  But the most amazing things about modern
+microprocessors is that they work so incredibly reliably despite all their
+incredible complexity._
+
+_This talk is about the battle between complexity and correctness and about how
+new formal verification tools can be used to help you design higher performance
+processors that actually work.  I will describe the common optimisations, the
+bugs that these often introduce and how open source tools such as SAT solvers
+and bounded model checkers can be used to find these bugs._
+
+  - [Electromagnetic Field 2018](https://www.emfcamp.org/line-up/2018/417-what-makes-processors-fail-and-how-to-prevent-it)
+    <br>
+    Eastnor, UK.
+    31 August - 2 September 2018.
+    [[pdf](/talks/what-makes-processors-fail-EMF-2018-09-02.pdf)]
+    [[video](https://media.ccc.de/v/emf2018-417-what-makes-processors-fail-and-how-to-prevent-it)]
+
 <h3>Creating Formal Specifications of the Arm Processor Architecture</h3>
 
 _A talk about why creating formal specifications for real world systems
@@ -57,7 +80,7 @@ quality of the specification._
     Invited talk,
     Salzburg, Austria.
     15 June, 2018.
-    [[pdf][/talks/formalizing-arm-specs-ACSD-2018-06-15.pdf]]
+    [[pdf](/talks/formalizing-arm-specs-ACSD-2018-06-15.pdf)]
 
   - [OAuth Security Workshop](https://st.fbk.eu/osw2018)
     <br>
