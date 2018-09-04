@@ -5,7 +5,7 @@ import sys
 
 import bibtexparser
 from bibtexparser.bparser import BibTexParser
-from bibtexparser.customization import homogeneize_latex_encoding
+# from bibtexparser.customization import homogenize_latex_encoding
 from bibtexparser.customization import convert_to_unicode
 
 extra = sys.argv[1]
@@ -15,7 +15,7 @@ with open(extra) as data_file:
     extra = json.load(data_file)
     with open(bib) as bibtex_file:
         parser = BibTexParser()
-        # parser.customization = homogeneize_latex_encoding
+        # parser.customization = homogenize_latex_encoding
         parser.customization = convert_to_unicode
         bib_database = bibtexparser.load(bibtex_file, parser=parser)
 

@@ -4,7 +4,7 @@ import bibtexparser
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
-from bibtexparser.customization import homogeneize_latex_encoding
+from bibtexparser.customization import homogenize_latex_encoding
 from bibtexparser.customization import convert_to_unicode
 
 import json
@@ -35,7 +35,7 @@ with open(extra) as data_file:
 bib = sys.argv[2]
 with open(bib) as bibtex_file:
     parser = BibTexParser()
-    parser.customization = homogeneize_latex_encoding
+    parser.customization = homogenize_latex_encoding
     db = bibtexparser.load(bibtex_file, parser=parser)
 
 for e in db.entries:
