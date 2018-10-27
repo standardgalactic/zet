@@ -75,6 +75,14 @@ quality of the specification._
     Austin, Texas, USA.
     5-6 November, 2018.
 
+  - [Agence National de la sécurité des systèmes d'information (ANSSI)](https://www.ssi.gouv.fr/)
+    <br>
+    Invited talk,
+    Paris, France.
+    24 October, 2018.
+    [[pdf]](/talks/creating-formal-specs-ANSSI-2018-10-24.pdf)
+
+
   - [Austrian Computer Science Day](https://arise.or.at/2018/01/austrian-computer-science-day-june-2018-salzburg/)
     <br>
     Invited talk,
