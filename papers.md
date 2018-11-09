@@ -46,7 +46,7 @@ create the specifications we need._
     Keynote talk,
     Austin, Texas, USA.
     5-6 November, 2018.
-    [[pdf]](talks/engineering-large-specs-ACL2-2018-11-06.pdf)
+    [[pdf]](/talks/engineering-large-specs-ACL2-2018-11-06.pdf)
 
 <h3>What makes processors fail - and how to prevent it</h3>
 
