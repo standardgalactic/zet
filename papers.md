@@ -30,6 +30,24 @@ pages.
 
 ## Talks
 
+<h3>Engineering and Using Large Formal Specifications</h3>
+
+_We have great tools and technique to formally verify hardware and software but,
+if we are apply these to real world systems, we need high quality
+specifications of real world artifacts such as processors, OSes, libraries,
+programming languages and internet protocols.
+This talk is about how we are going to avoid a specification bottleneck - it
+uses my experience in formalising the ARM processor architecture to suggest an
+approach that we can use on other large, complex hardware and software to
+create the specifications we need._
+
+  - [ACL2 2018](http://www.cs.utexas.edu/users/moore/acl2/workshop-2018/index.html)
+    <br>
+    Keynote talk,
+    Austin, Texas, USA.
+    5-6 November, 2018.
+    [[pdf]](talks/engineering-large-specs-ACL2-2018-11-06.pdf)
+
 <h3>What makes processors fail - and how to prevent it</h3>
 
 A more accessible presentation of the ideas in the [ISA-Formal paper](_papers/CAV_16.md)
@@ -68,12 +86,6 @@ processors against the specification.  And I discuss how those lessons can be
 applied in other contexts.  This includes use of traditional testing, formal
 validation, social engineering and building a virtuous cycle to drive up the
 quality of the specification._
-
-  - [ACL2 Workshop](http://www.cs.utexas.edu/users/moore/acl2/workshop-2018/index.html)
-    <br>
-    Invited keynote talk,
-    Austin, Texas, USA.
-    5-6 November, 2018.
 
   - [Agence National de la sécurité des systèmes d'information (ANSSI)](https://www.ssi.gouv.fr/)
     <br>
