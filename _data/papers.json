@@ -1,4 +1,5 @@
 {
+    "conf/popl19/armstrong": { "file": "popl19-isasemantics.pdf" },
     "conf/arw18/armstrong": { "file": "arw2018.pdf" },
     "conf/oopsla/Reid17": { "file": "oopsla2017-whoguardstheguards.pdf", "slides": "oopsla2017-whoguardstheguards-slides.pdf" },
     "journal/micro/sve2017": { "file": "sve-ieee-micro-2017.pdf" },
