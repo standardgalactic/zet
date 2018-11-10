@@ -16,7 +16,7 @@ file: cav2016_isa_formal.pdf
 editor: S. Chaudhuri, A. Farzan
 doi: 10.1007/978-3-319-41540-6_3
 booktitle: Proceedings of the 2016 International Conference on Computer Aided Verification (CAV'16)
-authors: Alastair Reid and Rick Chen and Anastasios Deligiannis and David Gilday and David Hoyes and Will Keen and Ashan Pathirane and Owen Shepherd and Peter Vrabel and Ali Zaidi
+authors: Alastair Reid and Rick Chen and Anastasios Deligiannis and David Gilday and David Hoyes and Will Keen and Ashan Pathirane and Erin Shepherd and Peter Vrabel and Ali Zaidi
 ar_shortname: CAV 16
 ar_file: CAV_16
 affiliation: ARM Ltd
@@ -97,7 +97,7 @@ bibtex: |
         , ar_shortname = {CAV 16}
         , authors = {Alastair Reid and Rick Chen and Anastasios Deligiannis and
     David Gilday and David Hoyes and Will Keen and Ashan Pathirane and
-    Owen Shepherd and Peter Vrabel and Ali Zaidi}
+    Erin Shepherd and Peter Vrabel and Ali Zaidi}
         , booktitle = {Proceedings of the 2016 International Conference on Computer Aided Verification (CAV\textquotesingle 16)}
         , doi = {10.1007/978-3-319-41540-6\_3}
         , editor = {S. Chaudhuri and A. Farzan}
