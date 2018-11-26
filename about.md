@@ -11,6 +11,8 @@ My research revolves around the interplay between software, compilers, architect
 microarchitecture in microprocessors resulting in system prototypes,
 [patents and papers](/papers/).
 
+The opinions expressed are my own views and not my employer.
+
 I have worked on
 [formal verification of ARM processors](/activities#processor-formal-verification),
 [formalizing ARM's architecture specification](/activities#mechanised-processor-specification),
