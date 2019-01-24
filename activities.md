@@ -6,9 +6,10 @@ permalink: /activities/
 
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
-| Senior Principal Research Engineer || ARM Ltd                          || 2017 - present |
+| Senior Principal Research Engineer || Arm Ltd                          || 2017 - present |
+| - ASL Steering Committee           || Arm Ltd                          || 2017 - present |
 | - Patent Review Committee          ||                                  || 2014 - present |
-| Principal Research Engineer        || ARM Ltd                          || 2004 - 2017    |
+| Principal Research Engineer        || Arm Ltd                          || 2004 - 2017    |
 | - Skill Group Leader               ||                                  || 2011 - 2014    |
 | Director                           || Reid Consulting (UK) Ltd         || 2002 - 2004    |
 | Research Associate                 || Flux group, University of Utah   || 1998 - 2001    |
@@ -32,61 +33,62 @@ I have served on the following conference program committees.
 
 ---
 
-## ARM Ltd. Projects (selected)
+## Arm Ltd. Projects (selected)
 
-I joined ARM Research in 2004 and initiate and lead research projects.  As
+I joined Arm Research in 2004 and initiate and lead research projects.  As
 a supplier of commercial IP, we don't publish details of all our projects so
 the following is only a selection.
 
 
-### Processor Formal Verification
+### Mechanized Processor Specification
 
-I am currently looking at how to use ARM's architecture specifications to
-verify ARM's processors and related IP.  This is running concurrently with the
-project on [mechanising ARM's processor
-specifications](#mechanised-processor-specification).
-
-Working with verification engineers in ARM's processor division, I developed
-the ISA-Formal processor verification technique that is based on:
-
-- Machine generation of verification IP from ARM's official processor
-  specification documents
-- Using model checking for end-to-end verification of processor pipelines
-
-This technique has proven very effective at detecting complex bugs early in the
-design process.  It has been used on 8 ARM processors and the tools and
-technique will be used in all of ARM's next generation processors.
-
-1 paper published ([CAV](/papers/CAV_16/)), 1 tool tech-transferred.
-
-
-### Mechanised Processor Specification
-
-Concurrently with the [Processor Verification](#processor-formal-verification)
-project, I work on improving and
-extending how ARM specifies its processor architecture.
-
-- Can we make the specification more precise without reducing readability?
-- Can we automatically generate some of the objects currently manually derived
-  from the specification?
-- Can we detect omissions/errors in the specification?
-
-(This is an offshoot of the concurrent [vector processing
-project](#vector-processing). We got tired
-of having to update compilers, assemblers, simulators, etc. each time we tried
-out a new instruction.)
+This was a very influential project to change the way that Arm thinks about
+their processor specifications: how it creates them, how it validates them and
+the many different ways that they can use them.
 
 As a result of this work, the specification is executable instead of just being
-a static document and we generate parts of simulators, assemblers,
+a static document and we formally validate processor RTL against the
+specification, generate parts of simulators, assemblers,
 disassemblers, etc. from the specification.
 It is now standard practice for new architecture extensions
 to be tested as they are being designed and for specifications to undergo
 regression testing during maintenance.
 
-2 architecture specifications mechanised, 2 major architecture extensions mechanised,
-1 tool tech-transferred, 2 papers published ([FMCAD](/papers/FMCAD_16/),
-[OOPSLA](/papers/OOPSLA_17/)), 1 architecture specification
+Concurrently with the [Processor Verification](#processor-formal-verification)
+project, I formalized the "pseudocode" that Arm uses to define their
+processors; developed a toolchain to parse, typecheck and execute the
+specifications; tested and fixed the pseudocode; and evangelized on the
+benefits of having a single mechanized specification shared across the company.
+The specifications, approach and tools are now in standard use across Arm's
+engineering divisions and the specifications have been publicly released in
+machine readable form.
+
+2 architecture specifications mechanized, 3 major architecture extensions mechanized,
+1 tool tech-transferred, 3 papers published ([POPL]({{ site.url }}/papers/POPL_19/),
+[OOPSLA](/papers/OOPSLA_17/),
+[FMCAD](/papers/FMCAD_16/)), 1 architecture specification
 publicly released.
+
+
+### Processor Formal Verification
+
+This was a project to develop a flow to use Arm's architecture specifications
+to formally validate Arm's processors and related IP.  This was the primary
+motivation for the concurrent project on [mechanizing Arm's processor
+specifications](#mechanized-processor-specification).
+
+Working with verification engineers in Arm's processor division, I developed
+the ISA-Formal processor verification technique that is based on:
+
+- Machine generation of verification IP from Arm's official processor
+  specification documents
+- Using model checking for end-to-end verification of processor pipelines
+
+This technique has proven very effective at detecting complex bugs early in the
+design process.  It has been used on 8 Arm processors and the tools and
+technique will be used in all of Arm's next generation processors.
+
+1 papers published ([CAV](/papers/CAV_16/)), 1 tool tech-transferred.
 
 
 ### Vector Processing
@@ -102,13 +104,13 @@ Since vector architecture projects always lead to large ISA extensions, I also
 created a language and tool to describe large ISAs in a compact, structured
 way.
 
-7 patents granted, 1 patents pending, 2 papers published ([IEEE
+10 patents granted, 2 papers published ([IEEE
 Micro](/papers/IEEE_Micro/), [DATE](/papers/DATE_14/)), 1 tool tech-transferred.
 
 
 ### Software Defined Radio
 
-I led the team developing software tools for ARM's Software Defined Radio
+I led the team developing software tools for Arm's Software Defined Radio
 platform. This included developing C language extensions to support
 heterogeneous multiprocessors ('System-on-chip C' or just SoC-C), developing
 the SoC-C compiler and linker and driving the specification of the toolchain
@@ -118,8 +120,8 @@ and software aspects of the trace generation system for low overhead monitoring
 of parallel real-time systems. The platform has been spun out into another
 company (Cognovo) which has since been acquired by u-blox.
 
-7 patents granted, 1 patent pending, 4 papers published ([CASES](/papers/CASES_08/),
-[MICRO](/papers/MICRO_08/), [SIPS](/papers/SIPS_06/), [SDR](/papers/SDR_06)), 3 tools released,
+1 working test chip, 8 patents granted, 4 papers published ([CASES](/papers/CASES_08/),
+[MICRO](/papers/MICRO_08/), [SIPS](/papers/SIPS_06/), [SDR](/papers/SDR_06)), 3 tools released, 1 spinout company purchased,
 numerous training sessions provided to potential customers.
 
 
@@ -152,7 +154,7 @@ stream computation fed into the later development of SoC-C
 
 ### Vectorizing Compiler for NEON
 
-I joined an existing hardware-software project developing ARM's Advanced SIMD
+I joined an existing hardware-software project developing Arm's Advanced SIMD
 extensions (NEON). The software component was to improve/test/demonstrate the
 design by showing that a vectorizing compiler could be written. My role was to
 add floating point support and make the compiler robust enough for release to
