@@ -352,4 +352,5 @@ pretty good.
 * [Formal validation of the Arm v8-M specification]({{ site.baseurl }}{% post_url 2017-09-24-validating-specs %})
 * [Bidirectional ARM Assembly Syntax Specifications]({{ site.baseurl }}{% post_url 2017-12-24-bidirectional-assemblers %})
 * Talk: [[How can you trust formally verified software (pdf)](/talks/using-arm-specs-34C3-2017-12-27.pdf)], Chaos Communication Congress, 2017.
-* This post: [Generating SMT from traces]({{ site.baseurl }}{% post_url 2019-02-02-tracing-smt %})
+* This series (part 1): [Generating SMT from traces]({{ site.baseurl }}{% post_url 2019-02-02-tracing-smt %})
+* This series (part 2): [Using SMT to check specifications for errors]({{ site.baseurl }}{% post_url 2019-02-09-tracing-smt2 %})
