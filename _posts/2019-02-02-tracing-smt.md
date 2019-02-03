@@ -319,6 +319,21 @@ figure out why v2473 is 253 instead of 3, you will remember this bit of the
 post.
 
 
+### Historical note
+
+I first got interested in generating SMT from traces when I saw [this
+paper](http://bitblaze.cs.berkeley.edu/papers/pokeemu-asplos12.pdf) presented
+at ASPLOS 2012 in London.
+I was so excited about the idea that I decided to implement it myself for
+the Arm processor specification.  By the end of the weekend, I had
+a crude but effective version of the paper that could generate test programs
+that I could run on simulators, the architecture specifications, etc.
+
+If you want to know more about this area, the Related Work section in that
+paper is pretty good.  The references about KLEE, SAGE and Concolic execution are
+pretty good.
+
+
 ### Related posts and papers
 
 * Paper: [End-to-End Verification of ARM Processors with ISA-Formal]({{ site.url }}/papers/CAV_16/), CAV 2016.
