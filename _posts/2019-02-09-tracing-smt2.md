@@ -171,3 +171,4 @@ and I wrote [a paper]({{ site.url }}/papers/OOPSLA_17/) about it.
 * Talk: [[How can you trust formally verified software (pdf)](/talks/using-arm-specs-34C3-2017-12-27.pdf)], Chaos Communication Congress, 2017.
 * This series (part 1): [Generating SMT from traces]({{ site.baseurl }}{% post_url 2019-02-02-tracing-smt %})
 * This series (part 2): [Using SMT to check specifications for errors]({{ site.baseurl }}{% post_url 2019-02-09-tracing-smt2 %})
+* This series (part 3): [Generating multiple solutions with SMT]({{ site.baseurl }}{% post_url 2019-02-17-tracing-smt3 %})
