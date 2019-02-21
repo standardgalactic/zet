@@ -30,6 +30,43 @@ pages.
 
 ## Talks
 
+<h3>The Hardware-Software Interface: Quality and Performance</h3>
+
+_One of the most important interfaces in a computer system is the
+interface between hardware and software.
+This talk examines two critical aspects of defining the
+hardware-software interface: quality and performance._
+
+_The first aspect concerns the "radical" idea of creating a single,
+high-quality, formal specification of microprocessors that everybody
+can use.
+This idea does not seem "radical" until you realize that standard
+practice is for every group to create their own version of a
+specification in their preferred toolchain.
+I will describe the challenges that lead to this behavior and how to
+overcome the challenges.
+This project lead to the creation of Arm's official formal
+specification of their microprocessors and to the formal validation of
+Arm's processors against that specification._
+
+_The second aspect concerns the tradeoff between portability and
+performance in the context of high performance, energy efficient,
+parallel systems.
+I will describe the challenges in balancing portability and
+performance and how I overcame them by defining the hardware-software
+interface in terms of extensions of the C language.
+This project played a key part in creation of a software-defined radio
+system capable of implementing the 4G cellphone protocol._
+
+_The Arm architecture is the largest computer architecture by volume in
+the world; it behooves us to ensure that the interface it describes is
+appropriately defined._
+
+  - Computer Science Department, Glasgow, UK.
+    21 February, 2019
+    [[pdf]](/talks/hw-sw-interfaces-2019-02-21.pdf)
+
+
 <h3>Engineering and Using Large Formal Specifications</h3>
 
 _We have great tools and technique to formally verify hardware and software but,
