@@ -6,7 +6,7 @@ layout: default
   <center>
   <h1>{{ page.title }}</h1>
   <div style="font-size:larger;">{{ page.author }}</div>
-    {{ page.affiliation }}
+  {{ page.affiliation | replace:', ','<br>' }}
     <br>
     {% if page.file %} <a class="pagefile" href="{{ site.baseurl }}/papers/{{ page.file }}">[pdf]</a> {% endif %}
     {% if page.slides %} <a class="pageslides" href="{{ site.baseurl }}/papers/{{ page.slides }}">[slides]</a> {% endif %}
