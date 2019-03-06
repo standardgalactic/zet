@@ -81,7 +81,7 @@ for e in db.entries:
             file.write(k + ": " + v +"\n")
         file.write("---\n")
 
-print(db.entries)
+print(json.dumps(db.entries, indent=4))
 
 # with open('normalized.bib', 'w') as bibfile:
 #     bibfile.write(writer.write(db))
