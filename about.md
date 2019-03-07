@@ -6,7 +6,7 @@ permalink: /about/
 
 I am a senior principal research engineer at ARM Ltd.
 currently working on
-[formal specification of the ARM processor architecture](/activities#mechanised-processor-specification).
+[formal specification of the ARM processor architecture](/activities#mechanized-processor-specification).
 My research revolves around the interplay between software, compilers, architecture and
 microarchitecture in microprocessors resulting in system prototypes,
 [patents and papers](/papers/).

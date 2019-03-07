@@ -7,7 +7,7 @@ permalink: /activities/
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
 | Senior Principal Research Engineer || Arm Ltd                          || 2017 - present |
-| - ASL Steering Committee           || Arm Ltd                          || 2017 - present |
+| - ASL Steering Committee           ||                                  || 2017 - present |
 | - Patent Review Committee          ||                                  || 2014 - present |
 | Principal Research Engineer        || Arm Ltd                          || 2004 - 2017    |
 | - Skill Group Leader               ||                                  || 2011 - 2014    |
@@ -48,8 +48,8 @@ the many different ways that they can use them.
 
 As a result of this work, the specification is executable instead of just being
 a static document and we formally validate processor RTL against the
-specification, generate parts of simulators, assemblers,
-disassemblers, etc. from the specification.
+specification, generate parts of simulators, etc. from the specification,
+and measure the architectural coverage of testsuites.
 It is now standard practice for new architecture extensions
 to be tested as they are being designed and for specifications to undergo
 regression testing during maintenance.
@@ -63,11 +63,32 @@ The specifications, approach and tools are now in standard use across Arm's
 engineering divisions and the specifications have been publicly released in
 machine readable form.
 
-2 architecture specifications mechanized, 3 major architecture extensions mechanized,
-1 tool tech-transferred, 3 papers published ([POPL]({{ site.url }}/papers/POPL_19/),
-[OOPSLA](/papers/OOPSLA_17/),
-[FMCAD](/papers/FMCAD_16/)), 1 architecture specification
-publicly released.
+This project has been an exercise in _soft power_:
+showing the way,
+building credibility and support,
+paying and asking favours,
+building a virtual team across the company,
+understanding and overcoming [Conway's
+Law](https://en.wikipedia.org/wiki/Conway%27s_law),
+and exercising patience.
+Changing Arm's use of the specification is only half the challenge;
+the other half is helping the ecosystem to use the specification
+so Arm has publicly released the mechanized v8-A architecture specification
+and I have gone to the USA, Germany, the UK, France, Austria,
+and Italy [to give talks](/papers#talks) to industry,
+to government agencies, to ``hacker'' conventions, to IETF and
+theorem prover workshops,
+and to universities about the potential uses of the specification.
+
+
+3 architecture specifications mechanized,
+3 major architecture extensions mechanized (TZM, SVE, Helium),
+1 tool tech-transferred (in regular use by four Arm divisions),
+3 papers published
+([POPL 19](/papers/POPL_19/),
+ [OOPSLA 17](/papers/OOPSLA_17/),
+ [FMCAD 16](/papers/FMCAD_16/)),
+1 architecture specification publicly released.
 
 
 ### Processor Formal Verification
@@ -85,10 +106,14 @@ the ISA-Formal processor verification technique that is based on:
 - Using model checking for end-to-end verification of processor pipelines
 
 This technique has proven very effective at detecting complex bugs early in the
-design process.  It has been used on 8 Arm processors and the tools and
+design process.  It has been used on eight Arm processors and the tools and
 technique will be used in all of Arm's next generation processors.
 
-1 papers published ([CAV](/papers/CAV_16/)), 1 tool tech-transferred.
+This project was a joy to work on: working with and learning to communicate
+with subject experts, hard technical challenges and adoption of the techniques
+by multiple project groups and by senior engineering management.
+
+1 paper published ([CAV 16](/papers/CAV_16/)), 1 tool tech-transferred.
 
 
 ### Vector Processing
@@ -97,15 +122,26 @@ Building on the experience from [NEON](#vectorizing-compiler-for-neon) and from 
 [Software Defined Radio](#software-defined-radio)
 project, I spent some time working on how to make vector processing more
 flexible and on how to implement it more efficiently.
-This led to a major architecture extension and multiple architecture and
+This led to a major architecture extension known as the Scalable Vector
+Extension (SVE) and to multiple architecture and
 microarchitecture patents.
 
 Since vector architecture projects always lead to large ISA extensions, I also
 created a language and tool to describe large ISAs in a compact, structured
-way.
+way and, of course,
+I made sure that we had a [formal
+specification](#mechanized-processor-specification).
+
+Visiting the same topic three times within Arm has taught me a lot about how
+to conduct an ISA extension project all the way from initial investigations
+with dodgy, hacked-together tools through to a finished design with
+benchmarking, assembler, compiler, OS, etc. support, with a formal ISA
+specification, processor verification IP, testsuites, etc.
+And, most importantly, how to get from those rough beginnings to a polished
+design ready for processor teams to implement.
 
 10 patents granted, 2 papers published ([IEEE
-Micro](/papers/IEEE_Micro/), [DATE](/papers/DATE_14/)), 1 tool tech-transferred.
+Micro 17](/papers/IEEE_Micro/), [DATE 14](/papers/DATE_14/)), 1 tool tech-transferred.
 
 
 ### Software Defined Radio
@@ -120,8 +156,10 @@ and software aspects of the trace generation system for low overhead monitoring
 of parallel real-time systems. The platform has been spun out into another
 company (Cognovo) which has since been acquired by u-blox.
 
-1 working test chip, 8 patents granted, 4 papers published ([CASES](/papers/CASES_08/),
-[MICRO](/papers/MICRO_08/), [SIPS](/papers/SIPS_06/), [SDR](/papers/SDR_06)), 3 tools released, 1 spinout company purchased,
+1 working test chip, 8 patents granted, 4 papers published ([CASES 08](/papers/CASES_08/),
+[MICRO 08](/papers/MICRO_08/),
+[SIPS 06](/papers/SIPS_06/),
+[SDR 06](/papers/SDR_06)), 3 tools released, 1 spinout company purchased,
 numerous training sessions provided to potential customers.
 
 
@@ -130,7 +168,7 @@ numerous training sessions provided to potential customers.
 A chance discussion over coffee lead to an interesting idea on how to share
 resources between hardware threads of different priorities. 
 
-1 patent granted, 1 paper published ([SBAC-PAD](/papers/SBAC_PAD_07/)).
+1 patent granted, 1 paper published ([SBAC-PAD 07](/papers/SBAC_PAD_07/)).
 
 
 ### Reliability/Security
@@ -177,8 +215,11 @@ I developed a variety of tools for analyzing embedded systems including
 a binary analysis tool to identify which interrupts were enabled/disabled and
 a worst-case stack-depth analysis (which accounted for interrupt-handlers).
 
-4 papers published ([ASPLOS](/papers/ASPLOS_04), [TECS](/papers/TECS_05),
-[ACP4IS](/papers/ACP4IS_03/), [EMSOFT](/papers/EMSOFT_03/)).
+4 papers published
+([ASPLOS 04](/papers/ASPLOS_04),
+[TECS 05](/papers/TECS_05),
+[ACP4IS 03](/papers/ACP4IS_03/),
+[EMSOFT 03](/papers/EMSOFT_03/)).
 
 ### Component-Based Operating Systems
 
@@ -187,21 +228,24 @@ needs of low-level code with complex interconnections and even more complex
 component initialization requirements. I used this to develop a more modular
 version of the operating system toolkit 'OSKit' previously developed at Utah.
 
-3 papers published ([OSDI](/papers/OSDI_00/), [ICSE](/papers/ICSE_02/),
-[ASPSE](/papers/ASPSE_01/)), 2 open source projects released.
+3 papers published
+([OSDI 00](/papers/OSDI_00/),
+[ASPSE 01](/papers/ASPSE_01/),
+[ICSE 02](/papers/ICSE_02/)),
+2 open source projects released.
 
 ---
 
 ## Yale University Projects
 
-I joined Yale University's Haskell research group in 1994.
+I joined Yale University's [Haskell](https://haskell.org/) research group in 1994.
 
 ### Robotics
 
 I applied the principles of Functional Reactive Programming to the tasks of
 Visual Tracking and Robotics.
 
-2 papers published ([ICSE](/papers/ICSE_99/), [PADL](/papers/PADL_01/)).
+2 papers published ([ICSE 99](/papers/ICSE_99/), [PADL 01](/papers/PADL_01/)).
 
 ### Haskell Compiler Development
 
@@ -210,16 +254,18 @@ Haskell Compiler, the standard Haskell libraries, graphics libraries, exception
 handling and the foreign function interface.
 
 6 papers published
-([PLDI](/papers/PLDI_99),
-[IFL](/papers/IFL_98),
+([PLDI 99](/papers/PLDI_99),
+[IFL 98](/papers/IFL_98),
+[GFPW 98](/papers/Exceptions),
+[RR 98](/papers/StdLib_98),
 [Haskell Report](/papers/Haskell_Report),
 [Haskell Library](/papers/Haskell_Lib),
-[HW](/papers/Haskell_97),
-[HW](/papers/Haskell_95a),
-[HW](/papers/Haskell_95b),
-[GFPW](/papers/Exceptions),
-[RR](/papers/StdLib_98)), 1 open source project released, 1 open source project
-maintained.
+[Haskell FFI](/papers/Haskell_FFI/),
+[HW 97](/papers/Haskell_97),
+[HW 95](/papers/Haskell_95a),
+[HW 95](/papers/Haskell_95b)),
+1 open source project released,
+1 open source project maintained.
 
 ---
 
@@ -228,17 +274,33 @@ maintained.
 I earned an [M.Sc. by research](/papers/MSc_93) in formal methods from the
 University of Glasgow.
 
-### GUIs
-
-I implemented a widget library for Haskell using the recently developed 'monad
-programming' technique and an early version of Haskell's foreign function
-interface.
-
-1 paper published ([GFPW](/papers/GFPW_93)).
 
 ### Foreign Function Interface
 
-I extended the Glasgow Haskell Compiler's garbage collector to better support
+I extended the [Glasgow Haskell Compiler](https://wiki.haskell.org/GHCi)'s
+garbage collector to better support
 the foreign function interface,
 
-1 paper published ([GFPW](/papers/GFPW_94)), contributed to 1 open source project.
+1 paper published ([GFPW 94](/papers/GFPW_94)), contributed to 1 open source project.
+
+
+### GUIs
+
+I implemented a widget library for [Haskell](https://haskell.org/)
+using the recently developed 'monad
+programming' technique and an early version of Haskell's foreign function
+interface.
+
+1 paper published ([GFPW 93](/papers/GFPW_93)).
+
+
+### GHCi
+
+I worked on adding an interpreter to [GHC](https://wiki.haskell.org/GHC)
+and on allowing compiled code and
+interpreted code to call each other.  This was not released at the time but
+several years later, Julian Seward revived the idea although a new runtime
+system was also being written at the time so I think the only part of the
+original GHCi that survives is the name.  (Which is a shame because the name
+doesn't really make any sense.)
+
