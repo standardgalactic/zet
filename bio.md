@@ -18,5 +18,6 @@ of the Arm processor architecture.
 
 Alastair
 holds over 20 patents in microarchitecture, architecture and
-compilers.
+compilers
+and holds a PhD from the University of Glasgow.
 

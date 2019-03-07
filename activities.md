@@ -90,6 +90,7 @@ and to universities about the potential uses of the specification.
 ([POPL 19](/papers/POPL_19/),
  [OOPSLA 17](/papers/OOPSLA_17/),
  [FMCAD 16](/papers/FMCAD_16/)),
+1 PhD ([thesis](/papers/PhD_19/)),
 1 architecture specification publicly released.
 
 

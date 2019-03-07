@@ -40,10 +40,12 @@ Before working at Arm, I worked on
 and
 [operating systems](/activities#university-of-utah-projects).
 I hold over 20 [patents](/papers#patents),
-have written over 20 peer reviewed [papers](/papers#papers).
+have written over 20 peer reviewed [papers](/papers#papers)
+and I have completed a [PhD in formal specification](/papers/PhD_19/) from Glasgow University.
 
 
 I also like to
 [build my own keyboards](/building-keyboards/).
+
 
 The opinions expressed are my own views and not those of my employer.
