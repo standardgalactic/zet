@@ -58,8 +58,9 @@ for e in db.entries:
     v = e2['title']
     v = v.replace('\n',' ')
     v = v.replace("{", "").replace("}", "")
-    # v = v.replace(":", "")
     e['ar_title'] = v
+    v = v.replace(": ", " - ")
+    e2['title'] = v
 
     # print(toString(e2))
     # print(dump(e, Dumper=Dumper))
