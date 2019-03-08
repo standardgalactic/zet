@@ -2,7 +2,7 @@
 layout: paper
 year: 2000
 url: http//dl.acm.org/citation.cfm?id=1251253
-title: Knit Component Composition for Systems Software
+title: Knit - Component Composition for Systems Software
 publisher: USENIX Association
 pages: 347--360
 month: October

@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2014
-title: Advanced SIMD Extending the reach of contemporary SIMD architectures
+title: Advanced SIMD - Extending the reach of contemporary SIMD architectures
 publisher: European Design and Automation Association
 pages: 1-4
 month: March

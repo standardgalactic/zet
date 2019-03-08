@@ -2,7 +2,7 @@
 layout: paper
 year: 1998
 volume: 1595
-title: Putting the Spine Back in the Spineless Tagless G-Machine An Implementation of Resumable Black-Holes
+title: Putting the Spine Back in the Spineless Tagless G-Machine - An Implementation of Resumable Black-Holes
 series: Lecture Notes in Computer Science
 publisher: Springer
 pages: 186--199

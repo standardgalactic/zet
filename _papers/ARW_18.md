@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2018
-title: Detailed Models of Instruction Set Architectures From Pseudocode to Formal Semantics
+title: Detailed Models of Instruction Set Architectures - From Pseudocode to Formal Semantics
 month: April
 location: Cambridge, UK
 file: arw2018.pdf

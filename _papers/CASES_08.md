@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2008
-title: SoC-C efficient programming abstractions for heterogeneous multicore systems on chip
+title: SoC-C - efficient programming abstractions for heterogeneous multicore systems on chip
 slides: cases2008-SoC-C-slides.pdf
 publisher: ACM
 pages: 95--104

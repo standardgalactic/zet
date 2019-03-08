@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2008
-title: From SODA to scotch The evolution of a wireless baseband processor
+title: From SODA to scotch - The evolution of a wireless baseband processor
 publisher: IEEE Computer Society
 pages: 152--163
 month: November

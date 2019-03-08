@@ -2,7 +2,7 @@
 layout: paper
 year: 2001
 volume: 1990
-title: FVision A Declarative Language for Visual Tracking
+title: FVision - A Declarative Language for Visual Tracking
 series: Lecture Notes in Computer Science
 publisher: Springer
 pages: 304--321

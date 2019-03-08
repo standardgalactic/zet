@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 1999
-title: Prototyping Real-Time Vision Systems An Experiment in DSL Design
+title: Prototyping Real-Time Vision Systems - An Experiment in DSL Design
 publisher: ACM
 pages: 484--493
 month: May

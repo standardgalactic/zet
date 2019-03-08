@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2006
-title: SPEX A programming language for software defined radio
+title: SPEX - A programming language for software defined radio
 month: November
 location: Orlando, FL, USA
 file: lin-sdr06.pdf

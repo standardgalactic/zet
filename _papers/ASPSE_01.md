@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2001
-title: Aspect Weaving as Component Knitting Separating Concerns with Knit
+title: Aspect Weaving as Component Knitting - Separating Concerns with Knit
 month: May
 location: Toronto, Ontario, Canada
 file: knit-icse01-wasc.pdf

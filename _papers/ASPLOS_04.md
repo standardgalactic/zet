@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2004
-title: HOIST a system for automatically deriving static analyzers for embedded systems
+title: HOIST - a system for automatically deriving static analyzers for embedded systems
 publisher: ACM
 pages: 133--143
 month: October

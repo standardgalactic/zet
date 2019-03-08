@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 1994
-title: Malloc Pointers and Stable Pointers Improving Haskell's Foreign Language Interface
+title: Malloc Pointers and Stable Pointers - Improving Haskell's Foreign Language Interface
 month: September
 location: Ayr, Scotland
 file: malloc.pdf

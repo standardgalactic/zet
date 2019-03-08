@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 1997
-title: Green Card a foreign-language interface for Haskell
+title: Green Card - a foreign-language interface for Haskell
 month: June
 location: Amsterdam, Netherlands
 file: green-card.pdf
