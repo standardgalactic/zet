@@ -11,7 +11,7 @@ My research at Arm revolves around the interplay between software, compilers, ar
 microarchitecture in microprocessors.
 This results in
 [patents](/papers#patents),
-[papers](/papers#papers).
+[papers](/papers#papers)
 and, most importantly, in tools that are used by Arm's processor and architecture teams.
 
 My most influential project produced a methodology and tools for
