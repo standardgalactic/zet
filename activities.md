@@ -73,7 +73,9 @@ Law](https://en.wikipedia.org/wiki/Conway%27s_law),
 and exercising patience.
 Changing Arm's use of the specification is only half the challenge;
 the other half is helping the ecosystem to use the specification
-so Arm has publicly released the mechanized v8-A architecture specification
+so Arm has publicly released the mechanized v8-A architecture specification,
+I have written papers about the creation, use and testing of the
+specification
 and I have gone to the USA, Germany, the UK, France, Austria,
 and Italy [to give talks](/papers#talks) to industry,
 to government agencies, to ``hacker'' conventions, to IETF and
