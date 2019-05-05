@@ -51,6 +51,8 @@ for e in db.entries:
     filename = '_papers/' + filename + '.md'
 
     s = toString(e)
+    s = s.replace("\\textquotesingle ", "'")
+    s = s.replace("\\textasciigrave ", "`")
     # print(s)
     e2 = parseEntry(s)
     e2['bibtex'] = s
@@ -58,6 +60,8 @@ for e in db.entries:
     v = e2['title']
     v = v.replace('\n',' ')
     v = v.replace("{", "").replace("}", "")
+    v = v.replace("' ", "'")
+    # print(v)
     e['ar_title'] = v
     v = v.replace(": ", " - ")
     e2['title'] = v
