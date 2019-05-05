@@ -1,7 +1,7 @@
 ---
 layout: paper
 year: 2003
-url: https//www.cse.unsw.edu.au/~chak/haskell/ffi
+url: https//www.cse.unsw.edu.au/~ chak/haskell/ffi
 title: The Haskell 98 Foreign Function Interface 1.0 - An Addendum to the Haskell 98 Report
 file: ffi.pdf
 author:  Manuel Chakravarty, Sigbjorn Finne, Fergus Henderson, Marcin Kowalczyk, Daan Leijen, Simon Marlow, Erik Meijer, Sven Panne, Simon Peyton Jones, Alastair Reid, Malcolm Wallace, Michael Weber

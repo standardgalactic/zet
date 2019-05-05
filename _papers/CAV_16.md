@@ -71,10 +71,10 @@ bibtex: |
     design styles.
     <p>
     This paper describes how ARM has overcome these issues in our Instruction Set
-    Architecture Formal Verification framework \textasciigrave \textasciigrave ISA-Formal.\textquotesingle \textquotesingle  This is an
+    Architecture Formal Verification framework ``ISA-Formal.'' This is an
     end-to-end framework to detect bugs in the datapath, pipeline control and
     forwarding/stall logic of processors.  A key part of making the approach scale
-    is use of a mechanical translation of ARM\textquotesingle s Architecture Reference Manuals to
+    is use of a mechanical translation of ARM's Architecture Reference Manuals to
     Verilog allowing the use of commercial model-checkers.  ISA-Formal has proven
     especially effective at finding micro-architecture specific bugs involving
     complex sequences of instructions.
@@ -84,7 +84,7 @@ bibtex: |
     out-of-order processors.  We have applied this method to 8 different ARM
     processors spanning all stages of development up to release.  In all
     processors, this has found bugs that would have been hard for conventional
-    simulation-based verification to find and ISA-Formal is now a key part of ARM\textquotesingle s
+    simulation-based verification to find and ISA-Formal is now a key part of ARM's
     formal verification strategy.
     <p>
     To the best of our knowledge, this is the most broadly applicable formal
@@ -98,7 +98,7 @@ bibtex: |
         , authors = {Alastair Reid and Rick Chen and Anastasios Deligiannis and
     David Gilday and David Hoyes and Will Keen and Ashan Pathirane and
     Erin Shepherd and Peter Vrabel and Ali Zaidi}
-        , booktitle = {Proceedings of the 2016 International Conference on Computer Aided Verification (CAV\textquotesingle 16)}
+        , booktitle = {Proceedings of the 2016 International Conference on Computer Aided Verification (CAV'16)}
         , doi = {10.1007/978-3-319-41540-6\_3}
         , editor = {S. Chaudhuri and A. Farzan}
         , file = {cav2016_isa_formal.pdf}

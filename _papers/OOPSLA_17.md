@@ -13,7 +13,7 @@ location: Vancouver, BC, Canada
 journal: PACMPL
 file: oopsla2017-whoguardstheguards.pdf
 doi: 10.1145/3133912
-day: 22–27
+day: 22– 27
 authors: Alastair Reid
 ar_shortname: OOPSLA 17
 ar_file: OOPSLA_17
@@ -60,7 +60,7 @@ bibtex: |
     One of the most important specifications for software
     verification is the processor specification since it de nes the
     behaviour of machine code and of hardware protection features
-    used by operating systems. We demonstrate our approach on ARM\textquotesingle s
+    used by operating systems. We demonstrate our approach on ARM's
     v8-M Processor Specification, which is intended to improve the
     security of Internet of Things devices. Thus, we focus on
     establishing the security guarantees the architecture is

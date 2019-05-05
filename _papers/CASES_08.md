@@ -55,7 +55,7 @@ bibtex: |
     irregular memory hierarchies.  The conventional approach to
     programming such hardware is very low-level but this yields software
     which is intimately and inseparably tied to the details of the
-    platform it was originally designed for, limiting the software\textquotesingle s
+    platform it was originally designed for, limiting the software's
     portability, and, ultimately, the architectural choices available to
     designers of future platform generations.  The key insight of this
     paper is that many of the problems experienced in mapping applications
@@ -68,7 +68,7 @@ bibtex: |
     express the desired mapping of tasks to resources.  The compiler takes
     care of the complex, error-prone details required to implement that
     mapping.  We demonstrate the effectiveness of SoC-C and its compiler
-    with a \textasciigrave \textasciigrave software defined radio\textquotesingle \textquotesingle  example (the PHY layer of a Digital
+    with a ``software defined radio'' example (the PHY layer of a Digital
     Video Broadcast receiver) achieving a 3.4x speedup on 4 cores.
     }
         , acceptance = {33}

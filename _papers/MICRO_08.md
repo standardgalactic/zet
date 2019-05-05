@@ -67,7 +67,7 @@ bibtex: |
     a research design to a commercial prototype, including the goals, trade-offs,
     and final design choices.
     <p>
-    Ardbeg\textquotesingle s redesign process can be grouped into the following three major areas:
+    Ardbeg's redesign process can be grouped into the following three major areas:
     optimizing the wide SIMD datapath, providing long instruction word (LIW)
     support for SIMD operations, and adding application-specific hardware
     accelerators. Because SODA was originally designed with 180nm technology, the
@@ -75,7 +75,7 @@ bibtex: |
     re-evaluating the most efficient SIMD width, designing a wider SIMD shuffle
     network, and implementing faster SIMD arithmetic units. Ardbeg also provides
     modest LIW support by allowing two SIMD operations to issue in the same cycle.
-    This LIW execution supports SDR algorithms\textquotesingle  most common parallel SIMD execution
+    This LIW execution supports SDR algorithms' most common parallel SIMD execution
     patterns with minimal hardware overhead. A viable commercial SDR solution must
     be competitive with existing ASIC solutions. Therefore, algorithm-specific
     hardware is added for performance bottleneck algorithms while still maintaining

@@ -72,7 +72,7 @@ bibtex: |
     C. A. R. Hoare and
     Simon Marlow}
         , booktitle = {Proceedings of the 1999 ACM SIGPLAN Conference on Programming
-    Language Design and Implementation (PLDI \textquotesingle 99)}
+    Language Design and Implementation (PLDI '99)}
         , day = {1-4}
         , doi = {10.1145/301618.301637}
         , editor = {Barbara G. Ryder and

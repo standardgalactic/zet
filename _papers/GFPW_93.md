@@ -50,7 +50,7 @@ bibtex: |
         , booktitle = {Proceedings of the 1993 Glasgow Workshop on Functional Programming}
         , day = {5-7}
         , doi = {10.1007/978-1-4471-3236-3\_18}
-        , editor = {John T. O\textquotesingle Donnell and Kevin Hammond}
+        , editor = {John T. O'Donnell and Kevin Hammond}
         , isbn = {978-1-4471-3236-3}
         , location = {Ayr, Scotland}
         , month = {July}

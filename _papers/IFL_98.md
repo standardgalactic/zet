@@ -47,7 +47,7 @@ bibtex: |
     avoid the problem by omitting or disabling black-holing. Batch mode
     Haskell implementations such as HBC and the Glasgow Haskell Compiler
     (GHC) avoid this problem by disabling black-holing or by providing no
-    way to catch interrupts. This paper describes a modification to GHC\textquotesingle s
+    way to catch interrupts. This paper describes a modification to GHC's
     abstract machine (the Spineless Tagless G-Machine) which
     simultaneously supports both interrupts and black-holing.}
         , affiliation = {Yale University}
@@ -55,7 +55,7 @@ bibtex: |
         , ar_shortname = {IFL 98}
         , author = {Alastair Reid}
         , booktitle = {Implementation of Functional Languages, 10th International Workshop
-    (IFL\textquotesingle 98) Selected Papers}
+    (IFL'98) Selected Papers}
         , day = {9-11}
         , doi = {10.1007/3-540-48515-5\_12}
         , editor = {Kevin Hammond and

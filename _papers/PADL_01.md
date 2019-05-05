@@ -50,19 +50,19 @@ bibtex: |
     that a declarative programming language like Haskell is effective for
     describing complex visual tracking systems. We have taken an existing
     C++ library for computer vision, called XVision, and used it to build
-    FVision (pronounced \textasciigrave \textasciigrave fission\textquotesingle \textquotesingle ), a library of Haskell types and
+    FVision (pronounced ``fission''), a library of Haskell types and
     functions that provides a high-level interface to the lower-level
     XVision code. Using functional abstractions, users of FVision can
     build and test new visual tracking systems rapidly and reliably. The
     use of Haskell does not degrade system performance: computations are
     dominated by low-level calculations expressed in C++ while the
-    Haskell \textasciigrave \textasciigrave glue code\textquotesingle \textquotesingle  has a negligible impact on performance.
+    Haskell ``glue code'' has a negligible impact on performance.
     <p>
     FVision is built using functional reactive programming (FRP) to
     express interaction in a purely functional manner. The resulting
     system demonstrates the viability of mixed-language programming:
     visual tracking programs continue to spend most of their time
-    executing low-level image-processing code, while Haskell\textquotesingle s advanced
+    executing low-level image-processing code, while Haskell's advanced
     features allow us to develop and test systems quickly and with
     confidence. In this paper, we demonstrate the use of Haskell and FRP
     to express many basic abstractions of visual tracking.

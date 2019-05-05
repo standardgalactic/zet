@@ -5,7 +5,7 @@ title: Malloc Pointers and Stable Pointers - Improving Haskell's Foreign Languag
 month: September
 location: Ayr, Scotland
 file: malloc.pdf
-day: 12–14
+day: 12– 14
 booktitle: Draft Proceedings of the Glasgow Functional Programming Workshop
 author: Alastair Reid
 ar_shortname: GFPW 94
@@ -24,7 +24,7 @@ bibtex: |
         , file = {malloc.pdf}
         , location = {Ayr, Scotland}
         , month = {September}
-        , title = {{M}alloc {P}ointers and {S}table {P}ointers: {I}mproving {H}askell\textquotesingle s {F}oreign {L}anguage {I}nterface}
+        , title = {{M}alloc {P}ointers and {S}table {P}ointers: {I}mproving {H}askell's {F}oreign {L}anguage {I}nterface}
         , year = {1994}
     }
 ---

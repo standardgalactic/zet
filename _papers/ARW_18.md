@@ -15,7 +15,7 @@ abstract: |
     ongoing work on expressing such specifications rigorously and
     automatically trans- lating them to interactive theorem prover
     definitions, making them amenable to mechanised proof. Our ISA
-    descriptions are written in Sail—a custom ISA specification
+    descriptions are written in Sail— a custom ISA specification
     language designed to support idioms from var- ious processor
     vendor’s pseudocode, with lightweight dependent typing for
     bitvectors, targeting a variety of use cases including

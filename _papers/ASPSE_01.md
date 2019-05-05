@@ -24,7 +24,7 @@ abstract: |
     weave the components together to achieve reasonable performance.
     <p>
     Component composition with Knit thus acts like aspect weaving: component
-    interfaces determine the “join points” for weaving, while components (some of
+    interfaces determine the ``join points'' for weaving, while components (some of
     which may be automatically generated) implement aspects. Knit is not limited to
     the construction of low-level software, and to the degree that a set of
     components exposes fine-grained relationships, Knit provides the benefits
@@ -46,7 +46,7 @@ bibtex: |
     weave the components together to achieve reasonable performance.
     <p>
     Component composition with Knit thus acts like aspect weaving: component
-    interfaces determine the \textquotedblleft join points\textquotedblright  for weaving, while components (some of
+    interfaces determine the ``join points'' for weaving, while components (some of
     which may be automatically generated) implement aspects. Knit is not limited to
     the construction of low-level software, and to the degree that a set of
     components exposes fine-grained relationships, Knit provides the benefits

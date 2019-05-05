@@ -59,7 +59,7 @@ bibtex: |
     with synchronous language semantics. The design choices are
     motivated by our experience implementing W-CDMA protocol on
     a reprogrammable substrate. In the paper, we also briefly
-    explain SPEX\textquotesingle s compilation strategies.
+    explain SPEX's compilation strategies.
     }
         , affiliation = {ARM Ltd and University of Michigan}
         , ar_file = {SDR_06}

@@ -58,19 +58,19 @@ bibtex: |
     specifications must be sufficient for the task, the specification must be
     applicable to processors of interest and the specification must be trustworthy.
     <p>
-    This paper describes a 5 year project to change ARM\textquotesingle s existing architecture
+    This paper describes a 5 year project to change ARM's existing architecture
     specification process so that machine-readable, executable specifications can
-    be automatically generated from the same materials used to generate ARM\textquotesingle s
+    be automatically generated from the same materials used to generate ARM's
     conventional architecture documentation.  We have developed executable
-    specifications of both ARM\textquotesingle s A-class and M-class processor architectures that
+    specifications of both ARM's A-class and M-class processor architectures that
     are complete enough and trustworthy enough that we have used them to formally
     verify ARM processors using bounded model checking.  In particular, our
     specifications include the semantics of the most security sensitive parts of
     the processor: the memory and register protection mechanisms and the exception
     mechanisms that trigger transitions between different modes.  Most importantly,
-    we have applied a diverse set of methods including ARM\textquotesingle s internal processor
+    we have applied a diverse set of methods including ARM's internal processor
     test suites to improve our trust in the specification using many other
-    expressions of the architectural specification such as ARM\textquotesingle s simulators,
+    expressions of the architectural specification such as ARM's simulators,
     testsuites and processors to defend against common-mode failure.  In the
     process, we have also found bugs in all those artifacts: testing specifications
     is very much a two-way street.
