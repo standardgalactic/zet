@@ -12,7 +12,7 @@ microarchitecture in microprocessors.
 This results in
 [patents](/papers#patents),
 [papers](/papers#papers)
-and, most importantly, in tools that are used by Arm's processor and architecture teams.
+and, most importantly, tools that are used by Arm's processor and architecture teams.
 
 My most influential project produced a methodology and tools for
 [formal validation of Arm processors](/activities#processor-formal-verification)
