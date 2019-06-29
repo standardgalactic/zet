@@ -4,17 +4,17 @@ title: About
 permalink: /about/
 ---
 
-I am a senior principal research engineer at Arm Ltd.
+Until August 2019, I was a senior principal research engineer at Arm Ltd.
 currently working on
 [formal specification of the Arm processor architecture](/activities#mechanized-processor-specification).
-My research at Arm revolves around the interplay between software, compilers, architecture and
+My research at Arm revolved around the interplay between software, compilers, architecture and
 microarchitecture in microprocessors.
-This results in
+This resulted in
 [patents](/papers#patents),
 [papers](/papers#papers)
 and, most importantly, tools that are used by Arm's processor and architecture teams.
 
-My most influential project produced a methodology and tools for
+My most influential Arm project produced a methodology and tools for
 [formal validation of Arm processors](/activities#processor-formal-verification)
 against a 
 [formal specification of Arm's processor architecture](/activities#mechanized-processor-specification).

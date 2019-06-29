@@ -6,9 +6,9 @@ permalink: /activities/
 
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
-| Senior Principal Research Engineer || Arm Ltd                          || 2017 - present |
-| - ASL Steering Committee           ||                                  || 2017 - present |
-| - Patent Review Committee          ||                                  || 2014 - present |
+| Senior Principal Research Engineer || Arm Ltd                          || 2017 - 2019    |
+| - ASL Steering Committee           ||                                  || 2017 - 2019    |
+| - Patent Review Committee          ||                                  || 2014 - 2019    |
 | Principal Research Engineer        || Arm Ltd                          || 2004 - 2017    |
 | - Skill Group Leader               ||                                  || 2011 - 2014    |
 | Director                           || Reid Consulting (UK) Ltd         || 2002 - 2004    |
