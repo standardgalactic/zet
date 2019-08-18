@@ -32,6 +32,8 @@ layout: default
   <h2>Abstract</h2>
   {{ page.abstract | markdownify }}
 
+  {% if page.file %} <img src="{{ site.baseurl }}/papers/{{ page.file }}" alt="First page of paper" height=400px> {% endif %}
+
   <h2>BibTeX</h2>
   <span style="display: block; font-family: monospace; white-space: pre; font-size:50%">{{ page.bibtex }}</span>
 </article>
