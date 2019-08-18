@@ -41,7 +41,7 @@ and
 [operating systems](/activities#university-of-utah-projects).
 I hold over 20 [patents](/papers#patents),
 have written over 20 peer reviewed [papers](/papers#papers)
-and I have completed a [PhD in formal specification](/papers/PhD_19/) from Glasgow University.
+and I hold a [PhD in formal specification](/papers/PhD_19/) from Glasgow University.
 
 
 I also like to
