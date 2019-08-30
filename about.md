@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 Until August 2019, I was a senior principal research engineer at Arm Ltd.
-currently working on
+working on
 [formal specification of the Arm processor architecture](/activities#mechanized-processor-specification).
 My research at Arm revolved around the interplay between software, compilers, architecture and
 microarchitecture in microprocessors.
