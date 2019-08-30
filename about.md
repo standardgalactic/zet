@@ -131,6 +131,7 @@ and to universities about the potential uses of the specification.
 
 3 architecture specifications mechanized,
 3 major architecture extensions mechanized (TZM, SVE, Helium),
+1 tool publicly released ([ASLi](https://github.com/ARM-software/asl-interpreter)),
 1 tool tech-transferred (in regular use by four Arm divisions),
 3 papers published
 ([POPL 19](/papers/POPL_19/),
