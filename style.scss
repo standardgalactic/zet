@@ -114,6 +114,30 @@ img {
   max-width: 100%;
 }
 
+/* Hack for aligning images left/right/centered
+ * https://stackoverflow.com/questions/255170/markdown-and-image-alignment
+ */
+img[alt$=">"] {
+  float: right;
+}
+
+img[alt$="<"] {
+  float: left;
+}
+
+img[alt$="><"] {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+  float: none!important;
+}
+
+img[alt$="^"] {
+    vertical-align: top;
+}
+
+
 th {
   border-top: 1px solid #aaa;
   border-bottom: 1px solid #bbb;
