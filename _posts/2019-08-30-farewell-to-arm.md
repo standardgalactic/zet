@@ -57,7 +57,7 @@ So here are some answers:
   worrying about what would happen if Arm committed to using formal processor
   specs to generate everything.
   This would remove a lot of the redundancy in the specification development
-  process: no second model to compare againgst, less experience/skill needed
+  process: no second model to compare against, less experience/skill needed
   to create tests, simulators, documentation, etc.
   (My ["Who guards the guards?"]({{ site.url }}/papers/OOPSLA_17/)
   paper and my recent blog posts are part of what came out of that.)
