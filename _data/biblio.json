@@ -1,5 +1,18 @@
 [
     {
+        "month": "September",
+        "year": "2019",
+        "ar_shortname": "SpISA 19",
+        "location": "Portland, Oregon, USA",
+        "booktitle": "SpISA 2019: Workshop on Instruction Set Architecture Specification",
+        "author": "Alasdair Armstrong and\nThomas Bauereiss and\nBrian Campbell and\nAlastair Reid and\nKathryn E. Gray and\nRobert Norton and\nPrashanth Mundkur and\nMark Wassell and\nJon French and\nChristopher Pulte and\nShaked Flur and\nIan Stark and\nNeel Krishnaswami and\nPeter Sewell",
+        "title": "{T}he {S}tate of {S}ail",
+        "ENTRYTYPE": "article",
+        "ID": "conf/spisa19/armstrong",
+        "ar_file": "SpISA_19",
+        "ar_title": "The State of Sail"
+    },
+    {
         "year": "2019",
         "month": "March",
         "ar_shortname": "PhD 19",
