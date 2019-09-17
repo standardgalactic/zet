@@ -10,8 +10,8 @@ working on
 My research at Arm revolved around the interplay between software, compilers, architecture and
 microarchitecture in microprocessors.
 This resulted in
-[patents](/papers.html#patents),
-[papers](/papers.html#papers)
+[patents](/papers/#patents),
+[papers](/papers/#papers)
 and, most importantly, tools that are used by Arm's processor and architecture teams.
 
 My most influential Arm project produced a methodology and tools for
@@ -39,8 +39,8 @@ Before working at Arm, I worked on
 [functional programming](#yale-university-projects),
 and
 [operating systems](#university-of-utah-projects).
-I hold over 20 [patents](/papers.html#patents),
-have written over 20 peer reviewed [papers](/papers.html#papers)
+I hold over 20 [patents](/papers/#patents),
+have written over 20 peer reviewed [papers](/papers/#papers)
 and I hold a [PhD in formal specification](/papers/PhD_19/) from Glasgow University.
 
 
