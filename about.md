@@ -6,41 +6,41 @@ permalink: /about/
 
 Until August 2019, I was a senior principal research engineer at Arm Ltd.
 working on
-[formal specification of the Arm processor architecture](/about#mechanized-processor-specification).
+[formal specification of the Arm processor architecture](#mechanized-processor-specification).
 My research at Arm revolved around the interplay between software, compilers, architecture and
 microarchitecture in microprocessors.
 This resulted in
-[patents](/papers#patents),
-[papers](/papers#papers)
+[patents](/papers.html#patents),
+[papers](/papers.html#papers)
 and, most importantly, tools that are used by Arm's processor and architecture teams.
 
 My most influential Arm project produced a methodology and tools for
-[formal validation of Arm processors](/about#processor-formal-verification)
+[formal validation of Arm processors](#processor-formal-verification)
 against a 
-[formal specification of Arm's processor architecture](/about#mechanized-processor-specification).
+[formal specification of Arm's processor architecture](#mechanized-processor-specification).
 The methodology and tools are in daily use by Arm's processor teams
 and the specification has been [publicly released](/arm-v8_3/).
 
-I was a founding member of Arm's team that developed the [Scalable Vector Extension](/about#vector-processing):
+I was a founding member of Arm's team that developed the [Scalable Vector Extension](#vector-processing):
 a major new wide-vector instruction set that is used by
 [Fujitsu's Post-K
 supercomputer](http://www.fujitsu.com/global/Images/armv8-a-scalable-vector-extension-for-post-k.pdf).
 I was a founding member of Arm's "Ardbeg"
-[software defined radio project](/about#software-defined-radio)
+[software defined radio project](#software-defined-radio)
 where I 
-[created a language and compiler for programming heterogeneous parallel system](/about#software-defined-radio).
+[created a language and compiler for programming heterogeneous parallel system](#software-defined-radio).
 
 I have also worked on
-[vectorizing compilers](/about#vectorizing-compiler-for-neon),
+[vectorizing compilers](#vectorizing-compiler-for-neon),
 testcase generation,
 architectural coverage analysis,
 CPU simulators and the ARMv8 architecture.
 Before working at Arm, I worked on
-[functional programming](/about#yale-university-projects),
+[functional programming](#yale-university-projects),
 and
-[operating systems](/about#university-of-utah-projects).
-I hold over 20 [patents](/papers#patents),
-have written over 20 peer reviewed [papers](/papers#papers)
+[operating systems](#university-of-utah-projects).
+I hold over 20 [patents](/papers.html#patents),
+have written over 20 peer reviewed [papers](/papers.html#papers)
 and I hold a [PhD in formal specification](/papers/PhD_19/) from Glasgow University.
 
 
