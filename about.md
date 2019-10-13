@@ -4,6 +4,11 @@ title: About
 permalink: /about/
 ---
 
+In September 2019, I joined Google Research to work on [Project
+Oak](https://github.com/project-oak/oak/blob/master/README.md) where I will
+be working on formal verification of the [Hafnium
+Hypervisor](https://opensource.google/projects/hafnium).
+
 Until August 2019, I was a senior principal research engineer at Arm Ltd.
 working on
 [formal specification of the Arm processor architecture](#mechanized-processor-specification).
@@ -52,6 +57,7 @@ I also like to
 
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
+| Staff Research Scientist           || Google Research                  || 2019 -         |
 | Senior Principal Research Engineer || Arm Ltd                          || 2017 - 2019    |
 | - ASL Steering Committee           ||                                  || 2017 - 2019    |
 | - Patent Review Committee          ||                                  || 2014 - 2019    |
