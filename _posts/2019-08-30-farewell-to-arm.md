@@ -3,7 +3,7 @@ layout: post
 title: Farewell to Arm
 ---
 
-After [14 great years at Arm](/about#arm-ltd-projects-selected), I’m making a change.
+After [15 great years at Arm](/about#arm-ltd-projects-selected), I’m making a change.
 ![Farewell to Arms ><](/images/farewell_to_arms.png)
 
 I have learned about how processors work,
