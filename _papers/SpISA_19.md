@@ -4,6 +4,7 @@ year: 2019
 title: The State of Sail
 month: September
 location: Portland, Oregon, USA
+file: spisa2019.pdf
 booktitle: SpISA 2019 Workshop on Instruction Set Architecture Specification
 author: Alasdair Armstrong, Thomas Bauereiss, Brian Campbell, Alastair Reid, Kathryn E. Gray, Robert Norton, Prashanth Mundkur, Mark Wassell, Jon French, Christopher Pulte, Shaked Flur, Ian Stark, Neel Krishnaswami, Peter Sewell
 ar_shortname: SpISA 19
@@ -29,6 +30,7 @@ bibtex: |
     Neel Krishnaswami and
     Peter Sewell}
         , booktitle = {SpISA 2019: Workshop on Instruction Set Architecture Specification}
+        , file = {spisa2019.pdf}
         , location = {Portland, Oregon, USA}
         , month = {September}
         , title = {{T}he {S}tate of {S}ail}

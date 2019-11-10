@@ -5,9 +5,10 @@ permalink: /about/
 ---
 
 In September 2019, I joined Google Research to work on [Project
-Oak](https://github.com/project-oak/oak/blob/master/README.md) where I will
-be working on formal verification of the [Hafnium
-Hypervisor](https://opensource.google/projects/hafnium).
+Oak](https://github.com/project-oak/oak/blob/master/README.md) where I am
+working on tools and methodologies to support the use of formal methods
+to improve our confidence in high-privilege, low-level software such as firmware and
+[hypervisors](https://opensource.google/projects/hafnium).
 
 Until August 2019, I was a senior principal research engineer at Arm Ltd.
 working on
@@ -25,6 +26,8 @@ against a
 [formal specification of Arm's processor architecture](#mechanized-processor-specification).
 The methodology and tools are in daily use by Arm's processor teams
 and the specification has been [publicly released](/arm-v8_3/).
+This work inspired RISC-V to do the same and Intel has publicly stated an intention
+to create a public, formal x86 specification.
 
 I was a founding member of Arm's team that developed the [Scalable Vector Extension](#vector-processing):
 a major new wide-vector instruction set that is used by

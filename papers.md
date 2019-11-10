@@ -8,7 +8,8 @@ permalink: /papers/
 {:toc}
 
 My [Google Scholar](https://scholar.google.co.uk/citations?hl=en&user=oT8RhJgAAAAJ),
-[DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David) and
+[DBLP](http://dblp.uni-trier.de/pers/hd/r/Reid:Alastair_David),
+[ORCID](https://orcid.org/0000-0003-4695-6668) and
 [Microsoft Academic](https://academic.microsoft.com/#/detail/2293162450)
 pages.
 
