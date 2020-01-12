@@ -45,6 +45,7 @@ architectural coverage analysis,
 CPU simulators and the ARMv8 architecture.
 Before working at Arm, I worked on
 [functional programming](#yale-university-projects),
+[functional reactive programming](#robotics)
 and
 [operating systems](#university-of-utah-projects).
 I hold over 20 [patents](/papers/#patents),
