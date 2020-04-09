@@ -17,8 +17,8 @@ pages.
 
 <table>
 {% for paper in site.data.biblio %}
-    <tr valign="top">
-        <td align="right" class="bibtexnumber" style="padding: 10px;">
+    <tr style="vertical-align:top">
+        <td class="bibtexnumber" style="text-align:right; padding: 10px;">
             <a class="papertitle" href="{{ site.baseurl }}/papers/{{ paper.ar_file }}">{{ paper.ar_shortname | replace:' ','&nbsp;'}}</a>
         </td>
         <td class="bibtexitem">
@@ -259,8 +259,8 @@ _First public talk about creating formal specifications of ARM processors._
 
 <table>
 {% for paper in site.data.patents %}
-    <tr valign="top">
-        <td align="right" class="bibtexnumber" style="padding: 10px;">
+    <tr style="vertical-align:top">
+        <td class="bibtexnumber" style="text-align:right; padding: 10px;">
             {% if paper.link %}
                 <a class="papertitle" href="{{ paper.link }}">{{ paper.number | replace:' ','&nbsp;'}}</a>
             {% else %}
