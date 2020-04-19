@@ -109,6 +109,7 @@ and [ETAPS TOOLympics](https://conf.researchr.org/track/etaps-2019/etaps-2019-TO
 | [Quantitative Formal Models (QComp)](http://qcomp.org) | Markov/Petri | |
 | [Rigorous Examination of Reactive Systems](http://rers-challenge.org) | | |
 | [Software testing (Test-Comp)](https://test-comp.sosy-lab.org/2019/) | | |
+| [WCET tool challenge](https://www.absint.com/ait/WCET_Tool_Challenge_2011_Final_Report.pdf) | ARM, MPC5554 | |
 |----------------------------|----------------|----------------|
 
 In addition to these tool competitions, there are also contests that pit teams
@@ -134,6 +135,7 @@ or send me [an email](mailto:adreid@google.com).
 
 *Acknowledgements for pointing me at some of the above*:
 Claire Wolf,
+Igor Skochinsky,
 John Regehr,
 Hernan Ponce De Leon,
 Martin Nyx Brain,
