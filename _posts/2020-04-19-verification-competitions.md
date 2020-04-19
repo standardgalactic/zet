@@ -75,8 +75,10 @@ allows external tools to check any UNSAT results.
 
 In addition, I found a paper that gives an overview of competitions:
 [TOOLympics 2019: An Overview of Competitions in Formal Methods](https://link.springer.com/chapter/10.1007/978-3-030-17502-3_1)
-([pdf](https://www.sosy-lab.org/research/pub/2019-TACAS.TOOLympics_2019_An_Overview_of_Competitions_in_Formal_Methods.pdf))
-
+([pdf](https://www.sosy-lab.org/research/pub/2019-TACAS.TOOLympics_2019_An_Overview_of_Competitions_in_Formal_Methods.pdf)).
+And [Martin Nyx Brain](https://www.city.ac.uk/people/academics/martin-nyx-brain) pointed me at
+the [FLOC Olympic games](https://www.floc2018.org/floc-olympic-games/)
+and [ETAPS TOOLympics](https://conf.researchr.org/track/etaps-2019/etaps-2019-TOOLympics)
 
 |----------------------------|----------------|---------------|
 | Competition                | Input format   | Output format |
@@ -85,7 +87,12 @@ In addition, I found a paper that gives an overview of competitions:
 | [SMT Competition](https://boolector.github.io/smt-comp.html) | [SMT-LIB](http://smtlib.cs.uiowa.edu) | |
 | [Hardware Model Checking competition](http://fmv.jku.at/hwmcc19/) | [BTOR2](https://github.com/Boolector/btor2tools), [AIGER](http://fmv.jku.at/aiger/) | |
 | [Competition on Software Verification (SV-COMP)](https://sv-comp.sosy-lab.org/2020/)  | | |
+| [Separation Logic Competition](https://sl-comp.github.io) | [SMTLIB-SL](https://sl-comp.github.io/docs/smtlib-sl.pdf) | |
 | [MaxSAT](https://maxsat-evaluations.github.io) | | |
+| [Constrained Horned Clause (HCVC)](https://chc-comp.github.io) | [HORN (smt-lib)](https://chc-comp.github.io/format.html) | |
+| [Confluence Competition (COCO)](http://project-coco.uibk.ac.at) | [TRS](http://project-coco.uibk.ac.at/problems/trs.php), [CTRS](http://project-coco.uibk.ac.at/problems/ctrs.php), [HRS](http://project-coco.uibk.ac.at/problems/hrs.php), [MSTRS](http://project-coco.uibk.ac.at/problems/mstrs.php) | |
+| [Rewriting Engines Competition (REC)](http://rec.gforge.inria.fr) | TRS | |
+| [Sparkle SAT](http://ada.liacs.nl/events/sparkle-sat-18/) | | |
 | [Pseudo-Boolean Competition](http://www.cril.univ-artois.fr/PB16/) | | |
 | [Quantified boolean formula (QBF) evaluation](http://www.qbflib.org/index_eval.php) | | |
 | [Constraint Satisfaction](http://xcsp.org/competition) | [XCSP](http://xcsp.org/) | |
@@ -96,6 +103,12 @@ In addition, I found a paper that gives an overview of competitions:
 | [Answer Set Programming challenge](https://sites.google.com/view/aspcomp2019/) | | |
 | [Reactive sythesis competition](http://www.syntcomp.org) | LTL, TLSF, AIGER, HOA | |
 | [Syntax Guided Synthesis (SyGuS)](https://sygus.org) | [SyGuS-IF](https://sygus.org/language/) | |
+| [Runtime Verification (CRV)](https://www.rv-competition.org) | | |
+| [Production Software Verification Tools Rodeo](https://samate.nist.gov/FMSwVRodeo/) | | 
+| [Model Checking Contest (MCC)](https://mcc.lip6.fr) | LTL | |
+| [Quantitative Formal Models (QComp)](http://qcomp.org) | Markov/Petri | |
+| [Rigorous Examination of Reactive Systems](http://rers-challenge.org) | | |
+| [Software testing (Test-Comp)](https://test-comp.sosy-lab.org/2019/) | | |
 |----------------------------|----------------|----------------|
 
 In addition to these tool competitions, there are also contests that pit teams
@@ -110,13 +123,14 @@ the power/flexibility of their tools.
 | [VerifyThis]               | Any Auto-active theorem prover |
 | [Proof Ground interactive proving contest](https://www21.in.tum.de/~wimmers/proofground/) | Any Interactive theorem prover |
 | [Proving for fun](https://competition.isabelle.systems) | Isabelle |
+| [LP/CP Programming Contest](https://sites.google.com/site/prologcontest2018/) | Prolog, Potassco, Ergo-Lite, Picat, MiniZinc, IDP |
 |----------------------------|-------|
+
+---------------
 
 If you know of any other competitions, please DM me [on
 twitter](https://www.twitter.com/alastair_d_reid)
 or send me [an email](mailto:adreid@google.com).
-
----------------
 
 *Acknowledgements for pointing me at some of the above*:
 Claire Wolf,
