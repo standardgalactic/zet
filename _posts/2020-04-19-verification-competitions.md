@@ -58,6 +58,10 @@ These competitions are interesting for several reasons
    solve problems more quickly, you are now expected to show it
    by reporting your performance on these benchmarks.
 
+6. To turn prototypes into mature tools.
+   For example, to enter SV-COMP, you have to be able to cope with a large
+   part of the C language, not just a subset.
+
 [Martin Nyx Brain](https://www.city.ac.uk/people/academics/martin-nyx-brain)
 has written
 [an explanation of how these competitions are organized](http://www.sc-square.org/CSA/workshop2-papers/RP3-FinalVersion.pdf).
@@ -69,6 +73,11 @@ For example, the SAT competition became concerned about bugs in verifiers
 skewing the result so they have adopted the DRAT output format that
 allows external tools to check any UNSAT results.
 
+In addition, I found a paper that gives an overview of competitions:
+[TOOLympics 2019: An Overview of Competitions in Formal Methods](https://link.springer.com/chapter/10.1007/978-3-030-17502-3_1)
+([pdf](https://www.sosy-lab.org/research/pub/2019-TACAS.TOOLympics_2019_An_Overview_of_Competitions_in_Formal_Methods.pdf))
+
+
 |----------------------------|----------------|---------------|
 | Competition                | Input format   | Output format |
 |----------------------------|----------------|---------------|
@@ -76,7 +85,6 @@ allows external tools to check any UNSAT results.
 | [SMT Competition](https://boolector.github.io/smt-comp.html) | [SMT-LIB](http://smtlib.cs.uiowa.edu) | |
 | [Hardware Model Checking competition](http://fmv.jku.at/hwmcc19/) | [BTOR2](https://github.com/Boolector/btor2tools), [AIGER](http://fmv.jku.at/aiger/) | |
 | [Competition on Software Verification (SV-COMP)](https://sv-comp.sosy-lab.org/2020/)  | | |
-| [VerifyThis] | | |
 | [MaxSAT](https://maxsat-evaluations.github.io) | | |
 | [Pseudo-Boolean Competition](http://www.cril.univ-artois.fr/PB16/) | | |
 | [Quantified boolean formula (QBF) evaluation](http://www.qbflib.org/index_eval.php) | | |
@@ -88,9 +96,29 @@ allows external tools to check any UNSAT results.
 | [Answer Set Programming challenge](https://sites.google.com/view/aspcomp2019/) | | |
 |----------------------------|----------------|----------------|
 
+In addition to these tool competitions, there are also contests that pit teams
+of users against each other.
+
+
+|----------------------------|-------|
+| Contests                   | Tool  |
+|----------------------------|-------|
+| [VerifyThis]               | Any Auto-active theorem prover |
+| [Proof Ground interactive proving contest](https://www21.in.tum.de/~wimmers/proofground/) | Any Interactive theorem prover |
+| [Proving for fun](https://competition.isabelle.systems) | Isabelle |
+|----------------------------|-------|
+
 If you know of any other competitions, please DM me [on
 twitter](https://www.twitter.com/alastair_d_reid)
 or send me [an email](mailto:adreid@google.com).
+
+---------------
+
+*Acknowledgements for pointing me at some of the above*:
+Claire Wolf,
+Hernan Ponce De Leon,
+Martin Nyx Brain,
+SidiMohamed Beillahi.
 
 
 [Coq]: https://coq.inria.fr
