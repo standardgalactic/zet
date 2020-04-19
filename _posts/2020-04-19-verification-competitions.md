@@ -94,10 +94,14 @@ In addition, I found a paper that gives an overview of competitions:
 | [Tableaux and non-classical system comparision](http://www.cs.man.ac.uk/~schmidt/mspass/problems.html) | | 
 | [World championship for automated theorem proving](http://www.tptp.org/CASC/)  | | |
 | [Answer Set Programming challenge](https://sites.google.com/view/aspcomp2019/) | | |
+| [Reactive sythesis competition](http://www.syntcomp.org) | LTL, TLSF, AIGER, HOA | |
+| [Syntax Guided Synthesis (SyGuS)](https://sygus.org) | [SyGuS-IF](https://sygus.org/language/) | |
 |----------------------------|----------------|----------------|
 
 In addition to these tool competitions, there are also contests that pit teams
 of users against each other.
+So these competitions test both the skills of the participants and
+the power/flexibility of their tools.
 
 
 |----------------------------|-------|
@@ -116,6 +120,7 @@ or send me [an email](mailto:adreid@google.com).
 
 *Acknowledgements for pointing me at some of the above*:
 Claire Wolf,
+John Regehr,
 Hernan Ponce De Leon,
 Martin Nyx Brain,
 SidiMohamed Beillahi.
