@@ -323,6 +323,17 @@ a.papertitle {
     font-size: 20px
 }
 
+// For some reason, the default CSS had broken the appearance of footnotes.
+sup {
+  vertical-align: super;
+  font-size: x-small;
+}
+
+th, td {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
