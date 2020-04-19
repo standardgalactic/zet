@@ -74,6 +74,7 @@ allows external tools to check any UNSAT results.
 |----------------------------|----------------|---------------|
 | [SAT Competition](http://www.satcompetition.org) | [DIMACS](http://www.satcompetition.org/2009/format-benchmarks2009.html) | [DRAT](https://satcompetition.github.io/2020/certificates.html) |
 | [SMT Competition](https://boolector.github.io/smt-comp.html) | [SMT-LIB](http://smtlib.cs.uiowa.edu) | |
+| [Hardware Model Checking competition](http://fmv.jku.at/hwmcc19/) | [BTOR2](https://github.com/Boolector/btor2tools), [AIGER](http://fmv.jku.at/aiger/) | |
 | [Competition on Software Verification (SV-COMP)](https://sv-comp.sosy-lab.org/2020/)  | | |
 | [VerifyThis] | | |
 | [MaxSAT](https://maxsat-evaluations.github.io) | | |
