@@ -99,7 +99,7 @@ and [ETAPS TOOLympics](https://conf.researchr.org/track/etaps-2019/etaps-2019-TO
 | [MiniZinc challenge](https://www.minizinc.org/challenge2017/call_for_problems.html) | [MiniZinc](https://www.minizinc.org) | |
 | [Termination competition](http://termination-portal.org/wiki/Termination_Competition) | | |
 | [Tableaux and non-classical system comparision](http://www.cs.man.ac.uk/~schmidt/mspass/problems.html) | | 
-| [World championship for automated theorem proving](http://www.tptp.org/CASC/)  | | |
+| [TPTP CASC](http://www.tptp.org/CASC/)  | automated theorem provers | |
 | [Answer Set Programming challenge](https://sites.google.com/view/aspcomp2019/) | | |
 | [Reactive sythesis competition](http://www.syntcomp.org) | LTL, TLSF, AIGER, HOA | |
 | [Syntax Guided Synthesis (SyGuS)](https://sygus.org) | [SyGuS-IF](https://sygus.org/language/) | |
@@ -110,6 +110,7 @@ and [ETAPS TOOLympics](https://conf.researchr.org/track/etaps-2019/etaps-2019-TO
 | [Rigorous Examination of Reactive Systems](http://rers-challenge.org) | | |
 | [Software testing (Test-Comp)](https://test-comp.sosy-lab.org/2019/) | | |
 | [WCET tool challenge](https://www.absint.com/ait/WCET_Tool_Challenge_2011_Final_Report.pdf) | ARM, MPC5554 | |
+| [VNN-COMP](https://sites.google.com/view/vnn20/vnncomp) | Neural networks | |
 |----------------------------|----------------|----------------|
 
 In addition to these tool competitions, there are also contests that pit teams
@@ -128,6 +129,18 @@ the power/flexibility of their tools.
 | [CPS ARCH comp](https://cps-vo.org/group/ARCH/FriendlyCompetition) | |
 |----------------------------|-------|
 
+And there are non-competitions that are maybe best described as "[Rosetta
+Code](http://rosettacode.org/wiki/Rosetta_Code) but for proof".
+That is, the goal is to have many people solve the same problem
+using as many different tools as possible.
+
+|----------------------------|
+| Rosetta proof              |
+|----------------------------|
+| [Let's prove leftpad](https://github.com/hwayne/lets-prove-leftpad) |
+| [Let's prove a blocking queue](https://github.com/lemmy/lets-prove-blocking-queue) |
+|----------------------------|
+
 ---------------
 
 If you know of any other competitions, please DM me [on
@@ -138,10 +151,13 @@ or send me [an email](mailto:adreid@google.com).
 Amit Gurung,
 Claire Wolf,
 Igor Skochinsky,
+Jack Pappas,
 John Regehr,
 Hernan Ponce De Leon,
+@lemmstr,
 Martin Nyx Brain,
-SidiMohamed Beillahi.
+SidiMohamed Beillahi,
+Taylor T Johnson.
 
 
 [Coq]: https://coq.inria.fr
