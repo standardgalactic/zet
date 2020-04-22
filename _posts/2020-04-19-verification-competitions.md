@@ -125,6 +125,7 @@ the power/flexibility of their tools.
 | [Proof Ground interactive proving contest](https://www21.in.tum.de/~wimmers/proofground/) | Any Interactive theorem prover |
 | [Proving for fun](https://competition.isabelle.systems) | Isabelle |
 | [LP/CP Programming Contest](https://sites.google.com/site/prologcontest2018/) | Prolog, Potassco, Ergo-Lite, Picat, MiniZinc, IDP |
+| [CPS ARCH comp](https://cps-vo.org/group/ARCH/FriendlyCompetition) | |
 |----------------------------|-------|
 
 ---------------
@@ -134,6 +135,7 @@ twitter](https://www.twitter.com/alastair_d_reid)
 or send me [an email](mailto:adreid@google.com).
 
 *Acknowledgements for pointing me at some of the above*:
+Amit Gurung,
 Claire Wolf,
 Igor Skochinsky,
 John Regehr,
