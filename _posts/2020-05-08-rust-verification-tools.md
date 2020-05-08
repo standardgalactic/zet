@@ -72,6 +72,9 @@ Although I have spent some time looking at what is available and
 reading [Rust verification papers],
 I am not an expert in this area so I have probably got things wrong, missed
 out important tools, etc.
+You should also bear in mind that things are changing fast: I am writing this
+in early May 2020 but I hope that, in a few months time, everything I
+say will be out of date.
 Do please [contact me](mailto:adreid@google.com)  with additions and
 corrections._
 
