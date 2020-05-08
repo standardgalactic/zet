@@ -3,8 +3,8 @@ title: Rust verification tools
 layout: post
 ---
 
-The [Rust language] and the Rust community are really interesting if you are interested
-in building better quality systems software.
+The [Rust language] and the Rust community are really interesting if you are
+want to build better quality systems software.
 
 - The language is specifically designed to make it easier to build reliable
   software.
@@ -28,6 +28,10 @@ Are they complete?
 And are they being maintained?
 
 Here is a list of the tools that I know about (more details below):
+- Cargo-KLEE:
+  [repository][Cargo-KLEE],
+  [paper][lindner:indin:2018],
+  [paper][lindner:indin:2019]
 - CBMC:
   [Pull Request][CBMC]
 - Crust:
@@ -40,10 +44,11 @@ Here is a list of the tools that I know about (more details below):
   [repository][Electrolysis],
   [thesis](https://pp.ipd.kit.edu/uploads/publikationen/ullrich16masterarbeit.pdf),
   [slides](http://kha.github.io/electrolysis/presentation.pdf)
-- KLEE:
-  [repository][Cargo-KLEE],
-  [paper][lindner:indin:2018],
-  [paper][lindner:indin:2019]
+- Haybale:
+  [repository][Haybale],
+  [crates.io](https://crates.io/crates/haybale),
+  [announcement
+  (twitter)](https://twitter.com/craigdissel/status/1199046678818385920?s=20)
 - MIRAI:
   [repository][MIRAI]
 - Prusti:
@@ -273,6 +278,8 @@ Some of the tools have solutions for these issues.
 - [Cargo tool] integration: Many of the tools seem to act on a single file
   but if I want to verify a Rust package, I really want something
   that is integrated with Cargo.
+  (Tools that seem to have Cargo integration are [Cargo-KLEE] and
+  [Crux-mir].)
 
 - Standard verification interfaces for automatic verification tools:
   The automatic verification tools all seem to have different ways
@@ -308,7 +315,10 @@ This finds things like
   delayed.  The list of talks was helpful in finding some of the tools
   listed on this page.
 
-Also, Martin Nyx Brain pointed me at the CBMC pull request for Rust support.
+Also:
+- Martin Nyx Brain pointed me at the CBMC pull request for Rust support
+- @matt_dz pointed me at his list of [LLVM based program analysis tools](https://gist.github.com/MattPD/00573ee14bf85ccac6bed3c0678ddbef#llvm---verification)
+
 
 ----------------
 
@@ -327,7 +337,7 @@ Also, Martin Nyx Brain pointed me at the CBMC pull request for Rust support.
 [matsushita:esop:2020]: {{ site.baseurl }}/RelatedWork/papers/matsushita:esop:2020/
 [toman:ase:2015]: {{ site.baseurl }}/RelatedWork/papers/toman:ase:2015/
 
-[Rust verification papers]: {{ site.baseurl }}/notes/rust-language/
+[Rust verification papers]: {{ site.baseurl }}/RelatedWork/notes/rust-language/
 
 [Rust verification working group]: https://rust-lang-nursery.github.io/wg-verification/
 [Rust verification workshop]: https://sites.google.com/view/rustverify2020
@@ -336,6 +346,7 @@ Also, Martin Nyx Brain pointed me at the CBMC pull request for Rust support.
 [Crust]: https://github.com/uwplse/crust
 [Crux-mir]: https://github.com/GaloisInc/mir-verifier
 [Electrolysis]: https://github.com/Kha/electrolysis
+[Haybale]: https://github.com/PLSysSec/haybale
 [Cargo-KLEE]: https://gitlab.henriktjader.com/pln/cargo-klee
 [MIRAI]: https://github.com/facebookexperimental/MIRAI
 [PRUSTI]: https://github.com/viperproject/prusti-dev
