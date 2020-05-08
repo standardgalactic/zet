@@ -117,9 +117,9 @@ Runtime errors includes things like the following
 
 While not all tools aim to check all of the above,
 the automatic verification tools I know of are
+[Cargo-KLEE],
 [CBMC],
 [Crux-mir],
-[KLEE],
 [MIRAI],
 [RustHorn],
 [SMACK].
@@ -252,8 +252,8 @@ Here is what I know about them.
 (Please tell me if I got this wrong.)
 
 - Actively developed: 
+  [Cargo-KLEE],
   [Crux-mir],
-  [KLEE],
   [MIRAI],
   [Miri],
   [Prusti],
