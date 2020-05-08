@@ -12,6 +12,8 @@ want to build better quality systems software.
   Rust code includes documentation and tests.
 - There is an active [Rust fuzzing] community to improve the state
   of Rust packages and other software.
+- There is only one implementation so they don't suffer the fragmentation
+  that the existence of multiple compilers causes for C.
 
 Over the last few months, I have been trying to understand one more part
 of the story:
@@ -72,6 +74,9 @@ Miri is not a formal verification tool
 but it can be used to detect undefined behaviour
 and it is important in defining what "unsafe" Rust
 is and is not allowed to do.
+And I should mention [Sealed Rust] which is
+"Ferrous System's plan to qualify the Rust
+Language and Compiler for use in the Safety Critical domain."
 
 
 
@@ -327,6 +332,7 @@ Also:
 [Cargo tool]: https://doc.rust-lang.org/cargo/
 [Rust fuzzing]: https://github.com/rust-fuzz
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/
+[Sealed Rust]: https://ferrous-systems.com/blog/sealed-rust-the-pitch/
 
 [astrauskas:oopsla:2019]: {{ site.baseurl }}/RelatedWork/papers/astrauskas:oopsla:2019/
 [baranowski:atva:2018]: {{ site.baseurl }}/RelatedWork/papers/baranowski:atva:2018/
