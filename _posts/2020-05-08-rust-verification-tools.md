@@ -95,11 +95,25 @@ corrections._
 
 ## What can the tools verify?
 
-There are three major categories of software verification tool
+There are four major categories of software verification tool
 in roughly increasing order of how hard it is to use them:
+symbolic execution tools,
 automatic (aka extended static checkers),
 auto-active verifiers
 and deductive verifiers.
+
+### Symbolic execution tools
+
+These tools are designed to find bugs by exploring
+paths through your program and/or to generate testsuites
+with high control coverage.
+Unlike the other three kinds of tool, these tools typically don't provide
+any guarantee that there are no bugs left but they scale really well
+and they are probably the best tools to use on a new codebase.
+
+The tools that I know to be in this category are
+[Cargo-KLEE]
+and [Haybale].
 
 
 ### Automatic verification tools
@@ -122,7 +136,6 @@ Runtime errors includes things like the following
 
 While not all tools aim to check all of the above,
 the automatic verification tools I know of are
-[Cargo-KLEE],
 [CBMC],
 [Crux-mir],
 [MIRAI],
