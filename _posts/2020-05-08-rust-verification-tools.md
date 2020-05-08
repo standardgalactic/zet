@@ -40,6 +40,10 @@ Here is a list of the tools that I know about (more details below):
   [repository][Electrolysis],
   [thesis](https://pp.ipd.kit.edu/uploads/publikationen/ullrich16masterarbeit.pdf),
   [slides](http://kha.github.io/electrolysis/presentation.pdf)
+- KLEE:
+  [repository][Cargo-KLEE],
+  [paper][lindner:indin:2018],
+  [paper][lindner:indin:2019]
 - MIRAI:
   [repository][MIRAI]
 - Prusti:
@@ -110,6 +114,7 @@ While not all tools aim to check all of the above,
 the automatic verification tools I know of are
 [CBMC],
 [Crux-mir],
+[KLEE],
 [MIRAI],
 [RustHorn],
 [SMACK].
@@ -243,6 +248,7 @@ Here is what I know about them.
 
 - Actively developed: 
   [Crux-mir],
+  [KLEE],
   [MIRAI],
   [Miri],
   [Prusti],
@@ -316,6 +322,8 @@ Also, Martin Nyx Brain pointed me at the CBMC pull request for Rust support.
 [baranowski:atva:2018]: {{ site.baseurl }}/RelatedWork/papers/baranowski:atva:2018/
 [jung:popl:2017]: {{ site.baseurl }}/RelatedWork/papers/jung:popl:2017/
 [jung:popl:2020]: {{ site.baseurl }}/RelatedWork/papers/jung:popl:2020/
+[lindner:indin:2018]: {{ site.baseurl }}/RelatedWork/papers/lindner:indin:2018/
+[lindner:indin:2019]: {{ site.baseurl }}/RelatedWork/papers/lindner:indin:2019/
 [matsushita:esop:2020]: {{ site.baseurl }}/RelatedWork/papers/matsushita:esop:2020/
 [toman:ase:2015]: {{ site.baseurl }}/RelatedWork/papers/toman:ase:2015/
 
@@ -328,6 +336,7 @@ Also, Martin Nyx Brain pointed me at the CBMC pull request for Rust support.
 [Crust]: https://github.com/uwplse/crust
 [Crux-mir]: https://github.com/GaloisInc/mir-verifier
 [Electrolysis]: https://github.com/Kha/electrolysis
+[Cargo-KLEE]: https://gitlab.henriktjader.com/pln/cargo-klee
 [MIRAI]: https://github.com/facebookexperimental/MIRAI
 [PRUSTI]: https://github.com/viperproject/prusti-dev
 [RustBelt]: https://plv.mpi-sws.org/rustbelt/
