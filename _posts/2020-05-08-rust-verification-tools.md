@@ -12,8 +12,21 @@ want to build better quality systems software.
   Rust code includes documentation and tests.
 - There is an active [Rust fuzzing] community to improve the state
   of Rust packages and other software.
-- There is only one implementation so they don't suffer the fragmentation
-  that the existence of multiple compilers causes for C.
+- There is just one compiler for Rust and it has been
+  [reshaped to make it easier to write analysis tools][librarification]
+  and there are two clean interfaces (MIR and LLVM-IR) that tools can
+  hook into.
+  This avoids most of the fragmentation we see in C compilers and
+  makes it much easier for the compiler and the analysis tool to
+  give the same meaning to a single piece of code.[^reddit]
+
+[^reddit]:
+    A [comment on
+    Reddit](https://www.reddit.com/r/rust/comments/gfz4gh/rust_verification_tools/)
+    suggested that Rust had a problem for not having a full formal spec.
+    This led me to think about how it actually had something at least
+    as good: a single compiler that gives access to the MIR and LLVM-IR
+    representations of your code.
 
 Over the last few months, I have been trying to understand one more part
 of the story:
@@ -92,6 +105,10 @@ say will be out of date.
 Do please [contact me](mailto:adreid@google.com)  with additions and
 corrections._
 
+_Of course, the fact that I am updating this post as people point things out
+means that if you look at comments in twitter or reddit about this post,
+they may not make sense because I have tried to fix this post in response._
+
 
 ## What can the tools verify?
 
@@ -151,6 +168,13 @@ Typically, all you have to do is build a verification harness
 (that looks a wee bit like a fuzzing harness)
 and maybe add some extra assertions into your code.
 
+For me, this makes these tools the most interesting because,
+once the kinks have been worked out, these tools have the
+most potential to be added into a normal development flow.
+You don't need a lot of training to make use of these tools.
+(But note the comments below about the kinks that still have
+to be worked out.)
+
 
 ### Auto-active verification tools
 
@@ -181,6 +205,9 @@ conditions" that are then proved using an interactive theorem prover.
 
 The deductive verification tools for Rust that I know of are
 [Electrolysis] and [RustBelt].
+[Electrolysis] transpiles Rust code into a functional program in the [Lean]
+interactive theorem prover
+and you then prove correctness of that program using Lean.
 The goal of [RustBelt] is to verify unsafe Rust code but,
 strictly speaking, RustBelt does not actually verify Rust code:
 you manually transcribe Rust code into &lambda;-Rust and
@@ -272,6 +299,7 @@ Here is what I know about them.
 - Actively developed: 
   [Cargo-KLEE],
   [Crux-mir],
+  [haybale],
   [MIRAI],
   [Miri],
   [Prusti],
@@ -310,6 +338,15 @@ Some of the tools have solutions for these issues.
   contracts. Is this a good choice? Are/should other tools
   use the same crate?
 
+These largely come down to standardisation.
+In an ideal world, there would be a standard way to markup my
+code and invoke tools so that I can verify it.
+This would let me switch from one tool to another, benchmark tools
+against each other, use a portfolio of tools, etc.
+In the C verification world, there has been some standardization
+driven by [verification competitions] such as [SV-COMP].
+
+
 
 ## Conclusion
 
@@ -322,10 +359,10 @@ The Rust verification future looks very bright!
 &#x1F576;
 
 
-------------
+### Postscript
 
-_Where did I get this list from?_
-As you might imagine, I searched the Google Scholar and the 
+_Where did I get this list of tools from?_
+As you might imagine, I searched Google Scholar and the 
 web for things like "Rust verification tool"
 This finds things like
 - The [Rust verification working group] which seems to be dormant,
@@ -338,7 +375,7 @@ Also:
 - @matt_dz pointed me at his list of [LLVM based program analysis tools](https://gist.github.com/MattPD/00573ee14bf85ccac6bed3c0678ddbef#llvm---verification)
 
 
-----------------
+### Footnotes
 
 [Rust language]: https://www.rust-lang.org
 [Rust book]: https://doc.rust-lang.org/book/
@@ -357,6 +394,10 @@ Also:
 [toman:ase:2015]: {{ site.baseurl }}/RelatedWork/papers/toman:ase:2015/
 
 [Rust verification papers]: {{ site.baseurl }}/RelatedWork/notes/rust-language/
+[Lean]: {{ site.baseurl }}/RelatedWork/notes/lean-theorem-prover/
+[SV-COMP]: {{ site.baseurl }}/RelatedWork/notes/sv-competition/
+
+[verification competitions]: {% post_url 2020-04-19-verification-competitions %}
 
 [Rust verification working group]: https://rust-lang-nursery.github.io/wg-verification/
 [Rust verification workshop]: https://sites.google.com/view/rustverify2020
@@ -376,3 +417,4 @@ Also:
 [Miri]: https://github.com/rust-lang/miri
 [contracts crate]: https://gitlab.com/karroffel/contracts
 [arbitrary crate]: https://github.com/rust-fuzz/arbitrary
+[librarification]: http://smallcultfollowing.com/babysteps/blog/2020/04/09/libraryification/
