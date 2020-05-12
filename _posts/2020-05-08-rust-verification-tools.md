@@ -40,7 +40,8 @@ and it seems that the community should be receptive to the idea of formal verifi
 So what tools are out there?
 What can you do with them?
 Are they complete?
-And are they being maintained?
+Are they being maintained?
+What common standards and benchmarks exist?
 
 Here is a list of the tools that I know about (more details below):
 - Cargo-KLEE:
@@ -315,37 +316,76 @@ Here is what I know about them.
   [Electrolysis].
 
 
-## Other thoughts
+## Emerging standards and benchmarks
 
-While I was looking at all these different tools, I noticed
-a few other challenges with the tools.
-Some of the tools have solutions for these issues.
+If verification of Rust programs is going to take off, we
+need standards and benchmarks.
 
-- [Cargo tool] integration: Many of the tools seem to act on a single file
-  but if I want to verify a Rust package, I really want something
-  that is integrated with Cargo.
-  (Tools that seem to have Cargo integration are [Cargo-KLEE] and
-  [Crux-mir].)
+Standard interfaces
+let us try different tools to see which one is best for our codebase;
+they let us switch between different kinds of tools (maybe one is
+great for finding bugs while another is great for showing the
+absence of bugs);
+and they let us use a portfolio of tools running in parallel.
+Two emerging interfaces are
 
-- Standard verification interfaces for automatic verification tools:
-  The automatic verification tools all seem to have different ways
-  of creating symbolic values and specifying assumptions.
-  I wonder whether the [arbitrary crate] used by fuzzers could
-  provide some inspiration for a standard symbolic value API?
+- The [verifier crate] that provides
+  macros `assert!` (and the usual variants like `assert_eq!`),
+  `assume!`, `unreachable!` and `nondet!`[^fuzzers]
+  that can be used to create verification harnesses.
 
-- Standard verification interfaces for function contracts:
-  The [MIRAI] tool is using the [contracts crate] for function
-  contracts. Is this a good choice? Are/should other tools
-  use the same crate?
+[^fuzzers]:
+    I wonder whether it would be possible to create a further
+    layer of abstraction to give fuzzers and verifiers
+    a common interface that invokes 
+    the [arbitrary crate] in fuzzers and uses `nondet!` in
+    fuzzers.
 
-These largely come down to standardisation.
-In an ideal world, there would be a standard way to markup my
-code and invoke tools so that I can verify it.
-This would let me switch from one tool to another, benchmark tools
-against each other, use a portfolio of tools, etc.
-In the C verification world, there has been some standardization
-driven by [verification competitions] such as [SV-COMP].
+- The [contracts crate] that
+  provides macros `pre!` and `post!` for function contracts
+  and `invariant!` for loop invariants.
 
+There is a virtuous cycle between standard interfaces, benchmarks
+and [verification competitions].
+
+- Standard interfaces enable the development of meaningful benchmarks
+  because they make it possible to share verification harnesses
+  and code annotations.
+
+- Benchmarks allow you to compare tools which makes it possible to
+  create [verification competitions].[^Haskell-benchmarks]
+  The best benchmark suites contain a mixture of different types and
+  sizes of code
+  and a mixture of code with known (tricky) bugs and of code
+  with no bugs to identify tools that are good in one mode or another.
+  This mixture reflects real requirements for the tools but it also
+  allows for multiple winners – depending on which category matters
+  most to each user group or different project phase.
+
+  (Benchmarks are also useful when developing tools and competitive
+  benchmark results are useful when publishing papers about tools.)
+
+- [Verification competitions] such as [SV-COMP]
+  let tool developers demonstrate how
+  good their tools are and they encourage friendly competition between
+  tools.
+  But you can only take part if your tool implements the interface
+  used in the benchmarks.
+
+[^Haskell-benchmarks]:
+    One of the motivations for developing the Haskell language
+    was the difficulty of comparing all the different lazy functional
+    languages that existed before Haskell.
+    With a standard language, benchmarks like the brilliantly named
+    [nofib benchmark suite] could be developed.
+
+
+## Cargo integration
+
+While I was looking at these tools, I noticed that many of the tools act on
+a single file.  But if I want to verify a Rust package, I really want something
+that is integrated with the [Cargo tool].
+Tools that seem to have Cargo integration are [Cargo-KLEE] and [Crux-mir].
 
 
 ## Conclusion
@@ -373,6 +413,8 @@ This finds things like
 Also:
 - Martin Nyx Brain pointed me at the CBMC pull request for Rust support
 - @matt_dz pointed me at his list of [LLVM based program analysis tools](https://gist.github.com/MattPD/00573ee14bf85ccac6bed3c0678ddbef#llvm---verification)
+- Zvonimir Rakamaric pointed me at the [verifier crate] and the [verifier benchmarks].
+
 
 
 ### Footnotes
@@ -394,10 +436,13 @@ Also:
 [toman:ase:2015]: {{ site.baseurl }}/RelatedWork/papers/toman:ase:2015/
 
 [Rust verification papers]: {{ site.baseurl }}/RelatedWork/notes/rust-language/
-[Lean]: {{ site.baseurl }}/RelatedWork/notes/lean-theorem-prover/
-[SV-COMP]: {{ site.baseurl }}/RelatedWork/notes/sv-competition/
 
 [verification competitions]: {% post_url 2020-04-19-verification-competitions %}
+
+[Lean]: {{ site.baseurl }}/RelatedWork/notes/lean-theorem-prover/
+[SV-COMP]: {{ site.baseurl }}/RelatedWork/notes/sv-competition/
+[Haskell]: https://haskell.org/
+[nofib benchmark suite]: https://link.springer.com/chapter/10.1007/978-1-4471-3215-8_17
 
 [Rust verification working group]: https://rust-lang-nursery.github.io/wg-verification/
 [Rust verification workshop]: https://sites.google.com/view/rustverify2020
@@ -409,12 +454,14 @@ Also:
 [Haybale]: https://github.com/PLSysSec/haybale
 [Cargo-KLEE]: https://gitlab.henriktjader.com/pln/cargo-klee
 [MIRAI]: https://github.com/facebookexperimental/MIRAI
+[Miri]: https://github.com/rust-lang/miri
 [PRUSTI]: https://github.com/viperproject/prusti-dev
 [RustBelt]: https://plv.mpi-sws.org/rustbelt/
 [RustHorn]: https://github.com/hopv/rust-horn
 [SMACK]: https://github.com/smackers/smack
 
-[Miri]: https://github.com/rust-lang/miri
 [contracts crate]: https://gitlab.com/karroffel/contracts
 [arbitrary crate]: https://github.com/rust-fuzz/arbitrary
 [librarification]: http://smallcultfollowing.com/babysteps/blog/2020/04/09/libraryification/
+[verifier crate]: https://crates.io/crates/verifier
+[verifier benchmarks]: https://github.com/soarlab/rust-benchmarks
