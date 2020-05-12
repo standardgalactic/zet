@@ -65,6 +65,8 @@ Here is a list of the tools that I know about (more details below):
   [crates.io](https://crates.io/crates/haybale),
   [announcement
   (twitter)](https://twitter.com/craigdissel/status/1199046678818385920?s=20)
+- KLEE Rust (abandoned):
+  [repository][KLEE Rust] https://github.com/jawline/klee-rust
 - MIRAI:
   [repository][MIRAI]
 - Prusti:
@@ -78,21 +80,15 @@ Here is a list of the tools that I know about (more details below):
 - RustHorn:
   [repository][RustHorn],
   [paper][matsushita:esop:2020]
+- Seer:
+  [repository][Seer]
 - SMACK:
   [website](https://smackers.github.io),
   [repository][SMACK],
   [paper][baranowski:atva:2018]
 
-I should also mention [Miri] ([paper][jung:popl:2020]).
-Miri is not a formal verification tool
-but it can be used to detect undefined behaviour
-and it is important in defining what "unsafe" Rust
-is and is not allowed to do.
-And I should mention [Sealed Rust] which is
-"Ferrous System's plan to qualify the Rust
-Language and Compiler for use in the Safety Critical domain."
-
-
+There are also some interpreters, tools and libraries that are not formal
+verification tools but that are relevant – I mention these at the end.
 
 
 _Before I go any further, I should probably add a disclaimer:
@@ -130,8 +126,9 @@ any guarantee that there are no bugs left but they scale really well
 and they are probably the best tools to use on a new codebase.
 
 The tools that I know to be in this category are
-[Cargo-KLEE]
-and [Haybale].
+[Cargo-KLEE],
+[Haybale]
+and [Seer].
 
 
 ### Automatic verification tools
@@ -313,7 +310,11 @@ Here is what I know about them.
 
 - Appears to be abandoned: 
   [Crust],
-  [Electrolysis].
+  [Electrolysis],
+  [Seer].
+
+- Definitely abandoned:
+  [KLEE Rust].
 
 
 ## Emerging standards and benchmarks
@@ -388,6 +389,26 @@ that is integrated with the [Cargo tool].
 Tools that seem to have Cargo integration are [Cargo-KLEE] and [Crux-mir].
 
 
+## Runtime checks, etc.
+
+This article is about *formal* verification tools.
+But testing and fuzzing tools are an important, complementary part
+of any verification story.
+
+- [LibHoare] is a Rust library for adding runtime pre- and post-conditions to
+  Rust programs.
+
+- [Miri] ([paper][jung:popl:2020]) is not a formal verification tool
+  but it can be used to detect undefined behaviour
+  and it is important in defining what "unsafe" Rust
+  is and is not allowed to do.
+
+- [RustFuzz] is a collection of resources for fuzz-testing Rust code.
+
+- [Sealed Rust] is "Ferrous System's plan to qualify the Rust
+  Language and Compiler for use in the Safety Critical domain."
+
+
 ## Conclusion
 
 Is looks as though Rust is a very active area for verification tools.
@@ -453,11 +474,15 @@ Also:
 [Electrolysis]: https://github.com/Kha/electrolysis
 [Haybale]: https://github.com/PLSysSec/haybale
 [Cargo-KLEE]: https://gitlab.henriktjader.com/pln/cargo-klee
+[KLEE Rust]: https://github.com/jawline/klee-rust
+[LibHoare]: https://github.com/nrc/libhoare
 [MIRAI]: https://github.com/facebookexperimental/MIRAI
 [Miri]: https://github.com/rust-lang/miri
 [PRUSTI]: https://github.com/viperproject/prusti-dev
 [RustBelt]: https://plv.mpi-sws.org/rustbelt/
+[RustFuzz]: https://github.com/rust-fuzz
 [RustHorn]: https://github.com/hopv/rust-horn
+[Seer]: https://github.com/dwrensha/seer
 [SMACK]: https://github.com/smackers/smack
 
 [contracts crate]: https://gitlab.com/karroffel/contracts
