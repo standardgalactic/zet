@@ -3,6 +3,9 @@ title: Rust verification tools
 layout: post
 ---
 
+_[I have been updating this post continually in response to suggestions and questions.
+If you want to see recent changes, you can [find the diffs here](https://github.com/alastairreid/alastairreid.github.io/commits/master/_posts/2020-05-08-rust-verification-tools.md).]_
+
 The [Rust language] and the Rust community are really interesting if you are
 want to build better quality systems software.
 
