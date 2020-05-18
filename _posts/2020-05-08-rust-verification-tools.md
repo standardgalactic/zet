@@ -331,7 +331,7 @@ they let us switch between different kinds of tools (maybe one is
 great for finding bugs while another is great for showing the
 absence of bugs);
 and they let us use a portfolio of tools running in parallel.
-Two emerging interfaces are
+Three emerging interfaces are
 
 - The [verifier crate] that provides
   macros `assert!` (and the usual variants like `assert_eq!`),
@@ -344,6 +344,10 @@ Two emerging interfaces are
     a common interface that invokes 
     the [arbitrary crate] in fuzzers and uses `nondet!` in
     fuzzers.
+
+- [Viper rust-contracts] that
+  provides macros `requires!`, `ensures!` and `invariant!`
+  for use in function attributes and loop bodies.
 
 - The [contracts crate] that
   provides macros `pre!` and `post!` for function contracts
@@ -489,6 +493,7 @@ Also:
 [SMACK]: https://github.com/smackers/smack
 
 [contracts crate]: https://gitlab.com/karroffel/contracts
+[Viper rust-contracts]: https://github.com/viperproject/rust-contracts
 [arbitrary crate]: https://github.com/rust-fuzz/arbitrary
 [librarification]: http://smallcultfollowing.com/babysteps/blog/2020/04/09/libraryification/
 [verifier crate]: https://crates.io/crates/verifier
