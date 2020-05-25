@@ -4,11 +4,25 @@ title: About
 permalink: /about/
 ---
 
+## Google (2019--present)
+
 In September 2019, I joined Google Research to work on [Project
-Oak](https://github.com/project-oak/oak/blob/master/README.md) where I am
-working on tools and methodologies to support the use of formal methods
-to improve our confidence in high-privilege, low-level software such as firmware and
-[hypervisors](https://opensource.google/projects/hafnium).
+Oak](https://github.com/project-oak/oak/blob/master/README.md)
+where my focus is on
+tools and methodologies to support the use of formal methods
+to improve our confidence in high-privilege, low-level software
+such as firmware, hypervisors and virtual machines.
+
+Increasingly my focus has shifted to formal verification tools
+for the Rust programming language and how formal verification
+tools fit into a development flow that
+includes documentation tests, property-based testing,
+fuzzing and automatic test generation.
+My boss likes to use the phrase "Verify all the things!"
+and I am trying to figure out how to make it happen.
+
+
+## Arm (2004--2019)
 
 Until August 2019, I was a senior principal research engineer at Arm Ltd.
 working on
@@ -43,6 +57,9 @@ I have also worked on
 testcase generation,
 architectural coverage analysis,
 CPU simulators and the ARMv8 architecture.
+
+## Utah, Yale and Glasgow Universities (1988--2004)
+
 Before working at Arm, I worked on
 [functional programming](#yale-university-projects),
 [functional reactive programming](#robotics)
