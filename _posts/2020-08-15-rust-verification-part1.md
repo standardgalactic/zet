@@ -12,8 +12,9 @@ this post is about using KLEE to verify Rust programs.
 
 The process is a bit complicated and it took me a while to figure out (based on
 reading many random posts full of instructions that no longer work) so I am
-going to describe all the details.  (In a later post, I will describe a tool
-I wrote that hides all the complexity.)
+going to dive into all the details.
+(In later post, I will introduce scripts and libraries that that hide
+a lot of the complexity so that you can focus on the task of verification.)
 
 The Rust compiler is based on the LLVM platform and
 KLEE is based on LLVM so the steps involved in using
@@ -71,6 +72,9 @@ RUSTFLAGS=...  cargo build --target=x86_64-unknown-linux-gnu
 
 1. Running KLEE on bitcode
 2. Exploring paths and assumptions
+   Maybe note that KLEE is not usually used to explore all paths
+   and has a rich set of options for controlling which paths to
+   explore and in what order.
 3. Entry point
 4. Library
 5. Working round KLEE issues
@@ -111,16 +115,46 @@ KTEST_FILE=... cargo run
 
 # Rust verification part 2: automating use of KLEE
 
+In the previous post
+
 ## The cargo-verify script
 
+todo: extend script with profiling: # paths and time 
+
 ## klee-annotations
+
+1. u8, ... i128
+2. ranges
+
 
 
 # Rust verification part 3: data structures
 
-1. vec, ranges, etc.
+Any interesting program involves not just scalar values like ints and chars but
+data structures like arrays, vectors, btrees, etc.
+So, this post in the series on Rust verification takes a first look at
+how to reason about programs that use data structures.
+We'll develop a small library for building symbolic values which
+later posts in this series will develop into an alternative implementation
+of the [proptest] property-based testing/fuzzing library.
+
+## How to verify array and vector functions?
+
+1. arrays, vecs, ranges, etc.
+   Note that arrays _could_ use existing initialization mechanisms
+   Note that symbolic sized allocations blow up
+
+   Note that we have a range primitive to help
+   create interesting arrays, etc.
+   composite data structures are parameterized
+
+## How to verify btreemap functions
+
 2. avoiding path explosion in btreemap, etc.
-3. compose, union, boxing, oneof?
+
+## What about user-defined types like structs and enums
+
+4. compose, union, boxing, oneof?
 
 
 # Rust verification part 4: a DSL for building complex values
@@ -129,9 +163,28 @@ KTEST_FILE=... cargo run
 2. Property based testing in Rust: proptest, etc.
 3. Implementing proptest for Rust
 
+   a. The Strategy trait
+      value and Value
+      slightly incompatible - may not be important
 
-# Rust verification part 5: fuzzing and verification
+   b. Using last week's library to implement Strategy
 
+   c. The proptest! macro
+
+4. Some proptest examples.
+
+
+# Rust verification part 5: directed testing, fuzzing and verification
+
+Pros and cons
+All depends how rare the failure is
+whether you can anticipate failures
+or are worried about the failures you did not anticipate
+
+Verification's strength: finding unusual corner cases
+
+(Can proptest find btreemap that has key collisions?
+Only if you restrict key range?)
 
 
 # Rust verification part 6: cargo test
@@ -142,6 +195,9 @@ But what about #[test]
 2. Invoking the entry-point
 3. Finding entry points (name mangling)
 4. `cargo test -- --list`
+5. ??
+6. #[should_panic]
+7. parallel testing
 
 
 
