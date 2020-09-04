@@ -264,18 +264,39 @@ Enjoy!
 
 ---------------
 
-If you found this article interesting, you might also enjoy
+## Related work
+
+If you found this article interesting, you might also enjoy these related posts
 
 * [Verification competitions]
 * [Rust verification tools]
 
+And these papers:
+
+* [goodman:ndss:2018] applied some very similar ideas to C++ testing
+  in 2018 using the [GoogleTest] DSL as a starting point and providing
+  support for [angr], [Manticore] and [Dr. Fuzz].
+
+  They ran into and solved problems related to logging (causing a path
+  explosion), symbolic loop bounds and symbolic array indices (causing
+  a path explosion) and how to combine swarm testing with verification.
+
+  Highly recommended!
+
 ---------------
 
+[goodman:ndss:2018]: {{ site.baseurl }}/RelatedWork/papers/goodman:ndss:2018
 [fonseca:ecs:2017]: {{ site.baseurl }}/RelatedWork/papers/fonseca:ecs:2017
 [verification competitions]: {% post_url 2020-04-19-verification-competitions %}
 [Rust verification tools]:   {% post_url 2020-05-08-rust-verification-tools %}
+
 [RVT]:           https://github.com/project-oak/rust-verification-tools
 [proptest]:      https://github.com/AltSysrq/proptest
 [Crux-MIR]:      https://github.com/GaloisInc/mir-verifier
 [KLEE]:          https://klee.github.io
 [proptest book]: https://altsysrq.github.io/proptest-book/proptest/tutorial/macro-proptest.html
+[GoogleTest]:    https://github.com/google/googletest
+
+[angr]:          https://angr.io
+[Manticore]:     https://blog.trailofbits.com/2017/04/27/manticore-symbolic-execution-for-humans/
+[Dr. Fuzz]:      https://dynamorio.org/drmemory_docs/page_drfuzz.html
