@@ -41,14 +41,14 @@ possible to port our library to many other verification tools.[^for-Rust]
     patches to [KLEE] so that KLEE could be used to verify Rust programs.
 
 
-_[Before I go any further, I should mention that what we are [releasing this
+*[Before I go any further, I should mention that what we are [releasing this
 week][RVT] is a very early research prototype.  It is not ready for serious use
 and it is definitely not an official, supported Google product.  We are
 releasing it now, in its current, immature state because we want to have
 a conversation about how programmers want to formally verify Rust code
 and we think that it is helpful to have something to push against.
 We welcome pull requests that add support for other verifiers, or that
-push the design in a better direction.]_
+push the design in a better direction.]*
 
 
 ## A proptest test harness
@@ -56,7 +56,7 @@ push the design in a better direction.]_
 To get an idea for what property testing looks like in `proptest`,
 we'll look at an example from the [proptest book].
 
-```
+```rust
 fn add(a: i32, b: i32) -> i32 {
     a + b
 }
@@ -85,7 +85,7 @@ body of the property.
 
 (After adding in [some additional glue code](https://altsysrq.github.io/proptest-book/proptest/tutorial/macro-proptest.html)) we can run this example with the command
 
-```
+```shell
 cargo test
 ```
 
@@ -134,7 +134,7 @@ code, invokes the [KLEE symbolic execution engine][KLEE] and filters
 the output of KLEE to determine whether there is any choice of `a` and
 `b` that can cause the body of the property to panic.
 
-```
+```shell
 cargo-verify . --tests
 ```
 
@@ -206,10 +206,10 @@ The latter two are mostly for the benefit of verification tool developers.
 
 ## Our next steps
 
-_[You can either read this as a sketch of what we plan to do or
+*[You can either read this as a sketch of what we plan to do or
 as an admission of what we have not yet done.
 As [Fred and Ginger said](https://www.youtube.com/watch?v=LOILZ_D3aRg),
-"Tomato. Tomato."]_
+"Tomato. Tomato."]*
 
 - The tools have a horrifically complicated set of dependencies.
 
@@ -264,7 +264,7 @@ Enjoy!
 
 ---------------
 
-## Related work
+## More information
 
 If you found this article interesting, you might also enjoy these related posts
 
@@ -272,6 +272,22 @@ If you found this article interesting, you might also enjoy these related posts
 * [Rust verification tools]
 
 And these papers:
+
+* The style of test used is a lot like [property-based testing]
+  that started with [claessen:icfp:2000] for Haskell and has since spread
+  to many other languages.
+
+  In strongly-typed languages, property-based testing usually uses the type to
+  determine how to generate values
+  but proptest is inspired by MacIver's "Hypothesis" for Python [maciver:ecoop:2020]
+  that provides a set of fuzzing-constructors ("strategies") for
+  describing how to construct values and also to control "shrinking"
+  (simplification) of random values.
+
+* The general approach of using test harnesses with symbolic execution
+  goes back (at least) as far as [tillmann:fse:2005] with
+  more recent work by
+  [garg:icse:2013] and [dimjasevic:ifm:2018].
 
 * [goodman:ndss:2018] applied some very similar ideas to C++ testing
   in 2018 using the [GoogleTest] DSL as a starting point and providing
@@ -283,10 +299,17 @@ And these papers:
 
   Highly recommended!
 
+
 ---------------
 
-[goodman:ndss:2018]: {{ site.baseurl }}/RelatedWork/papers/goodman:ndss:2018
-[fonseca:ecs:2017]: {{ site.baseurl }}/RelatedWork/papers/fonseca:ecs:2017
+[property-based testing]:    {{ site.baseurl }}/RelatedWork/notes/property-based-testing
+[claessen:icfp:2000]:        {{ site.baseurl }}/RelatedWork/papers/claessen:icfp:2000
+[dimjasevic:ifm:2018]:       {{ site.baseurl }}/RelatedWork/papers/dimjasevic:ifm:2018
+[fonseca:ecs:2017]:          {{ site.baseurl }}/RelatedWork/papers/fonseca:ecs:2017
+[garg:icse:2013]:            {{ site.baseurl }}/RelatedWork/papers/garg:icse:2013
+[goodman:ndss:2018]:         {{ site.baseurl }}/RelatedWork/papers/goodman:ndss:2018
+[maciver:ecoop:2020]:        {{ site.baseurl }}/RelatedWork/papers/maciver:ecoop:2020
+[tillmann:fse:2005]:         {{ site.baseurl }}/RelatedWork/papers/tillmann:fse:2005
 [verification competitions]: {% post_url 2020-04-19-verification-competitions %}
 [Rust verification tools]:   {% post_url 2020-05-08-rust-verification-tools %}
 
@@ -300,3 +323,5 @@ And these papers:
 [angr]:          https://angr.io
 [Manticore]:     https://blog.trailofbits.com/2017/04/27/manticore-symbolic-execution-for-humans/
 [Dr. Fuzz]:      https://dynamorio.org/drmemory_docs/page_drfuzz.html
+
+[Hacker News]:   https://news.ycombinator.com/item?id=24372760
