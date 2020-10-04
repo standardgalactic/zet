@@ -6,18 +6,12 @@ layout: post
 This is an overview of [the papers that I have read over the last 12 months][papers]
 since I [joined Google Research][joining Google].
 Over the last year, I have read 122 papers and I have added 364 to my paper
-backlog.[^not-unread]
+backlog.
 You can read [my summaries of all the papers][RelatedWork],
 read [notes on common themes in the papers][notes],
 and download [BibTeX][bibfile] for all the papers.
 As the number of papers grew, I reorganized several times and
 [the site][RelatedWork] became a bit like a [Zettelkasten].
-
-[^not-unread]:
-    Note that the unsummarized papers are a mixture of
-    papers that I mean to read,
-    papers that I read before I started writing these summaries at the end of September 2019,
-    and papers that I wrote myself.
 
 
 ## How I organize my notes about papers
@@ -37,7 +31,7 @@ learned.
 
 After a few months, the original system was starting to fail, and I learned
 about the [ZettelKasten] method of making
-notes about papers and concepts. I have not fully adopted this method[^not-Z]
+notes about papers and concepts. I have not fully adopted this method
 but I have adopted some of the ideas:
 
 - If a paper introduces an important looking concept, I create a new
@@ -83,7 +77,10 @@ and
 Each paper links to my summary of the paper.
 A few caveats about my summaries:
 
-- Summaries are written fairly quickly, in a single pass, with little/no revision.
+- Paper summaries are written fairly quickly, in a single pass, with little/no revision.
+
+- Notes about concepts are always in a state of flux and often contain 'todo' comments
+  about how they should be restructured when I find the time.
 
 - Especially when I am reading about a new topic, the summaries will contain errors
   because I don't understand that topic well enough to write a good summary.
@@ -301,11 +298,11 @@ Looking back over my research career, I wish that I had started writing paper su
 for myself decades earlier.
 Some of the benefits I have seen are:
 
-- Writing the summaries turns the passive act or reading papers into an
-  active act: it forces me to try harder to understand what I am writing about.
+- Writing the summaries turns the *passive* act of reading papers into an
+  *active* act and it forces me to try harder to understand what I am writing about.
 
 - When I introduce a new concept, I try to go back to all papers that relate to
-  that concept and add links to the concept.
+  that concept and add links back to the concept.
   This strengthens my understanding of papers and helps me see different ways
   that papers and concepts connect to each other.
 
@@ -314,20 +311,42 @@ Some of the benefits I have seen are:
   the content very well or when the part I remember is not the primary
   point of the paper.
 
-- When I was writing a paper a few weeks ago, I had all of the related work
+- A few weeks ago, I wrote a workshop paper with other members of my team.
+  Thanks to the summaries and the way I organize them, I had all of the related work
   available to me: I had a clear memory of it, I could find the papers, I
-  could quickly remind myself what the paper was about (to confirm that I was
-  citing the correct paper).
+  could quickly remind myself what the paper was about to confirm that I was
+  citing the correct paper.
+
+  Another crucial ingredient was that my project planning documents explained
+  the reason for the project, the design decisions, alternatives, etc.
+  (These documents are not public.)
+
+  I found the experience of writing the paper to be very productive and satisfying.
+  It seemed to match the claims made
+  about [ZettelKasten] as a way to organize your research into separate stages of
+
+  - reading related work,
+  - forming ideas (through the notes on concepts, the project planning documents, etc.),
+  - collecting ideas into a paper,
+  - and then, finally, reorganizing and rewriting to make a coherent paper.
+
+  Since I had already done most of the work before we even thought about
+  writing the paper, I was mostly able to focus on how to present the ideas
+  without being distracted the earlier phases.
 
 - When I summarize a paper, I also capture enough metadata that I can
   construct [BibTeX][bibfile] for all the papers.
   So, if I later cite the paper, I have already done the tedious work
   of finding the citation, finding a doi entry, etc. for all the papers that I cite.
-  It is also easy to identify papers that my co-authors cite (so that I can read them too).
+  Again, this lets me focus on the act of writing without being distracted by
+  the mechanics of BibTeX files.
 
-  I try to make sure that this BibTeX is usable as is by correcting
+  To make citing the papers as easy as possible, I try to make sure that this BibTeX is usable as is by correcting
   the capitalization of paper titles to overcome the
   [BiBTeX design bug](https://tex.stackexchange.com/questions/10772/bibtex-loses-capitals-when-creating-bbl-file).
+
+  An unexpected side effect of using a machine-generated BibTeX file is that
+  it is also easy to identify papers that my co-authors cite (so that I can read them too).
 
 After trying this for a year, I am planning to continue the practice
 and I would encourage others to do the same.
@@ -339,8 +358,8 @@ I have problems with.
 
 ### Other paper summaries
 
-The focus of [RelatedWork] is on understanding a field: a set of papers,
-typically over an extended time period, their shared concepts, how they
+The focus of [RelatedWork] is on understanding a field so it is about a set of papers,
+typically over an extended time period, their shared concepts and how they
 interconnect.
 Another paper summary site is Adrian Colyer's excellent "[the morning paper]."
 Adrian reads a broad sweep of brand new papers to keep abreast of
@@ -364,8 +383,8 @@ a much larger subset of computer science.
 [Survey papers]:              {{ site.baseurl }}/RelatedWork/notes/survey/
 [Fuzz testing]:               {{ site.baseurl }}/RelatedWork/notes/fuzz-testing/
 [Test generation]:            {{ site.baseurl }}/RelatedWork/notes/test-generation/
-[SAT]:                        {{ site.baseurl }}/RelatedWork/notes/sat-solvers/
-[SMT]:                        {{ site.baseurl }}/RelatedWork/notes/smt-solvers/
+[SAT]:                        {{ site.baseurl }}/RelatedWork/notes/sat-solver/
+[SMT]:                        {{ site.baseurl }}/RelatedWork/notes/smt-solver/
 [ISA specification]:          {{ site.baseurl }}/RelatedWork/notes/isa-specification/
 [Property-based testing]:     {{ site.baseurl }}/RelatedWork/notes/property-based-testing/
 [Google]:                     {{ site.baseurl }}/RelatedWork/notes/google/
