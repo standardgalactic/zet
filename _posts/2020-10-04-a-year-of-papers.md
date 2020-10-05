@@ -368,7 +368,8 @@ a much larger subset of computer science.
 
 ### Software
 
-The tools I use are just [Jekyll](https://jekyllrb.com/), some python scripts and an editor.
+The tools I use are just [Jekyll](https://jekyllrb.com/), [some python scripts](https://github.com/alastairreid/RelatedWork/tree/master/_scripts)
+and an editor.
 But people pointed out some other tools that might work better (most of which I have not tried).
 
 - [The Archive](https://zettelkasten.de/the-archive/)
