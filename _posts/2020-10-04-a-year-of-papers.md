@@ -366,6 +366,18 @@ Adrian reads a broad sweep of brand new papers to keep abreast of
 a much larger subset of computer science.
 
 
+### Software
+
+The tools I use are just [Jekyll](https://jekyllrb.com/), some python scripts and an editor.
+But people pointed out some other tools that might work better (most of which I have not tried).
+
+- [The Archive](https://zettelkasten.de/the-archive/)
+- [nvAlt](https://brettterpstra.com/projects/nvalt/) for Macs. (This is the tool that first got me hooked on Markdown)
+- [Obsidian](https://obsidian.md/features)
+- [Roam](https://roamresearch.com/)
+
+
+
 ---------------
 
 [Information flow control]:   {{ site.baseurl }}/RelatedWork/notes/information-flow/
