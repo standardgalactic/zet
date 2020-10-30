@@ -130,7 +130,7 @@ See:
     *   Use Function inverse pairs (eg print/parse functions)
     *   Compare two implementations
 *   Use asserts liberally
-*   Turn on sanitizers (todo: how do you do this in Rust?)
+*   [Turn on sanitizers](https://doc.rust-lang.org/nightly/unstable-book/compiler-flags/sanitizer.html)
 *   [Contracts.rs](https://docs.rs/contracts/0.6.0/contracts/)
     / [(crates.io link)](https://crates.io/crates/contracts) -- code contract library
 *   [inactive?] [libhoare](https://github.com/nrc/libhoare) compiler plugin
@@ -347,6 +347,14 @@ If you found this article interesting, you might also enjoy these related posts
 * [Rust testing or verifying: Why not both]
 * [Rust verification tools]
 * [Verification competitions]
+
+### Thanks
+
+Thanks to the following people for adding to the above
+
+- [Christoph Siedentop (@chsiedentop)](https://twitter.com/chsiedentop)
+  pointed me at the [Sanitizer](https://doc.rust-lang.org/nightly/unstable-book/compiler-flags/sanitizer.html) instructions.
+
 
 ---
 
