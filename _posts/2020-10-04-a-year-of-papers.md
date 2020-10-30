@@ -376,6 +376,7 @@ But people pointed out some other tools that might work better (most of which I 
 - [nvAlt](https://brettterpstra.com/projects/nvalt/) for Macs. (This is the tool that first got me hooked on Markdown)
 - [Obsidian](https://obsidian.md/features)
 - [Roam](https://roamresearch.com/)
+- [Zettlr](https://www.zettlr.com/)
 
 
 
