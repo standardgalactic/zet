@@ -195,7 +195,11 @@ different tools and libraries to support writing tests.
 *   Unit tests vs integration tests
 *   Using [assert\_cmd](https://docs.rs/assert_cmd) crate to test applications
     (link has links to other useful crates)
-*   [anyhow crate](https://docs.rs/anyhow/1.0.33/anyhow/) -- adding context to error messages
+*   Better error reporting using one of
+    - [anyhow crate](https://docs.rs/anyhow/1.0.33/anyhow/) -- adding context to error messages
+    - [color eyre crate](https://docs.rs/color-eyre/0.5.6/color_eyre/) --
+      extends anyhow with .suggestion() and other context
+
 *   Use the {:?} and {:x?} Debug string formats in test harnesses
     (see [std/fmt](https://doc.rust-lang.org/std/fmt/#formatting-traits))
 *   [Rutenspitz](https://github.com/jakubadamw/rutenspitz):
@@ -220,6 +224,9 @@ Rust specific but they are a bit random and need to be improved.
     (last updated 2017)
 *   [TDD with Rust](https://matthewkmayer.github.io/blag/public/post/tdd-with-rust/) (2017) –
     a small example
+*   Regression testing (testing against a golden reference) using one of
+    - [Retest](https://docs.rs/qtrac-retest/4.0.6/retest/)
+    - [insta](https://github.com/mitsuhiko/insta)
 
 
 ## Specific topics
@@ -360,7 +367,11 @@ If you found this article interesting, you might also enjoy these related posts
 Thanks to the following people for adding to the above
 
 - [Christoph Siedentop (@chsiedentop)](https://twitter.com/chsiedentop)
-  pointed me at the [Sanitizer](https://doc.rust-lang.org/nightly/unstable-book/compiler-flags/sanitizer.html) instructions.
+  pointed me at
+  - [Sanitizer instructions](https://doc.rust-lang.org/nightly/unstable-book/compiler-flags/sanitizer.html)
+  - [insta](https://github.com/mitsuhiko/insta)
+  - [Retest](https://docs.rs/qtrac-retest/4.0.6/retest/)
+  - [color eyre crate](https://docs.rs/color-eyre/0.5.6/color_eyre/)
 
 - [Laurence Tratt (@laurencetratt)](https://twitter.com/laurencetratt)
   pointed me at [lang_tester](https://crates.io/crates/lang_tester/)
