@@ -162,7 +162,14 @@ API design strongly affects testability of that API
 *   Always implement Clone and fmt::Debug for public types
     *   types like failure::Error should be converted to something that is cloneable
 *   Use ‘newtype’ to let the type system statically test for errors and use
-    [compiletest.rs](https://github.com/laumann/compiletest-rs) to test that this is done correctly
+    one of these to test that this is done correctly
+
+    - [compiletest.rs](https://github.com/laumann/compiletest-rs)
+      for testing Rust compilations
+    - [lang_tester](https://crates.io/crates/lang_tester/)
+      for testing compilations including, but not limited to, Rust
+    - the fuzzy text matcher [fm](https://crates.io/crates/fm)
+
 *   Use #![warn(missing\_doc\_code\_examples)]
     (and other [Rust API guidelines](https://rust-lang.github.io/api-guidelines/about.html))
 
@@ -355,11 +362,16 @@ Thanks to the following people for adding to the above
 - [Christoph Siedentop (@chsiedentop)](https://twitter.com/chsiedentop)
   pointed me at the [Sanitizer](https://doc.rust-lang.org/nightly/unstable-book/compiler-flags/sanitizer.html) instructions.
 
+- [Laurence Tratt (@laurencetratt)](https://twitter.com/laurencetratt)
+  pointed me at [lang_tester](https://crates.io/crates/lang_tester/)
+  and the fuzzy text matcher [fm](https://crates.io/crates/fm)
+
 
 ---
 
 [verification competitions]: {% post_url 2020-04-19-verification-competitions %}
 [Rust verification tools]:   {% post_url 2020-05-08-rust-verification-tools %}
 [Rust testing or verifying: why not both]: {% post_url 2020-09-03-why-not-both %}
+
 
 
