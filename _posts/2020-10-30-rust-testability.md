@@ -186,12 +186,19 @@ different tools and libraries to support writing tests.
 
 *   Documentation tests
 *   [How to organize your Rust tests](https://blog.logrocket.com/how-to-organize-your-rust-tests/)
-*   [Fuzzing book](https://rust-fuzz.github.io/book/):
-    describes use of [cargo-fuzz](https://rust-fuzz.github.io/book/cargo-fuzz.html)
-    and [afl.rs](https://github.com/rust-fuzz/afl.rs).
+*   [Fuzzing book](https://rust-fuzz.github.io/book/) describes use of
+    - [cargo-fuzz](https://rust-fuzz.github.io/book/cargo-fuzz.html)
+    - [afl.rs](https://github.com/rust-fuzz/afl.rs)
+    - [arbitrary](https://crates.io/crates/arbitrary)
+
     See: [Rust Fuzzing Authority](https://github.com/rust-fuzz)
-*   Use [QuickCheck](https://docs.rs/quickcheck) or [proptest](https://docs.rs/proptest)
-    for generative testing / property-based testing
+*   Use a generative testing / property-based testing crate such as
+    - [QuickCheck](https://docs.rs/quickcheck)
+      - has its own
+        [arbitrary implementation](https://docs.rs/quickcheck/0.9.2/quickcheck/trait.Arbitrary.html)
+    - [proptest](https://docs.rs/proptest)
+      - has its own
+        [arbitrary implementation](https://docs.rs/proptest-arbitrary/0.2.2/proptest_arbitrary/)
 *   Unit tests vs integration tests
 *   Using [assert\_cmd](https://docs.rs/assert_cmd) crate to test applications
     (link has links to other useful crates)
@@ -265,11 +272,13 @@ Note: links in this section are more likely to be out of date.
 
 *   [Two easy ways to test async functions in Rust](https://blog.x5ff.xyz/blog/async-tests-tokio-rust/)
 *   [Async book -- testing a web server](https://rust-lang.github.io/async-book/09_example/03_tests.html)
-*   [Tokio-test](https://crates.io/crates/tokio-test)
+*   [Tokio-test](https://crates.io/crates/tokio-test) for mocking AsyncRead/Write and tasks
     ([docs](https://docs.rs/tokio-test/0.3.0/tokio_test/index.html))
 *   [actix async example](https://github.com/actix/examples/blob/master/hello-world/src/main.rs)
 *   [Our first integration test](https://www.lpalmieri.com/posts/2020-08-09-zero-to-production-3-how-to-bootstrap-a-new-rust-web-api-from-scratch/#4-our-first-integration-test) --
     Actix\_rt::test based chapter in book [Zero to production in Rust (book)](https://zero2prod.com/)
+*   [Loom](https://crates.io/crates/loom) tests concurrent code by
+    running it many times with all possible thread interleavings
 
 
 ### Testing frameworks
@@ -377,6 +386,11 @@ Thanks to the following people for adding to the above
   pointed me at [lang_tester](https://crates.io/crates/lang_tester/)
   and the fuzzy text matcher [fm](https://crates.io/crates/fm)
 
+- [@fitzgen](https://twitter.com/fitzgen)
+  pointed me at
+  - [Tarpaulin](https://crates.io/crates/cargo-tarpaulin)
+  - [Loom](https://crates.io/crates/loom)
+  - [arbitrary](https://crates.io/crates/arbitrary)
 
 ---
 
