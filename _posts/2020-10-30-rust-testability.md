@@ -145,6 +145,7 @@ See:
 *   Abstraction can be based on Higher order functions or objects
 *   Traits and [mockall](https://github.com/asomers/mockall)
 *   Module mocks using [mocktopus](https://github.com/CodeSandwich/Mocktopus)
+*   [shaku](https://github.com/Mcat12/shaku) is a compile-time dependency injection library that works well with mockall
 
 
 ### API design
@@ -166,6 +167,8 @@ API design strongly affects testability of that API
 
     - [compiletest.rs](https://github.com/laumann/compiletest-rs)
       for testing Rust compilations
+    - [trybuild](https://github.com/dtolnay/trybuild)
+      for testing error messages (eg from proc-macros)
     - [lang_tester](https://crates.io/crates/lang_tester/)
       for testing compilations including, but not limited to, Rust
     - the fuzzy text matcher [fm](https://crates.io/crates/fm)
@@ -383,14 +386,20 @@ Thanks to the following people for adding to the above
   - [color eyre crate](https://docs.rs/color-eyre/0.5.6/color_eyre/)
 
 - [Laurence Tratt (@laurencetratt)](https://twitter.com/laurencetratt)
-  pointed me at [lang_tester](https://crates.io/crates/lang_tester/)
-  and the fuzzy text matcher [fm](https://crates.io/crates/fm)
+  pointed me at
+  - [lang_tester](https://crates.io/crates/lang_tester/)
+  - [fm](https://crates.io/crates/fm)
 
 - [@fitzgen](https://twitter.com/fitzgen)
   pointed me at
   - [Tarpaulin](https://crates.io/crates/cargo-tarpaulin)
   - [Loom](https://crates.io/crates/loom)
   - [arbitrary](https://crates.io/crates/arbitrary)
+
+- Mark Drobnak
+  pointed me at
+  - [shaku](https://github.com/Mcat12/shaku)
+  - [trybuild](https://github.com/dtolnay/trybuild)
 
 ---
 
