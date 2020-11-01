@@ -361,6 +361,12 @@ Not quite about testing -- but semi-relevant.
 *   [Error handling survey](https://blog.yoshuawuyts.com/error-handling-survey/)
 
 
+### Misc
+
+- kruetz on reddit
+  [described how he checks that code in mdbooks compiles correctly](https://www.reddit.com/r/rust/comments/jl2xlg/rust_designfortestability_a_survey/ganb86b?utm_source=share&utm_medium=web2x&context=3)
+
+
 ## More information
 
 My interest in Rust testing is a hope/belief that a good way of making formal
@@ -373,6 +379,14 @@ If you found this article interesting, you might also enjoy these related posts
 * [Rust testing or verifying: Why not both]
 * [Rust verification tools]
 * [Verification competitions]
+
+
+### Discussion of this post
+
+- [twitter](https://twitter.com/alastair_d_reid/status/1322241400310845440?s=20)
+- [reddit](https://www.reddit.com/r/rust/comments/jl2xlg/rust_designfortestability_a_survey/?utm_source=share&utm_medium=web2x&context=3)
+- [zulip](https://rust-lang.zulipchat.com/#narrow/stream/122651-general/topic/Design.20for.20testability/near/215223020)
+
 
 ### Thanks
 
