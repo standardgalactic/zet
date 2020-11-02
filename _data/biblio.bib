@@ -6,6 +6,25 @@
               Sarah de Haas and
               Maritza Johnson and
               Ben Laurie},
+      abstract={Formal verification of software is a bit of a niche
+      activity: it is only applied to the most safety-critical or
+      security-critical software and it is typically only performed by
+      specialized verification engineers. This paper considers whether
+      it would be possible to increase adoption of formal methods by
+      integrating formal methods with developers' existing practices
+      and workflows.
+
+      We do not believe that widespread adoption will follow from
+      making the prevailing formal methods argument that correctness
+      is more important than engineering teams realize. Instead, our
+      focus is on what we would need to do to enable programmers to
+      make effective use of formal verification tools and techniques.
+      We do this by considering how we might make verification tooling
+      that both serves developers' needs and fits into their existing
+      development lifecycle. We propose a target of two orders of
+      magnitude increase in adoption within a decade driven by
+      ensuring a positive `weekly cost-benefit' ratio for developer
+      time invested.},
       year={2020},
       month={October},
       day={30},
@@ -32,6 +51,32 @@
              Ian Stark and
              Neel Krishnaswami and
              Peter Sewell},
+    abstract = {
+
+Sail is a custom domain-specific language for ISA semantics, in which we have
+developed formal models for ARMv8-A, RISC-V, and MIPS, as well as CHERI-based
+capability extensions for both RISC-V and MIPS. In particular, our model of
+ARMv8-A is automatically translated from ARM-internal definitions and tested
+against the ARM Architecture validation suite. All the above models contain
+enough system-level features to boot various operating systems, including Linux
+and FreeBSD, but also various smaller microkernels and hypervisors.
+
+In this short paper, we present the ways in which Sail enables us to bridge the
+gap between our various ISA models and the myriad use cases for such models. By
+using Sail, we are able to generate emulators for testing and validation,
+generate theorem prover definitions across multiple major tools (Isabelle,
+HOL4, and Coq), translate Sail to SMT for automatic verification, and integrate
+with both operational models for relaxed-memory concurrency via our RMEM tool.
+
+We will also present our current work to extend Sail to support axiomatic
+concurrency models, in the style of Alglave and Maranget’s herd7 tool, with the
+intent being to explore the behaviour of concurrent litmus tests that span the
+full behaviour of the architecture. As an illustrative example, one could
+consider how instruction cache maintenance instructions interact with
+self-modifying code in an axiomatic setting, or other interesting cases that
+are not well-covered by existing tools
+
+},
     booktitle = {SpISA 2019: Workshop on Instruction Set Architecture Specification},
     location = {Portland, Oregon, USA},
     ar_shortname = "SpISA 19",

@@ -13,10 +13,49 @@ author: Alastair Reid, Luke Church, Shaked Flur, Sarah de Haas, Maritza Johnson,
 archiveprefix: arXiv
 ar_shortname: HATRA 20
 ar_file: HATRA_20
+abstract: |
+    Formal verification of software is a bit of a niche
+    activity: it is only applied to the most safety-critical or
+    security-critical software and it is typically only performed by
+    specialized verification engineers. This paper considers whether
+    it would be possible to increase adoption of formal methods by
+    integrating formal methods with developers' existing practices
+    and workflows.
+    <p>
+    We do not believe that widespread adoption will follow from
+    making the prevailing formal methods argument that correctness
+    is more important than engineering teams realize. Instead, our
+    focus is on what we would need to do to enable programmers to
+    make effective use of formal verification tools and techniques.
+    We do this by considering how we might make verification tooling
+    that both serves developers' needs and fits into their existing
+    development lifecycle. We propose a target of two orders of
+    magnitude increase in adoption within a decade driven by
+    ensuring a positive `weekly cost-benefit' ratio for developer
+    time invested.
 ENTRYTYPE: misc
 ID: reidhatra2020
 bibtex: |
     @misc{reid:hatra:2020
+        , abstract = {Formal verification of software is a bit of a niche
+    activity: it is only applied to the most safety-critical or
+    security-critical software and it is typically only performed by
+    specialized verification engineers. This paper considers whether
+    it would be possible to increase adoption of formal methods by
+    integrating formal methods with developers' existing practices
+    and workflows.
+    <p>
+    We do not believe that widespread adoption will follow from
+    making the prevailing formal methods argument that correctness
+    is more important than engineering teams realize. Instead, our
+    focus is on what we would need to do to enable programmers to
+    make effective use of formal verification tools and techniques.
+    We do this by considering how we might make verification tooling
+    that both serves developers' needs and fits into their existing
+    development lifecycle. We propose a target of two orders of
+    magnitude increase in adoption within a decade driven by
+    ensuring a positive `weekly cost-benefit' ratio for developer
+    time invested.}
         , ar_file = {HATRA_20}
         , ar_shortname = {HATRA 20}
         , archiveprefix = {arXiv}
