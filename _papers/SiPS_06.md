@@ -3,6 +3,7 @@ layout: paper
 year: 2006
 title: Design and Implementation of Turbo Decoders for Software Defined Radio
 publisher: IEEE
+png: lin-sips06.png
 pages: 22--27
 month: October
 location: Banff, Alberta, Canada
@@ -69,6 +70,7 @@ bibtex: |
         , location = {Banff, Alberta, Canada}
         , month = {October}
         , pages = {22--27}
+        , png = {lin-sips06.png}
         , publisher = {IEEE}
         , title = {{D}esign and {I}mplementation of {T}urbo {D}ecoders for {S}oftware {D}efined {R}adio}
         , year = {2006}

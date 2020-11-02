@@ -2,6 +2,7 @@
 layout: paper
 year: 2006
 title: SPEX - A programming language for software defined radio
+png: lin-sdr06.png
 month: November
 location: Orlando, FL, USA
 file: lin-sdr06.pdf
@@ -71,6 +72,7 @@ bibtex: |
         , file = {lin-sdr06.pdf}
         , location = {Orlando, FL, USA}
         , month = {November}
+        , png = {lin-sdr06.png}
         , title = {S{P}EX: {A} programming language for software defined radio}
         , year = {2006}
     }

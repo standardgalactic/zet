@@ -5,6 +5,7 @@ volume: 1990
 title: FVision - A Declarative Language for Visual Tracking
 series: Lecture Notes in Computer Science
 publisher: Springer
+png: fvision-padl01-2.png
 pages: 304--321
 month: March
 location: Las Vegas, Nevada, USA
@@ -83,6 +84,7 @@ bibtex: |
         , location = {Las Vegas, Nevada, USA}
         , month = {March}
         , pages = {304--321}
+        , png = {fvision-padl01-2.png}
         , publisher = {Springer}
         , series = {Lecture Notes in Computer Science}
         , title = {F{V}ision: {A} Declarative {L}anguage for {V}isual {T}racking}

@@ -3,6 +3,7 @@ layout: paper
 year: 2002
 title: Static and dynamic structure in design patterns
 publisher: ACM
+png: knit-icse02.png
 pages: 208--218
 month: May
 location: Orlando, Florida, USA
@@ -79,6 +80,7 @@ bibtex: |
         , location = {Orlando, Florida, USA}
         , month = {May}
         , pages = {208--218}
+        , png = {knit-icse02.png}
         , publisher = {ACM}
         , title = {{S}tatic and dynamic structure in design patterns}
         , year = {2002}

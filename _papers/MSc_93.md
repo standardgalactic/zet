@@ -3,6 +3,7 @@ layout: paper
 year: 1993
 title: A Precise Semantics for Ultraloose Specifications
 school: Glasgow School of Computing Science
+png: ReidThesis93.png
 location: Glasgow, Scotland
 file: ReidThesis93.pdf
 author: Alastair Reid
@@ -69,6 +70,7 @@ bibtex: |
         , author = {Alastair Reid}
         , file = {ReidThesis93.pdf}
         , location = {Glasgow, Scotland}
+        , png = {ReidThesis93.png}
         , school = {Glasgow School of Computing Science}
         , title = {{A} Precise {S}emantics for {U}ltraloose {S}pecifications}
         , year = {1993}

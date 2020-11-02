@@ -3,6 +3,7 @@ layout: paper
 year: 2019
 title: Defining interfaces between hardware and software - Quality and performance
 school: School of Computing Science, University of Glasgow
+png: 2019reidphd.png
 numpages: 161
 month: March
 location: Glasgow, Scotland
@@ -155,6 +156,7 @@ bibtex: |
         , location = {Glasgow, Scotland}
         , month = {March}
         , numpages = {161}
+        , png = {2019reidphd.png}
         , school = {School of Computing Science, University of Glasgow}
         , title = {{D}efining interfaces between hardware and software: {Q}uality and performance}
         , year = {2019}

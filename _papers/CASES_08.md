@@ -4,6 +4,7 @@ year: 2008
 title: SoC-C - efficient programming abstractions for heterogeneous multicore systems on chip
 slides: cases2008-SoC-C-slides.pdf
 publisher: ACM
+png: cases2008-SoC-C.png
 pages: 95--104
 month: October
 location: Atlanta, GA, USA
@@ -88,6 +89,7 @@ bibtex: |
         , location = {Atlanta, GA, USA}
         , month = {October}
         , pages = {95--104}
+        , png = {cases2008-SoC-C.png}
         , publisher = {ACM}
         , slides = {cases2008-SoC-C-slides.pdf}
         , title = {{S}oC-{C}: efficient programming abstractions for heterogeneous multicore

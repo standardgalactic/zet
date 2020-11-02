@@ -4,6 +4,7 @@ year: 1989
 title: Designing Data Structures
 series: Workshops in Computing
 publisher: Springer
+png: designing.png
 pages: 170--181
 month: August
 location: Fraserburgh, Scotland, UK
@@ -40,6 +41,7 @@ bibtex: |
         , location = {Fraserburgh, Scotland, UK}
         , month = {August}
         , pages = {170--181}
+        , png = {designing.png}
         , publisher = {Springer}
         , series = {Workshops in Computing}
         , title = {{D}esigning {D}ata {S}tructures}

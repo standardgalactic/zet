@@ -2,6 +2,7 @@
 layout: paper
 year: 1998
 title: Designing the Standard Haskell Libraries
+png: libraries.png
 file: libraries.pdf
 author: Alastair Reid, John Peterson
 ar_shortname: StdLib 98
@@ -16,6 +17,7 @@ bibtex: |
         , ar_shortname = {StdLib 98}
         , author = {Alastair Reid and John Peterson}
         , file = {libraries.pdf}
+        , png = {libraries.png}
         , title = {{D}esigning the {S}tandard {H}askell {L}ibraries}
         , year = {1998}
     }

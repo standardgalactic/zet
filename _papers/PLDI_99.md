@@ -3,6 +3,7 @@ layout: paper
 year: 1999
 title: A Semantics for Imprecise Exceptions
 publisher: ACM
+png: except.png
 pages: 25--36
 month: May
 location: Atlanta, Georgia, USA
@@ -81,6 +82,7 @@ bibtex: |
         , location = {Atlanta, Georgia, USA}
         , month = {May}
         , pages = {25--36}
+        , png = {except.png}
         , publisher = {ACM}
         , title = {{A} Semantics for {I}mprecise {E}xceptions}
         , year = {1999}

@@ -3,6 +3,7 @@ layout: paper
 year: 2017
 volume: 37
 title: The ARM Scalable Vector Extension
+png: sve-ieee-micro-2017.png
 pages: 26--39
 number: 2
 month: March
@@ -99,6 +100,7 @@ bibtex: |
         , month = {March}
         , number = {2}
         , pages = {26--39}
+        , png = {sve-ieee-micro-2017.png}
         , title = {{T}he {A}RM {S}calable {V}ector {E}xtension}
         , volume = {37}
         , year = {2017}

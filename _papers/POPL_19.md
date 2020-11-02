@@ -4,6 +4,7 @@ year: 2019
 volume: 3
 title: ISA Semantics for ARMv8-A, RISC-V, and CHERI-MIPS
 publisher: ACM
+png: popl19-isasemantics.png
 pages: 711--7131
 numpages: 31
 number: POPL
@@ -107,6 +108,7 @@ bibtex: |
         , number = {POPL}
         , numpages = {31}
         , pages = {71:1--71:31}
+        , png = {popl19-isasemantics.png}
         , publisher = {ACM}
         , title = {I{S}A {S}emantics for {A}RMv8-{A}, {R}IS{C}-V, and {C}HE{R}I-{M}IP{S}}
         , volume = {3}

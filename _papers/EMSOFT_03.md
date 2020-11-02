@@ -5,6 +5,7 @@ volume: 2855
 title: Eliminating Stack Overflow by Abstract Interpretation
 series: Lecture Notes in Computer Science
 publisher: Springer
+png: emsoft03-preprint.png
 pages: 306--322
 month: October
 location: Philadelphia, PA, USA
@@ -90,6 +91,7 @@ bibtex: |
         , location = {Philadelphia, PA, USA}
         , month = {October}
         , pages = {306--322}
+        , png = {emsoft03-preprint.png}
         , publisher = {Springer}
         , series = {Lecture Notes in Computer Science}
         , title = {{E}liminating {S}tack {O}verflow by {A}bstract {I}nterpretation}

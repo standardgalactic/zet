@@ -3,6 +3,7 @@ layout: paper
 year: 2014
 title: Advanced SIMD - Extending the reach of contemporary SIMD architectures
 publisher: European Design and Automation Association
+png: date2014_adv_simd.png
 pages: 1-4
 month: March
 location: Dresden, Germany
@@ -81,6 +82,7 @@ bibtex: |
         , location = {Dresden, Germany}
         , month = {March}
         , pages = {1-4}
+        , png = {date2014_adv_simd.png}
         , publisher = {European Design and Automation Association}
         , title = {{A}dvanced {S}IM{D}: {E}xtending the reach of contemporary {S}IM{D} architectures}
         , year = {2014}

@@ -5,6 +5,7 @@ volume: 1595
 title: Putting the Spine Back in the Spineless Tagless G-Machine - An Implementation of Resumable Black-Holes
 series: Lecture Notes in Computer Science
 publisher: Springer
+png: spine-ifl98.png
 pages: 186--199
 month: September
 location: London, UK
@@ -65,6 +66,7 @@ bibtex: |
         , location = {London, UK}
         , month = {September}
         , pages = {186--199}
+        , png = {spine-ifl98.png}
         , publisher = {Springer}
         , series = {Lecture Notes in Computer Science}
         , title = {{P}utting the {S}pine {B}ack in the {S}pineless {T}agless {G}-Machine: {A}n {I}mplementation

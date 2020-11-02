@@ -2,6 +2,7 @@
 layout: paper
 year: 2001
 title: Aspect Weaving as Component Knitting - Separating Concerns with Knit
+png: knit-icse01-wasc.png
 month: May
 location: Toronto, Ontario, Canada
 file: knit-icse01-wasc.pdf
@@ -60,6 +61,7 @@ bibtex: |
         , file = {knit-icse01-wasc.pdf}
         , location = {Toronto, Ontario, Canada}
         , month = {May}
+        , png = {knit-icse01-wasc.png}
         , title = {{A}spect {W}eaving as {C}omponent {K}nitting: {S}eparating {C}oncerns with {K}nit}
         , year = {2001}
     }

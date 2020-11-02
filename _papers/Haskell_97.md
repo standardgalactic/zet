@@ -2,6 +2,7 @@
 layout: paper
 year: 1997
 title: Green Card - a foreign-language interface for Haskell
+png: green-card.png
 month: June
 location: Amsterdam, Netherlands
 file: green-card.pdf
@@ -22,6 +23,7 @@ bibtex: |
         , file = {green-card.pdf}
         , location = {Amsterdam, Netherlands}
         , month = {June}
+        , png = {green-card.png}
         , title = {{G}reen {C}ard: a foreign-language interface for {H}askell}
         , year = {1997}
     }

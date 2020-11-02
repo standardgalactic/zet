@@ -4,6 +4,7 @@ year: 2016
 url: https//alastairreid.github.io/papers/fmcad2016-trustworthy.pdf
 title: Trustworthy Specifications of ARM v8-A and v8-M System Level Architecture
 slides: fmcad2016-trustworthy-slides.pdf
+png: fmcad2016-trustworthy.png
 pages: 161-168
 month: October
 location: Mountain View, CA, USA
@@ -95,6 +96,7 @@ bibtex: |
         , location = {Mountain View, CA, USA}
         , month = {October}
         , pages = {161-168}
+        , png = {fmcad2016-trustworthy.png}
         , slides = {fmcad2016-trustworthy-slides.pdf}
         , title = {{T}rustworthy {S}pecifications of {A}RM v8-{A} and v8-{M}
     System {L}evel {A}rchitecture}

@@ -2,6 +2,7 @@
 layout: paper
 year: 1998
 title: Handling Exceptions in Haskell
+png: exceptions98.png
 month: August
 location: New Haven, CT, USA
 file: exceptions98.pdf
@@ -42,6 +43,7 @@ bibtex: |
         , file = {exceptions98.pdf}
         , location = {New Haven, CT, USA}
         , month = {August}
+        , png = {exceptions98.png}
         , title = {{H}andling {E}xceptions in {H}askell}
         , year = {1998}
     }

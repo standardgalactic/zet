@@ -3,6 +3,7 @@ layout: paper
 year: 2004
 title: HOIST - a system for automatically deriving static analyzers for embedded systems
 publisher: ACM
+png: p021-regehr.png
 pages: 133--143
 month: October
 location: Boston, MA, USA
@@ -83,6 +84,7 @@ bibtex: |
         , location = {Boston, MA, USA}
         , month = {October}
         , pages = {133--143}
+        , png = {p021-regehr.png}
         , publisher = {ACM}
         , title = {H{O}IS{T}: a system for automatically deriving static analyzers for
     embedded systems}

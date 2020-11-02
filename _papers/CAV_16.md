@@ -6,6 +6,7 @@ title: End-to-End Verification of ARM Processors with ISA-Formal
 slides: cav2016_isa_formal-slides.pdf
 series: Lecture Notes in Computer Science
 publisher: Springer Verlag
+png: cav2016_isa_formal.png
 pages: 42-58
 number: 9780
 month: July
@@ -108,6 +109,7 @@ bibtex: |
         , month = {July}
         , number = {9780}
         , pages = {42-58}
+        , png = {cav2016_isa_formal.png}
         , publisher = {Springer Verlag}
         , series = {Lecture Notes in Computer Science}
         , slides = {cav2016_isa_formal-slides.pdf}

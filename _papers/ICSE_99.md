@@ -3,6 +3,7 @@ layout: paper
 year: 1999
 title: Prototyping Real-Time Vision Systems - An Experiment in DSL Design
 publisher: ACM
+png: fvision-icse99-2.png
 pages: 484--493
 month: May
 location: Los Angeles, CA, USA
@@ -81,6 +82,7 @@ bibtex: |
         , location = {Los Angeles, CA, USA}
         , month = {May}
         , pages = {484--493}
+        , png = {fvision-icse99-2.png}
         , publisher = {ACM}
         , title = {{P}rototyping {R}eal-{T}ime {V}ision {S}ystems: {A}n {E}xperiment in {D}SL {D}esign}
         , year = {1999}

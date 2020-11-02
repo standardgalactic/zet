@@ -2,6 +2,7 @@
 layout: paper
 year: 2019
 title: The State of Sail
+png: spisa2019.png
 month: September
 location: Portland, Oregon, USA
 file: spisa2019.pdf
@@ -33,6 +34,7 @@ bibtex: |
         , file = {spisa2019.pdf}
         , location = {Portland, Oregon, USA}
         , month = {September}
+        , png = {spisa2019.png}
         , title = {{T}he {S}tate of {S}ail}
         , year = {2019}
     }

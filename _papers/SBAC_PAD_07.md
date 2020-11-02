@@ -3,6 +3,7 @@ layout: paper
 year: 2007
 title: Low-cost Techniques for Reducing Branch Context Pollution in a Soft Realtime Embedded Multithreaded Processor
 publisher: IEEE Computer Society
+png: SBACPAD07.png
 pages: 37--44
 month: October
 location: Gramado, RS, Brazil
@@ -70,6 +71,7 @@ bibtex: |
         , location = {Gramado, RS, Brazil}
         , month = {October}
         , pages = {37--44}
+        , png = {SBACPAD07.png}
         , publisher = {IEEE Computer Society}
         , title = {{L}ow-cost {T}echniques for {R}educing {B}ranch {C}ontext {P}ollution in a {S}oft
     {R}ealtime {E}mbedded {M}ultithreaded {P}rocessor}

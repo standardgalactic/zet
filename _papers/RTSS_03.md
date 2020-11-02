@@ -3,6 +3,7 @@ layout: paper
 year: 2003
 title: Evolving real-time systems using hierarchical scheduling and concurrency analysis
 publisher: IEEE Computer Society
+png: rtss03-preprint.png
 pages: 25--36
 month: December
 location: Cancun, Mexico
@@ -71,6 +72,7 @@ bibtex: |
         , location = {Cancun, Mexico}
         , month = {December}
         , pages = {25--36}
+        , png = {rtss03-preprint.png}
         , publisher = {IEEE Computer Society}
         , title = {{E}volving real-time systems using hierarchical scheduling and concurrency
     analysis}

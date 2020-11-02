@@ -2,6 +2,7 @@
 layout: paper
 year: 1994
 title: Malloc Pointers and Stable Pointers - Improving Haskell's Foreign Language Interface
+png: malloc.png
 month: September
 location: Ayr, Scotland
 file: malloc.pdf
@@ -24,6 +25,7 @@ bibtex: |
         , file = {malloc.pdf}
         , location = {Ayr, Scotland}
         , month = {September}
+        , png = {malloc.png}
         , title = {{M}alloc {P}ointers and {S}table {P}ointers: {I}mproving {H}askell's {F}oreign {L}anguage {I}nterface}
         , year = {1994}
     }

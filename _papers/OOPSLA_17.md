@@ -5,6 +5,7 @@ volume: 1
 title: Who guards the guards? Formal Validation of the ARM v8-M Architecture Specification
 slides: oopsla2017-whoguardstheguards-slides.pdf
 publisher: ACM
+png: oopsla2017-whoguardstheguards.png
 pages: 881--8824
 numpages: 24
 number: OOPSLA
@@ -83,6 +84,7 @@ bibtex: |
         , number = {OOPSLA}
         , numpages = {24}
         , pages = {88:1--88:24}
+        , png = {oopsla2017-whoguardstheguards.png}
         , publisher = {ACM}
         , slides = {oopsla2017-whoguardstheguards-slides.pdf}
         , title = {{W}ho guards the guards? {F}ormal {V}alidation of the {A}RM v8-{M} Architecture {S}pecification}

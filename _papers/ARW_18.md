@@ -2,6 +2,7 @@
 layout: paper
 year: 2018
 title: Detailed Models of Instruction Set Architectures - From Pseudocode to Formal Semantics
+png: arw2018.png
 month: April
 location: Cambridge, UK
 file: arw2018.pdf
@@ -61,6 +62,7 @@ bibtex: |
         , file = {arw2018.pdf}
         , location = {Cambridge, UK}
         , month = {April}
+        , png = {arw2018.png}
         , title = {{D}etailed {M}odels of {I}nstruction {S}et {A}rchitectures: {F}rom {P}seudocode to {F}ormal {S}emantics}
         , year = {2018}
     }

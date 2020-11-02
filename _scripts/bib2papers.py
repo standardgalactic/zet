@@ -9,7 +9,7 @@ from bibtexparser.customization import convert_to_unicode
 
 import json
 from yaml import dump
-from yaml import CDumper as Dumper
+from yaml import Dumper
 
 import sys
 
@@ -43,6 +43,7 @@ for e in db.entries:
         info = extra[e['ID']]
         link = info['file'] if 'file' in info else info['slides']
         e['file'] = link
+        e['png'] = link.replace(".pdf", ".png")
         if 'slides' in info: e['slides'] = info['slides']
 
     name = e['ar_shortname']

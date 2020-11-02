@@ -2,6 +2,7 @@
 layout: paper
 year: 2003
 title: Lock inference for systems software
+png: tsl-acp4is.png
 month: March
 location: Boston, MA, USA
 file: tsl-acp4is.pdf
@@ -49,6 +50,7 @@ bibtex: |
         , file = {tsl-acp4is.pdf}
         , location = {Boston, MA, USA}
         , month = {March}
+        , png = {tsl-acp4is.png}
         , title = {{L}ock inference for systems software}
         , year = {2003}
     }

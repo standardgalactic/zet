@@ -2,6 +2,7 @@
 layout: paper
 year: 2001
 title: The Hugs Graphics Library (Version 2.0)
+png: hugsgraphics.png
 location: New Haven, CT, USA
 file: hugsgraphics.pdf
 author: Alastair Reid
@@ -18,6 +19,7 @@ bibtex: |
         , author = {Alastair Reid}
         , file = {hugsgraphics.pdf}
         , location = {New Haven, CT, USA}
+        , png = {hugsgraphics.png}
         , title = {{T}he {H}ugs {G}raphics {L}ibrary ({V}ersion 2.0)}
         , year = {2001}
     }

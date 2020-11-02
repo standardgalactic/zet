@@ -3,6 +3,7 @@ layout: paper
 year: 2008
 title: From SODA to scotch - The evolution of a wireless baseband processor
 publisher: IEEE Computer Society
+png: mwoh-micro08.png
 pages: 152--163
 month: November
 location: Lake Como, Italy
@@ -106,6 +107,7 @@ bibtex: |
         , location = {Lake Como, Italy}
         , month = {November}
         , pages = {152--163}
+        , png = {mwoh-micro08.png}
         , publisher = {IEEE Computer Society}
         , title = {{F}rom {S}OD{A} to scotch: {T}he evolution of a wireless baseband processor}
         , year = {2008}

@@ -3,6 +3,7 @@ layout: paper
 year: 2005
 volume: 4
 title: Eliminating stack overflow by abstract interpretation
+png: p751-regehr.png
 pages: 751--778
 number: 4
 journal: ACM Transactions Embedded Computing Systems
@@ -57,6 +58,7 @@ bibtex: |
         , journal = {ACM Transactions Embedded Computing Systems}
         , number = {4}
         , pages = {751--778}
+        , png = {p751-regehr.png}
         , title = {{E}liminating stack overflow by abstract interpretation}
         , volume = {4}
         , year = {2005}

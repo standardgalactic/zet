@@ -4,6 +4,7 @@ year: 2000
 url: http//dl.acm.org/citation.cfm?id=1251253
 title: Knit - Component Composition for Systems Software
 publisher: USENIX Association
+png: knit-osdi00.png
 pages: 347--360
 month: October
 location: San Diego, California, USA
@@ -71,6 +72,7 @@ bibtex: |
         , location = {San Diego, California, USA}
         , month = {October}
         , pages = {347--360}
+        , png = {knit-osdi00.png}
         , publisher = {USENIX Association}
         , title = {{K}nit: {C}omponent {C}omposition for {S}ystems {S}oftware}
         , url = {http://dl.acm.org/citation.cfm?id=1251253}
