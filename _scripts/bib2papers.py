@@ -39,6 +39,8 @@ with open(bib) as bibtex_file:
     db = bibtexparser.load(bibtex_file, parser=parser)
 
 for e in db.entries:
+    if 'url' in e: e['link'] = e['url'] # default link
+
     if e['ID'] in extra:
         info = extra[e['ID']]
         link = info['file'] if 'file' in info else info['slides']
@@ -80,6 +82,9 @@ for e in db.entries:
                 v = '\n<p>\n'.join(v)
                 v = v.split('\n')
                 v = '|\n    ' + ('\n    '.join(v))
+            elif 'http' in v: # don't mess with : in urls
+                v = v.replace('~ ','~')
+                pass
             else:
                 v = v.replace('\n',' ')
                 v = v.replace("{", "").replace("}", "")
