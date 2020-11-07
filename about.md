@@ -6,20 +6,28 @@ permalink: /about/
 
 ## Google (2019--present)
 
-In September 2019, I joined Google Research to work on [Project
-Oak](https://github.com/project-oak/oak/blob/master/README.md)
-where my focus is on
-tools and methodologies to support the use of formal methods
-to improve our confidence in high-privilege, low-level software
-such as firmware, hypervisors and virtual machines.
-
-Increasingly my focus has shifted to formal verification tools
-for the Rust programming language and how formal verification
-tools fit into a development flow that
-includes documentation tests, property-based testing,
+In September 2019,
+I joined
+[Google Research](https://research.google/)
+to work on
+[Project Oak](https://github.com/project-oak/oak/blob/master/README.md)
+where my focus is on understanding how to make
+[Rust](https://research.google/)
+developers more productive with formal verification tools.
+The approach I am taking is one of
+[meeting the developer where they are](/papers/HATRA_20/):
+looking for ways to make
+formal verification fit into developers existing workflow of
+documentation tests, property-based testing,
 fuzzing and automatic test generation.
-My boss likes to use the phrase "Verify all the things!"
+
+My
+[boss](https://twitter.com/BenLaurie)
+likes to use the phrase
+"[Verify all the things!](https://twitter.com/hashtag/VerifyAllTheThings?src=hashtag_click)"
 and I am trying to figure out how to make it happen.
+
+[My Google webpage is here](https://research.google/people/AlastairReid/).
 
 
 ## Arm (2004--2019)
