@@ -1,13 +1,14 @@
 ---
 layout: paper
 year: 2000
-url: http//dl.acm.org/citation.cfm?id=1251253
+url: http://dl.acm.org/citation.cfm?id=1251253
 title: Knit - Component Composition for Systems Software
 publisher: USENIX Association
 png: knit-osdi00.png
 pages: 347--360
 month: October
 location: San Diego, California, USA
+link: http://dl.acm.org/citation.cfm?id=1251253
 file: knit-osdi00.pdf
 editor: Michael B. Jones, M. Frans Kaashoek
 day: 23-25
@@ -69,6 +70,7 @@ bibtex: |
         , editor = {Michael B. Jones and
     M. Frans Kaashoek}
         , file = {knit-osdi00.pdf}
+        , link = {http://dl.acm.org/citation.cfm?id=1251253}
         , location = {San Diego, California, USA}
         , month = {October}
         , pages = {347--360}

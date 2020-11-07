@@ -1,13 +1,14 @@
 ---
 layout: paper
 year: 2016
-url: https//alastairreid.github.io/papers/fmcad2016-trustworthy.pdf
+url: https://alastairreid.github.io/papers/fmcad2016-trustworthy.pdf
 title: Trustworthy Specifications of ARM v8-A and v8-M System Level Architecture
 slides: fmcad2016-trustworthy-slides.pdf
 png: fmcad2016-trustworthy.png
 pages: 161-168
 month: October
 location: Mountain View, CA, USA
+link: https://alastairreid.github.io/papers/fmcad2016-trustworthy.pdf
 isbn: 978-0-9835678-6-8
 file: fmcad2016-trustworthy.pdf
 booktitle: Proceedings of Formal Methods in Computer-Aided Design (FMCAD 2016)
@@ -93,6 +94,7 @@ bibtex: |
     (FMCAD 2016)}
         , file = {fmcad2016-trustworthy.pdf}
         , isbn = {978-0-9835678-6-8}
+        , link = {https://alastairreid.github.io/papers/fmcad2016-trustworthy.pdf}
         , location = {Mountain View, CA, USA}
         , month = {October}
         , pages = {161-168}

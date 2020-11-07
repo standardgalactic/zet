@@ -1,11 +1,13 @@
 ---
 layout: paper
 year: 2020
+url: https://research.google/pubs/pub49713/
 title: Towards making formal methods normal - meeting developers where they are
 primaryclass: cs.LO
 png: hatra2020.png
 note: Accepted at HATRA 2020
 month: October
+link: https://research.google/pubs/pub49713/
 file: hatra2020.pdf
 eprint: 2010.16345
 day: 30
@@ -68,11 +70,13 @@ bibtex: |
         , day = {30}
         , eprint = {2010.16345}
         , file = {hatra2020.pdf}
+        , link = {https://research.google/pubs/pub49713/}
         , month = {October}
         , note = {Accepted at HATRA 2020}
         , png = {hatra2020.png}
         , primaryclass = {cs.LO}
         , title = {{T}owards making formal methods normal: meeting developers where they are}
+        , url = {https://research.google/pubs/pub49713/}
         , year = {2020}
     }
 ---

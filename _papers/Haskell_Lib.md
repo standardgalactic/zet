@@ -1,9 +1,10 @@
 ---
 layout: paper
 year: 1999
-url: https//www.haskell.org/definition/
+url: https://www.haskell.org/definition/
 title: Standard Libraries for the Haskell 98 Programming Language
 png: haskell98-library.png
+link: https://www.haskell.org/definition/
 file: haskell98-library.pdf
 author:  Simon Peyton Jones, Lennart Augustsson, Dave Barton, Brian Boutel, Warren Burton, Joseph Fasel, Kevin Hammond, Ralf Hinze, Paul Hudak, John Hughes, Thomas Johnsson, Mark Jones, John Launchbury, Erik Meijer, John Peterson, Alastair Reid, Colin Runciman, Philip Wadler
 ar_shortname: Haskell Lib
@@ -35,6 +36,7 @@ bibtex: |
     and Philip Wadler
     }
         , file = {haskell98-library.pdf}
+        , link = {https://www.haskell.org/definition/}
         , png = {haskell98-library.png}
         , title = {{S}tandard {L}ibraries for the {H}askell 98 {P}rogramming {L}anguage}
         , url = {https://www.haskell.org/definition/}
