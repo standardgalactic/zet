@@ -25,7 +25,8 @@ layout: default
   {% elsif page.journal %}
       {{ page.journal }}
       {{ page.volume }}({{ page.number }})<br>
-  {% elsif page.eprint %}
+  {% endif %}
+  {% if page.eprint %}
       <a href="https://arxiv.org/abs/{{page.eprint}}">{{ page.archiveprefix }}:{{ page.eprint }} [{{ page.primaryclass }}]</a><br>
   {% endif %}
   {% if page.location %} {{ page.location }}<br> {% endif %}
