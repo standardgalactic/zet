@@ -122,6 +122,9 @@
         "ar_title": "Who guards the guards? Formal Validation of the ARM v8-M Architecture Specification"
     },
     {
+        "primaryclass": "cs.AR",
+        "archiveprefix": "arXiv",
+        "eprint": "1803.06185",
         "ar_shortname": "IEEE Micro",
         "doi": "10.1109/MM.2017.35",
         "pages": "26--39",
