@@ -1,5 +1,9 @@
 {
-    "reid:hatra:2020": { "file": "hatra2020.pdf" },
+    "reid:hatra:2020": {
+        "file": "hatra2020.pdf",
+        "slides": "hatra2020-slides.pdf",
+        "video": "https://youtu.be/fUNYvUMSmq4?t=520"
+    },
     "conf/spisa19/armstrong": { "file": "spisa2019.pdf" },
     "ReidPhDThesis2019": { "file": "2019reidphd.pdf" },
     "conf/popl19/armstrong": { "file": "popl19-isasemantics.pdf" },

@@ -10,6 +10,7 @@ layout: default
     <br>
     {% if page.file %} <a class="pagefile" href="{{ site.baseurl }}/papers/{{ page.file }}">[pdf]</a> {% endif %}
     {% if page.slides %} <a class="pageslides" href="{{ site.baseurl }}/papers/{{ page.slides }}">[slides]</a> {% endif %}
+    {% if page.video %} <a class="pageslides" href="{{ page.video }}">[video]</a> {% endif %}
     {% if page.doi %} <a href="https://doi.org/{{ page.doi }}">[doi]</a>
     {% elsif page.link %} <a href="{{ page.link }}">[url]</a>
     {% endif %}

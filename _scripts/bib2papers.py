@@ -47,6 +47,7 @@ for e in db.entries:
         e['file'] = link
         e['png'] = link.replace(".pdf", ".png")
         if 'slides' in info: e['slides'] = info['slides']
+        if 'video' in info: e['video'] = info['video']
 
     name = e['ar_shortname']
     filename = name.replace(' ','_').replace('-','_')

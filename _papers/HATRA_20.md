@@ -1,8 +1,10 @@
 ---
 layout: paper
 year: 2020
+video: https://youtu.be/fUNYvUMSmq4?t=520
 url: https://research.google/pubs/pub49713/
 title: Towards making formal methods normal - meeting developers where they are
+slides: hatra2020-slides.pdf
 primaryclass: cs.LO
 png: hatra2020.png
 note: Accepted at HATRA 2020
@@ -75,8 +77,10 @@ bibtex: |
         , note = {Accepted at HATRA 2020}
         , png = {hatra2020.png}
         , primaryclass = {cs.LO}
+        , slides = {hatra2020-slides.pdf}
         , title = {{T}owards making formal methods normal: meeting developers where they are}
         , url = {https://research.google/pubs/pub49713/}
+        , video = {https://youtu.be/fUNYvUMSmq4?t=520}
         , year = {2020}
     }
 ---
