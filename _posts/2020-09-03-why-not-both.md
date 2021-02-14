@@ -3,6 +3,7 @@ title: "Rust testing or verifying: Why not both?"
 layout: post
 ---
 
+![Rust logo]{: style="float: left; width: 10%; padding: 1%"}
 Dijkstra famously dissed testing by saying "Program testing can be used to show
 the presence of bugs, but never to show their absence!"
 As if you should choose one over the other.
@@ -325,3 +326,5 @@ And these papers:
 [Dr. Fuzz]:      https://dynamorio.org/drmemory_docs/page_drfuzz.html
 
 [Hacker News]:   https://news.ycombinator.com/item?id=24372760
+
+[Rust logo]: {{ site.baseurl }}/images/Rust_programming_language_black_logo.svg

@@ -3,6 +3,7 @@ title: "Rust Design-for-Testability: a survey"
 layout: post
 ---
 
+![Rust logo]{: style="float: left; width: 10%; padding: 1%"}
 What can we do when designing Rust code to make it easier to test?
 This is a survey of everything I could find[^survey-method] about
 testing Rust with a particular focus on design for testability for
@@ -421,5 +422,4 @@ Thanks to the following people for adding to the above
 [Rust verification tools]:   {% post_url 2020-05-08-rust-verification-tools %}
 [Rust testing or verifying: why not both]: {% post_url 2020-09-03-why-not-both %}
 
-
-
+[Rust logo]: {{ site.baseurl }}/images/Rust_programming_language_black_logo.svg

@@ -3,6 +3,7 @@ title: Rust verification tools
 layout: post
 ---
 
+![Rust logo]{: style="float: left; width: 10%; padding: 1%"}
 _[I have been updating this post continually in response to suggestions and questions.
 If you want to see recent changes, you can [find the diffs here](https://github.com/alastairreid/alastairreid.github.io/commits/master/_posts/2020-05-08-rust-verification-tools.md).]_
 
@@ -498,3 +499,5 @@ Also:
 [librarification]: http://smallcultfollowing.com/babysteps/blog/2020/04/09/libraryification/
 [verifier crate]: https://crates.io/crates/verifier
 [verifier benchmarks]: https://github.com/soarlab/rust-benchmarks
+
+[Rust logo]: {{ site.baseurl }}/images/Rust_programming_language_black_logo.svg
