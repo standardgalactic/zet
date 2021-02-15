@@ -3,6 +3,7 @@ layout: post
 title: Limitations of ISA-Formal
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 As I was explaining the [ISA-Formal technique for verifying ARM processors]({{
 site.url }}/papers/CAV_16/) to people, I realized that it was
 important to be clear about what ISA-Formal does not verify and why.

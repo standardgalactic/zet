@@ -3,6 +3,7 @@ layout: post
 title: Bidirectional ARM Assembly Syntax Specifications
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 One of the tantalising pieces of information contained in [ARM's machine
 readable specifications]({{ site.baseurl }}{% post_url
 2017-04-20-ARM-v8a-xml-release %}) is a specification of the assembly syntax.

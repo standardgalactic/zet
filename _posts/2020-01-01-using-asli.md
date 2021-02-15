@@ -3,6 +3,7 @@ title: Using ASLi with Arm's v8.6-A ISA specification
 layout: post
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 [ASLi](https://github.com/alastairreid/asl-interpreter)
 is an interpreter for
 [Arm's Architecture Specification Language]({{ site.baseurl }}{% post_url 2016-08-17-specification_languages %}).

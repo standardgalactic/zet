@@ -3,6 +3,7 @@ layout: post
 title: ARM's Architecture Specification Language
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 What language should you write a specification in?  Should you use the language
 supported by your favourite verification tool (HOL, Verilog, ...)?
 Or should you write it in a DSL and translate that to whatever your

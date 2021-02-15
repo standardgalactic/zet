@@ -3,6 +3,7 @@ layout: post
 title: Dissecting ARM's Machine Readable Specification
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 Last week, ARM released their Machine Readable
 Architecture Specification and
 [I wrote about what you can do with it]({{ site.baseurl

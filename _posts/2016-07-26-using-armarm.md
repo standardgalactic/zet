@@ -3,6 +3,7 @@ layout: post
 title: Verifying against the official ARM specification
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 Part of the reason why  the [ISA-Formal technique for verifying ARM
 processors]({{ site.url }}/papers/CAV_16/) is so effective and
 so portable across different ARM processors is the fact that we directly use the

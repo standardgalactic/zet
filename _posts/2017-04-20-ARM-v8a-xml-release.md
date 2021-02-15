@@ -3,6 +3,7 @@ layout: post
 title: ARM Releases Machine Readable Architecture Specification
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 The device you are reading this post on consists of a very tall
 stack of layers - all the way from transistors and NAND gates all the
 way up to processors, C, Linux/ Android/ iOS/ Windows to the browser.

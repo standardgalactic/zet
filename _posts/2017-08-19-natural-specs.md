@@ -3,6 +3,7 @@ layout: post
 title: Are natural language specifications useful?
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 In my efforts to create a formal specification of the Arm architecture, I have
 focussed on the parts written in "pseudocode".  I have  reverse engineered [the
 ASL language hiding inside the pseudocode]({{ site.baseurl }}{% post_url

@@ -3,6 +3,7 @@ layout: post
 title: Formal validation of the Arm v8-M specification
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 In my [last post about natural language specifications]({{ site.baseurl }}{%
 post_url 2017-08-19-natural-specs %}), I talked about the problem with
 executable specifications: they are great for specifying existing behaviour but

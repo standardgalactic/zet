@@ -3,6 +3,7 @@ layout: post
 title: ASL Lexical Syntax
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 In my post about [dissecting the ARM Machine Readable Architecture files]({{ site.baseurl }}{% post_url 2017-04-29-dissecting-ARM-MRA %})
 I described how to extract the ASL code from the XML files that ARM provides.
 In this post, I will describe how to start processing that code by examining
