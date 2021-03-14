@@ -4,9 +4,6 @@ layout: post
 ---
 
 ![Rust logo]{: style="float: left; width: 10%; padding: 1%"}
-_[I have been updating this post continually in response to suggestions and questions.
-If you want to see recent changes, you can [find the diffs here](https://github.com/alastairreid/alastairreid.github.io/commits/master/_posts/2020-05-08-rust-verification-tools.md).]_
-
 The [Rust language] and the Rust community are really interesting if you are
 want to build better quality systems software.
 
@@ -46,6 +43,13 @@ What can you do with them?
 Are they complete?
 Are they being maintained?
 What common standards and benchmarks exist?
+
+*[Update March 2021:
+Rust verification tools are in active development.
+I'm not going to rewrite this entire article but I will
+mention that my team at Google has been working on how to use [KLEE], [SeaHorn] and [Crux-MIR]
+to verify Rust - you can get our tools [on github here](https://project-oak.github.io/rust-verification-tools/).
+]*
 
 Here is a list of the tools that I know about (more details below):
 - Cargo-KLEE:
@@ -501,3 +505,6 @@ Also:
 [verifier benchmarks]: https://github.com/soarlab/rust-benchmarks
 
 [Rust logo]: {{ site.baseurl }}/images/Rust_programming_language_black_logo.svg
+
+[KLEE]: https://klee.github.io/
+[SeaHorn]: https://seahorn.github.io/
