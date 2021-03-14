@@ -3,6 +3,7 @@ layout: post
 title: Verification
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 Historically, I've changed jobs every 5-6 years; I've been at ARM over 7 years
 now.  When I mentioned this to my manager, he started wondering where this was
 heading.  In fact, I was explaining why I felt it was time for me to shift my

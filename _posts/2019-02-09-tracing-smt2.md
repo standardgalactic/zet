@@ -3,6 +3,7 @@ layout: post
 title: Using SMT to check specifications for errors
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 SMT solvers are incredibly flexible tools for analyzing complex systems.  In
 [my previous post]({{ site.baseurl }}{% post_url 2019-02-02-tracing-smt %}),
 I showed how you can: generate a symbolic execution trace from running an

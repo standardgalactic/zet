@@ -3,6 +3,7 @@ layout: post
 title: Generating SMT from traces
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 In a [previous post about formal validation of the Arm architecture]({{
 site.baseurl }}{% post_url 2017-09-24-validating-specs %}) I sketched how you
 can reason about [Arm's processor specifications]({{ site.baseurl }}{% post_url

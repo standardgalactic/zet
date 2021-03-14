@@ -3,6 +3,7 @@ layout: post
 title: Specification Terminology
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 I have spent the last 5 years working on ARM's processor specifications:
 making them executable, testable, mechanizing them, formalizing them,
 making them trustworthy, etc.

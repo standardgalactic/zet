@@ -3,6 +3,7 @@ layout: post
 title: Finding Bugs versus Proving Absence of Bugs
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 Probably the most important thing I didn't say enough in [my paper about
 verifying ARM processors]({{ site.url }}/papers/CAV_16/)
 is why we focus on finding bugs.

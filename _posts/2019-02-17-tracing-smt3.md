@@ -3,6 +3,7 @@ layout: post
 title: Generating multiple solutions with SMT
 ---
 
+![ARM logo]({{ site.baseurl }}/images/ARM_logo.svg){: style="float: left; width: 10%; padding: 1%"}
 You can use an SMT solver to find a solution to a set of constraints.
 But what happens if you want to find multiple solutions?
 My previous posts in this series have looked at
