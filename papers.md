@@ -31,6 +31,18 @@ pages.
 
 ## Talks
 
+<h3>Rust Verification</h3>
+
+
+  - [KLEE workshop 2021](https://srg.doc.ic.ac.uk/klee21/)
+    <br>
+    Virtual (London, UK).
+    11 June 2021.
+    [[pdf]](talks/using-KLEE-with-Rust-2021-07-11.pdf)
+    [[video]](https://youtu.be/zR7oDg7zix0)
+
+
+
 <h3>The Hardware-Software Interface: Quality and Performance</h3>
 
 _One of the most important interfaces in a computer system is the
