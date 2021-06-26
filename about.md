@@ -4,30 +4,61 @@ title: About
 permalink: /about/
 ---
 
+I am a research scientist at Google and former senior principal research
+engineer at Arm Ltd
+working at the intersection of
+formal verification,
+security,
+privacy,
+software,
+hardware,
+compilers,
+processor architecture and
+microarchitecture.
+
+I have a history of initiating projects with impact across the company
+and
+of creating systems that push the boundary of what is feasible but that I can help transfer to production engineering.
+
+Where possible, I use existing tools and techniques often derived from [academic papers and projects]({% post_url 2020-10-04-a-year-of-papers %}).
+If I find gaps where the state of the art does not solve the full problem, I invent ways to fill them.
+*There are always gaps.*
+
+
 ## Google (2019--present)
 
-In September 2019,
-I joined
-[Google Research](https://research.google/)
-to work on
-[Project Oak](https://github.com/project-oak/oak/blob/master/README.md)
-where my focus is on understanding how to make
-[Rust](https://research.google/)
-developers more productive with formal verification tools.
-The approach I am taking is one of
+I am tech lead on Google Research's
+[Rust Verification Tools project](https://project-oak.github.io/rust-verification-tools/)
+working on how to make Rust developers more productive with formal verification tools.
+Specifically, we aim to *democratize* and *deskill* formal verification to make it
+not just accessible by developers but something that developers actually want to use
+because they can see how it helps them do their job.
+
+We are taking the approach of
 [meeting the developer where they are](/papers/HATRA_20/):
 looking for ways to make
 formal verification fit into developers existing workflow of
 documentation tests, property-based testing,
 fuzzing and automatic test generation.
+The first phase of this work was figuring out
+[how to use KLEE with Rust](https://project-oak.github.io/rust-verification-tools/2021/03/29/klee-status.html);
+the next phase will focus more on usability and productivity.
 
-My
-[boss](https://twitter.com/BenLaurie)
-likes to use the phrase
-"[Verify all the things!](https://twitter.com/hashtag/VerifyAllTheThings?src=hashtag_click)"
-and I am trying to figure out how to make it happen.
+See also: [project progress posts](https://project-oak.github.io/rust-verification-tools/);
+[the code on github](https://github.com/project-oak/rust-verification-tools);
+[my Google webpage](https://research.google/people/AlastairReid/);
+and blog posts about Rust
+([#1]({% post_url 2020-09-03-why-not-both %}),
+[#2]({% post_url 2020-05-08-rust-verification-tools %}),
+[#3]({% post_url 2021-06-03-automatic-rust-verification-tools-2021 %}),
+[#4]({% post_url 2020-10-30-rust-testability %}),
+[#5]({% post_url 2020-04-19-verification-competitions %})).
 
-[My Google webpage is here](https://research.google/people/AlastairReid/).
+<!--
+My boss likes to use the phrase
+"[#VerifyAllTheThings](https://twitter.com/hashtag/VerifyAllTheThings?src=hashtag_click)"
+and I am figuring out how to make it happen.
+-->
 
 
 ## Arm (2004--2019)
@@ -35,12 +66,12 @@ and I am trying to figure out how to make it happen.
 Until August 2019, I was a senior principal research engineer at Arm Ltd.
 working on
 [formal specification of the Arm processor architecture](#mechanized-processor-specification).
-My research at Arm revolved around the interplay between software, compilers, architecture and
+My research at Arm revolved around the interplay between software/hardware, security, compilers, architecture and
 microarchitecture in microprocessors.
 This resulted in
 [patents](/papers/#patents),
 [papers](/papers/#papers)
-and, most importantly, tools that are used by Arm's processor and architecture teams.
+and, most importantly, tools that are used every day by Arm's processor and architecture teams.
 
 My most influential Arm project produced a methodology and tools for
 [formal validation of Arm processors](#processor-formal-verification)
@@ -62,9 +93,9 @@ where I
 
 I have also worked on
 [vectorizing compilers](#vectorizing-compiler-for-neon),
-testcase generation,
+defending against architectural side channels,
 architectural coverage analysis,
-CPU simulators and the ARMv8 architecture.
+CPU simulators and both the A- and M-class ARMv8 architectures.
 
 ## Utah, Yale and Glasgow Universities (1988--2004)
 
@@ -86,7 +117,7 @@ I also like to
 
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
-| Staff Research Scientist           || Google Research                  || 2019 -         |
+| Research Scientist                 || Google Research                  || 2019 -         |
 | Senior Principal Research Engineer || Arm Ltd                          || 2017 - 2019    |
 | - ASL Steering Committee           ||                                  || 2017 - 2019    |
 | - Patent Review Committee          ||                                  || 2014 - 2019    |
@@ -113,6 +144,34 @@ I have served on the following conference program committees.
 - [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm) PC
 
 ---
+
+## Google Research Projects
+
+I [joined Google Research]({% post_url 2019-11-02-joining-google %}) in 2019 to work on
+[Project Oak](https://github.com/project-oak/oak):
+an ambitious, multistranded project to provide privacy-respecting computation
+in the cloud where all sensitive information is governed by a user policy
+and cannot be seen by environments that have not been verified to respect that policy.
+
+The [Oak runtime](https://github.com/project-oak/oak) is written in the
+[Rust language](https://www.rust-lang.org/) so it was important to understand how
+to apply formal verification to Rust code.
+We soon realized that formal verification of Rust was in its infancy and many Rust
+verification tools could not handle enough of the Rust language and library features
+to be able to verify Oak and the libraries that Oak depends on.
+
+This led me to propose [a project focused on Rust
+verification](https://project-oak.github.io/rust-verification-tools/) that
+would focus on supporting as much real Rust code as possible and on developing
+tools and techniques that could feasibly be adopted into a production
+engineering environment.
+We can now apply the 
+[KLEE](https://klee.github.io/) symbolic execution tool to most Rust code
+(see [status update](https://project-oak.github.io/rust-verification-tools/2021/03/29/klee-status.html))
+and we published a paper about our plans for 
+[making formal normal](/papers/HATRA_20/): tackling the usability and acceptance
+issues developers face with formal verification tools.
+
 
 ## Arm Ltd. Projects (selected)
 
