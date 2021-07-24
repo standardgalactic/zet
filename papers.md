@@ -33,14 +33,35 @@ pages.
 
 <h3>Rust Verification</h3>
 
+Talks about the [Rust verification project](https://project-oak.github.io/rust-verification-tools/)
+at Google.
 
-  - [KLEE workshop 2021](https://srg.doc.ic.ac.uk/klee21/)
+  - Building Better Systems (Episode #11): Meeting Developers Where They Are
+    <br>
+    23 July 2021 (recorded 2nd February).
+    [[youtube]](https://www.youtube.com/watch?v=yXEVO-26eC8)
+    [[apple podcast]](https://podcasts.apple.com/us/podcast/11-alastair-reid-meeting-developers-where-they-are/id1537190695?i=1000529842759)
+    [[simplecast]](https://building-better-systems.simplecast.com/episodes/11-alastair-reid-meeting-developers-where-they-are-TSRN2M5n)
+    [[mp3]](https://cdn.simplecast.com/audio/83a96719-0b3a-4a2c-b6ef-4cbfc1905808/episodes/1b616260-3607-44c2-807a-117160a33368/audio/d5b73395-8453-42f6-a66b-1516814cf77f/default_tc.mp3)
+    [[transcript]](https://building-better-systems.simplecast.com/episodes/11-alastair-reid-meeting-developers-where-they-are-TSRN2M5n/transcript)
+
+    This 36 minute interview with Joey Dodds and Shpat Morina at Galois focuses on adoption and usability of verification tools
+    and where we sit on the spectrum from high-assurance/high-cost to lower-assurance/lower-cost.
+
+
+  - Using KLEE with Large Rust Programs
+    <br>
+    [KLEE workshop 2021](https://srg.doc.ic.ac.uk/klee21/)
     <br>
     Virtual (London, UK).
     11 June 2021.
     [[pdf]](talks/using-KLEE-with-Rust-2021-07-11.pdf)
     [[video]](https://youtu.be/zR7oDg7zix0)
 
+    This 12 minute talk focuses on tools: what we have done to adapt KLEE for use with Rust;
+    the language, compiler, library and linker features we have encountered in real
+    code out in the wild;
+    and how we have tried to solve issues in a way that other Rust verification tools can directly use or adapt.
 
 
 <h3>The Hardware-Software Interface: Quality and Performance</h3>
