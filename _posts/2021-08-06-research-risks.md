@@ -83,12 +83,26 @@ ranking system like high, medium and low and do the best you can.
 
 ### Managing your risk budget
 
-Now the hard part... try to kill your project.
+Now the hard part... try to kill your project.[^student-projects]
 Pick the largest risk and try to show that it is so big
 that your project is bound to fail.
 Be creative. Try really hard to kill it.
 This is a bit brutal but it's a lot better to find a problem yourself
 early in a project than to have somebody else find the problem later.
+
+[^student-projects]:
+    From comments on Twitter, I realize that I did not make it clear that
+    the approach in this article is mostly for multiperson, multiyear
+    projects. For a student project, the PhD supervisor would be thinking
+    of some of these issues before suggesting the project to avoid
+    the student discovering the fatal flaws for themselves some distance
+    into the project.
+
+*[[Laurence Tratt](https://tratt.net/laurie/)
+(King's College London)
+[wrote about](https://tratt.net/laurie/blog/entries/stick_or_twist.html)
+how he has applied a similar approach at
+several points in his career.]*
 
 
 > If it's your job to eat a frog, it's best to do it first thing in the morning.
@@ -176,6 +190,19 @@ and what I need to build to support that.
 - With luck, the number of high-rated risks will go down over time.
   If not, you should seriously consider killing your project.
 
+In closing...
+the idea here is not to fixate on risk: running around shouting
+that the sky is falling down.
+Instead, it is like the [Getting Things Done](https://gettingthingsdone.com/)
+productivity system:
+by writing down all the risks, you can stop worrying about them because
+you know that you have that taken care of and you have a plan to handle them.
+Which lets you focus on other aspects of the project.
+The tweak that I am adding is the idea that you can use the
+list of risks to help decide what part of the problem to work on next.
+
+
+------------
 
 
 [RVT website]: https://project-oak.github.io/rust-verification-tools/
