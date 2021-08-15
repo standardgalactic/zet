@@ -68,7 +68,8 @@ is to make a list of all the risks you can think of.
   surprising issues that are encountered in solving 
   a problem.)
 
-For [my current project][RVT website], I have a list of around 50 risks that I'm worried about.
+For [my current project][RVT website], I have a
+[list of around 50 risks that I'm worried about](https://project-oak.github.io/rust-verification-tools/2021/08/15/rvt-risks.html).
 
 Once you have a list of risks, you need to estimate the size of each risk:
 how much impact it could have and how uncertain you are about
