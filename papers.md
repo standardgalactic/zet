@@ -36,6 +36,21 @@ pages.
 Talks about the [Rust verification project](https://project-oak.github.io/rust-verification-tools/)
 at Google.
 
+  - How can we formally verify Rust for Linux
+    <br>
+    [Kangrejos](https://kangrejos.com/)
+    (workshop attached to [Linux Plumbers 2021](https://linuxplumbersconf.org/event/13/timetable/#20210913.detailed)).
+    <br>
+    Virtual.
+    <br>
+    13 September 2021.
+    [[pdf]](talks/Kangrejos-2021-09-13.pdf)
+
+    This talk describes the state of formal verification for Rust code in the
+    Linux kernel based on the
+    [blog posts](https://project-oak.github.io/rust-verification-tools/2021/08/22/rust-on-linux-1.html)
+    I wrote.
+
   - Building Better Systems (Episode #11): Meeting Developers Where They Are
     <br>
     23 July 2021 (recorded 2nd February).
