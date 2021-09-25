@@ -1,12 +1,14 @@
 ---
 layout: paper
 year: 2019
+url: http://theses.gla.ac.uk/41068/
 title: Defining interfaces between hardware and software - Quality and performance
 school: School of Computing Science, University of Glasgow
 png: 2019reidphd.png
 numpages: 161
 month: March
 location: Glasgow, Scotland
+link: http://theses.gla.ac.uk/41068/
 file: 2019reidphd.pdf
 author: Alastair Reid
 ar_shortname: PhD 19
@@ -153,12 +155,14 @@ bibtex: |
         , ar_shortname = {PhD 19}
         , author = {Alastair Reid}
         , file = {2019reidphd.pdf}
+        , link = {http://theses.gla.ac.uk/41068/}
         , location = {Glasgow, Scotland}
         , month = {March}
         , numpages = {161}
         , png = {2019reidphd.png}
         , school = {School of Computing Science, University of Glasgow}
         , title = {{D}efining interfaces between hardware and software: {Q}uality and performance}
+        , url = {http://theses.gla.ac.uk/41068/}
         , year = {2019}
     }
 ---

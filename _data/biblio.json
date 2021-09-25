@@ -41,6 +41,7 @@
     {
         "year": "2019",
         "month": "March",
+        "url": "http://theses.gla.ac.uk/41068/",
         "ar_shortname": "PhD 19",
         "numpages": "161",
         "location": "Glasgow, Scotland",
@@ -51,6 +52,7 @@
         "author": "Alastair Reid",
         "ENTRYTYPE": "phdthesis",
         "ID": "ReidPhDThesis2019",
+        "link": "http://theses.gla.ac.uk/41068/",
         "file": "2019reidphd.pdf",
         "png": "2019reidphd.png",
         "ar_file": "PhD_19",
