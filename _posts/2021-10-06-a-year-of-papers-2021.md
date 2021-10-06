@@ -6,18 +6,18 @@ layout: post
 Last year, I wrote [about the 122 papers that I read in my first year at Google][summary-2020]
 and that I summarize on [the RelatedWork site][RelatedWork].
 Over the last 18 months or so, I've spent a lot less time doing the one hour train commute between Cambridge and London
-so I read 59 papers in the last year and added 188 papers to the backlog of unread papers.
+so I read [59 papers][papers] in the last year and added 188 papers to the [backlog of unread papers][backlog].
 You can read [my summaries of all the papers][RelatedWork],
 read [notes on common themes in the papers][notes],
 and download [BibTeX][bibfile] for all the papers.
 
-*Note that the main motivation for writing these paper summaries
+*[Note that the main motivation for writing these paper summaries
 is to help me learn new research fields.
 So these summaries are usually not high quality reviews by an expert in the
 field but, instead, me trying to make sense of a barrage of terminology,
 notation and ideas as I try to figure out whether the paper is useful to my
 work.
-You should write your own summaries of any of the papers I list that sound interesting.*
+You should write your own summaries of any of the papers I list that sound interesting.]*
 
 
 ## Zettelkasten
@@ -167,6 +167,7 @@ Since I work in a machine-learning part of Google, I have been reading about mac
 [RelatedWork]:                {{site.RWurl}}
 [bibfile]:                    {{site.RWurl}}/RelatedWork.bib
 [papers]:                     {{site.RWurl}}/papers
+[backlog]:                    {{site.RWurl}}/papers/#unsummarized
 [notes]:                      {{site.RWurl}}/notes
 
 [Hardware faults]:            {{site.RWurl}}/notes/hardware-faults/
