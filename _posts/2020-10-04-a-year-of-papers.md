@@ -1,5 +1,5 @@
 ---
-title: Summarizing 12 months of reading papers
+title: Summarizing 12 months of reading papers (2020)
 layout: post
 ---
 
@@ -382,33 +382,33 @@ But people pointed out some other tools that might work better (most of which I 
 
 ---------------
 
-[Information flow control]:   {{ site.baseurl }}/RelatedWork/notes/information-flow/
-[Operating Systems]:          {{ site.baseurl }}/RelatedWork/topics/os/
-[Verification tools]:         {{ site.baseurl }}/RelatedWork/topics/tools/
-[Interactive theorem prover]: {{ site.baseurl }}/RelatedWork/notes/interactive-theorem-prover/
-[Auto active verification]:   {{ site.baseurl }}/RelatedWork/notes/auto-active-verification/
-[Abstract interpretation]:    {{ site.baseurl }}/RelatedWork/notes/abstract-interpretation/
-[Model checking]:             {{ site.baseurl }}/RelatedWork/notes/model-checking/
-[Bounded model checking]:     {{ site.baseurl }}/RelatedWork/notes/bounded-model-checking/
-[Symbolic execution]:         {{ site.baseurl }}/RelatedWork/notes/symbolic-execution/
-[Separation logic]:           {{ site.baseurl }}/RelatedWork/notes/separation-logic/
-[Permission logic]:           {{ site.baseurl }}/RelatedWork/notes/permission-logic/
-[The Rust language]:          {{ site.baseurl }}/RelatedWork/notes/rust-language/
-[Survey papers]:              {{ site.baseurl }}/RelatedWork/notes/survey/
-[Fuzz testing]:               {{ site.baseurl }}/RelatedWork/notes/fuzz-testing/
-[Test generation]:            {{ site.baseurl }}/RelatedWork/notes/test-generation/
-[SAT]:                        {{ site.baseurl }}/RelatedWork/notes/sat-solver/
-[SMT]:                        {{ site.baseurl }}/RelatedWork/notes/smt-solver/
-[ISA specification]:          {{ site.baseurl }}/RelatedWork/notes/isa-specification/
-[Property-based testing]:     {{ site.baseurl }}/RelatedWork/notes/property-based-testing/
-[Google]:                     {{ site.baseurl }}/RelatedWork/notes/google/
+[Information flow control]:   {{site.RWurl}}/notes/information-flow/
+[Operating Systems]:          {{site.RWurl}}/topics/os/
+[Verification tools]:         {{site.RWurl}}/topics/tools/
+[Interactive theorem prover]: {{site.RWurl}}/notes/interactive-theorem-prover/
+[Auto active verification]:   {{site.RWurl}}/notes/auto-active-verification/
+[Abstract interpretation]:    {{site.RWurl}}/notes/abstract-interpretation/
+[Model checking]:             {{site.RWurl}}/notes/model-checking/
+[Bounded model checking]:     {{site.RWurl}}/notes/bounded-model-checking/
+[Symbolic execution]:         {{site.RWurl}}/notes/symbolic-execution/
+[Separation logic]:           {{site.RWurl}}/notes/separation-logic/
+[Permission logic]:           {{site.RWurl}}/notes/permission-logic/
+[The Rust language]:          {{site.RWurl}}/notes/rust-language/
+[Survey papers]:              {{site.RWurl}}/notes/survey/
+[Fuzz testing]:               {{site.RWurl}}/notes/fuzz-testing/
+[Test generation]:            {{site.RWurl}}/notes/test-generation/
+[SAT]:                        {{site.RWurl}}/notes/sat-solver/
+[SMT]:                        {{site.RWurl}}/notes/smt-solver/
+[ISA specification]:          {{site.RWurl}}/notes/isa-specification/
+[Property-based testing]:     {{site.RWurl}}/notes/property-based-testing/
+[Google]:                     {{site.RWurl}}/notes/google/
 
 [leaving Arm]:                {% post_url 2019-08-30-farewell-to-arm %}
 [joining Google]:             {% post_url 2019-11-02-joining-google %}
-[RelatedWork]:                {{ site.baseurl }}/RelatedWork
-[bibfile]:                    {{ site.baseurl }}/RelatedWork/RelatedWork.bib
-[papers]:                     {{ site.baseurl }}/RelatedWork/papers
-[notes]:                      {{ site.baseurl }}/RelatedWork/notes
+[RelatedWork]:                {{site.RWurl}}
+[bibfile]:                    {{site.RWurl}}/RelatedWork.bib
+[papers]:                     {{site.RWurl}}/papers
+[notes]:                      {{site.RWurl}}/notes
 
 [the morning paper]:          https://blog.acolyer.org
 [Zettelkasten]:               https://zettelkasten.de/posts/zettelkasten-improves-thinking-writing

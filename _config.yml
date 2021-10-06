@@ -50,6 +50,9 @@ url: https://alastairreid.github.io
 # then add in the baseurl here, like this: "/repository-name"
 baseurl:
 
+# RelatedWork url
+RWurl: https://alastairreid.github.io/RelatedWork
+
 #
 # Generate one page per paper with all the information about the paper on it
 #
