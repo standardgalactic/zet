@@ -6,7 +6,7 @@ layout: post
 Last year, I wrote [about the 122 papers that I read in my first year at Google][summary-2020]
 and that I summarize on [the RelatedWork site][RelatedWork].
 Over the last 18 months or so, I've spent a lot less time doing the one hour train commute between Cambridge and London
-so I read [59 papers][papers] in the last year and added 188 papers to the [backlog of unread papers][backlog].
+so I only read [59 papers][papers] in the last year and added 188 papers to the [backlog of unread papers][backlog].
 You can read [my summaries of all the papers][RelatedWork],
 read [notes on common themes in the papers][notes],
 and download [BibTeX][bibfile] for all the papers.
@@ -24,20 +24,25 @@ You should write your own summaries of any of the papers I list that sound inter
 
 I have found that a great way of organizing my thoughts about papers is as a
 [Zettelkasten].  The basic structuring idea is based on creating links between
-papers and concepts.  Every time you come across a new concept in a paper, you
+papers and concepts.  Every time I come across a new concept in a paper, I
 create a new page about it and link the paper to that page.  Each paper,
 concept or link added to the Zettelkasten refines my understanding of the
-research field and captures that understanding in the links between concepts,
+research field and that understanding is (partly) captured in the links between concepts,
 between papers and between papers and concepts.
+And since every page has back-references to the pages that link to it, I can
+easily find related papers that have different views of a concept or that improve
+upon an idea.
 
-Last year, I had only just adopted the [Zettelkasten] concept and I was not adding
-enough pages about new concepts until after I came across the concept a second time.
+Last year, I had only just adopted the [Zettelkasten] concept and I was often not adding
+new concept pages until after I came across the concept a second time.
 This year, I have tried to be more aggressive about adding new concepts.
 This has turned out to be much easier when I am reading papers in a completely new field
 because my ignorance makes it easier to spot new concepts.
-This was easiest when I started reading about machine learning where every page
+For example, when when I started reading about machine learning every page
 I read had a bunch of new acronyms like RNN, CNN, ReLU or unfamiliar terms
-like Softmax, Activation or Attention.
+like Softmax, Activation or Attention and I created pages for each of these concepts,
+looked them up, linked to the wikipedia page (or similar) and linked the current
+and later papers to the concept.
 
 *[I wrote a lot more about Zettelkasten and the tools that support it [last year][summary-2020]]*
 
@@ -58,7 +63,7 @@ so, unsurprisingly, many of the papers are about the [Rust language] with a bit 
   - GhostCell: Separating permissions from data in Rust [<a href="{{site.RWurl}}/papers/yanovski:unknown:2021/">yanovski:unknown:2021</a>]
   - Phantom types and subtyping [<a href="{{site.RWurl}}/papers/fluet:jfp:2006/">fluet:jfp:2006</a>]
 
-Also, some pre-Rust papers that these paper build on.
+Also, some pre-Rust papers that these papers build on.
 
 - Dependent types for low-level programming [<a href="{{site.RWurl}}/papers/condit:esop:2007/">condit:esop:2007</a>]
 - Quantifying the performance of garbage collection vs. explicit memory management [<a href="{{site.RWurl}}/papers/hertz:oopsla:2005/">hertz:oopsla:2005</a>]
