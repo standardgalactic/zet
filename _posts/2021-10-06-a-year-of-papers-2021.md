@@ -11,6 +11,14 @@ You can read [my summaries of all the papers][RelatedWork],
 read [notes on common themes in the papers][notes],
 and download [BibTeX][bibfile] for all the papers.
 
+*Note that the main motivation for writing these paper summaries
+is to help me learn new research fields.
+So these summaries are usually not high quality reviews by an expert in the
+field but, instead, me trying to make sense of a barrage of terminology,
+notation and ideas as I try to figure out whether the paper is useful to my
+work.
+You should write your own summaries of any of the papers I list that sound interesting.*
+
 
 ## Zettelkasten
 
