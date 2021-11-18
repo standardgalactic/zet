@@ -48,7 +48,7 @@ What common standards and benchmarks exist?
 Rust verification tools are in active development.
 I'm not going to rewrite this entire article but I will
 mention that my team at Google has been working on how to use [KLEE], [SeaHorn] and [Crux-MIR]
-to verify Rust - you can get our tools [on github here](https://project-oak.github.io/rust-verification-tools/).
+to verify Rust - you can get our tools [on github here]({{site.RVTurl}}/).
 ]*
 
 Here is a list of the tools that I know about (more details below):

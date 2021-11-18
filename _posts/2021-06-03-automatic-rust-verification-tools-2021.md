@@ -328,7 +328,7 @@ also look at [Crux-MIR].
 
 -----------
 
-[RVT website]: https://project-oak.github.io/rust-verification-tools/
+[RVT website]: {{site.RVTurl}}/
 [RVT github]: https://github.com/project-oak/rust-verification-tools/
 [RVT 2020]: {% post_url 2020-05-08-rust-verification-tools %}
 [RV2021]: https://sites.google.com/view/rustverify2021
@@ -339,21 +339,21 @@ also look at [Crux-MIR].
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/
 [Sealed Rust]: https://ferrous-systems.com/blog/sealed-rust-the-pitch/
 
-[astrauskas:oopsla:2019]: {{ site.baseurl }}/RelatedWork/papers/astrauskas:oopsla:2019/
-[baranowski:atva:2018]: {{ site.baseurl }}/RelatedWork/papers/baranowski:atva:2018/
-[jung:popl:2017]: {{ site.baseurl }}/RelatedWork/papers/jung:popl:2017/
-[jung:popl:2020]: {{ site.baseurl }}/RelatedWork/papers/jung:popl:2020/
-[lindner:indin:2018]: {{ site.baseurl }}/RelatedWork/papers/lindner:indin:2018/
-[lindner:indin:2019]: {{ site.baseurl }}/RelatedWork/papers/lindner:indin:2019/
-[matsushita:esop:2020]: {{ site.baseurl }}/RelatedWork/papers/matsushita:esop:2020/
-[toman:ase:2015]: {{ site.baseurl }}/RelatedWork/papers/toman:ase:2015/
+[astrauskas:oopsla:2019]: {{site.RWurl}}/papers/astrauskas:oopsla:2019/
+[baranowski:atva:2018]: {{site.RWurl}}/papers/baranowski:atva:2018/
+[jung:popl:2017]: {{site.RWurl}}/papers/jung:popl:2017/
+[jung:popl:2020]: {{site.RWurl}}/papers/jung:popl:2020/
+[lindner:indin:2018]: {{site.RWurl}}/papers/lindner:indin:2018/
+[lindner:indin:2019]: {{site.RWurl}}/papers/lindner:indin:2019/
+[matsushita:esop:2020]: {{site.RWurl}}/papers/matsushita:esop:2020/
+[toman:ase:2015]: {{site.RWurl}}/papers/toman:ase:2015/
 
-[Rust verification papers]: {{ site.baseurl }}/RelatedWork/notes/rust-language/
+[Rust verification papers]: {{site.RWurl}}/notes/rust-language/
 
 [verification competitions]: {% post_url 2020-04-19-verification-competitions %}
 
-[Lean]: {{ site.baseurl }}/RelatedWork/notes/lean-theorem-prover/
-[SV-COMP]: {{ site.baseurl }}/RelatedWork/notes/sv-competition/
+[Lean]: {{site.RWurl}}/notes/lean-theorem-prover/
+[SV-COMP]: {{site.RWurl}}/notes/sv-competition/
 [Haskell]: https://haskell.org/
 [nofib benchmark suite]: https://link.springer.com/chapter/10.1007/978-1-4471-3215-8_17
 
@@ -390,19 +390,19 @@ also look at [Crux-MIR].
 [verifier crate]: https://crates.io/crates/verifier
 [verifier benchmarks]: https://github.com/soarlab/rust-benchmarks
 
-[Rust logo]: {{ site.baseurl }}/images/Rust_programming_language_black_logo.svg
+[Rust logo]: {{site.baseurl}}/images/Rust_programming_language_black_logo.svg
 
 [KLEE]: https://klee.github.io/
 [SeaHorn]: https://seahorn.github.io/
 
 [RVT 2021 doc]: https://docs.google.com/document/d/1KlHeawNg4UDzvNLByv7RxYTGTVLBGIdfg8532pfuJKU/edit?usp=sharing
 
-[distefano:cacm:2019]: https://alastairreid.github.io/RelatedWork/papers/distefano:cacm:2019
-[godefroid:acmq:2012]: https://alastairreid.github.io/RelatedWork/papers/godefroid:acmq:2012/
-[jung:popl:2020]:      https://alastairreid.github.io/RelatedWork/papers/jung:popl:2020/
-[sadowski:cacm:2018]:  https://alastairreid.github.io/RelatedWork/papers/sadowski:cacm:2018/
-[wright:icsm:2013]:    https://alastairreid.github.io/RelatedWork/papers/wright:icsm:2013/
-[yun:usenix:2018]:     https://alastairreid.github.io/RelatedWork/papers/yun:usenix:2018/
+[distefano:cacm:2019]: {{site.RWurl}}/papers/distefano:cacm:2019
+[godefroid:acmq:2012]: {{site.RWurl}}/papers/godefroid:acmq:2012/
+[jung:popl:2020]:      {{site.RWurl}}/papers/jung:popl:2020/
+[sadowski:cacm:2018]:  {{site.RWurl}}/papers/sadowski:cacm:2018/
+[wright:icsm:2013]:    {{site.RWurl}}/papers/wright:icsm:2013/
+[yun:usenix:2018]:     {{site.RWurl}}/papers/yun:usenix:2018/
 
 [HATRA 2020]: {{site.baseurl}}/papers/HATRA_20/
 [clippy]: https://rust-lang.github.io/rust-clippy/master/index.html
@@ -416,6 +416,6 @@ also look at [Crux-MIR].
 [fearless concurrency]: https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html
 [dynamic symbolic execution]: https://en.wikipedia.org/wiki/Symbolic_execution
 [RMC]: https://github.com/model-checking/rmc
-[Boogie]: https://alastairreid.github.io/RelatedWork/notes/boogie-verifier/
-[Intermediate Verification Language]: https://alastairreid.github.io/RelatedWork/notes/intermediate-verification-language/
+[Boogie]: {{site.RWurl}}/notes/boogie-verifier/
+[Intermediate Verification Language]: {{site.RWurl}}/notes/intermediate-verification-language/
 [SAW]: https://saw.galois.com/

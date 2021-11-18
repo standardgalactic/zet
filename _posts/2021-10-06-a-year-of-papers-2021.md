@@ -49,7 +49,7 @@ and later papers to the concept.
 
 ## Rust and verification
 
-I spent most of the year working on the [Rust verification project](https://project-oak.github.io/rust-verification-tools/) at Google
+I spent most of the year working on the [Rust verification project]({{site.RVTurl}}/) at Google
 so, unsurprisingly, many of the papers are about the [Rust language] with a bit of an emphasis around [Rust unsafe code].
 
 - [Rust language]
@@ -73,7 +73,7 @@ Also, some pre-Rust papers that these papers build on.
 
 ## Symbolic execution, verification and testing
 
-The [Rust verification project](https://project-oak.github.io/rust-verification-tools/)
+The [Rust verification project]({{site.RVTurl}}/)
 focused on [creating a continuum of verification techniques and tools][Rust testing or verifying: why not both]
 including fuzz-testing, concolic execution, symbolic execution, bounded model checking and abstract interpretation.
 
@@ -135,7 +135,7 @@ Since I work in a machine-learning part of Google, I have been reading about mac
 
 - Language and kernels
   - TensorFlow: Large-scale machine learning on heterogeneous distributed systems [<a href="{{site.RWurl}}/papers/abadi:arxiv:2016/">abadi:arxiv:2016</a>]
-  - The tensor algebra compiler [<a href="https://alastairreid.github.io/RelatedWork/papers/kjolstad:oopsla:2017/">kjolstad:oopsla:2017</a>]
+  - The tensor algebra compiler [<a href="{{site.RWurl}}/papers/kjolstad:oopsla:2017/">kjolstad:oopsla:2017</a>]
   - Sparse GPU kernels for deep learning [<a href="{{site.RWurl}}/papers/gale:arxiv:2020/">gale:arxiv:2020</a>]
 - Hardware
   - In-datacenter performance analysis of a tensor processing unit [<a href="{{site.RWurl}}/papers/jouppi:isca:2017/">jouppi:isca:2017</a>]
