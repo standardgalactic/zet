@@ -4,8 +4,7 @@ title: About
 permalink: /about/
 ---
 
-I am a research scientist at Google and former senior principal research
-engineer at Arm Ltd
+I am a Senior Principal Engineer at Intel Strategic CAD Labs
 working at the intersection of
 formal verification,
 security,
@@ -24,17 +23,21 @@ Where possible, I use existing tools and techniques often derived from [academic
 If I find gaps where the state of the art does not solve the full problem, I invent ways to fill them.
 *There are always gaps.*
 
+## Intel (2021--present)
 
-## Google (2019--present)
+I am working on formal ISA specifications of the x86 architecture.
 
-I am tech lead on Google Research's
+
+## Google (2019--2021)
+
+I was tech lead on Google Research's
 [Rust Verification Tools project](https://project-oak.github.io/rust-verification-tools/)
 working on how to make Rust developers more productive with formal verification tools.
-Specifically, we aim to *democratize* and *deskill* formal verification to make it
+Specifically, our  aim was to *democratize* and *deskill* formal verification to make it
 not just accessible by developers but something that developers actually want to use
 because they can see how it helps them do their job.
 
-We are taking the approach of
+We took the approach of
 [meeting the developer where they are](/papers/HATRA_20/):
 looking for ways to make
 formal verification fit into developers existing workflow of
@@ -42,7 +45,7 @@ documentation tests, property-based testing,
 fuzzing and automatic test generation.
 The first phase of this work was figuring out
 [how to use KLEE with Rust](https://project-oak.github.io/rust-verification-tools/2021/03/29/klee-status.html);
-the next phase will focus more on usability and productivity.
+as a prelude to shifting focus to usability and productivity.
 
 See also: [project progress posts](https://project-oak.github.io/rust-verification-tools/);
 [the code on github](https://github.com/project-oak/rust-verification-tools);
@@ -59,6 +62,10 @@ My boss likes to use the phrase
 "[#VerifyAllTheThings](https://twitter.com/hashtag/VerifyAllTheThings?src=hashtag_click)"
 and I am figuring out how to make it happen.
 -->
+
+I also worked on a fun hardware-software codesign project (not yet public) where I
+worked on tools to allow hardware engineers and software engineers to collaborate more
+closely by letting them explore the hw/sw design space together.
 
 
 ## Arm (2004--2019)
@@ -117,7 +124,8 @@ I also like to
 
 | Position                           || Institution                      || Date           |
 | :--------------------------------- || :------------------------------- || :------------- |
-| Research Scientist                 || Google Research                  || 2019 -         |
+| Senior Principal Engineer          || Intel                            || 2021 -         |
+| Research Scientist                 || Google Research                  || 2019 - 2021    |
 | Senior Principal Research Engineer || Arm Ltd                          || 2017 - 2019    |
 | - ASL Steering Committee           ||                                  || 2017 - 2019    |
 | - Patent Review Committee          ||                                  || 2014 - 2019    |
@@ -134,14 +142,15 @@ I also like to
 
 I have served on the following conference program committees.
 
+- [HATRA 2021](https://2021.splashcon.org/home/hatra-2021) Program Committee
 - [PLDI 2018](http://conf.researchr.org/home/pldi-2018) External Review Committee
-- [SPIN 2012](http://qav.cs.ox.ac.uk/spin2012/) PC
-- [RTAS 2012](http://2014.rtas.org/wp-content/uploads/archives/2012/) PC
-- [LCTES 2011](http://lctes2011.elis.ugent.be/?file=kop1.php) PC
-- [LCTES 2008](http://lctes08.flux.utah.edu) PC
-- [RTAS 2007](http://2014.rtas.org/wp-content/uploads/archives/2007/) PC
-- HiPEAC 2007 PC
-- [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm) PC
+- [SPIN 2012](http://qav.cs.ox.ac.uk/spin2012/) Program Committee
+- [RTAS 2012](http://2014.rtas.org/wp-content/uploads/archives/2012/) Program Committee
+- [LCTES 2011](http://lctes2011.elis.ugent.be/?file=kop1.php) Program Committee
+- [LCTES 2008](http://lctes08.flux.utah.edu) Program Committee
+- [RTAS 2007](http://2014.rtas.org/wp-content/uploads/archives/2007/) Program Committee
+- HiPEAC 2007 Program Committee
+- [RTAS 2006](http://2014.rtas.org/wp-content/uploads/archives/2006/index.htm) Program Committee
 
 ---
 
