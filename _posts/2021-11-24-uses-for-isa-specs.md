@@ -10,6 +10,8 @@ as ISAs have grown, this has become unwieldy.
 More importantly though, there are more and more
 potential uses for machine readable, mechanized, executable ISA specifications.
 
+* Table of contents
+{:toc}
 
 ## Documentation
 
@@ -212,7 +214,7 @@ Some of the [binary analysis] tools used are
 - The [Mayhem][mayhem] [automatic exploit generation] tool [[cha:sandp:2012]]
   based on CMU's [BAP binary analysis platform][BAP tool] [[brumley:cav:2011]].
 
-- The [angr][angr tool] tool [[coppa:ase:2017]] that uses [valgrind] to
+- The [angr][angr tool] tool [[shoshitaishvili:sp:2016]] that uses [valgrind] to
   convert binary code to the VEX intermediate representation that is then
   symbolically executed.
 
