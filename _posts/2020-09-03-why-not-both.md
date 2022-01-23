@@ -196,11 +196,11 @@ Some slightly better examples are
 
 And, we have more documentation about
 
-* [Using the propverify library](https://github.com/project-oak/rust-verification-tools/blob/main/docs/using-propverify.md)
+* [Using the propverify library]({% post_url 2020-09-03-using-propverify %}))
 
-* [Using the lower level `verification-annotations` API](https://github.com/project-oak/rust-verification-tools/blob/main/docs/using-annotations.md)
+* [Using the lower level `verification-annotations` API]({% post_url 2020-09-02-using-annotations %})
 
-* [The many, many flags we use when compiling Rust code so that it can be verified with KLEE](https://github.com/project-oak/rust-verification-tools/blob/main/docs/using-klee.md)
+* [The many, many flags we use when compiling Rust code so that it can be verified with KLEE]({% post_url 2020-09-01-using-klee %})
 
 The latter two are mostly for the benefit of verification tool developers.
 

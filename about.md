@@ -44,7 +44,7 @@ formal verification fit into developers existing workflow of
 documentation tests, property-based testing,
 fuzzing and automatic test generation.
 The first phase of this work was figuring out
-[how to use KLEE with Rust](https://project-oak.github.io/rust-verification-tools/2021/03/29/klee-status.html);
+[how to use KLEE with Rust]({% post_url 2021-03-29-klee-status %});
 as a prelude to shifting focus to usability and productivity.
 
 See also: [project progress posts](https://project-oak.github.io/rust-verification-tools/);
@@ -176,7 +176,7 @@ tools and techniques that could feasibly be adopted into a production
 engineering environment.
 We can now apply the 
 [KLEE](https://klee.github.io/) symbolic execution tool to most Rust code
-(see [status update](https://project-oak.github.io/rust-verification-tools/2021/03/29/klee-status.html))
+(see [status update]({% post_url 2021-03-29-klee-status %}))
 and we published a paper about our plans for 
 [making formal normal](/papers/HATRA_20/): tackling the usability and acceptance
 issues developers face with formal verification tools.

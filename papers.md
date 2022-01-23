@@ -48,7 +48,7 @@ at Google.
 
     This talk describes the state of formal verification for Rust code in the
     Linux kernel based on the
-    [blog posts](https://project-oak.github.io/rust-verification-tools/2021/08/22/rust-on-linux-1.html)
+    [blog posts]({% post_url 2021-08-22-rust-on-linux-1 %})
     I wrote.
 
   - Building Better Systems (Episode #11): Meeting Developers Where They Are

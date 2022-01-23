@@ -54,7 +54,7 @@ baseurl:
 RWurl: https://alastairreid.github.io/RelatedWork
 
 # RVT url
-RVTurl: https://project-oak.github.io/rust-verification-tools
+RVTurl: https://github.com/project-oak/rust-verification-tools
 
 #
 # Generate one page per paper with all the information about the paper on it

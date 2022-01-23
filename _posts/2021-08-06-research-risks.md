@@ -69,7 +69,7 @@ is to make a list of all the risks you can think of.
   a problem.)
 
 For [my current project][RVT website], I have a
-[list of around 50 risks that I'm worried about](https://project-oak.github.io/rust-verification-tools/2021/08/15/rvt-risks.html).
+[list of around 50 risks that I'm worried about]({% post_url 2021-08-15-rvt-risks %}).
 
 Once you have a list of risks, you need to estimate the size of each risk:
 how much impact it could have and how uncertain you are about
@@ -161,9 +161,9 @@ I switch to software engineering mode: turning any useful
 ideas into decent quality code or writing design documents for later.
 And, since the project is all open source, sometimes I write blog post
 about 
-things like [profiling](https://project-oak.github.io/rust-verification-tools/2021/03/12/profiling-rust.html)
+things like [profiling]({% post_url 2021-03-12-profiling-rust %})
 or 
-fixing [bottlenecks](https://project-oak.github.io/rust-verification-tools/2021/05/19/fixing-bottlenecks.html)
+fixing [bottlenecks]({% post_url 2021-05-19-fixing-bottlenecks %})
 found by profiling.
 
 And every few months, I go back to the list of risks and
@@ -206,4 +206,4 @@ list of risks to help decide what part of the problem to work on next.
 ------------
 
 
-[RVT website]: https://project-oak.github.io/rust-verification-tools/
+[RVT website]: {{site.RVTurl}}/
