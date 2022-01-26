@@ -83,7 +83,7 @@ verification teams use the spec as a *golden reference* or *test oracle*;
 security analysts verify security properties of the specification;
 simulation engineers transform the specifications into simulators
 or feed them to JIT engines for really high performance simulators;
-malware teams turn the specification into tools for symbolically
+anti-malware teams turn the specification into tools for symbolically
 simulating the specification;
 technical communication teams turn the specification into accessible,
 readable, well structured, accessible documentation for users of the system;
@@ -163,7 +163,7 @@ in different ways is that
 > specification in a different specification language.
 
 For example, if I'm verifying hardware with the Coq theorem prover, a commercial bounded model checker for Verilog,
-or the Forte symbolic simulation system, it would be better to write the 
+or the [Forte symbolic simulation system][FORTE], it would be better to write the 
 specification in Gallina, in System Verilog or in reFLect respectively.
 Or if I'm writing a simulator, it would be better to write the specification in
 C or C++.
@@ -374,5 +374,31 @@ and creating tools to verify that they do, indeed, hold.
 
 
 
+### Related posts and papers
+
+* Code: [ASLi](https://github.com/alastairreid/asl-interpreter)
+* Code: [MRA Tools](https://github.com/alastairreid/mra_tools)
+* Paper: [End-to-End Verification of ARM Processors with ISA-Formal]({{ site.url }}/papers/CAV_16/), CAV 2016.
+* Paper: [Trustworthy Specifications of ARM v8-A and v8-M System Level Architecture]({{ site.url }}/papers/FMCAD_16/), FMCAD 2016.
+* Paper: [Who guards the guards?  Formal Validation of the Arm v8-M Architecture Specification]({{ site.url }}/papers/OOPSLA_17/)), OOPSLA 2017.
+* [Verifying against the official ARM specification]({{ site.baseurl }}{% post_url 2016-07-26-using-armarm %})
+* [Finding Bugs versus Proving Absence of Bugs]({{ site.baseurl }}{% post_url 2016-07-18-finding-bugs %})
+* [Limitations of ISA-Formal]({{ site.baseurl }}{% post_url 2016-07-30-isa-formal-limitations %})
+* [ARM's ASL Specification Language]({{ site.baseurl }}{% post_url 2016-08-17-specification_languages %})
+* [ARM Releases Machine Readable Architecture Specification]({{ site.baseurl }}{% post_url 2017-04-20-ARM-v8a-xml-release %})
+* [Dissecting the ARM Machine Readable Architecture files]({{ site.baseurl }}{% post_url 2017-04-29-dissecting-ARM-MRA %})
+* [ASL Lexical Syntax]({{ site.baseurl }}{% post_url 2017-05-07-asl-lexical-syntax %})
+* [Arm v8.3 Machine Readable Specifications]({{ site.baseurl }}{% post_url 2017-07-31-arm-v8_3 %})
+* [Are Natural Language Specifications Useful?]({{ site.baseurl }}{% post_url 2017-08-19-natural-specs %})
+* [Formal validation of the Arm v8-M specification]({{ site.baseurl }}{% post_url 2017-09-24-validating-specs %})
+* [Bidirectional ARM Assembly Syntax Specifications]({{ site.baseurl }}{% post_url 2017-12-24-bidirectional-assemblers %})
+* Talk: [[How can you trust formally verified software (pdf)](/talks/using-arm-specs-34C3-2017-12-27.pdf)], Chaos Communication Congress, 2017.
+* [Using ASLi with Arm's v8.6-A ISA specification]({{site.baseurl}}{% post_url 2022-01-25-mrs-at-scale %})
+* [What can you do with an ISA specification?]({{site.baseurl}}{% post_url 2021-11-24-uses-for-isa-specs %})
+
+
+
+
 [Spec uses]: {{site.baseurl}}{% post_url 2021-11-24-uses-for-isa-specs %}
 
+[FORTE]: https://www.cs.ox.ac.uk/tom.melham/res/forte.html
