@@ -31,6 +31,82 @@ pages.
 
 ## Talks
 
+<h3>Specifications</h3>
+
+  - Towards a formal specification of Intel’s x86 architecture
+    <br>
+    [Novel Architecture and Novel Design Automation (NANDA)](http://cc.doc.ic.ac.uk/nanda/)
+    <br>
+    Virtual.
+    <br>
+    5--6 September, 2022
+    <br>
+    [[pdf]](talks/towards-a-formal-x86-specification-ImperialCollege-2022-09-05.pdf)
+
+    This talk is about my work on creating a formal specification of Intel's
+    x86 architecture: goals, why it is easy, why it is hard and the research
+    challenges I see in the future.
+
+  - Leaky abstractions
+    <br>
+    [RISE summer school 2022](https://www.ukrise.org/2022-summer-school/)
+    <br>
+    Keynote talk
+    <br>
+    [UK Research Institute in Secure Hardware and Embedded Systems (RISE)](https://www.ukrise.org)
+    <br>
+    Centre for Secure Information Technology (CSIT)
+    <br>
+    Belfast UK
+    <br>
+    20--21 July, 2022.
+    <br>
+    [[pdf]](talks/leaky-abstractions-RISE-2022-07-19.pdf)
+
+    Since at least the 1950s, computer design has been viewed as a stack of
+    separate concerns: programmers need not worry about how the hardware works
+    as long as it satisfies its functional specification; and digital logic
+    designers need not worry about how transistors work as long as they turn on
+    and off. This separation has allowed engineers at each layer of the stack
+    to innovate and has resulted in the remarkable improvements in power,
+    performance and area seen over the last 70+ years. Layers in the stack can
+    be changed independently of their neighbours because each layer in the
+    stack only depends on an abstraction of the layer below. However, these
+    abstractions are "leaky": the abstractions are approximate and they omit
+    properties such as time, space and power. This talk is about the
+    connections between leaky abstractions and security and on both recent
+    research and research opportunities in relating architectural security to
+    the hardware stack that it rests on.
+
+  - Machine readable specifications at scale
+    <br>
+    [ZISC seminar, ETH Zurich](https://zisc.ethz.ch/)
+    <br>
+    Virtual
+    <br>
+    2 June, 2022
+    <br>
+    [[pdf]](talks/mrs-at-scale-ETHZ-2022-06-02.pdf)
+
+    There are lots of potential uses for machine readable specifications so you
+    would think that every major real world artifact like long-lived hardware
+    and software systems, protocols, languages, etc. would have a formal
+    specification that is used by all teams extending, implementing, testing,
+    verifying or securing the design. But, in practice, this is usually not
+    true: most real world systems do not have a well tested, up to date,
+    machine readable specification.
+
+    This talk is about why you might want to change this and some things to
+    consider as you go about it. In particular, it is about the use and
+    creation of machine readable specifications at scale: when the number of
+    engineers affected is counted in the thousands. This sort of scale leads to
+    different problems and solutions than you would see in a 5–10 person
+    project and both the challenges and the potential benefits are
+    significantly larger.
+
+    [See also my blog post
+    [Machine readable specifications at scale]({{site.baseurl}}{% post_url 2022-01-25-mrs-at-scale %}).]
+
 <h3>Rust Verification</h3>
 
 Talks about the [Rust verification project](https://project-oak.github.io/rust-verification-tools/)
