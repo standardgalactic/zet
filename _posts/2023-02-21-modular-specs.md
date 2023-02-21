@@ -3,6 +3,7 @@ layout: post
 title: "Modularizing ISA specifications"
 ---
 
+![Intel logo]({{site.baseurl}}/images/Intel_logo_2020.svg){: style="float: left; width: 13%; padding: 1%"}
 Programming languages provide modules as a way of splitting large programs
 up into small, separate pieces.
 Modules enable *information hiding* that prevents one part of the program

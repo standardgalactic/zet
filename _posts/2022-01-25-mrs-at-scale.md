@@ -3,6 +3,7 @@ layout: post
 title: Machine readable specifications at scale
 ---
 
+![Intel logo]({{site.baseurl}}/images/Intel_logo_2020.svg){: style="float: left; width: 13%; padding: 1%"}
 There are lots of [potential uses for machine readable specifications][Spec uses]
 so you would think that every major real world artifact like long-lived
 hardware and software systems, protocols, languages, etc. would have
