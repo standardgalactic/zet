@@ -184,7 +184,7 @@ These need slightly different handling.
   modules that import them can be instantiated with different
   values for the constants.
 
-- The most tricky are variables.
+- The most tricky are variables (which typically represent registers).
   Instead of importing / exporting the variable directly, it is
   helpful to introduce a pair of functions: one to read the variable
   and one to write to the variable.
@@ -199,6 +199,11 @@ These need slightly different handling.
   So, when importing/exporting a variable, it can be useful to create
   access functions to read/write the variable and transform all
   references to the variable into a call to the appropriate access function.
+
+  Fortunately, ASL specs tend to already use access functions to access
+  variables because most registers need some special access code to implement
+  banking, masking, access checks, etc. So, for ASL specs, there is often not
+  much that has to be done.
 
 Each use of the specification turns out to need a slightly different module
 interface.
