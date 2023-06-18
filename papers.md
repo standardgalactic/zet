@@ -33,6 +33,23 @@ pages.
 
 <h3>Specifications</h3>
 
+  - Goals of a modern ISA specification
+    <br>
+    [Programming Languages for Architecture (PLARCH)](https://pldi23.sigplan.org/home/plarch-2023)
+    <br>
+    17 June, 2023
+    <br>
+    [[pdf]](talks/goals-of-modern-ISA-spec-PLARCH-2023-06-17.pdf)
+
+    What should we consider when creating an ISA specification?
+    What can we learn from the 1970s?
+    What are the conflicts between different uses of an ISA specification?
+
+    _(Talking to other researchers after the workshop, it became clear that I had missed out something
+    important: we need to have a range of tools available that can be adapted
+    to suit various needs. If we don't, then people will continue to roll their
+    own specialized spec because it is too hard to use the official one.)_
+
   - Towards a formal specification of Intel’s x86 architecture
     <br>
     [Novel Architecture and Novel Design Automation (NANDA)](http://cc.doc.ic.ac.uk/nanda/)
