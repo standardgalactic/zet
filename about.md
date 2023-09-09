@@ -142,6 +142,7 @@ I also like to
 
 I have served on the following conference program committees.
 
+- [PLDI 2024](https://pldi24.sigplan.org/) Program Committee
 - [PLDI 2023](https://pldi23.sigplan.org/) Program Committee
 - [HATRA 2022](https://2022.splashcon.org/home/hatra-2022) Program Committee
 - [HATRA 2021](https://2021.splashcon.org/home/hatra-2021) Program Committee
