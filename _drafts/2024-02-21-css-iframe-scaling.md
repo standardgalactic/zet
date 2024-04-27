@@ -3,8 +3,12 @@ layout: post
 title: "CSS fun: scaling iframes"
 ---
 
-It is a while since I refreshed my website so I thought I would experiment a
-bit with <abbr title="Cascading Style Sheets">CSS</abbr> to explore my options
+It is a while since I refreshed my website so I thought I would experiment a bit with
+<abbr title="Cascading Style Sheets">CSS</abbr>,
+<abbr title="HyperText Markup Language">HTML 5</abbr>,
+and
+<abbr title="ECMAScript">Javascript</abbr>
+to explore my options
 a bit.
 
 I sometimes want to embed  a web page within another so that I can give a complementary
