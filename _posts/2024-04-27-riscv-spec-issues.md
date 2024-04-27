@@ -207,10 +207,11 @@ added since then.
 
 ### Related posts and papers
 
-* [Bidirectional ARM Assembly Syntax Specifications]({{site.baseurl}}{% post_url 2017-12-24-bidirectional-assemblers %})
-* [PLARCH 2023]({{site.baseurl}}{% post_url 2023-07-01-plarch-2023 %})
+* [Goals of a modern ISA specification]({{site.baseurl}}/talks/goals-of-modern-ISA-spec-PLARCH-2023-06-17.pdf)
+  (presented at [PLARCH 2023]({{site.baseurl}}{% post_url 2023-07-01-plarch-2023 %}))
 * [What can you do with an ISA specification?]({{site.baseurl}}{% post_url 2021-11-24-uses-for-isa-specs %})
 * [Machine readable specifications at scale]({{site.baseurl}}{% post_url 2022-01-25-mrs-at-scale %})
+* [Bidirectional ARM Assembly Syntax Specifications]({{site.baseurl}}{% post_url 2017-12-24-bidirectional-assemblers %})
 
 
 [RISC-V Instruction Set Manual, volume 1]: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf
