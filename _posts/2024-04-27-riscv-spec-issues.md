@@ -29,6 +29,8 @@ And, finally, you might be using the [SAIL RISC-V model] as a formal
 specification of the architecture. (Although, I think this has mostly
 used to reason about software, rather than hardware.)
 
+*[This post was edited on 28th April to clarify the what I said about the SAIL spec.]*
+
 ## What's wrong with this picture?
 
 Overall, the specification is not in a very healthy state.
@@ -59,31 +61,6 @@ official PDF documents so that the SAIL code can add the precision
 that the natural language spec lacks and the natural language
 specification can make up for the almost total absence of comments
 in the SAIL specification.
-
-A complaint that I often hear about the SAIL specification is
-that it is a bit inaccessible for normal users. The SAIL language
-design builds on a number of popular academic languages
-and programming language research ideas
-such as the [OCaml Functional Programming Language],
-[Liquid types], [Monads], and [Effect Systems].
-The challenge with drawing on these different sources
-is that the primary audience for the specification is
-not programming language researchers but people who
-work on hardware design, hardware validation, OS developers,
-compiler developers, etc. --- many of whom are not familiar with
-the academic programming language literature and are confused and
-put off by the syntax of SAIL.
-To illustrate this, consider the following SAIL example
-from early in the SAIL reference manual:
-
-```
-val my_replicate_bits : forall 'n 'm, 'm >= 1 & 'n >= 1.  (int('n), bits('m)) -> bits('n * 'm)
-```
-
-If you are not familiar with OCaml and liquid types, some questions that
-you might ask are "What are the quote marks for in `'m` and `'n`?" and
-"What does `forall 'n 'm` mean?"
-
 
 ## Connecting the pieces: machine-readable formats
 
@@ -142,10 +119,32 @@ And, as that is being done, people should be looking at the extended
 ecosystem of build tools, libraries, OSes, etc. to autogenerate
 as much of them as possible from the machine readable data files.
 
-## Making SAIL usable in documentation
+## Making SAIL easier for non-PL people to read
 
-I have already touched on the problems for readers from a broad
-range of backgrounds reading SAIL specifications.
+A complaint that I often hear about the SAIL specification is
+that it is a bit inaccessible for normal users. The SAIL language
+design builds on a number of popular academic languages
+and programming language research ideas
+such as the [OCaml Functional Programming Language],
+[Liquid types], [Monads], and [Effect Systems].
+The challenge with drawing on these different sources
+is that the primary audience for the specification is
+not programming language (PL) researchers but people who
+work on hardware design, hardware validation, OS developers,
+compiler developers, etc. --- many of whom are not familiar with
+the academic programming language literature and are confused and
+put off by the syntax of SAIL.
+To illustrate this, consider the following SAIL example
+from early in the SAIL reference manual:
+
+```
+val my_replicate_bits : forall 'n 'm, 'm >= 1 & 'n >= 1.  (int('n), bits('m)) -> bits('n * 'm)
+```
+
+If you are not familiar with OCaml and liquid types, some questions that
+you might ask are "What are the quote marks for in `'m` and `'n`?" and
+"What does `forall 'n 'm` mean?"
+
 There are a range of improvements that can be made here from
 changing the syntax to applying sensible defaults to reduce
 the amount of clutter from the type system.
@@ -154,28 +153,34 @@ of the [ASL-1.0] ISA specification language which has many
 of the same features but was designed with more focus on
 use in documentation.)
 
-But there is another issue that is both more fundamental and also easier to solve:
-the SAIL specification
-is currently a large, monolithic specification.
-There is no easy way to extract an individual instruction specification
-or function definition to include in a particular place in the
-documentation.
-The easiest option to include the SAIL spec into the current spec would be
-to include the entire spec as a giant appendix at the back of the architecture manual.
-But it is much better to put each part of the SAIL spec on the same page
+Counter-intuitively, the success of SAIL is
+a barrier to improving this situation.  If radical changes are
+made, people may be concerned that there has been a change in the meaning of
+the specification, not just its appearance.
+
+
+## Including SAIL in the documentation
+
+The other problem with the SAIL specification is more fundamental but also easier to solve:
+the SAIL spec is not included in the architecture manual.
+The easiest option would be
+to include the entire spec as a giant appendix at the back of the document.
+But much better would to put each part of the SAIL spec on the same page
 as the natural language description of the same feature so that
 the SAIL spec can amplify your understanding of the natural language spec and
 the natural language spec can help you understand the SAIL spec.
 
-Fortunately, the fix is easy:
-either split the SAIL spec into smaller pieces (e.g., one definition per file)
-or write a tool to do it for you.
-This makes it easy to include the relevant part of the SAIL spec into
-the the documentation.
+The frustrating thing here is that this actually a solved problem.
+The tools to pick out snippets of LaTeX to use in docs has existed for a long time,
+and there has been a [version of the unpriv spec with instruction semantics properly interleaved](https://github.com/rems-project/riscv-isa-manual/blob/sail/release/riscv-spec-sail-draft.pdf) since 2019.
 
-*[Note that there has been  some work in the  direction of using the SAIL specs
-in documentation such as the [SAIL-to-ASCIIdoc] tool.]*
+An even better integration of SAIL, in my opinion, is the way that the SAIL instruction specs are integrated into the
+[CHERI ISAv9 spec (e.g., see page 176)](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-987.pdf#page=176).
+This reduces a lot of the clutter and looks a lot more like normal ISA specs.
 
+
+*[Note: With RISC-V switching from LaTeX to ASCIIdoc, the tool you would probably want to use
+as the [SAIL-to-ASCIIdoc] tool.]*
 
 ## Using SAIL in tools
 
