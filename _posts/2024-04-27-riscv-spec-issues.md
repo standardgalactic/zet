@@ -23,13 +23,16 @@ describe the unprivileged and privileged parts of the architecture.
 If you are developing a RISC-V processor, you will probably make heavy
 use of the [RISC-V Test Suites] to check that your processor correctly
 implements the architecture.
-And you will probably be using the [Spike RISC-V ISA Simulator] as a "golden
-reference model" to compare the behavior of your processor against.
-And, finally, you might be using the [SAIL RISC-V model] as a formal
-specification of the architecture. (Although, I think this has mostly
-used to reason about software, rather than hardware.)
+And you will probably be using the [Sail RISC-V model] as a formal
+specification of the architecture and using [Pydrofoil] to execute the Sail spec as
+a "golden reference simulator" to compare the behavior of your processor against.
+(And, if you are on the bleeding edge, you might also be using the Sail spec in a
+formal verification flow similar to ISA-Formal [[reid:cav:2016]].)
+And you may still be using [Spike RISC-V ISA Simulator] which was the original "golden
+reference model" because some ISA extensions still aren't specified in Sail.
 
-*[This post was edited on 28th April to clarify the what I said about the SAIL spec.]*
+*[This post was edited on 28th April and 1 May to clarify what I said about the Sail spec
+and the status of the Spike simulator.]*
 
 ## What's wrong with this picture?
 
@@ -42,7 +45,7 @@ to determine whether they match the other artifacts.
 
 A common complaint about the test suites is that the RISC-V
 architecture is very highly configurable with many subsets and
-implementation choices allowed but the test suites is not
+implementation choices allowed but the test suites are not
 easily configured to check the full envelope of allowed behaviors.
 Some of these issues stems from the challenge of creating a machine-readable
 description of which particular configuration you intended to build.
@@ -52,15 +55,15 @@ that Spike and the test suite support, you will end up with a large
 number of "waivers" documenting the places where your processor is
 expected to fail the tests.
 
-Finally, there is the SAIL model written in the
-[SAIL ISA specification language].
+Finally, there is the Sail model written in the
+[Sail ISA specification language].
 This is a precise, executable, formal specification of the architecture
 but it is not used as much as it should be.
-Ideally, parts of the SAIL specification would be included in the
-official PDF documents so that the SAIL code can add the precision
+Ideally, parts of the Sail specification would be included in the
+official PDF documents so that the Sail code can add the precision
 that the natural language spec lacks and the natural language
 specification can make up for the almost total absence of comments
-in the SAIL specification.
+in the Sail specification.
 
 ## Connecting the pieces: machine-readable formats
 
@@ -108,7 +111,7 @@ I've probably missed a few important pieces of information but you get the idea.
 Of course, creating this easy-to-use, highly-reusable machine readable spec
 is just the first part.
 To make a difference, you have to modify the architecture reference manual,
-the Spike simulator, the testsuite and the SAIL specification to use this data.
+the Spike simulator, the testsuite and the Sail specification to use this data.
 You have to find every part of these artifacts that currently contains
 information about instructions or CSRs and refactor them around
 code that is automatically generated from the json/yaml/xml file.
@@ -119,10 +122,10 @@ And, as that is being done, people should be looking at the extended
 ecosystem of build tools, libraries, OSes, etc. to autogenerate
 as much of them as possible from the machine readable data files.
 
-## Making SAIL easier for non-PL people to read
+## Making Sail easier for non-PL people to read
 
-A complaint that I often hear about the SAIL specification is
-that it is a bit inaccessible for normal users. The SAIL language
+A complaint that I often hear about the Sail specification is
+that it is a bit inaccessible for normal users. The Sail language
 design builds on a number of popular academic languages
 and programming language research ideas
 such as the [OCaml Functional Programming Language],
@@ -133,9 +136,9 @@ not programming language (PL) researchers but people who
 work on hardware design, hardware validation, OS developers,
 compiler developers, etc. --- many of whom are not familiar with
 the academic programming language literature and are confused and
-put off by the syntax of SAIL.
-To illustrate this, consider the following SAIL example
-from early in the SAIL reference manual:
+put off by the syntax of Sail.
+To illustrate this, consider the following Sail example
+from early in the Sail reference manual:
 
 ```
 val my_replicate_bits : forall 'n 'm, 'm >= 1 & 'n >= 1.  (int('n), bits('m)) -> bits('n * 'm)
@@ -153,45 +156,48 @@ of the [ASL-1.0] ISA specification language which has many
 of the same features but was designed with more focus on
 use in documentation.)
 
-Counter-intuitively, the success of SAIL is
+Counter-intuitively, the success of Sail is
 a barrier to improving this situation.  If radical changes are
 made, people may be concerned that there has been a change in the meaning of
 the specification, not just its appearance.
 
+*[For clarity, note that I am not suggesting that Liquid types, etc.
+are removed from the language: only that the syntax is simplified
+and decluttered in the common case.]*
 
-## Including SAIL in the documentation
+## Including Sail in the documentation
 
-The other problem with the SAIL specification is more fundamental but also easier to solve:
-the SAIL spec is not included in the architecture manual.
+The other problem with the Sail specification is more fundamental but also easier to solve:
+the Sail spec is not included in the architecture manual.
 The easiest option would be
 to include the entire spec as a giant appendix at the back of the document.
-But much better would to put each part of the SAIL spec on the same page
+But much better would to put each part of the Sail spec on the same page
 as the natural language description of the same feature so that
-the SAIL spec can amplify your understanding of the natural language spec and
-the natural language spec can help you understand the SAIL spec.
+the Sail spec can amplify your understanding of the natural language spec and
+the natural language spec can help you understand the Sail spec.
 
 The frustrating thing here is that this actually a solved problem.
 The tools to pick out snippets of LaTeX to use in docs has existed for a long time,
 and there has been a [version of the unpriv spec with instruction semantics properly interleaved](https://github.com/rems-project/riscv-isa-manual/blob/sail/release/riscv-spec-sail-draft.pdf) since 2019.
 
-An even better integration of SAIL, in my opinion, is the way that the SAIL instruction specs are integrated into the
+An even better integration of Sail, in my opinion, is the way that the Sail instruction specs are integrated into the
 [CHERI ISAv9 spec (e.g., see page 176)](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-987.pdf#page=176).
 This reduces a lot of the clutter and looks a lot more like normal ISA specs.
 
 
 *[Note: With RISC-V switching from LaTeX to ASCIIdoc, the tool you would probably want to use
-as the [SAIL-to-ASCIIdoc] tool.]*
+is the [Sail-to-ASCIIdoc] tool.]*
 
-## Using SAIL in tools
+## Using Sail in tools
 
 Why do we have two executable parts to the specification:
-the SAIL specification and the Spike golden reference simulator?
+the Sail specification and the Spike golden reference simulator?
 The historical reasons for this are clear but it would be
 good if Spike support for future extensions was generated
-from their SAIL specification.
+from their Sail specification.
 
 This will take a bit of work to do.  Mostly, this will consist of defining the
-interface that code generated from the SAIL specs uses to access parts of the
+interface that code generated from the Sail specs uses to access parts of the
 state that are represented in Spike.
 
 
@@ -209,6 +215,10 @@ This was not too big a problem for the original base architecture of just
 47 instructions and 32 registers but there have been many [RISC-V ISA extensions]
 added since then.
 
+-------
+
+This post was discussed on
+[Hacker News](https://news.ycombinator.com/item?id=40185065).
 
 ### Related posts and papers
 
@@ -223,15 +233,16 @@ added since then.
 [RISC-V Instruction Set Manual, volume 2]: https://github.com/riscv/riscv-isa-manual/releases/download/Priv-v1.12/riscv-privileged-20211203.pdf
 [RISC-V Test Suites]:                      https://github.com/riscv-non-isa/riscv-arch-test/blob/main/riscv-test-suite/README.md
 [Spike RISC-V ISA Simulator]:              https://github.com/riscv-software-src/riscv-isa-sim
-[SAIL RISC-V model]:                       https://github.com/riscv/sail-riscv
+[Sail RISC-V model]:                       https://github.com/riscv/sail-riscv
 [RISC-V ISA extensions]:                   https://en.wikipedia.org/wiki/RISC-V#ISA_base_and_extensions
 
-[SAIL-to-ASCIIdoc]:                        https://github.com/Alasdair/asciidoctor-sail/blob/master/doc/built/sail_to_asciidoc.pdf
-[SAIL ISA specification language]:         https://github.com/rems-project/sail?tab=readme-ov-file
-[SAIL Language Reference Manual]:          https://alasdair.github.io/manual.html
+[Sail-to-ASCIIdoc]:                        https://github.com/Alasdair/asciidoctor-sail/blob/master/doc/built/sail_to_asciidoc.pdf
+[Sail ISA specification language]:         https://github.com/rems-project/sail?tab=readme-ov-file
+[Sail Language Reference Manual]:          https://alasdair.github.io/manual.html
 
 [ASL-1.0]:                                 https://developer.arm.com/ASL1
 [Bidirectional ARM Assembly Syntax Specifications]: ({{site.baseurl}}{% post_url 2017-12-24-bidirectional-assemblers %})
+[reid:cav:2016]:                           {{site.RWurl}}/papers/reid:cav:2016/
 
 [OCaml Functional Programming Language]:   https://ocaml.org/
 [Liquid Types]:                            https://goto.ucsd.edu/~ucsdpl-blog/liquidtypes/2015/09/19/liquid-types/
