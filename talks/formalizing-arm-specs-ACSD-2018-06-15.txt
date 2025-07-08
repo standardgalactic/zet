@@ -1,0 +1,285 @@
+© 2017 Arm Limited 
+Creating Formal Specifications 
+of the Arm Processor 
+Architecture
+Alastair Reid 
+Arm Research 
+@alastair_d_reid
+
+© 2017 Arm Limited 
+A2
+Why should anybody care about formal specifications?
+- Precise / unambiguous 
+- Enables formal reasoning about implementations
+
+© 2017 Arm Limited 
+A3
+Real World Artifacts
+Linux Kernel, C compilers, ARM processors, TCP/IP, WiFi, etc.  
+- Multiple implementations, suppliers, versions, configurations 
+- Important: commercial, security, ... 
+- Long history, initial spec informal 
+- Formal spec not 100% welcome 
+- Backwards compatibility requirements 
+- Spec must include all quirks of recent versions of major implementations to be useful 
+- Conformance suites?
+
+© 2017 Arm Limited 
+A4
+ARM Architecture - an example real-world artifact
+Arm 
+- Founded in 1990 
+- Designs processors 
+- Designs architecture 
+- Licenses architecture 
+- 16B processors / year 
+- (also GPUs, IoT, ...)
+
+© 2017 Arm Limited 
+A5
+Current status of ARM specifications
+- Formal specifications of A, R and M-class processor classes exist 
+- Integrated into ARM's official processor specifications 
+- Maintained by ARM's architecture team 
+- Used by multiple teams within ARM 
+- Formal validation of ARM processors using Bounded Model Checking 
+- Development of test suites 
+- Designing architecture extensions 
+- ... 
+- Publicly released in machine readable form
+
+© 2017 Arm Limited 
+A6
+Overview
+1. What's different about Real World Artifacts? 
+2. ARM's formal processor specifications 
+• Three experiences 
+• Lessons learned 
+3. Conclusions
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016 
+"End to End Verification of ARM processors with ISA Formal," CAV 2016 
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017 
+https://alastairreid.github.io/papers/
+
+© 2017 Arm Limited 
+Creating trustworthy 
+specifications
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+
+© 2017 Arm Limited 
+A8
+Unstructured English Prose (A-class spec)
+
+© 2017 Arm Limited 
+A9
+Semi-structured English prose (M-class spec)
+
+© 2017 Arm Limited 
+A10
+Tables - semistructured, not machine readable
+
+© 2017 Arm Limited 
+A11
+Registers - structured, machine-readable
+
+© 2017 Arm Limited 
+A12
+Pseudocode
+
+© 2017 Arm Limited 
+A12
+Pseudocode
+Type Inference
+Dependent Types
+Enumerations
+Unbounded Integers
+Bit Vectors
+Indentation-based Syntax
+Imperative
+Exceptions
+
+© 2017 Arm Limited 
+A13
+Status at the start
+- No tools (parser, type checker) 
+- Incomplete (around 15% missing) 
+- "Specify by comment" 
+- Many trivial errors (that confuse tools but not humans) 
+- Unexecuted, untested 
+- Experts believed that an executable spec was 
+- Impossible 
+- Not useful 
+- Less readable 
+- Less correct
+
+© 2017 Arm Limited 
+A14
+Architectural Conformance Suite
+Processor architectural compliance sign-off 
+Large 
+• v8-A 11,000 test programs, > 2 billion instructions 
+• v8-M 3,500 test programs, > 250 million instructions 
+Thorough 
+• Tests dark corners of specification
+
+© 2017 Arm Limited 
+A15
+© 2017 Arm Limited 
+Progress in testing Arm specification
+-
+Does not parse, does not typecheck
+-
+Can't get out of reset
+-
+Can't execute first instruction
+-
+Can't execute first 100 instructions
+-
+...
+-
+Passes 90% of tests
+-
+Passes 99% of tests
+-
+...
+0
+50
+100
+
+© 2017 Arm Limited 
+A16
+Measuring architecture coverage of tests
+Untested: op1*op2 == -3.0, FPCR.RND=-Inf 
+
+© 2017 Arm Limited 
+A17
+Creating a Virtuous Cycle
+ARM 
+Spec
+
+© 2017 Arm Limited 
+A18
+Lessons learned
+- Specifications contain bugs 
+- Huge value in being able to run existing test suites 
+- Need to balance against benefits of non-executable specs 
+- Find ways to provide direct benefit to other users of spec 
+- They will do some of the testing/debugging for you 
+- They will support getting your changes/spec adopted as master spec 
+- Creates Virtuous Cycle
+
+© 2017 Arm Limited 
+Formal validation 
+of processors 
+and of specifications
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+
+© 2017 Arm Limited 
+A20
+Checking an instrucmon
+ADD
+
+© 2017 Arm Limited 
+A20
+Checking an instrucmon
+ADD
+CMP LDR
+STR BNE
+Context
+
+© 2017 Arm Limited 
+A21
+Lessons Learned from validating processors
+- Very effective way to find bugs in implementations 
+- Formally validating implementation is effective at finding bugs in spec 
+- Try to find most of the bugs in your spec before you start 
+- Huge value in being able to use spec to validate implementations 
+- Helps get formal specification adopted as part of official spec 
+
+© 2017 Arm Limited 
+A22
+"Eyeball Closeness"
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor 
+exception.
+Fell(LockedUp)  
+→ 
+    Called(TakeColdReset) 
+    ∨ Called(TakeReset) 
+    ∨ Rose(Halted) 
+    ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+A23
+Lessons Learned from formally validating specifications
+- Redundancy essential for detecting errors 
+- Detected subtle bugs in security, exceptions, debug, ... 
+- Found bugs in English prose 
+- Need set of 'orthogonal' properties 
+- Invariants, Security properties, Reachability properties, etc. 
+- Eyeball closeness 
+
+© 2017 Arm Limited 
+A24
+ARM Specification
+ARM Processor
+Translate 
+to Verilog
+Verilog 
+Model 
+Checker
+v8-M Spec
+Properties
+Z3 
+SMT 
+Solver
++
+Translate 
+to SMT
+
+© 2017 Arm Limited 
+A25
+Creating Formal Specifications of Real World Artifacts
+Spec 
+Plan for adoption into official specs 
+Test your specification 
+Build a virtuous cycle 
+- Look for early adopters 
+- What is "killer app" of your spec? 
+Formally validation of implementations?  
+- Ensure specifications have many uses 
+   Don't write spec in Coq/HOL/ACL2/... 
+
+Thank You! 
+Danke! 
+Merci! 
+谢谢! 
+ありがとう! 
+Gracias! 
+Kiitos!
+© 2017 Arm Limited 
+A26
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+© 2017 Arm Limited 
+A27
+Public release of machine readable Arm specification
+Enable formal veriﬁcamon of souware and tools 
+Releases 
+April 2017: v8.2 
+July 2017: v8.3 
+Working with Cambridge University REMS group to convert to SAIL 
+Backends for HOL, OCaml, Memory model, (hopefully Coq too) 
+Speciﬁcamon: hwps://developer.arm.com/products/architecture/a-proﬁle/exploramon-tools 
+Tools: hwps://github.com/alastairreid/mra_tools 
+(See also: hwps://github.com/herd/herdtools7/blob/master/herd/libdir/aarch64.cat) 
+Talk to me about how I can help you use it
+

@@ -1,0 +1,523 @@
+© 2017 Arm Limited 
+How Can You Trust 
+Formally Verified 
+Software?
+Alastair Reid
+Arm Research
+@alastair_d_reid
+
+© 2017 Arm Limited 
+2
+Formal verification
+Of libraries and apps
+Of compilers
+Of operating systems
+
+© 2017 Arm Limited 
+3
+Formally 
+Verified 
+Software
+Fonseca et al., An Empirical Study on the Correctness of Formally Verified Distributed Systems, Eurosys '17
+
+© 2017 Arm Limited 
+3
+Formally 
+Verified 
+Software
+Verification 
+Tool
+Formal 
+Specifications
+Shim 
+Code
+Fonseca et al., An Empirical Study on the Correctness of Formally Verified Distributed Systems, Eurosys '17
+
+© 2017 Arm Limited 
+4
+Takeaway #1: 3 key questions to ask
+1. What specifications does your proof rely on? 
+2. Why do you trust those specifications? 
+3. Does anybody else use these specifications?
+
+© 2017 Arm Limited 
+5
+Takeaway #2: Specifications must have multiple uses
+
+© 2017 Arm Limited 
+6
+Takeaway #2: Specifications must have multiple uses
+
+© 2017 Arm Limited 
+7
+How can you trust formally verified software?
+How can you trust formally verified software? 
+Specifications are part of the TCB 
+3 key questions 
+Specifications must have multiple users 
+How can you trust formal specifications? 
+Testing specifications 
+Verifying processors 
+Verifying specifications 
+How can you trust formally verified software?
+
+© 2017 Arm Limited 
+Creating trustworthy 
+specifications
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+
+© 2017 Arm Limited 
+9
+Arm Architecture Reference Manual (ARMARM)
+32-bit / 64-bit Instructions 
+Exceptions / Interrupts 
+Privilege / Security 
+Virtual Memory 
+System registers 
+Debug / Trace 
+Profiling 
+...
+Pages
+0
+1600
+3200
+4800
+6400
+1996
+2007
+2018
+
+© 2017 Arm Limited 
+10
+English prose
+
+© 2017 Arm Limited 
+11
+Pseudocode
+
+© 2017 Arm Limited 
+12
+Arm Architecture Specification Language (ASL)
+Indentation-based syntax 
+Imperative 
+First-order 
+Strongly typed (type inference, polymorphism, dependent types) 
+Bit-vectors 
+Unbounded integers 
+Infinite precision reals 
+Arrays, Records, Enumerations 
+Exceptions
+
+© 2017 Arm Limited 
+13
+Interpreter
+C 
+Backend
+ASL Spec
+Lexer 
+Parser 
+Typechecker
+
+© 2017 Arm Limited 
+14
+Architectural Conformance Suite
+Processor architectural compliance sign-off 
+Large 
+• v8-A 11,000 test programs, > 2 billion instructions 
+• v8-M 3,500 test programs, > 250 million instructions 
+Thorough 
+• Tests dark corners of specification
+
+© 2017 Arm Limited 
+15
+Tesfng Pass Rate
+0
+25
+50
+75
+100
+ISA
+Supervisor
+Hypervisor/Security
+(Arfsts Impression)
+Time
+15
+
+© 2017 Arm Limited 
+16
+0%
+25%
+50%
+75%
+100%
+v8-M
+16
+
+© 2017 Arm Limited 
+17
+Measuring architecture coverage of tests
+Untested: op1*op2 == -3.0, FPCR.RND=-Inf 
+
+© 2017 Arm Limited 
+18
+
+© 2017 Arm Limited 
+Formal verification 
+of processors
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+ARMResearch
+Checking an instrucfon
+20
+ADD
+
+ARMResearch
+Checking an instrucfon
+20
+ADD
+CMPLDR
+STRBNE
+Context
+
+© 2017 Arm Limited 
+21
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+© 2017 Arm Limited 
+21
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+
+© 2017 Arm Limited 
+21
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+Pre
+Post_spec
+Post_cpu
+Spec
+==?
+
+ARMResearch
+22
+Combinational
+Verilog
+ASL to 
+Verilog
+Architecture
+Speciﬁcation
+Specialize 
+Monomorphize 
+Constant Propagation 
+Width Analysis 
+Exception Handling 
+...
+
+© 2017 Arm Limited 
+23
+Arm CPUs verified with ISA-Formal
+A-class 
+Cortex-A53 
+Cortex-A32 
+Cortex-A35 
+Cortex-A55 
+Next generation
+R-class 
+Cortex-R52 
+Next generation
+M-class 
+Cortex-M4 
+Cortex-M7 
+Cortex-M33 
+Next generation
+Cambridge Projects
+Rolling out globally to other design centres 
+Sophia, France - Cortex-A75 (partial) 
+Austin, USA - TBA 
+Chandler, USA - TBA
+
+© 2017 Arm Limited 
+24
+
+© 2017 Arm Limited 
+Formal validation 
+of specifications
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+
+© 2017 Arm Limited 
+26
+Suppose...
+Last year: audited all accesses to privileged registers 
+• Specification: Added missing privilege checks 
+• Testsuite: Added new tests to test every privilege check 
+• Formal testbench: Verify every check 
+This year: add new instruction but accidentally omit privilege check 
+How many tests in the test suite will fail on new specification?
+
+© 2017 Arm Limited 
+27
+Can we formally verify specification?
+Specification of the specification 
+Disallowed behaviour 
+Invariants 
+Cross-cutting properties 
+Tools that can prove properties of ASL specifications
+
+© 2017 Arm Limited 
+28
+
+© 2017 Arm Limited 
+28
+State change
+
+© 2017 Arm Limited 
+28
+State change
+Event
+
+© 2017 Arm Limited 
+29
+
+© 2017 Arm Limited 
+State
+Output
+Input
+State
+29
+
+© 2017 Arm Limited 
+State
+Output
+Input
+State
+29
+ExceptionEntry
+
+© 2017 Arm Limited 
+State
+Output
+Input
+State
+29
+ExceptionEntry
+TakeReset
+
+© 2017 Arm Limited 
+30
+rule lockup_exit
+assume Fell(LockedUp);
+Called(TakeColdReset)
+∨ Called(TakeReset)
+∨ Rose(InDebugState())
+∨ Called(ExceptionEntry); 
+
+© 2017 Arm Limited 
+31
+Converting ASL to SMT
+Functions 
+Local Variables 
+Statements 
+Assignments 
+If-statements 
+Exceptions 
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays
+Functions 
+Local Variables 
+Statements 
+Assignments 
+If-statements 
+Exceptions 
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays 
+
+© 2017 Arm Limited 
+Bug in Spec
+32
+Formally Validating Specifications
+v8-M Spec
+Verification
+CEX
+Property
+Proof
+
+© 2017 Arm Limited 
+Bug in Spec
+12 Bugs 
+Found 
+so far
+32
+Formally Validating Specifications
+v8-M Spec
+Verification
+CEX
+Property
+Proof
+
+© 2017 Arm Limited 
+33
+
+© 2017 Arm Limited 
+rule lockup entry 
+assume Rose(LockedUp); 
+assume ¬Called(TakeReset);  
+property a    HaveMainExt() ⇒ CFSR != 0; 
+property b1   Stable(ExnPending); 
+property b2   Stable(ExnActive); 
+property c    PC == 0xEFFFFFFE; 
+property e    HFSR.FORCED == 0;  
+33
+
+© 2017 Arm Limited 
+rule lockup entry 
+assume Rose(LockedUp); 
+assume ¬Called(TakeReset);  
+property a    HaveMainExt() ⇒ CFSR != 0; 
+property b1   Stable(ExnPending); 
+property b2   Stable(ExnActive); 
+property c    PC == 0xEFFFFFFE; 
+property e    HFSR.FORCED == 0;  
+33
+Stable(HFSR.FORCED);
+
+© 2017 Arm Limited 
+rule lockup entry 
+assume Rose(LockedUp); 
+assume ¬Called(TakeReset);  
+property a    HaveMainExt() ⇒ CFSR != 0; 
+property b1   Stable(ExnPending); 
+property b2   Stable(ExnActive); 
+property c    PC == 0xEFFFFFFE; 
+property e    HFSR.FORCED == 0;  
+33
+Debug view of 
+is not changed.
+Stable(HFSR.FORCED);
+
+© 2017 Arm Limited 
+34
+
+© 2017 Arm Limited 
+35
+Lexer 
+Parser 
+Typechecker
+Interpreter
+Verilog 
+Backend
+C 
+Backend
+Test 
+Coverage
+Simulation 
+Trace
+ASL Spec
+SMT 
+Backend
+ARM 
+Test Suite
+Architecture 
+Properties
+Bounded 
+Model Checker
+SMT 
+Solver
+Arm 
+Processor
+
+© 2017 Arm Limited 
+36
+Public release of machine readable Arm specification
+Enable formal veriﬁcafon of somware and tools 
+Releases 
+April 2017: v8.2 
+July 2017: v8.3 
+Working with Cambridge University REMS group to convert to SAIL 
+Backends for HOL, OCaml, Memory model, (hopefully Coq too) 
+Tools: hops://github.com/alastairreid/mra_tools 
+Talk to me about how I can help you use it
+
+© 2017 Arm Limited 
+37
+Potential uses of processor specifications
+Verifying compilers 
+Verifying OS page table / interrupt / boot code 
+Verifying processor pipelines 
+Verification and discovery of peephole optimizations 
+Automatic generation of binary translators 
+Automatic generation of test cases 
+Decompilation of binaries 
+Abstract interpretation of binaries 
+etc.
+
+© 2017 Arm Limited 
+How can you trust formally verified 
+software?
+
+© 2017 Arm Limited 
+39
+How can you trust formal specifications?
+Test the specifications you depend on 
+Ensure specifications have multiple uses 
+Create meta-specifications
+https://xkcd.com/1416/
+
+Thank You! 
+Danke! 
+Merci! 
+谢谢! 
+ありがとう! 
+Gracias! 
+Kiitos!
+© 2017 Arm Limited 
+40
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+

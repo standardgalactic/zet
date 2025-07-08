@@ -1,0 +1,161 @@
+Alastair Reid and Shaked Flur
+{adreid, sflur}@google.com
+@alastair_d_reid, @FlurShaked
+https://project-oak.github.io/rust-verification-tools/
+Using KLEE with large Rust 
+programs
+KLEE workshop, 10-11 June 2021
+1
+
+01
+Agenda
+02
+03
+04
+05
+Why large Rust programs?
+High/low-level APIs for KLEE
+The challenge: so many features
+Experience
+Conclusions
+2
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+Fearless security: memory & thread safety
+Significant momentum & support
+Rust programs use lots of libraries
+Many verification approaches being explored
+MIR
+LLVM
+3
+Why large Rust programs?
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+x86
+
+4
+KLEE's C API
+Idiomatic Rust API
+klee_make_symbolic
+trait T::abstract_value
+klee_assume
+fn verifier::assume
+klee_abort
+fn verifier::abort
+klee_silent_exit
+fn verifier::reject
+klee_get_value_ty
+trait T::get_concrete_value
+klee_is_symbolic
+trait T::is_symbolic
+klee_{open,close}_merge
+macro verifier::coherent!
+Oxidizing the KLEE API: low level
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+To fuzz or to verify - Why not both?
+5
+Goal: common API for fuzzing and for DSE, BMC, ...
+-
+Based on Rust property-based testing library proptest
+-
+(Similar to Python's Hypothesis library) 
+"proptest!{...}" expands to suitable test harness
+EDSL for creating structured symbolic values
+-
+"0..1000"
+-
+"arbitrary_ascii(10)"
+-
+"[0..1000; 3]", "(0..1000, arbitrary_ascii(10))"
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+Fuzzing / DSE test harness
+(Overly simple example)
+6
+DSE test
+harness 
+Symbolic value EDSL
+
+7
+The challenge: so many features
+
+Language features: tuples, closures, traits, ...
+Compiler features: fshl/fshr, LLVM-11
+Runtime features: concurrency
+C-Rust interoperation: FFI-calls, linking, ...
+Stdlib features: glibc initializers, libc calls, ...
+Popular crates: x86 vector intrinsics
+8
+The challenge: so many features
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+How to add support for Rust features?
+1. Extend KLEE
+2. LLVM preprocessor
+3. Write library / runtime / emulation library
+4. Rust compiler flags
+9
+LLVM
+Preprocessor
+SIMD 
+emulation
+library
+libc
+modelling
+Most reusable
+
+Language features: tuples, closures, traits, ...
+Compiler features: fshl/fshr, LLVM-11, ...
+Runtime features: concurrency
+C-Rust interoperation: Rust <-> C foreign calls
+Stdlib features: glibc initializers, libc calls, ...
+Popular crates: x86 vector intrinsics
+10
+Key: KLEE, Library, Preprocessor, Rustc flags
+The challenge: so many features
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+Small libraries: base64, memchr, prost (protobufs)
+-
+decode(encode(x)) == x, decode(x) != panic
+Applications: uutils/coreutils (96 applications: ls, cat, df, ...)
+-
+Minor bugs found with UTF8
+-
+Have not done a thorough run of all applications
+Linux drivers: Rust-for-Linux (demos of how to write LKMs in Rust)
+-
+Challenges: how *not* to run KLEE on entire kernel (mocking), compiling KLEE runtime the 
+right way
+-
+Currently figuring out what a good test harness looks like
+Android: keystore2
+11
+Experience of using KLEE (still early stages)
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+Two APIs
+-
+Direct KLEE API
+-
+"Fuzzer" API built on top of KLEE API
+Most Rust features supported
+-
+Missing: concurrency, inline assembly
+Focus on reusable ways of adding support
+-
+Reusable with other Rust tools. Maybe C/C++ too?
+Starting to use on larger codebases
+12
+Summary
+KLEE workshop 2021, @alastair_d_reid, https://project-oak.github.io/rust-verification-tools/
+
+Thank You
+Alastair Reid, Shaked Flur
+More details 
+https://project-oak.github.io/rust-verification-tools/2021/03/29/klee-status.html
+{adreid, sflur}@google.com
+@alastair_d_reid, @FlurShaked
+KLEE workshop, 10-11 June 2021
+13
+

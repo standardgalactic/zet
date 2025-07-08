@@ -1,0 +1,1431 @@
+Appeared in Proceedings of the 24th International Conference on Software Engineering (ICSE 2002), pages 208-218, Orlando, FL,
+May 19-25, 2002.
+Static and Dynamic Structure in Design Patterns
+Eric Eide
+eeide@cs.utah.edu
+Alastair Reid
+reid@cs.utah.edu
+John Regehr
+regehr@cs.utah.edu
+Jay Lepreau
+lepreau@cs.utah.edu
+University of Utah, School of Computing
+50 South Central Campus Drive, Room 3190
+Salt Lake City, Utah 84112-9205
+http://www.cs.utah.edu/ﬂux/
+ABSTRACT
+Design patterns are a valuable mechanism for emphasizing struc-
+ture, capturing design expertise, and facilitating restructuring of
+software systems. Patterns are typically applied in the context of
+an object-oriented language and are implemented so that the pat-
+tern participants correspond to object instances that are created and
+connected at run-time. This paper describes a complementary real-
+ization of design patterns, in which many pattern participants cor-
+respond to statically instantiated and connected components.
+Our approach separates the static parts of the software design
+from the dynamic parts of the system behavior. This separation
+makes the software design more amenable to analysis, thus en-
+abling more effective and domain-speciﬁc detection of system de-
+sign errors, prediction of run-time behavior, and more effective op-
+timization. This technique is applicable to imperative, functional,
+and object-oriented languages: we have extended C, Scheme, and
+Java with our component model. In this paper, we illustrate our ap-
+proach in the context of the OSKit, a collection of operating system
+components written in C.
+1.
+INTRODUCTION
+Design patterns allow people to understand computer software in
+terms of stylized relationships between program entities: a pat-
+tern identiﬁes the roles of the participating entities, the responsi-
+bilities of each participant, and the reasons for the connections be-
+tween them. Patterns are valuable during the initial development
+of a system because they help software architects outline and plan
+the static and dynamic structure of software before that structure is
+implemented. Documented patterns are useful for subsequent sys-
+tem maintenance and evolution because they help maintainers un-
+derstand the software implementation in terms of well-understood,
+abstract structuring concepts and goals.
+This research was largely supported by the Defense Advanced
+Research Projects Agency, monitored by the Air Force Research
+Laboratory, under agreements F33615-00-C-1696 and F30602-
+99-1-0503. The U.S. Government is authorized to reproduce and
+distribute reprints for Governmental purposes notwithstanding any
+copyright annotation hereon.
+Copyright c⃝2002 by the Association for Computing Machinery, Inc. Per-
+mission to make digital or hard copies of part or all of this work for personal
+or classroom use is granted without fee provided that copies are not made
+or distributed for proﬁt or commercial advantage and that copies bear this
+notice and the full citation on the ﬁrst page. Copyrights for components of
+this work owned by others than ACM must be honored. Abstracting with
+credit is permitted. To copy otherwise, to republish, to post on servers, or to
+redistribute to lists, requires prior speciﬁc permission and/or a fee. Request
+permissions from Publications Dept, ACM Inc., fax +1 (212) 869-0481, or
+permissions@acm.org.
+The conventional approach to realizing patterns [13] primarily
+uses classes and objects to implement participants and uses inher-
+itance and object references to implement relationships between
+participants. The parts of patterns that are realized by classes and
+inheritance correspond to static information about the software—
+information that can be essential for understanding, checking, and
+optimizing a program. Unfortunately, class structures can disguise
+the underlying pattern relationships, both by being too speciﬁc (to
+a particular application of a pattern) and by being mixed with un-
+related code. In contrast, the parts of patterns realized by run-time
+objects and references are more dynamic and ﬂexible, but are there-
+fore harder to understand and analyze.
+This paper describes a complementary approach to realizing pat-
+terns based on separating the static parts of a pattern from the dy-
+namic parts. The static participants and relationships in a pattern
+are realized by component instances and component interconnec-
+tions that are set at compile- or link-time, while the dynamic partic-
+ipants continue to be realized by objects and object references. Ex-
+pressing static pattern relationships as component interconnections
+provides more ﬂexibility than the conventional approach while also
+promoting ease of understanding and analysis.
+To illustrate the tradeoffs between these approaches, consider
+writing a network stack consisting of a TCP layer, an IP layer, an
+Ethernet layer, and so on. The usual implementation strategy, used
+in mainstream operating systems, is for the implementation of each
+layer to directly refer to the layers above and below except in cases
+where the demand for diversity is well understood (e.g., to support
+different network interface cards). This approach commits to a par-
+ticular network stack when the layers are being written, making it
+hard to change decisions later (e.g., to add low-level packet ﬁltering
+in order to drop denial-of-service packets as early as possible).
+An alternate implementation strategy is to implement the stack
+according to the Decorator1 pattern with objects: each layer is im-
+plemented by an object that invokes methods in objects directly
+above and below it. The objects at each layer provide a common
+interface (e.g., methods for making and breaking connections, and
+for sending and receiving packets), allowing the designer to build a
+large variety of network stacks. In fact, stacks can be reconﬁgured
+at run-time, but that is more ﬂexibility than most users require.
+Our design and implementation approach offers a middle ground.
+Having identiﬁed the Decorator pattern and having decided that
+the network stack may need to be reconﬁgured, but not at run-time,
+each decorator would be implemented as a component that imports
+an interface for sending and receiving packets and exports the same
+interface. The choice of network stack is then statically expressed
+1Unless otherwise noted, the names of speciﬁc patterns refer to
+those presented in Gamma et al.'s Design Patterns catalog [13].
+1
+
+by connecting a particular set of components together.
+The basis of our approach is to permit system conﬁguration and
+realization of design patterns at compile- and link-time (i.e., before
+software is deployed) rather than at init- and run-time (i.e., after
+it is deployed). Components are deﬁned and connected in a lan-
+guage that is separate from the base language of our software, thus
+allowing us to separate "conﬁguration concerns" from the imple-
+mentation of a system's parts. A system can be reconﬁgured at the
+level of components, possibly by a non-expert, and can be analyzed
+to check design rules or optimize the overall system. Our approach
+helps the programmer identify design trade-offs and strike an ap-
+propriate balance between design-time and run-time ﬂexibility.
+The contributions of this paper are as follows:
+• We describe an approach to realizing patterns that clearly sep-
+arates the static parts of the design from the dynamic parts, making
+the system more amenable to optimization and to analyses that de-
+tect errors or predict run-time behavior (Section 3).
+• We deﬁne a systematic method for applying our approach to
+existing patterns (Section 3.1).
+• We show that our approach is applicable to three major pro-
+gramming language paradigms that support the unit component
+model: imperative languages, exempliﬁed by C [21]; functional
+languages, exempliﬁed by Scheme [11]; and object-oriented lan-
+guages, exempliﬁed by Java [17] (Sections 2 and 3). We demon-
+strate our approach with two examples from the OSKit [12], a set of
+operating system components written in C (Sections 3.2 and 3.3).
+• We evaluate the approach by applying it to each pattern de-
+scribed by Gamma et al. [13] (Section 3.4) and by analyzing its
+costs and beneﬁts (Section 4).
+In summary, although the beneﬁts of separating system architec-
+ture from component implementations are well-known, the distinc-
+tive features of this paper are that: we show a general approach that
+can be applied to many patterns and in multiple language paradigms;
+we consider the static-dynamic decision in the context of design
+patterns; and we thoroughly evaluate when to apply and when not
+to apply our approach.
+2.
+THE UNIT MODEL
+Our approach to realizing patterns is most readily expressed in
+terms of units [10,11], a component deﬁnition and linking model in
+the spirit of the Modula-3 and Mesa [19] module systems. The unit
+model emphasizes the notion of components as reusable architec-
+tural elements with well-deﬁned interfaces and dependencies. It ﬁts
+well with the deﬁnitions of "component" in the literature [22, p. 34]
+but differs from other component models that emphasize concerns
+such as separate compilation and dynamic component assembly. In
+the unit model, components are compile- or link-time parts of an
+assembly: i.e., software modules, not run-time objects.
+Three separate implementations of the unit model exist: Knit [21]
+for C, Jiazzi [17] for Java, and MzScheme [11] for Scheme. The
+implementations differ in details both because of technical differ-
+ences in the base languages and because of stylistic differences in
+the way the base languages are used. For the purposes of this paper,
+we focus on the common features of the three implementations.
+2.1
+Atomic and Compound Units
+An atomic unit can be thought of as a module with three parts:
+(1) a set of imports that name the dependencies of the unit, i.e., the
+deﬁnitions that the unit requires; (2) a set of exports that name the
+deﬁnitions that are provided by the unit and made available to other
+units; and (3) an implementation, which must include a deﬁnition
+for each export, and which may use any of the imports as required.
+I_Win32
+I_Main
+I_File
+I_Win32
+I_Main
+Draw
+I_Widget
+I_File
+I_Widget
+Win32 Widgets
+I_Win32
+Win32 Files
+Figure 1: Atomic and compound units
+Each import and export is a port with a well-deﬁned interface.
+An interface has a name and serves to group related terms, much
+like an interface or abstract class in an OOP language. The three
+implementations of the unit model make different choices about
+what makes up an interface. In Knit, an interface refers to sets of
+related C types, function prototypes, and variable declarations. In
+Jiazzi, port interfaces are like Java packages: they describe partial
+class hierarchies and the public methods and ﬁelds of classes. In
+MzScheme, because Scheme uses run-time typing, interfaces are
+simply lists of function names.
+Deﬁnitions that are not exported are inaccessible from outside
+the unit. The implementation of a unit is usually stored in a ﬁle
+separate from the unit deﬁnition, allowing code that was not in-
+tended for use as a unit to be packaged up as a unit.
+Although all implementations of the unit model use a textual lan-
+guage to deﬁne units, in this paper we use a graphical notation to
+avoid inessential details and to emphasize the underlying structure
+of our systems. The smaller boxes in Figure 1 represent atomic
+units. The export interfaces are listed at the top of a unit, the im-
+port interfaces are listed at the bottom, and the name of the unit
+is shown in the center. Consider the topmost unit, called Draw. It
+has the ability to load, save, and render images, encapsulating the
+main parts of a simple image viewing program. Draw exports (i.e.,
+implements) one port with interface I Main and imports two ports:
+one with interface I Widget and a second with interface I File.
+Units are instantiated and interconnected in compound units. Like
+atomic units, compound units have a set of imports and a set of ex-
+ports that deﬁne connection points to other units. The implementa-
+tion of a compound unit consists of a set of unit instances and a set
+of explicit interconnections between ports on these instances and
+the imports and exports of the compound unit. The result of com-
+posing units is a new unit, which is available for further linking.
+Figure 1 as a whole represents a compound unit composed of
+three other units. In this ﬁgure, an instance of Draw is composed
+with an instance of Win32 Widgets and an instance of Win32 Files.
+Within a compound unit, connections are deﬁned explicitly: this is
+necessary when there is more that one way to connect the units.
+Although not shown in this example, a system designer may freely
+create multiple unit instances from a single unit deﬁnition (e.g., two
+instances of Draw).
+2.2
+Exploiting Static Conﬁguration
+One of the key properties of programming with the unit component
+model is that component instantiation and interconnection are per-
+formed when the program is built instead of when the program is
+executed. This allows implementations of the unit model to make
+use of additional resources that may be available at compile- and
+link-time: powerful analysis and optimization techniques; in the
+case of embedded systems, orders of magnitude more cycles and
+memory with which to perform analyses; test cases, test scaffold-
+2
+
+ing, and debugging builds; and ﬁnally, freedom from real-world
+constraints such as real-time deadlines. All three unit implementa-
+tions check the component composition for type errors. Knit, which
+implements units for C, provides additional features that exploit the
+static nature of unit compositions.
+Constraint checking. Even if every link in a unit composition is
+"correct" according to local constraints such as type safety, the sys-
+tem as a whole may be incorrect because it does not meet global
+constraints. For example, [21] describes a design constraint used
+by operating system designers: "bottom-half code," executed by
+interrupt handlers, must not invoke "top-half code" that executes in
+the context of a particular process. The reason is that while top-half
+code typically blocks when a resource is temporarily unavailable,
+storing its state in the process's stack, an interrupt handler lacks a
+process context and therefore must not block. The problem with
+enforcing this constraint is that units containing bottom-half code
+(e.g., device drivers) may invoke code from other units that, transi-
+tively, invokes a top-half unit. Keeping track of such conditions is
+difﬁcult, especially when working with low-level systems code that
+is highly interconnected and not strictly layered. To address this
+problem, Knit unit deﬁnitions can include constraint annotations
+that describe the properties of imports and exports. Constraints can
+be declared explicitly (e.g., that imported functions are invoked by
+bottom-half code) or by description (e.g., that the import properties
+are set by the exports). At system build-time, Knit propagates unit
+properties in order to ensure that all constraints are satisﬁed.
+Cross-component inlining. When source is available, Knit in-
+lines function deﬁnitions across component boundaries with the
+help of the C compiler. By eliminating most of the overhead as-
+sociated with componentization, Knit reduces the need to choose
+between a clean design and a fast implementation.
+2.3
+Using Units Without Language Support
+The unit model makes it possible for a software architect to de-
+sign a system from components, describe local and global relation-
+ships between components, and reuse components both within and
+across system designs. These are the features that make it useful
+to develop and apply units for expressing design patterns. In par-
+ticular, our unit-based approach to realizing patterns relies on these
+features of the unit model:
+• Programming to interfaces. The only connections between
+components are through well-typed interfaces.
+• Conﬁgurable intercomponent connections. Unit imports de-
+scribe the "shapes" but not the providers of required services. A
+system architect links unit instances as part of a system deﬁnition,
+not as part of a component's base (e.g., C or Java) implementation.
+• Static component instantiation and interconnection. Units
+are instantiated and linked when the system is built, not when the
+system is run.
+• Multiple instantiation. A single unit deﬁnition can be used to
+create multiple unit instances, each of which has a unique identity
+at system build-time. Each instance can be linked differently.
+It is possible to make use of features of the unit component
+model without support from languages such as Knit, Jiazzi, and
+MzScheme. However, without support, some beneﬁts of the model
+may be lost. For instance, a C++ programmer might use template
+classes to describe units: this can provide optimization beneﬁts but
+does not help the system designer check constraints of the sort de-
+scribed previously. A C programmer might use the C preprocessor
+to achieve similar results. In sum, although unit tools can provide
+important beneﬁts, people who cannot or decide not to use our unit
+description languages can nevertheless take advantage of our gen-
+eral approach to realizing design patterns.
+3.
+EXPRESSING PATTERNS WITH UNITS
+The essence of a design pattern is the set of participants in the pat-
+tern and the relationships between those participants. As outlined
+previously, the conventional approaches to describing and realiz-
+ing patterns are based on the idioms of object-oriented program-
+ming. At design-time, the participants in the pattern correspond to
+classes. At run-time, the pattern is realized by object instances that
+are created, initialized, and connected by explicit statements in the
+program code. This style of implementation allows for a great deal
+of run-time ﬂexibility, but in some cases it can disguise informa-
+tion about the static properties of a system—information that can
+be used to check, reason about, or optimize the overall system.
+The key idea of this paper is that it is both possible and fruitful to
+separate static knowledge about a pattern application from dynamic
+knowledge. In particular, we believe that static information should
+be "lifted out" of the ordinary source code of the system, and should
+be represented at the level of unit deﬁnitions and connections. The
+unit model allows a system architect to describe the static proper-
+ties of a system in a clear manner, and to separate "conﬁguration
+concerns" from the implementations of the system's parts.
+Consider, for example, an application of the Decorator pattern:
+this pattern allows a designer to add additional responsibilities to an
+entity (e.g., component or object) in a way that is transparent to the
+clients of that entity. One might apply Decorator to protect a non-
+thread-safe singleton component with a mutual exclusion wrapper
+(which acquires a lock on entering a component and releases the
+lock on exit) when using the component in a multi-threaded en-
+vironment. In an object-oriented setting, this pattern would often
+be realized by deﬁning three classes: one abstract class to deﬁne
+the component interface, and two derived classes corresponding to
+the concrete component and decorator. At init-time, the program
+would create instances of each concrete class and establish the ap-
+propriate object connections. While workable, this implementation
+of the pattern can disguise valuable information about the static
+properties of this system. First, it hides the fact that there will
+be only one instance each of the component and decorator. Sec-
+ond and more important, it hides the design constraint that the base
+component must be accessed only through the decorator: because
+the realization of the pattern doesn't enforce the constraint, future
+changes to the program may violate the rule.
+To overcome these problems, we would realize the Decorator
+pattern at the level of units, as illustrated in Figure 2(a). We create
+one unit deﬁnition to encapsulate the base component deﬁnition;
+by instantiating this deﬁnition exactly once, we make it clear that
+there will be only one instance in the ﬁnal program. Furthermore,
+we annotate the unit deﬁnition with the constraint that the imple-
+mentation is non-thread-safe. We then create a separate unit deﬁ-
+nition to encapsulate our decorator, and include in the deﬁnition a
+speciﬁcation that it imports a non-thread-safe interface and exports
+a thread-safe one. The resulting structure in Figure 2(a) makes it
+clear that there is one instance of each participant and that there
+is no access to the base component except through the decorator.
+Units make the static structure of the system clear, and unit com-
+positions can be checked by tools to enforce design constraints. Of
+course, unit deﬁnitions are reusable between systems (and within
+a single system): we can include the decorator instances only as
+needed. If we desire greater reuse, we can apply the Strategy pat-
+tern to our decorator to separate its wrapping and locking aspects
+as shown in Figure 2(b). This structure provides greater ﬂexibility
+while still allowing for cross-component reasoning and optimiza-
+tion when the strategy is statically known.
+In sum, our approach to realizing patterns promotes the beneﬁts
+of static knowledge within patterns by moving such information to
+3
+
+I_Component
+I_Component
+Client
+I_Component
+Component
+Decorator
+I_Component
+I_Component
+(a) Decorator
+I_Component
+Component
+Strategy
+Client
+I_Component
+I_Component
+Decorator
+I_Component
+I_Strategy
+I_Component
+I_Strategy
+(b) Strategized Decorator
+Figure 2: Units realizing Decorator patterns
+the level of units. The unit model allows us to describe and separate
+the static and dynamic properties of a particular pattern application,
+thus making it possible for us to exploit the features described in
+Section 2.2. In the sections below we deﬁne a method for applying
+our approach, demonstrate the method in detail on a small exam-
+ple, demonstrate the effect of our method on a large example, and
+consider how the method applies to each of the patterns in Gamma
+et al.'s Design Patterns catalog [13].
+3.1
+A Method for Expressing Patterns with
+Units
+In realizing a pattern via units, the software architect's task is to
+identify the parts of the pattern that correspond to static (compile-
+time or link-time) knowledge about the pattern and its participants,
+to "lift" that knowledge out of the implementation code, and then
+to translate that knowledge into parts of unit deﬁnitions and con-
+nections. This process is necessarily speciﬁc to individual uses
+of a pattern: each time a pattern is applied, the situation dictates
+whether certain parts of the pattern correspond to static or dynamic
+knowledge. In our experience, however, we have found that many
+patterns are commonly applied in situations that provide signiﬁcant
+amounts of static information, and which therefore allow system
+architects to exploit the features of the unit model.
+We have found the following general procedure to be useful in
+analyzing the application of a pattern and translating that pattern
+into unit deﬁnitions, instances, and linkages. Because patterns are
+ordinarily described in terms of object-oriented structures (classes,
+interfaces, and inheritance), we describe our method as a translation
+from object-oriented concepts to parts of the unit model.
+1. Identify the abstract classes/interfaces. Many pattern de-
+scriptions contain one or more participating abstract classes that
+serve to deﬁne a common interface for a set of derived classes. The
+abstract classes therefore serve the same purpose as interfaces in
+the unit model; the three implementations of the model all allow
+related operations (and types, if needed) to be grouped together in
+named interfaces. In Figure 2(a), for example, I Component corre-
+sponds to the abstract component class described in the Decorator
+pattern. The exact translation from abstract class to unit interface
+depends on whether or not the derived classes are "static partici-
+pants" in the application of the pattern at hand, as described next.
+2. Identify the "static" and "dynamic" participants within
+the pattern. Within the context of a pattern, it is often the case that
+some pattern participants will be realized by a small and statically
+known number of instances. For example, in uses of the Abstract
+Factory pattern (see Section 3.2), there will often be exactly one
+Concrete Factory instance in the ﬁnal system (within the scope of
+the pattern). The number of instances does not need to be exactly
+one: what is important is that the number of instances, their classes,
+and the inter-instance references are all known statically.
+We refer to these kinds of participants as static participants, and
+in the steps below, we realize each of these participants as an in-
+dividual unit instance—essentially, realizing the participant as a
+part of our static architecture, rather than as a run-time object. In
+Figure 2(a), the context of our example says that in this particular
+use of Decorator, both the base component and its decorator are
+singletons. Thus, they are static participants.
+If a pattern participant is not static we refer to it as a dynamic par-
+ticipant. In this case, we will translate the participant as a unit that
+will encapsulate the participant class and will be able to produce in-
+stances at run-time. Figure 2(a) has no dynamic participants; later
+examples will show their use.
+3. Deﬁne the interfaces for static participants. Following the
+class hierarchy of the pattern, the software architect deﬁnes the unit
+interfaces to group the operations that will be provided by the static
+participants. The architect may choose to create one interface per
+class (i.e., one interface for the new operations provided at each
+level of the class inheritance hierarchy), or may group the opera-
+tions at a ﬁner granularity.
+Because each instance of a static participant will be implemented
+by a unique unit instance in the realization of the pattern, the iden-
+tity of each instance is part of the static system architecture and
+need not be represented by an object at run-time. Therefore, in the
+translation from class to unit interface, the methods that constitute
+the interface to a static participant can be translated as ordinary
+functions (or as class static methods, in the case of Jiazzi), and data
+members can be translated as ordinary variables (static members).
+Any method arguments that represent references to static partici-
+pants can be dropped from the translated function signatures: these
+arguments will be replaced by imports to the unit instances (i.e.,
+explicit, unit-level connections between the static participants).
+Thus, in the running example of Figure 2(a), the operations in
+I Component can be implemented by ordinary functions. Because
+all of our participants are static, we do not need to represent them
+as run-time objects.
+4. Deﬁne the interfaces for dynamic participants. Following
+the class hierarchy of the pattern, the designer now creates the in-
+terfaces for the dynamic participants. As described for the previous
+step, the designer may choose to create one or several interface def-
+initions per class.
+Unlike the static case, each instance of a dynamic participant
+must be represented by a run-time object (or other entity in a non-
+OOP language). This means that in translating the participant class
+to unit interfaces, the designer must include the deﬁnition of the
+type of the run-time objects, as the implementation language re-
+quires. With Jiazzi, this is straightforward: Jiazzi unit interfaces
+contain Java class deﬁnitions. In Knit, the interface would include
+a C type name along with a set of functions, each of which takes
+an instance of that type as an argument (i.e., the "self" parameter).
+MzScheme is the simplest: because Scheme uses run-time typing,
+the unit interface does not need to include the type of the dynamic
+pattern participants at all.2
+2If the pattern structure relies on implementation inheritance, dy-
+namic method dispatch, or other essentially OOP features, these ca-
+pabilities must be emulated when translating the pattern to Knit or
+MzScheme units. In our experience, this is sometimes tedious but
+generally not too difﬁcult.
+4
+
+Although the interfaces for a dynamic participant must include
+the class of the participant objects, the unit model allows the de-
+signer to avoid hard-coding class inheritance knowledge into the
+interfaces. By writing our units so that they import the superclasses
+of each exported class, we can implement our dynamic participant
+classes in a manner corresponding to mixins [8,17]. In other words,
+we can represent the static inheritance relationships between pat-
+tern participants not in the deﬁnitions of our units or in the unit
+interfaces, but in the connections between units.
+5. Create a unit deﬁnition for each concrete (static or dy-
+namic) participant. With the interfaces now deﬁned, the designer
+can write the deﬁnitions of the units for each participant. The unit
+deﬁnition for a dynamic participant encapsulates the class of the
+dynamic instances; normally, in the context of a single pattern,
+these kinds of units will be instantiated once. The unit deﬁnition
+for a static participant, on the other hand, encapsulates a single in-
+stance of the participant. The unit deﬁnition for a static participant
+may be instantiated as many times as needed, each time with a pos-
+sibly different set of imports, to create all of the needed static par-
+ticipant instances. In either case, the exports of a unit correspond
+to the services that the participant provides. The imports of a unit
+correspond to the connections described in the pattern; the imports
+of each unit instance will be connected to the exports of other unit
+instances that represent the other (static and dynamic) participants.
+Continuing the example of Figure 2(a), the software designer
+writes deﬁnitions for the Component and Decorator units, each en-
+capsulating a single instance of the corresponding participant. The
+base component has an I Component export, while the Decorator
+both imports and exports that interface.
+6. Within a compound unit deﬁnition, instantiate and con-
+nect the participant units. Within a compound unit, the designer
+describes the instantiation of the pattern as a whole. The implemen-
+tation of the compound unit speciﬁes how the participant units are
+to be instantiated and connected to one another. The connections
+between units follow naturally from the structure of the pattern and
+its application in the current context. In addition, one must import
+services that are required by the encapsulated participants.
+The above considers just one pattern applied before any code is
+written. In practice, participants have roles in multiple patterns and
+patterns are applied during code evolution. These considerations
+necessitate changes such as omitting the enclosing compound unit,
+moving some participants outside the compound unit, or choosing
+to treat a static participant as dynamic (or vice versa) to avoid ex-
+tensive changes to the implementations of the participants. The
+system designer may want to make additional changes, such as ag-
+gregating groups of interfaces into single interfaces, to reduce the
+complexity of the unit descriptions.
+3.2
+Example: Managing Block Devices
+We illustrate our approach in the context of a concrete system. The
+OSKit [12] is a collection of components for building operating
+systems and standalone systems. The components are almost all
+written in C, with a few in assembly code. Although the OSKit in-
+cludes a number of small and modest-sized "from-scratch" compo-
+nents, such as memory and thread management, the majority of its
+code is taken from elsewhere, including FreeBSD, NetBSD, Linux,
+and the Mach research operating system. The OSKit consists of
+over 1,000,000 lines of code, most of which is being independently
+maintained by the developers of the "donor" systems. At this time,
+about 40% of the OSKit has been explicitly converted to Knit units.
+Although the OSKit is written in C, some parts are distinctly object-
+oriented: a lightweight subset of Microsoft's COM is used in a num-
+ber of places. The OSKit has been used to build large systems such
+as operating system kernels and ﬁle servers, to implement advanced
+languages directly on the hardware, and for smaller projects such
+as embedded systems and bootloaders.
+As an initial example, consider the problem of managing block
+I/O device drivers, which provide low-level access to block-oriented
+storage media such as disks and tapes. An operating system is
+generally conﬁgured at build-time to include one device driver for
+each kind of supported block device: e.g., IDE disk, SCSI disk, and
+ﬂoppy disk drive. At run-time, the operating system queries each
+driver for information (e.g., the type and capabilities of the driver):
+the driver discovers the physical devices that it manages, and at
+the request of the OS, creates run-time objects to represent each of
+these devices. To make it easy to conﬁgure OSKit-based systems
+with different sets of block device drivers, we apply the Abstract
+Factory pattern as illustrated in Figure 3. In OOP terms, we deﬁne
+a common abstract class (BlockDevice) to be supported by all block
+devices, and we deﬁne abstract classes (BlkIO and DriverInfo) for
+the products that each driver may produce. The actual drivers and
+products map to concrete classes as shown.
+Having identiﬁed the pattern at hand, we can now apply the steps
+of our method to translate the pattern structure into appropriate unit
+deﬁnitions. First (step 1) we identify the abstract classes: clearly,
+these are BlockDevice, BlkIO, and DriverInfo. Next (step 2): because
+each device driver can manage multiple physical devices, we need
+at most one instance of each driver in any system we might build.
+(We need zero or one, depending on whether or not we choose to
+support a particular kind of device.) Thus, each of our concrete
+factories is a static participant. In contrast, since we do not know
+the number of physical devices that will be present at run-time,
+each concrete product class is a dynamic participant.
+We now deﬁne the interfaces for our static participants (step 3).
+The interface to each concrete factory class is deﬁned by the ab-
+stract BlockDevice class:
+we therefore deﬁne a corresponding
+I BlockDevice interface. As described in Section 3.1, we translate
+the BlockDevice methods into ordinary C functions, because we do
+not need to represent our static participants as run-time objects.
+In deﬁning the interfaces for our dynamic participants (step 4),
+we need to translate the participant's methods in a way that allows
+us to identify instances at run-time. Because we are using Knit, we
+translate the BlkIO and DriverInfo classes into unit port interfaces
+that include C types for the products. In addition, each product
+method becomes a C function that takes a run-time instance.
+Next (step 5) we create the unit deﬁnitions for each of our con-
+crete participants. This is a straightforward mapping from the pat-
+tern structure: the exports of each unit are determined by the pro-
+vided interfaces (i.e., the participants' classes), and the imports are
+determined by the connections in the pattern structure.
+Finally, we create a compound unit in which we instantiate the
+units that we need, and connect those instances according to the
+pattern (step 6). For example, to create a system with just IDE
+support, we would deﬁne the unit instances and links shown in
+Figure 4.
+The unit deﬁnitions that we created in steps 1-5 are
+reusable for many systems, but the structure of the ﬁnal unit compo-
+sition in step 6 is often speciﬁc to a particular system conﬁguration.
+Our method describes the process of creating appropriate unit
+deﬁnitions, but it does not address the problem of unit implementa-
+tion: i.e., the source code. We have found, however, that appropri-
+ate implementation is often straightforward. In the example above,
+the OSKit units are implemented by existing OS device drivers with
+little or no modiﬁcation. Most changes, if needed at all, can be
+implemented by Adapter units that wrap the existing code. Fur-
+thermore, the device-speciﬁc code can be isolated in the units that
+deﬁne our products. This means that we can write one unit deﬁni-
+5
+
+Floppy DriverInfo
+Client
+BlockDevice
+create_Device()
+create_DriverInfo()
+IDE
+create_Device()
+create_DriverInfo()
+SCSI
+create_Device()
+create_DriverInfo()
+Floppy
+create_Device()
+create_DriverInfo()
+BlkIO
+IDE BlkIO
+SCSI BlkIO
+Floppy BlkIO
+DriverInfo
+IDE DriverInfo
+SCSI DriverInfo
+Figure 3: Using the Abstract Factory pattern to manage block devices in OSKit-based systems
+I_BlockDevice
+IDE DriverInfo
+IDE BlkIO
+Client
+I_BlockDevice
+I_BlockDevice
+IDE
+I_BlkIO
+I_DriverInfo
+I_DriverInfo
+I_BlkIO
+Figure 4: Result of applying our method to Figure 3
+tion for our factory instead of one each for IDE, SCSI, and Floppy.
+Each instance of this factory imports the units that deﬁne a related
+family of products. Knit's constraint system can be used to stati-
+cally ensure that the system designer does not accidentally connect
+a mismatched set of products.
+3.3
+Example: OSKit Filesystems
+Having illustrated the method in detail in the previous section, we
+now show the result of applying the method to a more complex ex-
+ample. Figure 5 shows one possible conﬁguration of a ﬁlesystem in
+the OSKit. The primary parts of the system are: Main, an applica-
+tion that reads and writes ﬁles; FS Namespace, which implements
+ﬁlepaths (like /usr/bin/latex) on top of the more primitive ﬁle
+and directory abstraction; Ext2FS, a ﬁlesystem from the Linux ker-
+nel distribution; and Linux IDE, a Linux device driver for IDE disks.
+The other units in the system connect these primary parts according
+to the Abstract Factory, Adapter, Decorator, Strategy, Command,
+and Singleton patterns. All participants in these patterns are cur-
+rently implemented as described with one exception (Command)
+described below.
+Abstract Factory. Figure 5 contains two abstract factories: the
+Linux IDE and OSEnv/x86 units. (In both cases, only the enclosing
+compound unit is shown.) The OSKit deﬁnes an interface (called
+the "OS Environment Interface") for all components to use when
+manipulating interrupts, setting timers, allocating memory, and so
+on. This interface abstracts the more obtrusive details of the under-
+lying platform. In Figure 5, this interface is implemented by OS-
+Env/x86 for the Intel x86 hardware but we could have chosen OS-
+Env/StrongARM for the StrongARM architecture or OSEnv/Linux to
+run as a user-mode Linux program. (The latter choice would neces-
+I_x86
+BlkDev Instance
+Singleton
+I_BlockDevice
+I_BlockDevice
+Lock BlockDevice
+Decorator
+I_BlockDevice
+I_LinuxInternals
+OSEnv −> Linux
+Adapter
+I_OSEnv
+I_OSEnv
+OSEnv/x86
+Abstract Factory
+I_FileSysObj
+FS Instance
+Singleton
+I_FileSys
+I_BlockDeviceObj
+I_BlockDevice
+Linux −> BlkDev
+Adapter
+I_LinuxBlkDev
+I_LinuxBlkOp
+I_FileSys
+Lock Filesys
+Decorator
+I_FileSys
+I_FileSys
+LinuxFS −> FS
+Adapter
+I_LinuxFileSys
+I_LinuxFileSys
+Ext2FS
+I_LinuxInternals
+I_Main
+Main
+I_FS_Namespace
+I_FS_Namespace
+FS Namespace
+I_FileSysObj
+I_LinuxBlkOp
+Encode BlockOp
+Command
+I_LinuxBlkCmd
+I_LinuxBlkCmd
+Simple Disk Strategy
+Strategy
+I_LinuxBlkDev
+Linux IDE
+Abstract Factory
+I_LinuxInternals
+I_BlockDeviceObj
+Figure 5: A possible conﬁguration of an OSKit ﬁlesystem
+sitate a different choice of device driver.) It is appropriate to ﬁx on
+a particular platform at this stage because moving to another would
+require the system to be rebuilt.
+Adapter. The hybrid nature of the OSKit gives rise to many
+adapters. The OSEnv→Linux adapter implements Linux internal
+interfaces in terms of the OSKit-standard I OSEnv, allowing us to
+6
+
+include Linux-derived units in the system. The LinuxFS→FS and
+Linux→BlkDev adapters implement standard OSKit interfaces for
+ﬁlesystems and block devices using the internal Linux interfaces
+for these things. Being able to use Linux-derived units is extremely
+useful for OSKit systems: instead of writing and maintaining new
+ﬁlesystems and device drivers, the OSKit exploits the hard work
+of the Linux community. The OSKit uses this approach to provide
+30 Ethernet drivers, 23 SCSI drivers, and 11 ﬁlesystems.
+An interesting part of the LinuxFS→FS and Linux→BlkDev adapters
+is that they have both static and dynamic aspects. The static aspect
+adapts the static interfaces of the participants: those used for ini-
+tialization, ﬁnalization, and mounting a ﬁlesystem on a disk par-
+tition. The dynamic aspect adapts the interfaces of dynamic par-
+ticipants, wrapping Linux block device objects as OSKit block de-
+vice objects, Linux ﬁlesystem objects as OSKit ﬁlesystem objects,
+and Linux ﬁle and directory objects as their OSKit equivalents.
+This illustrates how our approach complements the conventional
+approach: our units make it apparent which decisions are static
+(e.g., the decision to use Linux components with OSKit compo-
+nents) and which are dynamic (e.g., how many ﬁles will be opened,
+which ﬁles will be opened).
+Decorator. If this is a multi-threaded system, we must take care
+to acquire and release locks when accessing the ﬁlesystem and de-
+vice driver objects. The decorators Lock Filesys and Lock BlockDe-
+vice acquire locks when entering the decorated objects and release
+locks when leaving.
+It would be a serious error to omit one of these lock decora-
+tors (leading to race conditions) or to insert it in the wrong place
+(leading to deadlock), so we use the constraint system to check that
+they are placed correctly. This may seem like overkill in such a
+simple conﬁguration, but the reader will appreciate that this is just
+one of many rules that must be enforced and that we have omitted
+many units that would appear in a complete system. The complete
+system—including units for bootstrapping, console I/O, memory
+allocation, threads and locks, etc.—consists of over 100 unit in-
+stances.
+Strategy. Disk drivers can optimize disk operations by coalesc-
+ing reads and writes on adjacent blocks and can optimize disk seeks
+by reordering read and write requests. The series of actual requests
+issued to the disk is determined by a strategy unit. In Figure 5, we
+have selected the Simple Disk Strategy unit (which queues requests
+in the order they are issued) but we could have chosen a strategy
+that coalesces disk operations or reorders requests using an eleva-
+tor algorithm. (The elevator strategy is not yet implemented.)
+Command. The Simple Disk Strategy unit manipulates a list of
+outstanding requests, and these requests are parts of a Command
+pattern. The participants in this pattern are currently integrated
+within the implementation of the Simple Disk Strategy unit, but
+could be separated as shown in Figure 5 into a separate unit En-
+code BlockOp which provides a separate function for each kind of
+request (e.g., read or write). This unit would construct request ob-
+jects and pass them to Simple Disk Strategy, which would process
+the requests.
+Singleton. In this system, we made a design decision to have a
+single device and a single ﬁlesystem instance. One could imag-
+ine using a device driver implementation that supports just one
+instance of that device type or a ﬁlesystem implementation that
+supports just one instance of that ﬁlesystem type. But this is not
+what Linux components do. Most Linux device drivers and ﬁlesys-
+tems are written to support multiple instances of a device or ﬁlesys-
+tem. To overcome this mismatch, we use the BlkDev Instance and
+FS Instance units that each create and manage a single instance
+of the corresponding dynamic objects. These units are effectively
+adapters, making dynamic pattern participants appear as if they
+were static. This mismatch is common in reuse and maintenance
+scenarios: the cost of making changes inﬂuences the choice of de-
+sign. Our approach to patterns addresses such real-world concerns.
+3.4
+Discussion
+The previous sections demonstrate our approach to utilizing design
+patterns in the context of two example systems. In both examples
+we had a mix of static and dynamic participants: the static par-
+ticipants were realized by unit instances corresponding to "object
+instances" while the remaining dynamic participants were realized
+by units that create the pattern participant objects at run-time. In
+both examples we were able to lift a great deal of static knowledge
+to the unit level, but the exact amount depended on the patterns and
+their application to the particular design problems at hand.
+In general, the static and dynamic parts of many patterns will
+vary from situation to situation. However, in common use, most
+pattern structures contain many participants and connections that
+are in fact static: these parts can be fruitfully lifted out of the par-
+ticipants' source implementations and then managed at the level of
+units. To test this claim, we analyzed the structures of all of the
+patterns described in Gamma et al.'s Design Patterns catalog [13].
+For each, we considered common uses of the pattern in component-
+based systems software such as that built with the OSKit. We then
+applied our method to translate the pattern structures into appropri-
+ate units and unit parts.
+Table 1 summarizes the results of our analysis.
+Each row of
+the table shows the translation of the participants within a single
+pattern. Overall, the table shows that most participants frequently
+correspond to static, design-time information and are therefore re-
+alizable within our unit model as design-time entities. (These are
+the columns under the "Design-Time/Static Participants" heading.)
+Abstract classes map naturally to unit interfaces. Participants that
+are singletons within the context of a pattern map naturally to unit
+instances that implement these participants. In some cases, a partic-
+ipant both deﬁnes an interface and represents a concrete instance,
+as indicated in the table. For example, in the Facade pattern, the
+Facade entity has both interface and implementation roles. In some
+cases, the designer may choose to implement a particular partici-
+pant in more than one way: for instance, the designer may choose to
+implement a Client participant as a unit instance, or as a set of ports
+that allow the client to be connected at a later stage of the overall
+design. In other cases, the appropriate implementation of one par-
+ticipant depends on the characteristics of another: in the Decorator
+pattern, for example, the appropriate realizations of Decorator and
+Concrete Decorator differ according to the "singleton-ness" of the
+Concrete Component. Where the common translation or use varies,
+we have indicated this with italics, and we list the participant in
+multiple categories.
+Because the OSKit is such a large body of code, largely derived
+from systems not explicitly organized around patterns, it is difﬁcult
+to identify all uses of a particular pattern and so it is hard to de-
+termine the ratio of static uses to dynamic uses. With that caveat,
+we have found static instances of all three categories of patterns
+(creational, structural, and behavioral) in OSKit-based systems, but
+most examples are either creational or structural. Our admittedly
+incomplete study failed to ﬁnd static examples of some patterns
+including Flyweight, Chain of Responsibility, and Visitor.
+In summary, Table 1 shows that our approach to realizing pat-
+terns is applicable to many patterns: most have common applica-
+tions in which many or all of the participants represent static sys-
+tem design knowledge that can be utilized by tools for design rule
+checking, code generation, and system optimization. This applies
+7
+
+Design-Time/Static Participants
+Dynamic Participants
+Realized By Unit
+Realized By Unit(s)
+Realized By Port(s)
+Realized By Unit
+Interface
+Impl'ing the Instance(s)
+On Unit Instances
+Deﬁning the Class
+Pattern
+(Method Steps 1, 3, 4)
+(Method Steps 2, 5)
+(Method Step 5)
+(Method Steps 2, 5)
+Abstract Factory
+Abstract Factory
+Concrete Factory
+Client
+Concrete Product
+Abstract Product
+Client
+Builder
+Builder
+Concrete Builder
+Product
+Director
+Factory Method
+Product
+Concrete Creator
+Concrete Product
+Creator
+Prototype
+Prototype
+Client
+Client
+Concrete Prototype
+Singleton
+Singleton
+Adapter (class)
+Target
+Client
+Client
+Adaptee
+Adapter
+Adapter (object)
+Target
+Client
+Client
+Adaptee
+Adapter
+Bridge
+Abstraction (intfc.)
+Abstraction (impl.)
+Reﬁned Abstraction (intfc.)
+Reﬁned Abstraction (impl.)
+Implementor
+Concrete Implementor
+Composite
+Component
+Client
+Client
+Leaf
+Composite
+Decorator
+Component
+Concrete Component
+Decorator
+Concrete Component
+Concrete Decorator
+Decorator
+Concrete Decorator
+Facade
+Facade (intfc.)
+Facade (impl.)
+subsystem classes
+Flyweight
+Flyweight
+Flyweight Factory
+Client
+Concrete Flyweight
+Client
+Unshared Conc. Flyweight
+Proxy
+Subject
+Proxy
+Real Subject
+Chain of Resp.
+Handler
+Concrete Handler
+Client
+Client
+Command
+Command
+Client
+Client
+Concrete Command
+Invoker
+Receiver
+Interpreter
+Abstract Expression
+Context
+Client
+Terminal Expression
+Client
+Nonterminal Expression
+Iterator
+Iterator
+Concrete Aggregate
+Concrete Iterator
+Aggregate
+Concrete Aggregate
+Mediator
+Mediator
+Concrete Mediator
+colleague classes
+Memento
+Originator
+Caretaker
+Memento
+Caretaker
+Observer
+Subject (intfc.)
+Subject (impl.)
+Concrete Observer
+Observer
+Concrete Subject
+Concrete Observer
+State
+Context (intfc.)
+Context (impl.)
+State
+Concrete State
+Strategy
+Strategy
+Concrete Strategy
+Context
+Template Method
+Abstract Class
+Concrete Class
+Visitor
+Visitor
+Concrete Visitor
+Concrete Visitor
+Element
+Object Structure
+Concrete Element
+Object Structure
+Table 1: Summary of how the participants within the Design Patterns catalog [13] can be realized within the unit model, for common
+situations in the design of component-based, C language systems software. Participants are classiﬁed according to their common and
+primary realizations; certain uses of patterns will dictate different realizations. Where common use varies, participants are italicized
+and are listed in all applicable categories. Some participants have both interface and implementation roles as shown. Participants
+that map to unit instances usually also require interface deﬁnitions to describe their ports.
+8
+
+even when a participant is dynamic and is realized by a unit that
+produces objects at run-time. In these cases, we can use the unit
+model to deﬁne our run-time classes/types in terms of mixins, thus
+increasing the potential reuse of our unit deﬁnitions and implemen-
+tations.
+4.
+ANALYSIS
+The key feature of our approach is that we express static pattern
+relationships in a component conﬁguration language instead of ex-
+pressing those relationships in the component implementation lan-
+guage. In this section, we detail the beneﬁts and costs of this sepa-
+ration of concerns.
+4.1
+Beneﬁts of Our Approach
+Our technique for realizing patterns has three main consequences.
+First, because static pattern information is located in single place
+(our compound units) and because component interconnections are
+fully resolved at build-time, it is possible for tools to perform a
+more thorough analysis of the software architecture than in the con-
+ventional approach to realizing patterns. Second, because the unit
+language has a single purpose—to express components, their in-
+stantiations, and their interconnections—it is possible to provide
+features in the language that make this task easier. Third, because
+the task of pattern composition is moved out of the implementa-
+tions of the participants, those implementations can be simpler and
+are less likely to be hard-wired to function only in ﬁxed pattern
+roles. These three consequences lead to beneﬁts in the areas of er-
+ror detection, performance, and ease of understanding and reuse,
+which we explore in the following sections.
+4.1.1
+Checking Architectural Constraints
+In the conventional approach to realizing design patterns, it can be
+difﬁcult to enforce static system design constraints: the rules are
+encoded "implicitly" in the implementation, making them difﬁcult
+for people to ﬁnd and for tools to enforce in the face of future sys-
+tem evolution. Our approach to realizing patterns has the following
+advantages over the conventional method.
+The constraint checker detects global, high-level errors. The
+constraint checker within the Knit unit compiler can detect "global"
+errors that involve many parts of a system, whereas a conventional
+language type system is restricted to detecting relatively local er-
+rors.
+Such global constraints often deal with high-level system
+composition issues—e.g., ensuring that domain-speciﬁc properties
+hold across many interconnected components—whereas conven-
+tional type systems and tools are restricted to detecting relatively
+low-level and general types of errors such as uncaught exceptions [1],
+dereferenced null pointers [7], and race conditions [9].
+Constraints express domain-speciﬁc design rules. A software
+architect is often interested in detecting domain-speciﬁc errors. For
+example, recent versions of RTLinux [24] permit normal (user-
+level) application code to be called from a hard real-time kernel.
+Without going into detail, an essential requirement of such appli-
+cations is that they never invoke a system call while running in
+real-time mode. We have used Knit's constraint system to check
+this constraint for RTLinux applications: i.e., to verify, at compile-
+time, that there are no paths from an application's real-time signal
+handler into the Linux kernel.
+Design errors are separated from implementation errors. In
+particular, this reduces the level of expertise required in order to
+use (or reuse) a component correctly, inside or outside of a pattern.
+The constraint checker need not deal with the base imple-
+mentation language. Our constraint checker deals only with the
+unit speciﬁcation language, not with the source code of the compo-
+nents. Because the unit language is simple, the constraint checker
+is simple and precise. Further, it would be easy to extend with more
+powerful and perhaps more pattern-speciﬁc reasoning methods in
+the future. In contrast, to detect design errors in a conventionally
+realized design pattern, a tool would need to deal with all the com-
+plexities of the base implementation language: loops, recursion,
+exceptions, typecasts, virtual functions, pointers, and so on. Such
+a tool is therefore difﬁcult to create—greatly raising the barrier to
+developing domain-speciﬁc analyses—and is often imprecise.
+Many architecture description languages can provide the advan-
+tages described above: like our tools, they achieve this by separat-
+ing the description of the architecture from the implementation of
+the components, and by being domain-speciﬁc instead of general-
+purpose. Bringing these features to bear on the realization of design
+patterns is one of the strengths of our tools and approach.
+4.1.2
+Performance Optimization
+Another strength of our approach is that static pattern knowledge
+is readily available for system optimization. The conventional ap-
+proach to realizing patterns uses language features that introduce
+indirections to achieve greater ﬂexibility. These indirections—prin-
+cipally indirect function calls—impose a performance penalty that
+can often be avoided in our approach.
+Static implementation enables many optimizations.
+When
+component instances are connected statically, indirect function calls
+are often turned into direct calls. This affords the compiler the op-
+portunity to inline function calls, thus eliminating overhead and ex-
+posing additional and often more signiﬁcant opportunities for op-
+timization, especially those that specialize a function for a particu-
+lar context. In addition, highly optimizing compilers, or compilers
+aided by a source transformation that Knit can perform, are able to
+inline functions across module boundaries. In previous work [21],
+we used Knit to implement a network router made of very small
+components. (Each packet traversed 10-20 components while be-
+ing forwarded.) Applying cross-component inlining eliminated the
+cost of many function calls but, more signiﬁcantly, enabled the C
+compiler to apply all of its intra-procedural optimizations. The
+overall effect of this optimization was to reduce the execution time
+of the routing components by 35%.
+Static implementation makes performance less sensitive to
+code changes. To eliminate virtual function calls, a compiler re-
+quires a global (or near global) analysis of the program being opti-
+mized. These analyses are necessarily affected by subtle features of
+how the program is expressed: a consequence is that any change to
+that program could potentially change the analysis result and there-
+fore change whether or not the optimization can be applied. In
+a performance-sensitive situation (e.g., in real-time code), loss of
+an optimization may affect program correctness. By making static
+knowledge explicit, our approach to patterns helps to reduce the
+complexity of the resulting system, thus promoting compile-time
+analysis and making "global" performance less sensitive to local
+code changes.
+4.1.3
+Ease of Understanding and Code Reuse
+In the conventional approach to realizing design patterns, one takes
+into account the role of each participant when implementing the
+participant—or, if the pattern is applied after implementation, one
+modiﬁes the participant to reﬂect their roles in the pattern. In our
+approach, because units do not contain direct references to other
+participants, units often need no modiﬁcation in order to be used in
+a particular role in a pattern. Avoiding even small changes to the
+participants leads to signiﬁcant beneﬁts.
+9
+
+The approach is usable when code cannot be changed. The
+implementation of a participant may be unchangeable if the code
+has multiple users with different needs, if the source code is not
+available, or if the code is being actively maintained by a sepa-
+rate organization. For instance, the developers of the OSKit cannot
+practically afford to change the Linux components that they incor-
+porate: they must deal with the code as it is written.
+A participant can be used in multiple patterns. Separating
+a participant's role from its implementation is beneﬁcial when the
+implementation can be "reused" to serve in many different roles,
+perhaps concurrently in several different patterns. The unit model
+allows a programmer to separate a participant's primary implemen-
+tation from any code needed to adapt that implementation to a par-
+ticular pattern role: by creating a unit composition, a programmer
+can "weave" code at the imports and exports of a participant unit
+instance.
+Code is not obfuscated with indirections. The conventional
+realization of a design pattern often achieves ﬂexibility by intro-
+ducing additional levels of indirection that are apparent in the im-
+plementations of the participants. This indirection can obscure the
+primary purpose of the code. For example, before applying the unit
+model to the OSKit, we relied on objects, factories, and registries
+to enable reconﬁguration. Over time, much OSKit code came to
+look like the following:
+clientos = registry->lookup(registry, clios_iid);
+fsn
+= clientos->create_fsnamespace(filesys);
+file
+= fsn->lookup_path("/usr/bin/latex");
+The code was often further complicated to deal with run-time er-
+rors. In any particular system, however, the values of clientos
+and fsn were ﬁxed in the system conﬁguration, and knowable at
+compile-time. After applying our approach, such code could often
+be simpliﬁed to just:
+file = lookup_path("/usr/bin/latex");
+making it clear that the selection of lookup_path's implementa-
+tion is a static, not dynamic, system property.
+4.2
+Costs of Our Approach
+Our approach to realizing design patterns is not appropriate for all
+situations and design problems. The following paragraphs summa-
+rize the costs and potential problems of our approach.
+Our approach only speciﬁes the static parts of patterns. The
+main goal of our approach is to use an external component lan-
+guage to specify the static aspects of system architecture. It is in-
+appropriate (and often infeasible) to use our approach to specify
+fundamentally dynamic elements of software architecture.
+Our approach commits code to being static or dynamic. One
+can imagine that having carefully used our approach (with its em-
+phasis on static participants and relationships) to realize a pattern, a
+change of requirements might turn a relationship from static to dy-
+namic, requiring that the pattern be re-implemented using the con-
+ventional object-oriented approach (with its emphasis on dynamic
+participants and relationships). This is a problem: while it is easy
+to use a dynamic system in a static situation, it is not so easy to
+use a static system in a dynamic way. Therefore, when using our
+approach, one should design systems in such a way that expected
+changes in the system requirements are unlikely to require chang-
+ing the static and dynamic natures of pattern participants—but we
+recognize that this is not always possible. An automated imple-
+mentation of our approach (perhaps based on partial evaluation [6])
+could partly solve this problem by transforming dynamic code into
+static code, although this would not promote the beneﬁt of easier
+writing and understanding of code through eliminated indirections.
+Our approach requires support for the unit component model.
+To fully beneﬁt from our approach, one needs language support in
+the form of an advanced module or component system and, ideally,
+a constraint checking system. This implies several costs: one must
+switch to using new tools, learn the component deﬁnition and link-
+ing language, learn to use the constraint checking language, and
+convert existing codebases to use the component language. This
+can be a signiﬁcant undertaking. As described in Section 2, how-
+ever, it is possible to use existing tools and techniques to achieve
+some (but not all) of the beneﬁts of the unit component model.
+Our approach can obscure the differences between patterns.
+When one looks at the unit diagrams of participants and relation-
+ships, it is clear that sometimes, different patterns look the same
+when realized in our approach. However, this observation is also
+true of the conventional approach to patterns: many patterns are
+realized in similar ways but differ signiﬁcantly in their purpose.
+5.
+RELATED WORK
+Gamma et al.'s Design Patterns book [13] triggered a ﬂurry of pa-
+pers on implementing patterns in object-oriented languages. Here,
+we consider representatives of particular styles of implementation.
+Bosch [3] describes a language LayOM for constructing C++ classes
+by adding a number of layers to a simple class. By using layers
+corresponding to particular patterns, Bosch solves the traceabil-
+ity problem—that it is hard to ﬁnd and identify patterns in one's
+code—and enables pattern implementations to be reused. How-
+ever, because the layers form part of the class description, the role
+of each pattern participant is hardwired and the participants cannot
+be used in other patterns without being modiﬁed. Bosch makes no
+mention of static analysis, detecting design errors, or optimization.
+Marcos et al. [16] describe an approach that is closer to ours: the
+code that implements participants is clearly separated from the code
+that deﬁnes their roles in patterns. The difference is that their ap-
+proach is based on run-time reﬂection within a metaprogramming
+system (CLOS), and so they do not support static analysis or op-
+timization. Tatsubori and Chiba [23] describe a similar approach
+to that of Marcos et al., except that it uses OpenJava's compile-
+time metaprogramming features. Like Marcos et al., they sepa-
+rate roles from participants and, because they use compile-time
+metaprogramming, it should be possible to perform static analy-
+sis. However, OpenJava does not provide anything like Knit's unit
+constraint system.
+Krishnamurthi et al. [15] describe an approach to pattern im-
+plementation based on McMicMac, an advanced macro system for
+Scheme. Their approach is like that of Tatsubori and Chiba: pat-
+terns are expanded statically (enabling optimization) and the appli-
+cation of patterns is not separated from the deﬁnitions of the partic-
+ipants. Unlike OpenJava, McMicMac provides source-correlation
+and expansion-tracking facilities that allow errors to be reported in
+terms of the code that users wrote instead of its expansion, but there
+is no overall framework for detecting global design errors.
+Baumgartner et al. [2] discuss the inﬂuence of language features
+on the implementation of design patterns. Like us, they note that
+Gamma et al.'s pattern descriptions [13] would be very different in
+a language that directly supports abstract interfaces and a module
+mechanism separate from class hierarchies. Baumgartner also lists
+a number of other useful features including mixins and multimeth-
+ods. MultiJava [5] adds some of these features to Java, enabling
+them to cleanly support the Visitor pattern and to describe "open
+classes." Our colleagues' paper on Jiazzi [17] shows how the open
+class pattern can be realized with units. Bruce et al. [4] describe
+10
+
+virtual types and show how they apply to the Observer pattern. All
+of these papers describe language features that address problems in
+implementing patterns in object-oriented languages, but their focus
+is on the technology, not the approach enabled by that technology.
+At the other end of the spectrum, there are component program-
+ming models, module interconnection languages (MILs) [20], and
+architecture description languages (ADLs) [18]. Our implementa-
+tions of the unit model lie at the intersection of these three ap-
+proaches. Units are like COM or CORBA components except that
+units play a more static role in software design; units are like MILs
+in that each implementation of the unit model supports just one
+kind of unit interconnection; and units are like ADLs in that units
+support static reasoning about system design.
+Module interconnection languages are perhaps closest in purpose
+to the unit model. The best example we know of using a MIL in the
+way this paper suggests is FoxNet [14], a network stack that ex-
+ploits ML's powerful module language. However, although FoxNet
+clearly uses a number of patterns, there is no explicit statement of
+this fact and consequently no discussion of implementing a broad
+range of patterns using a MIL.
+Architecture description languages provide a similar but higher-
+level view of the system architecture to MILs. This higher-level
+view is the key difference. ADLs describe software designs in terms
+of architectural features, which may include patterns. ADLs may
+also provide implementations of these features: the details of im-
+plementation need not concern the user. In contrast, this paper is
+all about those implementation issues: we describe a method that
+ADL implementors could apply when adding new patterns to the set
+provided by their ADL. That said, ADLs provide more expressive
+languages for describing design rules, specifying components, and
+reasoning about system design than is currently supported by the
+unit model. We plan to incorporate more high-level ADL features
+into our unit languages in the future.
+6.
+CONCLUSION
+Design patterns can be realized in many ways: although they are
+often described in object-oriented terms, a pattern need not always
+be realized in an OOP language nor always with objects and inter-
+connections created at run-time. In this paper we have presented
+a complementary realization of design patterns, in which patterns
+are statically speciﬁed in terms of the unit model of components.
+While this approach is not applicable to all software architectures,
+it can yield beneﬁts when applied to static systems, and to static as-
+pects of dynamic systems. These beneﬁts include veriﬁcation of ar-
+chitectural constraints on component compositions, and increased
+opportunities for optimization between components.
+7.
+ACKNOWLEDGMENTS
+We thank Mike Hibler for his expert help with the OSKit, and Sean
+McDirmid for many fruitful discussions about the unit model and
+design patterns. Matthew Flatt, Jason Baker, David Coppit, and Joe
+Loyall provided valuable comments on drafts of this paper. We also
+thank the anonymous reviewers for their many helpful suggestions.
+8.
+REFERENCES
+[1] K. Arnold and J. Gosling. The Java Programming Language. The
+Java Series. Addison-Wesley, second edition, 1998.
+[2] G. Baumgartner, K. L¨aufer, and V. F. Russo. On the interaction of
+object-oriented design patterns and programming languages.
+Technical Report CSD-TR-96-020, Department of Computer
+Sciences, Purdue University, 1996.
+[3] J. Bosch. Design patterns as language constructs. Journal of
+Object-Oriented Programming, 11(2):18-32, 1998.
+[4] K. B. Bruce and J. C. Vanderwaart. Semantics-driven language
+design: Statically type-safe virtual types in object-oriented
+languages. In Electronic Notes in Theoretical Computer Science,
+volume 20. Elsevier Science Publishers, 2000.
+[5] C. Clifton, G. T. Leavens, C. Chambers, and T. Millstein. MultiJava:
+Modular open classes and symmetric multiple dispatch for Java. In
+Proc. of the 2000 ACM SIGPLAN Conf. on Object-Oriented
+Programming, Systems, Languages, and Applications
+(OOPSLA '00), pages 130-145, Minneapolis, MN, Oct. 2000.
+[6] C. Consel, L. Hornof, R. Marlet, G. Muller, S. Thibault, E.-N.
+Volanschi, J. Lawall, and J. Noy´e. Partial evaluation for software
+engineering. ACM Computing Surveys, 30(3es), Sept. 1998.
+[7] D. Engler, B. Chelf, A. Chou, and S. Hallem. Checking system rules
+using system-speciﬁc, programmer-written compiler extensions. In
+Proc. of the Fourth Symposium on Operating Systems Design and
+Implementation, pages 1-16, San Diego, CA, Oct. 2000.
+[8] R. B. Findler and M. Flatt. Modular object-oriented programming
+with units and mixins. In Proc. of the Third ACM SIGPLAN
+International Conference on Functional Programming (ICFP '98),
+pages 94-104, Baltimore, MD, Sept. 1998.
+[9] C. Flanagan and S. N. Fruend. Type-based race detection for Java. In
+Proc. of the ACM SIGPLAN '00 Conf. on Programming Language
+Design and Implementation (PLDI), Vancouver, Canada, June 2000.
+[10] M. Flatt. Programming Languages for Component Software. PhD
+thesis, Rice University, June 1999.
+[11] M. Flatt and M. Felleisen. Units: Cool units for HOT languages. In
+Proc. of the ACM SIGPLAN '98 Conf. on Programming Language
+Design and Implementation (PLDI), pages 236-248, Montreal,
+Canada, June 1998.
+[12] B. Ford, G. Back, G. Benson, J. Lepreau, A. Lin, and O. Shivers. The
+Flux OSKit: A substrate for OS and language research. In Proc. of
+the 16th ACM Symposium on Operating Systems Principles, pages
+38-51, St. Malo, France, Oct. 1997.
+[13] E. Gamma, R. Helm, R. Johnson, and J. Vlissides. Design Patterns:
+Elements of Reusable Object-Oriented Software. Addison-Wesley,
+1995.
+[14] B. Harper, E. Cooper, and P. Lee. The Fox project: Advanced
+development of systems software. Computer Science Department
+Technical Report 91-187, Carnegie Mellon University, 1991.
+[15] S. Krishnamurthi, Y.-D. Erlich, and M. Felleisen. Expressing
+structural properties as language constructs. In Programming
+Languages and Systems (Proc. of the Eighth European Symp. on
+Programming, ESOP '99), volume 1576 of Lecture Notes in
+Computer Science, pages 258-272. Springer-Verlag, Mar. 1999.
+[16] C. Marcos, M. Campo, and A. Pirotte. Reifying design patterns as
+metalevel constructs. Electronic Journal of SADIO, 2(1):17-29,
+1999.
+[17] S. McDirmid, M. Flatt, and W. C. Hsieh. Jiazzi: New-age
+components for old-fashioned Java. In Proc. of the 2001 ACM
+SIGPLAN Conf. on Object-Oriented Programming, Systems,
+Languages, and Applications (OOPSLA '01), pages 211-222,
+Tampa, FL, Oct. 2001.
+[18] N. Medvidovic and R. N. Taylor. A classiﬁcation and comparison
+framework for software architecture description languages. IEEE
+Transactions on Software Engineering, 26(1):70-93, Jan. 2000.
+[19] J. G. Mitchell, W. Mayberry, and R. Sweet. Mesa Language Manual,
+1979.
+[20] R. Prieto-Diaz and J. M. Neighbors. Module interconnection
+languages. Journal of Systems and Software, 6(4), Nov. 1986.
+[21] A. Reid, M. Flatt, L. Stoller, J. Lepreau, and E. Eide. Knit:
+Component composition for systems software. In Proc. of the Fourth
+Symposium on Operating Systems Design and Implementation, pages
+347-360, San Diego, CA, Oct. 2000.
+[22] C. Szyperski. Component Software: Beyond Object-Oriented
+Programming. Addison-Wesley, 1999.
+[23] M. Tatsubori and S. Chiba. Programming support of design patterns
+with compile-time reﬂection. In Proc. of the OOPSLA '98 Workshop
+on Reﬂective Programming in C++ and Java, pages 56-60,
+Vancouver, Canada, Oct. 1998.
+[24] V. Yodaiken. The RTLinux manifesto. In Proc. of the Fifth Linux
+Expo, Raleigh, NC, Mar. 1999.
+11
+

@@ -1,0 +1,186 @@
+Alastair Reid
+@alastair_d_reid
+How can we formally verify 
+Rust for Linux?
+https://project-oak.github.io/rust-verification-tools/
+
+The verification continuum
+https://project-oak.github.io/rust-verification-tools/
+Testing
+Proving
+Bug finding
+Fuzzing
+Dynamic
+Static
+
+Agenda
+●What code to verify?
+●What properties to verify?
+●How can we use tools we have today?
+●What needs fixed before this is viable?
+https://project-oak.github.io/rust-verification-tools/
+
+Spoiler: It is not usable yet
+●Tool problems
+●I didn't find bugs
+●I didn't verify anything
+●(I am now working on a new, unrelated project)
+https://project-oak.github.io/rust-verification-tools/
+
+Detailed blog post https://project-oak.github.io/rust-verification-tools/
+
+What code to verify?
+https://project-oak.github.io/rust-verification-tools/
+Classic Linux (C)
+Rust for Linux (Rust)
+Device drivers (Rust)
+Stub layer (C + Rust)
+
+might_sleep()
+integer 
+overflow
+array index 
+error
+assert
+compiler
+bug
+hardware 
+failure
+kmalloc failure
+catch,
+cleanup,
+rethrow
+verify
+log or
+reset
+Legitimate
+failure
+Failing 
+checks
+External
+failure
+
+Programmer
+&
+Compiler
+inserted
+checks
+Checks that we cannot prove will not fail
+Checks proved cannot fail
+Checks that can fail
+Checks eliminated by compiler
+#1
+
+#2: State machines
+●Many state machines in OS
+○Kernel, modules, devices, objects, etc.
+●Check that state m/c changes are allowed
+●See Formal verification made easy and fast (LPC 2019)
+Diagram: Daniel Bristot de Oliviera et al, "Untangling the Intricacies of Thread Synchronization in the PREEMPT_RT Linux Kernel", ISORC 2019.
+
+#3: System invariants
+●Fast systems code has many invariants
+●Executable invariants
+○
+assertions on function entry/exit
+https://project-oak.github.io/rust-verification-tools/
+
+#4: Functional correctness 
+1. Write a formal specification of your code
+2. Verify code against the specification
+3. Update specification as code changes
+https://project-oak.github.io/rust-verification-tools/
+
+Writing verification harnesses
+(parameterized tests)
+1. Write a test of your code using fixed values
+2. Replace fixed values with parameters
+a. Random values → fuzzing
+b. Symbolic values → formal verification
+3. Profit: one test that can be used in two ways
+https://project-oak.github.io/rust-verification-tools/
+
+A concrete test
+    #[test]
+    fn test_fileops2() -> Result<()> {
+        let registration = &RustSemaphore::init()?._dev;
+        let file_state = *mk_file_state::<Arc<Semaphore>, FileState>(registration)?;
+        let file = File::make_fake_file();
+        test_write(&file_state, &file, 42);
+        test_read(&file_state, &file, 6);
+        Ok(())
+    }
+https://project-oak.github.io/rust-verification-tools/using-propverify/
+
+PropTest
+proptest! {
+    #[test]
+    fn test_fileops2(wlen in 0..=1000usize, rlen in 0..=1000usize) -> Result<()> {
+        let registration = &RustSemaphore::init()?._dev;
+        let file_state = *mk_file_state::<Arc<Semaphore>, FileState>(registration)?;
+        let file = File::make_fake_file();
+        test_write(&file_state, &file, wlen);
+        test_read(&file_state, &file, rlen);
+        Ok(())
+    }
+}
+https://project-oak.github.io/rust-verification-tools/using-propverify/
+What I want to write...
+
+PropTest and PropVerify
+proptest! {
+    #[test]
+    fn test_fileops2(wlen in 0..=1000usize, rlen in 0..=1000usize) -> Result<()> {
+        let registration = &RustSemaphore::init()?._dev;
+        let file_state = *mk_file_state::<Arc<Semaphore>, FileState>(registration)?;
+        let file = File::make_fake_file();
+        test_write(&file_state, &file, wlen);
+        test_read(&file_state, &file, rlen);
+        Ok(())
+    }
+}
+https://project-oak.github.io/rust-verification-tools/using-propverify/
+What I want to write...
+
+What works today
+#[no_mangle]
+pub fn test_fileops2() -> Result<()> {
+    let wlen = AbstractValue::abstract_value();
+    let rlen = AbstractValue::abstract_value();
+    let registration = &RustSemaphore::init()?._dev;
+    let file_state = *mk_file_state::<Arc<Semaphore>, FileState>(registration)?;
+    let file = File::make_fake_file();
+    test_write(&file_state, &file, wlen);
+    test_read(&file_state, &file, rlen);
+    Ok(())
+}
+https://project-oak.github.io/rust-verification-tools/2021/08/24/rust-on-linux-3.html
+
+How to run a verification tool
+1. Write a parameterized test
+2. Write stub functions for C code called from R4L
+3. Generate LLVM bitcode: WLLVM, --emit=llvm-bc
+4. Link bitcode files
+5. Run verification tool (KLEE)
+https://project-oak.github.io/rust-verification-tools/
+
+Tool issues today                 (many of these are changing)
+1. Cargo integration → couldn't use PropVerify
+2. KLEE only for now → finding bugs, not proving
+3. LLVM11 vs LLVM12
+4. No concurrency support
+https://project-oak.github.io/rust-verification-tools/
+
+Summary
+●What code to verify
+●What properties to verify
+Compiler inserted checks, state machines, system invariants, ...
+●Parameterized tests
+○Verification continuum (PropVerify and PropTest)
+●Tool issues - changing fast
+https://project-oak.github.io/rust-verification-tools/
+
+Thank You
+Alastair Reid
+@alastair_d_reid
+

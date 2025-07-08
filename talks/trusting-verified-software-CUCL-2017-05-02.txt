@@ -1,0 +1,464 @@
+ARMResearch
+How can you trust formally 
+veriﬁed software?
+Alastair Reid 
+alastair.reid@arm.com
+@alastair_d_reid
+
+ARMResearch
+2
+[...] By applying program proof 
+techniques to the source code 
+of the compiler, we can prove, 
+with mathematical certainty, 
+that the executable code 
+produced by the compiler 
+behaves exactly as specified 
+by the semantics of the 
+source~C~program, therefore 
+ruling out all risks of 
+miscompilation. 
+http://compcert.inria.fr/motivations.html
+seL4 is unique: it is the only 
+opera3ng system that has 
+undergone formal veriﬁca3on, 
+proving bug-free implementa3on, 
+and enforcement of spa3al isola3on 
+(data conﬁden3ality and integrity). 
+h?ps://sel4.systems/Info/Docs/seL4-brochure.pdf
+[...] recent advances have 
+made it possible to write 
+smaller-scale software that 
+can be mathematically 
+proven not to have the 
+type of imperfections that 
+make a program freeze up 
+or leave it vulnerable to a 
+security attack.
+https://www.microsoft.com/en-us/research/blog/
+microsoft-researchers-explore-a-practical-way-to-
+build-bug-free-software/
+
+ARMResearch
+3
+Release 3.0, 2017-02-10
+=======================
+[...]
+Bug fixing:
+- Issue #155: on ARM, assembly errors caused by large jump tables for
+  "switch" statements and overflow in accessing constant pools.
+- Issue #151: large inductive definition causes a fatal error in
+  32-bit versions of Coq.
+- Issue #143: handle "%lf" printf() format in the reference interpreter
+- Issue #138: struct declarations in K&R function parameters were ignored.
+- Issues #110, #111, #113, #114, #115, #119, #120, #121, #122, #123, #124,
+  #125, #126, #127, #128, #129, #130, #133, #138, #144: various cases
+  of internal errors and failed assertions that should have been
+  proper errors instead.
+- For __builtin_memcpy_aligned, size and alignment arguments of 64-bit
+  integer type were causing a fatal error on a 32-bit target.
+- ARM and x86 ports: wrong register allocation for some calls to
+  function pointers. 
+Release 2.7.1, 2016-07-18
+=========================
+[...]
+Bug fixing:
+- Fixed a compile-time assertion failure involving builtins
+  taking a 64-bit integer parameter and given an unsigned 32-bit 
+integer
+  argument.
+- Updates to the Cminor parser.
+Release 2.7, 2016-06-29
+=======================
+[...]
+Bug fixing:
+- Some declarations within C expressions were incorrectly ignored
+  (e.g. "sizeof(enum e {A})").
+- ARM in Thumb mode: incorrect "movs" instructions involving the stack
+  pointer register were generated.
+
+ARMResearch
+4
+
+ARMResearch
+5
+
+ARMResearch
+6
+
+ARMResearch
+7
+
+ARMResearch
+8
+Applica3on
+Library
+OS
+Compiler
+Processor
+Applica3on Spec
+Library Spec
+Posix Spec
+C Standard
+CPU Architecture
+implements
+
+ARMResearch
+9
+Applica3on Spec
+Library Spec
+Posix Spec
+C Standard
+CPU Architecture
+Trusted 
+Computing 
+Base
+
+ARMResearch
+Speciﬁcations are part of your TCB
+Testing and Formal Validation of Processor Speciﬁcations
+Testing Speciﬁcations (FMCAD 2016)
+Formally Validating Processors (CAV 2016)
+Formally Validating Speciﬁcations (submitted)
+Generating Testcases
+Security Checking
+Booting an OS
+Fuzzing an OS
+The Virtuous Cycle
+10
+
+ARMResearch
+11
+ISA Speciﬁcation
+System Speciﬁcation
+
+ARMResearch
+12
+v8-A
+v8-M
+Instructions
+Int/FP/SIMD
+26,000
+6,000
+Exceptions
+4,000
+3,000
+Memory
+3,000
+1,000
+Debug
+3,000
+1,000
+Misc
+5,500
+2,000
+(Test support)
+1,500
+2,000
+Total
+43,000
+15,000
+ARM Spec (lines of code)
+
+ARMResearch
+Test Suite
+Testing Speciﬁcations
+13
+v8-A/M Speciﬁca3on
+ASL Interpreter/Compiler
+Test Program
+Speciﬁca3on Bug
+Test Bug
+Test Suite
+Test Suite
+Test Suite
+Test Suite
+Trustworthy Speciﬁca3ons of ARM v8-A and v8-M System Level Architecture, FMCAD 2016
+11,000 test programs 
+2 Billion instruc3ons
+
+ARMResearch
+Formally Validating Processors
+14
+v8-A/M Spec 
+(ASL)
+Model Checker
+Processor Bug
+ Speciﬁca3on Bug
+ARM 
+Processor
+ASL to 
+Verilog
+v8-A/M Spec 
+(Verilog)
+CEX
+CEX
+End to End Veriﬁca3on of ARM Processors with ISA-Formal, CAV 2016
+
+ARMResearch
+Finding Bugs in Specs
+15
+1
+10
+100
+Syntax/Typecheck
+Testing
+Model Checking Processors
+QCC
+(Ar3sts Impression)
+Time
+Bugs 
+Found
+
+ARMResearch
+Formally Validating Speciﬁcations
+16
+v8-M Spec
+Veriﬁca3on
+Bug in Spec
+CEX
+Property
+
+ARMResearch
+17
+Excep3on 
+Entry
+Excep3on 
+Return
+Push 
+Stack 
+Read 
+Excep3on 
+Vector
+Pop 
+Stack
+
+ARMResearch
+18
+Derived Excep3on
+
+ARMResearch
+19
+Lockup
+
+ARMResearch
+20
+
+ARMResearch
+21
+rule lockup entry
+assume Rose(LockedUp);
+assume ¬Called(TakeReset); 
+property a    HaveMainExt() ⇒ CFSR != 0;
+property b1  Stable(ExnPending);
+property b2  Stable(ExnActive);
+property c    RName[RNamesPC] = 0xEFFFFFFE;
+property e    Stable(HFSR.FORCED); 
+
+ARMResearch
+22
+rule lockup_exit
+assume Fell(LockedUp);
+Called(TakeColdReset)
+∨ Called(TakeReset)
+∨ Rose(Halted)
+∨ Called(ExceptionEntry); 
+
+ARMResearch
+23
+rule lockup
+assume LockedUp;
+invariant a DHCSR.S_LOCKUP = 1; 
+invariant b PC == 0xEFFFFFFE;
+property  c 
+assume Past(LockedUp); 
+¬ Called(FetchInstr) ∧ ¬Called(DecodeExecute); 
+
+ARMResearch
+24
+
+ARMResearch
+25
+
+ARMResearch
+26
+State
+Output
+Input
+State
+
+ARMResearch
+27
+State
+Output
+Input
+State
+Excep3onEntry
+FetchInstr
+
+ARMResearch
+Formally Validating Speciﬁcations
+28
+v8-M Spec
+Veriﬁca3on
+Bug in Spec
+CEX
+Property
+12 Bugs 
+Found 
+so far
+
+ARMResearch
+Formally Validating Speciﬁcations
+29
+v8-M Spec 
+(ASL)
+Bug in Spec
+ASL to SMT
+CEX
+Rule 
++ Invariants
+Veriﬁca3on
+
+ARMResearch
+Formally Validating Speciﬁcations
+30
+v8-M Spec 
+(ASL)
+SMT Solver
+Bug in Spec
+ASL to SMT
+Veriﬁca3on 
+Condi3on (SMT)
+CEX
+Rule 
++ Invariants
+
+ARMResearch
+Formally Validating Speciﬁcations
+31
+v8-M Spec 
+(ASL)
+SMT Solver
+Bug in Rule
+Bug in Spec
+ASL to SMT
+Veriﬁca3on 
+Condi3on (SMT)
+CEX
+Bug in Invariants
+Rule 
++ Invariants
+
+ARMResearch
+32
+
+ARMResearch
+33
+
+ARMResearch
+Speciﬁcations are part of your TCB
+Testing and Formal Validation of Processor Speciﬁcations
+Testing Speciﬁcations (FMCAD 2016)
+Formally Validating Processors (CAV 2016)
+Formally Validating Speciﬁcations (submitted)
+Generating Testcases
+Security Checking
+Booting an OS
+Fuzzing an OS
+The Virtuous Cycle
+34
+
+ARMResearch
+Testcase Generation
+35
+v8-A/M Speciﬁca3on
+ASL Interpreter
+Branch 
+Coverage
+Symbolic 
+Dataﬂow 
+Graph
+TestCase
+SMT Solver
+
+ARMResearch
+Security Checking
+36
+v8-M Speciﬁca3on
+ASL Interpreter
+Test Program
+Informa3on 
+Flow
+Symbolic 
+Dataﬂow 
+Graph
+
+ARMResearch
+Booting an OS
+37
+v8-M Speciﬁca3on
+ASL Interpreter/Compiler
+mbed OS
+Applica3on
+(Work by Jon French and Nathan Chong)
+
+ARMResearch
+Fuzzing the mbed OS
+38
+v8-M Speciﬁca3on
+ASL Interpreter/Compiler
+mbed OS
+Random Applica3on
+Crash/Fail
+Branch 
+Coverage
+TestCase
+AFL Fuzzer
+(Work by Jon French and Nathan Chong)
+
+ARMResearch
+39
+
+ARMResearch
+Creating a Virtuous Cycle
+40
+ARM 
+Spec
+Fuzzing 
+Firmware
+ARM 
+Conformance 
+TestSuite
+Processor 
+Veriﬁca3on
+Boot 
+OS
+Informa3on 
+Flow 
+Analysis
+Random 
+Instruc3on 
+Sequences
+Testcase 
+Genera3on
+Speciﬁca3on 
+Veriﬁca3on
+
+ARMResearch
+How can you trust formally veriﬁed software?
+Don't forget the TCB
+Speciﬁcations — The Next Formal Veriﬁcation Bottleneck
+Too large to be "obviously correct"
+Testing
+Formally validating implementations
+Formally validating speciﬁcations
+  
+Hiring in Security and Correctness group — contact me
+41
+
+End 
+42
+alastair.reid@arm.com
+@alastair_d_reid
+

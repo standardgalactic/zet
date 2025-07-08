@@ -1,0 +1,9040 @@
+FVision:
+A
+De larativ
+e
+Language
+for
+Visual
+T
+ra 
+king
+John
+P
+eterson
+1
+,
+P
+aul
+Hudak
+1
+,
+Alastair
+Reid
+2
+,
+and
+Greg
+Hager
+3
+1
+Y
+ale
+Univ
+ersit
+y
+,
+peterson-john  s.yale.edu
+and
+paul.hudak yale.edu
+2
+Univ
+ersit
+y
+of
+Utah,
+reid  s.utah.edu
+3
+The
+Johns
+Hopkins
+Univ
+ersit
+y
+,
+hager  s.jhu.edu
+Abstra t.
+F
+un tional
+programming
+languages
+are
+not
+generally
+asso
+ iated
+with
+ om-
+putationally
+in
+tensiv
+e
+tasks
+su 
+h
+as
+ omputer
+vision.
+W
+e
+sho
+w
+that
+a
+de larativ
+e
+pro-
+gramming
+language
+lik
+e
+Hask
+ell
+is
+ee tiv
+e
+for
+des ribing
+ omplex
+visual
+tra 
+king
+sys-
+tems.
+W
+e
+ha
+v
+e
+tak
+en
+an
+existing
+C
++
++
+library
+for
+ omputer
+vision,
+ alled
+XVision,
+and
+used
+it
+to
+build
+FVision
+(pronoun ed
+\ssion"),
+a
+library
+of
+Hask
+ell
+t
+yp
+es
+and
+fun tions
+that
+pro
+vides
+a
+high-lev
+el
+in
+terfa e
+to
+the
+lo
+w
+er-lev
+el
+XVision
+ o
+de.
+Using
+fun tional
+abstra tions,
+users
+of
+FVision
+ an
+build
+and
+test
+new
+visual
+tra 
+king
+systems
+rapidly
+and
+reliably
+.
+The
+use
+of
+Hask
+ell
+do
+es
+not
+degrade
+system
+p
+erforman e:
+ omputations
+are
+dominated
+b
+y
+lo
+w-lev
+el
+ al ulations
+expressed
+in
+C
++
++
+while
+the
+Hask
+ell
+\glue
+ o
+de"
+has
+a
+negligible
+impa t
+on
+p
+erforman e.
+FVision
+is
+built
+using
+fun tional
+rea tiv
+e
+programming
+(FRP)
+to
+express
+in
+tera tion
+in
+a
+purely
+fun tional
+manner.
+The
+resulting
+system
+demonstrates
+the
+viabilit
+y
+of
+mixed-
+language
+programming:
+visual
+tra 
+king
+programs
+ on
+tin
+ue
+to
+sp
+end
+most
+of
+their
+time
+exe uting
+lo
+w-lev
+el
+image-pro
+ essing
+ o
+de,
+while
+Hask
+ell's
+adv
+an ed
+features
+allo
+w
+us
+to
+dev
+elop
+and
+test
+systems
+qui 
+kly
+and
+with
+ onden e.
+In
+this
+pap
+er,
+w
+e
+demonstrate
+the
+use
+of
+Hask
+ell
+and
+FRP
+to
+express
+man
+y
+basi 
+abstra tions
+of
+visual
+tra 
+king.
+1
+In
+tro
+du tion
+Algorithms
+for
+pro
+ essing
+dynami 
+imagery
+|
+video
+streams
+ omp
+osed
+of
+a
+sequen e
+of
+im-
+ages
+|
+ha
+v
+e
+rea 
+hed
+a
+p
+oin
+t
+where
+they
+ an
+no
+w
+b
+e
+usefully
+emplo
+y
+ed
+in
+man
+y
+appli ations.
+Prime
+examples
+in lude
+vision-driv
+en
+animation,
+h
+uman- omputer
+in
+terfa es,
+and
+vision-guided
+rob
+oti 
+systems.
+Ho
+w
+ev
+er,
+despite
+rapid
+progress
+on
+the
+te 
+hnologi al
+and
+s ien
+ti 
+fron
+ts,
+the
+fa t
+is
+that
+soft
+w
+are
+systems
+whi 
+h
+in orp
+orate
+vision
+algorithms
+are
+often
+quite
+diÆ ult
+to
+de-
+v
+elop
+and
+main
+tain.
+This
+is
+not
+for
+la 
+k
+of
+ omputing
+p
+o
+w
+er
+or
+underlying
+algorithms.
+Rather,
+it
+has
+to
+do
+with
+problems
+of
+s 
+aling
+simple
+algorithms
+to
+address
+ omplex
+problems,
+pr
+o-
+totyping
+and
+ev
+aluating
+exp
+erimen
+tal
+systems,
+and
+ee tiv
+e
+inte
+gr
+ation
+of
+separate,
+ omplex,
+ omp
+onen
+ts
+in
+to
+a
+w
+orking
+appli ation.
+There
+ha
+v
+e
+b
+een
+sev
+eral
+re en
+t
+attempts
+to
+build
+general-purp
+ose
+image
+pro
+ essing
+libraries,
+for
+example
+[9,
+13
+,
+8℄.
+In
+parti ular,
+the
+In
+tel
+Vision
+Libraries[7
+℄
+is
+an
+example
+of
+a
+signi an
+t
+soft
+w
+are
+eort
+aimed
+at
+ reating
+a
+general-purp
+ose
+library
+of
+ omputer
+vision
+algorithms.
+Most
+of
+these
+eorts
+ha
+v
+e
+tak
+en
+the
+traditional
+approa 
+h
+of
+building
+ob
+je t
+or
+subroutine
+libraries
+within
+languages
+su 
+h
+as
+C
++
++
+or
+Ja
+v
+a.
+While
+these
+libraries
+ha
+v
+e
+w
+ell
+designed
+in
+terfa es
+and
+ on
+tain
+a
+large
+sele tion
+of
+vision
+data
+stru tures
+and
+algorithms,
+they
+tend
+not
+to
+pro
+vide
+language
+abstra tions
+that
+fa ilitate
+dynami 
+vision.
+The
+resear 
+h
+dis ussed
+in
+this
+pap
+er
+started
+with
+XVision,
+a
+large
+library
+of
+C
++
++
+ o
+de
+for
+visual
+tra 
+king.
+XVision
+w
+as
+designed
+using
+traditional
+ob
+je t-orien
+ted
+te 
+hniques.
+Although
+ omputationally
+eÆ ien
+t
+and
+engineered
+from
+the
+start
+for
+dynami 
+vision,
+the
+abstra tions
+
+in
+XVision
+often
+failed
+to
+solv
+e
+man
+y
+basi 
+soft
+w
+are
+engineering
+problems.
+In
+parti ular,
+the
+original
+XVision
+often
+la 
+k
+ed
+the
+abstra tion
+me 
+hanisms
+ne essary
+to
+in
+tegrate
+primitiv
+e
+vision
+ omp
+onen
+ts
+in
+to
+larger
+systems,
+and
+it
+did
+not
+mak
+e
+it
+easy
+to
+p
+ar
+ameterize
+vision
+algorithms
+in
+a
+w
+a
+y
+that
+promoted
+soft
+w
+are
+reusabilit
+y
+.
+Rather
+than
+dire tly
+atta 
+king
+these
+issues
+in
+the
+C
++
++
+w
+orld,
+w
+e
+ 
+hose
+a
+dieren
+t
+ap-
+proa 
+h:
+namely
+,
+using
+de
+ lar
+ative
+pr
+o
+gr
+amming
+te 
+hniques.
+FVision
+is
+the
+result
+of
+our
+eort,
+a
+Hask
+ell
+library
+that
+pro
+vides
+high-lev
+el
+abstra tions
+for
+building
+ omplex
+visual
+tra 
+k
+ers
+from
+the
+eÆ ien
+t
+lo
+w-lev
+el
+C
++
++
+ o
+de
+found
+in
+XVision.
+The
+resulting
+system
+ om
+bines
+the
+o
+v
+erall
+eÆ ien y
+of
+C
++
++
+with
+the
+soft
+w
+are
+engineering
+adv
+an
+tages
+of
+fun tional
+languages:
+exibilit
+y
+,
+ omp
+osabilit
+y
+,
+mo
+dularit
+y
+,
+abstra tion,
+and
+safet
+y
+.
+This
+pap
+er
+is
+organized
+as
+a
+short
+tour
+of
+our
+problem
+domain,
+pun tuated
+b
+y
+short
+ex-
+amples
+of
+ho
+w
+to
+ onstru t
+and
+use
+FVision
+abstra tions.
+T
+o
+put
+visual
+tra 
+king
+in
+to
+a
+more
+realisti 
+ on
+text,
+some
+of
+our
+examples
+in lude
+animation
+ o
+de
+implemen
+ted
+in
+F
+ran,
+an
+ani-
+mation
+system
+built
+using
+FRP[1
+℄.
+Our
+primary
+goal
+is
+to
+explore
+issues
+of
+ omp
+osibilit
+y:
+w
+e
+will
+a
+v
+oid
+dis ussion
+of
+the
+underlying
+primitiv
+e
+tra 
+king
+algorithms
+and
+fo
+ us
+on
+metho
+ds
+for
+transforming
+and
+ om
+bining
+these
+primitiv
+e
+tra 
+k
+ers.
+All
+of
+our
+examples
+are
+written
+in
+Hask
+ell;
+w
+e
+assume
+the
+reader
+is
+familiar
+with
+the
+basi s
+of
+this
+language.
+See
+haskell.org
+for
+more
+further
+information
+ab
+out
+Hask
+ell
+and
+fun tional
+programming.
+FRP
+is
+a
+library
+of
+t
+yp
+es
+and
+fun tions
+written
+Hask
+ell.
+The
+FRP
+library
+has
+b
+een
+ev
+olving
+rapidly;
+some
+fun tion
+and
+t
+yp
+e
+names
+used
+here
+ma
+y
+not
+mat 
+h
+those
+in
+prior
+or
+future
+pap
+ers
+in
+v
+olving
+FRP
+.
+W
+e
+do
+not
+assume
+prior
+exp
+erien e
+with
+FRP
+in
+this
+pap
+er.
+F
+urther
+information
+regarding
+FRP
+ an
+b
+e
+found
+at
+haskell.org/frp
+.
+2
+Visual
+T
+ra 
+king
+T
+ra 
+king
+is
+the
+in
+v
+erse
+of
+animation.
+That
+is,
+animation
+maps
+a
+s ene
+des ription
+on
+to
+a
+(m
+u 
+h
+larger)
+arra
+y
+of
+pixels,
+while
+tra 
+king
+maps
+the
+image
+on
+to
+a
+m
+u 
+h
+simpler
+s ene
+des ription.
+Animation
+is
+ omputationally
+more
+eÆ ien
+t
+when
+the
+s ene
+ 
+hanges
+only
+sligh
+tly
+from
+one
+frame
+to
+the
+next:
+instead
+of
+re-rendering
+the
+en
+tire
+s ene,
+a
+ lev
+er
+algorithm
+ an
+reuse
+infor-
+mation
+from
+the
+previous
+frame
+and
+limit
+the
+amoun
+t
+of
+new
+rendering
+needed.
+T
+ra 
+king
+w
+orks
+in
+a
+similar
+w
+a
+y:
+ omputationally
+eÆ ien
+t
+tra 
+k
+ers
+exploit
+the
+fa t
+that
+the
+s ene
+ 
+hanges
+only
+sligh
+tly
+from
+one
+frame
+to
+the
+next.
+Consider
+an
+animation
+of
+t
+w
+o
+ ub
+es
+mo
+ving
+under
+3D
+transformations
+t1
+and
+t2.
+These
+transformations
+translate,
+s ale,
+and
+rotate
+the
+ ub
+e
+in
+to
+lo
+ ation
+within
+the
+s ene.
+In
+F
+ran,
+the
+follo
+wing
+program
+pla
+ys
+this
+animation:
+s ene
+::
+Transform3B
+->
+Transform3B
+->
+GeometryB
+s ene
+t1
+t2
+=
+ ube1
+`unionG`
+ ube2
+where
+ ube1
+=
+unitCube
+`transformG`
+t1
+ ube2
+=
+unitCube
+`transformG`
+t2
+Rendering
+this
+animation
+is
+a
+pro
+ ess
+of
+generating
+a
+video
+(i.e.
+image
+stream)
+that
+is
+a
+ omp
+osition
+of
+the
+videos
+of
+ea 
+h
+ ub
+e,
+ea 
+h
+of
+those
+in
+turn
+ onstru ted
+from
+the
+individual
+transformations
+t1
+and
+t2.
+In
+ omputer
+vision
+w
+e
+pro
+ ess
+the
+image
+stream
+to
+determine
+lo
+ ation
+and
+orien
+tation
+of
+the
+t
+w
+o
+ ub
+es,
+th
+us
+re o
+v
+ering
+the
+transformation
+parameters
+t1
+and
+t2.
+W
+e
+a  omplish
+this
+task
+b
+y
+using
+kno
+wledge
+of
+the
+s ene
+stru ture,
+as
+ aptured
+in
+a
+mo
+del,
+to
+ om
+bine
+visual
+tra 
+king
+primitiv
+es
+and
+motion
+ onstrain
+ts
+in
+to
+an
+\observ
+er."
+This
+observ
+er
+
+pro
+ esses
+the
+video
+input
+stream
+to
+determine
+the
+motion
+of
+the
+mo
+del.
+W
+e
+assume
+that
+the
+b
+eha
+vior
+of
+ob
+je ts
+in
+the
+video
+is
+someho
+w
+\smo
+oth":
+that
+is,
+ob
+je ts
+do
+not
+jump
+suddenly
+to
+dieren
+t
+lo
+ ations
+in
+the
+s ene.
+There
+are
+also
+a
+n
+um
+b
+er
+of
+signi an
+t
+dieren es
+b
+et
+w
+een
+vision
+and
+animation:
+{
+T
+ra 
+king
+is
+fundamen
+tally
+un ertain:
+a
+feature
+is
+re ognized
+with
+some
+measurable
+error.
+These
+error
+v
+alues
+ an
+b
+e
+used
+resolv
+e
+ oni ts
+b
+et
+w
+een
+tra 
+k
+ers:
+tra 
+k
+ers
+that
+express
+ ertain
+t
+y
+ an
+\n
+udge"
+other
+less
+ ertain
+tra 
+k
+ers
+to
+w
+ard
+their
+target.
+{
+EÆ ien
+t
+tra 
+k
+ers
+are
+fundamen
+tally
+history
+sensitiv
+e,
+ arrying
+information
+from
+frame
+to
+frame.
+Animators
+generally
+hide
+this
+sort
+of
+optimization
+from
+the
+user.
+{
+Animation
+builds
+a
+s ene
+\top
+do
+wn":
+ omplex
+ob
+je ts
+are
+de omp
+osed
+unam
+biguously
+in
+to
+simpler
+ob
+je ts.
+A
+tra 
+k
+er
+m
+ust
+pro
+ eed
+\b
+ottom
+up"
+from
+basi 
+features
+in
+to
+a
+more
+ omplex
+ob
+je t,
+a
+pro
+ ess
+whi 
+h
+is
+far
+more
+op
+en
+to
+am
+biguit
+y
+.
+The
+en
+tire
+XVision
+system
+ onsists
+of
+appro
+ximately
+27,000
+lines
+of
+C
++
++
+ o
+de.
+It
+in ludes
+generi 
+in
+terfa es
+to
+hardw
+are
+ omp
+onen
+ts
+(video
+sour es
+and
+displa
+ys),
+a
+large
+set
+of
+image
+pro
+ essing
+to
+ols,
+and
+a
+generi 
+notion
+of
+a
+\tra 
+k
+able
+feature."
+Using
+this
+as
+a
+basis,
+XVision
+also
+denes
+sev
+eral
+tr
+a kers:
+sp
+e ialized
+mo
+dules
+that
+re ognize
+and
+follo
+w
+sp
+e i 
+features
+in
+the
+video
+image.
+XVision
+in ludes
+tra 
+k
+ers
+for
+features
+su 
+h
+as
+edges,
+ orners,
+referen e
+images,
+and
+areas
+of
+kno
+wn
+ olor.
+These
+basi 
+tra 
+king
+algorithms
+w
+ere
+re-expressed
+in
+Hask
+ell
+using
+basi 
+C
++
++
+fun tions
+imp
+orted
+via
+GreenCard,
+a
+to
+ol
+for
+imp
+orting
+C
+ o
+de
+in
+to
+Hask
+ell.
+2.1
+Primitiv
+e
+T
+ra 
+k
+ers
+Primitiv
+e
+tra 
+k
+ers
+usually
+main
+tain
+an
+underlying
+state.
+This
+state
+denes
+the
+lo
+ ation
+of
+the
+feature
+as
+w
+ell
+as
+additional
+status
+information
+su 
+h
+as
+a
+ onden e
+measure.
+The
+form
+of
+the
+lo
+ ation
+is
+sp
+e i 
+to
+ea 
+h
+sort
+of
+tra 
+k
+er.
+F
+or
+a
+ olor
+blob
+it
+is
+the
+area
+and
+ en
+ter;
+for
+a
+line
+it
+is
+the
+t
+w
+o
+endp
+oin
+ts.
+Figure
+1
+illustrates
+this
+idea
+ on eptually
+for
+the
+sp
+e i 
+ ase
+of
+an
+SSD
+(Sum
+of
+Squared
+Dieren es)
+tra 
+king
+algorithm
+[2
+℄.
+This
+algorithm
+tra 
+ks
+a
+region
+b
+y
+attempting
+to
+ ompute
+an
+image
+motion
+and/or
+deformation
+to
+mat 
+h
+the
+ urren
+t
+app
+earan e
+of
+a
+target
+to
+a
+xed
+referen e.
+The
+steps
+in
+the
+algorithm
+are:
+1.
+A quire
+an
+image
+region
+from
+the
+video
+input
+using
+the
+most
+re en
+t
+estimate
+of
+target
+p
+osition
+and/or
+ onguration.
+In
+addition,
+rev
+erse
+transform
+(w
+arp)
+it.
+The
+a quired
+re-
+gion
+of
+in
+terest
+is
+generally
+m
+u 
+h
+smaller
+than
+the
+full
+video
+frame.
+Pixels
+are
+p
+ossibly
+in
+terp
+olated
+during
+w
+arping
+to
+a  oun
+t
+for
+rotation
+or
+stret 
+hing.
+2.
+Compute
+the
+dieren e
+b
+et
+w
+een
+this
+image
+and
+the
+referen e
+image
+(the
+target).
+3.
+Determine
+what
+p
+erturbation
+to
+the
+ urren
+t
+state
+parameters
+w
+ould
+ ause
+the
+(trans-
+formed)
+ urren
+t
+image
+to
+b
+est
+mat 
+h
+the
+referen e.
+4.
+Use
+this
+data
+to
+up
+date
+the
+running
+state.
+As
+this
+pro
+ ess
+requires
+only
+a
+small
+part
+of
+the
+original
+video
+frame
+it
+is
+v
+ery
+eÆ ien
+t
+ ompared
+to
+te 
+hniques
+that
+sear 
+h
+an
+en
+tire
+image.
+It
+also
+mak
+es
+use
+of
+the
+fa t
+that
+motion
+from
+frame
+to
+frame
+is
+small
+when
+ omputing
+the
+p
+erturbation
+to
+the
+ urren
+t
+state.
+As
+a
+ onsequen e,
+it
+requires
+that
+the
+target
+mo
+v
+e
+relativ
+ely
+ onsisten
+tly
+b
+et
+w
+een
+frames
+in
+the
+image
+stream:
+an
+abrupt
+mo
+v
+emen
+t
+ma
+y
+ ause
+the
+tra 
+k
+er
+to
+lose
+its
+target.
+In
+XVision,
+tra 
+k
+ers
+ an
+b
+e
+assem
+bled
+in
+to
+hier
+ar
+ hi 
+al
+ 
+onstr
+aint
+networks
+dened
+b
+y
+geometri 
+kno
+wledge
+of
+the
+ob
+je t
+b
+eing
+tra 
+k
+ed
+(the
+mo
+del).
+This
+kno
+wledge
+is
+t
+ypi ally
+a
+
+model
+inverse
+acquire
+∆position
+position
+-
+reference
+image
+∫
+image
+initial
+position
+Fig.
+1.
+Figure
+of
+XVision
+feedba 
+k
+lo
+op.
+relationship
+b
+et
+w
+een
+dieren
+t
+p
+oin
+ts
+or
+edges
+in
+the
+ob
+je t's
+image,
+su 
+h
+as
+the
+four
+ orners
+of
+a
+square.
+If
+one
+ orner
+is
+missing
+in
+the
+image
+(p
+erhaps
+due
+to
+o
+  lusion)
+then
+the
+p
+ositions
+of
+the
+other
+three
+dene
+the
+exp
+e ted
+lo
+ ation
+of
+the
+missing
+ orner.
+This
+allo
+ws
+a
+disorien
+ted
+tra 
+k
+er
+to
+resyn 
+hronize
+with
+its
+target.
+Although
+XVision
+in ludes
+ob
+je t-orien
+ted
+abstra tions
+for
+the
+ onstru tion
+of
+hierar 
+hi al
+ onstrain
+t
+net
+w
+orks,
+these
+abstra tions
+had
+pro
+v
+en
+diÆ ult
+to
+implemen
+t
+and
+limited
+in
+expressiv
+eness.
+In
+the
+remainder
+of
+the
+pap
+er
+w
+e
+des rib
+e
+a
+ri 
+h
+set
+of
+abstra tions
+for
+tra 
+k
+er
+ omp
+osition.
+3
+Abstra tions
+for
+Visual
+T
+ra 
+king
+A
+ amera
+ on
+v
+erts
+a
+ on
+tin
+uously
+ 
+hanging
+s ene
+in
+to
+a
+dis rete
+stream
+of
+images.
+In
+previous
+w
+ork
+w
+e
+ha
+v
+e
+dened
+tra 
+k
+ers
+in
+terms
+of
+standard
+str
+e
+am
+pr
+o
+ 
+essing
+ om
+binators
+[11
+℄.
+Here
+these
+ om
+binators
+are
+subsumed
+b
+y
+FRP
+.
+FRP
+supp
+orts
+in
+ter-op
+eration
+b
+et
+w
+een
+ on
+tin
+uous
+time
+systems
+and
+dis rete
+time
+(stream
+pro
+ essing)
+systems.
+This
+allo
+ws
+FVision
+to
+ om
+bine
+with
+animation
+systems
+su 
+h
+as
+F
+ran
+or
+rob
+oti s
+systems
+su 
+h
+as
+F
+rob[10
+℄.
+Before
+examining
+the
+ onstru tion
+of
+tra 
+k
+ers,
+w
+e
+start
+b
+y
+demonstrating
+the
+use
+of
+a
+tra 
+k
+er
+in
+ onjun tion
+with
+animation.
+This
+fun tion
+pro
+ esses
+a
+video
+stream,
+of
+t
+yp
+e
+Video
+ lk,
+and
+generates
+an
+animation
+in
+whi 
+h
+a
+red
+dot
+is
+dra
+wn
+o
+v
+er
+a
+tra 
+k
+ed
+image.
+The
+t
+yp
+e
+Video
+is
+dened
+th
+usly:
+type
+Video
+ lk
+=
+CEvent
+ lk
+Image
+The
+CEvent
+ lk
+a
+in
+FRP
+denotes
+a
+stream
+of
+v
+alues,
+ea 
+h
+of
+t
+yp
+e
+a,
+syn 
+hronized
+to
+ lo
+ 
+k
+ lk.
+This
+ lo
+ 
+k
+t
+yp
+e
+allo
+ws
+FVision
+to
+dete t
+unin
+ten
+tional
+ lo
+ 
+k
+mismat 
+hes.
+Sin e
+none
+of
+the
+ o
+de
+in
+this
+pap
+er
+is
+tied
+to
+a
+sp
+e i 
+ lo
+ 
+k
+the
+ lk
+argumen
+t
+to
+CEvent
+will
+alw
+a
+ys
+b
+e
+uninstan
+tiated.
+
+The
+user
+m
+ust
+rst
+dene
+the
+referen e
+image
+to
+b
+e
+tra 
+k
+ed
+b
+y
+using
+the
+mouse
+to
+sele t
+a
+re tangular
+area
+around
+the
+target
+in
+the
+video
+image.
+The
+re tangular
+area
+is
+mark
+ed
+b
+y
+pressing
+the
+mouse
+to
+indi ate
+the
+top-left
+ orner,
+then
+dragging
+and
+releasing
+the
+mouse
+at
+the
+b
+ottom-righ
+t
+ orner.
+As
+the
+mouse
+is
+b
+eing
+dragged,
+an
+animated
+re tangle
+is
+dra
+wn
+o
+v
+er
+the
+video
+image.
+On e
+the
+mouse
+is
+released,
+the
+re tangle
+is
+repla ed
+b
+y
+a
+red
+dot
+ en
+tered
+on
+the
+re tangle
+and
+an
+SSD
+tra 
+k
+er
+is
+ reated
+to
+mo
+v
+e
+the
+dot
+through
+su  essiv
+e
+frames.
+followMe
+::
+Video
+ lk
+->
+Pi tureB
+followMe
+video
+=
+videoB
+`untilB`
+(lbp
+`snapshot_`
+mouse)
+==>
+\ orner1
+->
+re tangle
+(lift0
+ orner1)
+mouse
+`over`
+videoB
+`untilB`
+((lbr
+`snapshot_`
+(pairB
+mouse
+videoB)
+==>
+\( orner2,
+image)
+->
+let
+tra ker
+=
+ssdTra ker
+(getImage
+image
+ orner1
+ orner2)
+mid
+=
+midPoint
+ orner1
+ orner2
+b
+=
+runTra kerB
+videoB
+mid
+mid
+tra ker
+in
+(redDot
+`transform2B`
+tra ker)
+`over`
+videoB
+))
+where
+videoB
+=
+stepper
+nullImage
+video
+--
+ onvert
+image
+stream
+to
+behavior
+redDot
+=
+...
+--
+draw
+a
+red
+dot
+re tangle
+ 1
+ 2
+=
+...
+--
+draw
+a
+re tangle
+The
+ab
+o
+v
+e
+ o
+de
+ an
+b
+e
+read:
+\Beha
+v
+e
+as
+the
+video
+input
+un
+til
+the
+left
+mouse
+button
+is
+pressed,
+at
+whi 
+h
+time
+a
+snapshot
+of
+the
+mouse
+p
+osition
+is
+tak
+en.
+Then
+dra
+w
+a
+re tangle
+whose
+top
+left-hand
+ orner
+is
+xed
+but
+whose
+b
+ottom
+righ
+t-hand
+ orner
+is
+whatev
+er
+the
+ urren
+t
+mouse
+p
+osition
+is.
+Do
+this
+un
+til
+the
+left
+mouse
+button
+is
+released,
+at
+whi 
+h
+p
+oin
+t
+a
+snapshot
+of
+b
+oth
+the
+mouse
+p
+osition
+and
+the
+video
+are
+tak
+en.
+A
+tra 
+k
+er
+is
+initialized
+with
+the
+midp
+oin
+t
+of
+the
+t
+w
+o
+ orners
+as
+the
+initial
+lo
+ ation
+and
+the
+snapshot
+image
+as
+the
+referen e.
+Use
+the
+output
+of
+the
+tra 
+k
+er
+to
+ on
+trol
+the
+p
+osition
+of
+a
+red
+dot
+dra
+wn
+o
+v
+er
+the
+video
+image."
+F
+or
+example,
+if
+y
+ou
+dra
+w
+a
+re tangle
+around
+a
+fa e
+the
+tra 
+k
+er
+ an
+the
+follo
+w
+this
+fa e
+as
+it
+mo
+v
+es
+around
+in
+the
+ amera's
+eld
+of
+view.
+This
+tra 
+k
+er
+is
+not
+robust:
+it
+ma
+y
+lose
+the
+fa e,
+at
+whi 
+h
+p
+oin
+t
+the
+red
+dot
+will
+ ease
+to
+mo
+v
+e
+meaningfully
+.
+F
+un tions
+su 
+h
+as
+untilB
+and
+snapshot_
+are
+part
+of
+FRP
+.
+By
+ on
+v
+en
+tion,
+t
+yp
+es
+and
+fun -
+tions
+suÆxed
+with
+\B"
+deal
+with
+b
+eha
+viors:
+ob
+je ts
+that
+v
+ary
+ on
+tin
+uously
+with
+time.
+T
+yp
+e
+synon
+yms
+are
+used
+to
+abbreviate
+Behavior
+Pi ture
+as
+Pi tureB.
+Some
+fun tions
+are
+im-
+p
+orted
+from
+XVision:
+the
+getImage
+fun tion
+extra ts
+a
+re tangular
+sub-image
+from
+the
+video
+stream.
+This
+image
+serv
+es
+as
+a
+referen e
+image
+for
+the
+SSD
+(Sum
+Squared
+Dieren e)
+tra 
+k
+er.
+On e
+the
+referen e
+image
+is
+a quired,
+the
+tra 
+k
+er
+(the
+ssdTra ker
+fun tion)
+denes
+a
+b
+eha
+vior
+that
+follo
+ws
+the
+lo
+ ation
+of
+the
+referen e
+image
+in
+the
+video
+stream.
+The
+runTra kerB
+fun tion
+starts
+the
+tra 
+k
+er,
+p
+oin
+ting
+it
+initially
+to
+the
+sele ted
+re tangle,
+dening
+the
+transformation
+used
+in
+the
+animation.
+3.1
+T
+yp
+es
+for
+T
+ra 
+king
+The
+goal
+of
+this
+resear 
+h
+is
+to
+dene
+tra 
+k
+ers
+in
+a
+ omp
+ositional
+st
+yle.
+F
+ollo
+wing
+the
+prin ipals
+of
+t
+yp
+e
+dire ted
+design,
+w
+e
+start
+with
+some
+t
+yp
+e
+denitions.
+A
+tra 
+k
+er
+is
+ omp
+osed
+of
+t
+w
+o
+parts:
+an
+observer
+whi 
+h
+a quires
+and
+normalizes
+some
+subse tion
+of
+the
+video
+image,
+and
+a
+stepp
+er
+whi 
+h
+examines
+this
+sub-image
+and
+ omputes
+the
+motion
+of
+the
+tra 
+k
+er.
+
+type
+Observer
+observation
+a
+=
+(a,
+Image)
+->
+observation
+type
+Stepper
+measure
+observation
+a
+=
+(a,
+observation)
+->
+measure
+a
+The
+observ
+er
+tak
+es
+the
+presen
+t
+lo
+ ation,
+a,
+of
+the
+tra 
+k
+er
+and
+the
+ urren
+t
+frame
+of
+video
+and
+returns
+an
+observ
+ation:
+usually
+one
+or
+more
+sub-images
+of
+the
+frame.
+The
+lo
+ ation
+ma
+y
+b
+e
+designated
+using
+a
+single
+p
+oin
+t
+(the
+Point2
+t
+yp
+e),
+as
+used
+in
+ olor
+blob
+tra 
+king,
+or
+p
+erhaps
+b
+y
+a
+p
+oin
+t,
+rotation,
+and
+s ale
+(represen
+ted
+b
+y
+the
+Transform2
+t
+yp
+e).
+Observ
+ers
+ma
+y
+also
+ 
+ho
+ose
+sample
+at
+lo
+w
+er
+resolutions,
+dropping
+ev
+ery
+other
+pixel
+for
+example.
+In
+an
+y
+ ase,
+the
+t
+yp
+e
+a
+is
+determined
+b
+y
+the
+parti ular
+observ
+er
+used.
+The
+stepp
+er
+adjusts
+the
+lo
+ ation
+of
+the
+tra 
+k
+ed
+feature
+based
+on
+the
+ urren
+t
+lo
+ ation
+and
+the
+observ
+ation
+returned
+b
+y
+the
+stepp
+er.
+The
+stepp
+er
+ma
+y
+also
+ ompute
+additional
+v
+alues
+that
+measure
+a  ura y
+or
+other
+prop
+erties
+of
+the
+tra 
+k
+er.
+W
+e
+ 
+ho
+ose
+to
+mak
+e
+the
+measure
+a
+t
+yp
+e
+ onstru tor,
+measure
+a,
+rather
+than
+a
+separate
+v
+alue,
+(measure,
+a),
+so
+as
+to
+use
+o
+v
+erloading
+to
+ om
+bine
+measured
+v
+alues.
+XVision
+denes
+a
+v
+ariet
+y
+of
+stepp
+ers,
+in luding
+the
+SSD
+stepp
+er,
+ olor
+blob
+stepp
+ers,
+edge
+dete tors,
+and
+motion
+dete tors.
+Measuremen
+t
+t
+yp
+es
+are
+dened
+to
+b
+e
+instan es
+of
+the
+Valued
+ lass.
+This
+extra ts
+the
+v
+alue
+from
+its
+ on
+taining
+measuremen
+t
+t
+yp
+e:
+ lass
+Valued
+ 
+where
+valueOf
+::
+ 
+a
+->
+a
+Measuremen
+t
+t
+yp
+es
+are
+also
+in
+the
+Fun tor
+ lass,
+allo
+wing
+mo
+di ation
+the
+ on
+tained
+v
+alue.
+The
+Residual
+t
+yp
+e
+used
+b
+y
+the
+SSD
+tra 
+k
+er
+in
+an
+example
+of
+a
+measuremen
+t:
+data
+Residual
+a
+=
+Residual
+{
+a
+::
+resValue,
+residual
+::
+Float
+}
+instan e
+Valued
+Residual
+where
+valueOf
+=
+resValue
+Com
+bining
+an
+observ
+er
+and
+a
+stepp
+er
+yields
+a
+tra 
+k
+er:
+a
+mapping
+from
+a
+video
+stream
+on
+to
+a
+stream
+of
+measured
+lo
+ ations.
+type
+Tra ker
+measure
+a
+=
+Stepper
+measure
+Image
+a
+Note
+that
+Tra ker
+is
+a
+renemen
+t
+of
+the
+Stepper
+t
+yp
+e.
+T
+ra 
+k
+ers
+are
+ onstru ted
+b
+y
+ om
+bining
+an
+observ
+er
+with
+a
+stepp
+er:
+mkTra ker
+::
+Observer
+observation
+a
+->
+Stepper
+measure
+observation
+a
+->
+Tra ker
+measure
+a
+mkTra ker
+o
+s
+=
+\(lo ,
+image)
+->
+let
+ob
+=
+o
+(lo ,
+image)
+in
+s
+(lo ,
+ob)
+3.2
+A
+Primitiv
+e
+T
+ra 
+k
+er
+W
+e
+ an
+no
+w
+assem
+ble
+a
+primitiv
+e
+FVision
+tra 
+k
+er,
+the
+SSD
+tra 
+k
+er.
+Giv
+en
+a
+referen e
+image,
+the
+observ
+er
+pulls
+in
+a
+similar
+sized
+image
+from
+the
+video
+sour e
+at
+the
+ urren
+t
+lo
+ ation.
+The
+stepp
+er
+then
+ ompares
+the
+image
+from
+the
+ urren
+t
+frame
+with
+the
+referen e,
+returning
+a
+new
+lo
+ ation
+and
+a
+residual.
+This
+parti ular
+tra 
+k
+er
+uses
+a
+v
+ery
+simple
+lo
+ ation:
+a
+2-D
+p
+oin
+t
+and
+an
+orien
+tation.
+The
+SSD
+observ
+er
+is
+an
+XVision
+primitiv
+e:
+grabTransform2
+::
+Size
+->
+Observer
+Image
+Transform2
+
+where
+Size
+is
+a
+t
+yp
+e
+dening
+the
+re tangular
+image
+size
+(in
+pixels)
+of
+the
+referen e
+image.
+The
+p
+osition
+and
+orien
+tation
+of
+the
+designated
+area,
+as
+dened
+in
+the
+Transform2,
+are
+used
+to
+in
+terp
+olate
+pixels
+from
+the
+video
+frame
+in
+to
+an
+image
+of
+the
+ orre t
+size.
+The
+other
+ omp
+onen
+t
+of
+SSD
+is
+the
+stepp
+er:
+a
+fun tion
+that
+ ompares
+a
+referen e
+image
+with
+the
+observ
+ed
+and
+determines
+the
+new
+lo
+ ation
+of
+the
+image.
+The
+t
+yp
+e
+of
+the
+stepp
+er
+is
+ssdStep
+::
+Image
+->
+Stepper
+Residual
+Image
+Transform2
+where
+Image
+argumen
+t
+is
+the
+referen e
+image.
+A
+detailed
+des ription
+of
+this
+parti ular
+stepp
+er
+is
+found
+in
+[11
+℄.
+No
+w
+for
+the
+full
+SSD
+tra 
+k
+er:
+ssdTra ker
+::
+Image
+->
+STra ker
+Residual
+Transform2
+ssdTra ker
+image
+=
+mkTra ker
+(grabTransform2
+(sizeOf
+image))
+(ssdStep
+image)
+Before
+w
+e
+ an
+use
+a
+tra 
+k
+er,
+w
+e
+need
+a
+fun tion
+that
+binds
+a
+tra 
+k
+er
+to
+a
+video
+sour e
+and
+initial
+lo
+ ation:
+runTra ker
+::
+Valued
+measure
+=>
+Video
+ lk
+->
+a
+->
+Tra ker
+measure
+a
+->
+CEvent
+ lk
+a
+runTra ker
+video
+a0
+tra ker
+=
+ma
+where
+lo ations
+=
+delay
+a0
+aStream
+ma
+=
+lift2
+(,)
+lo ations
+video
+==>
+tra ker
+aStream
+=
+ma
+==>
+valueOf
+The
+delay
+fun tion
+dela
+ys
+the
+v
+alues
+of
+an
+ev
+en
+t
+stream
+b
+y
+one
+ lo
+ 
+k
+ y le,
+returning
+an
+initial
+v
+alue,
+here
+a0,
+on
+the
+rst
+ lo
+ 
+k
+ti 
+k.
+W
+e
+ an
+also
+run
+a
+tra 
+k
+er
+to
+ reate
+a
+ on
+tin
+uous
+b
+eha
+vior,
+Behavior
+b.
+runTra kerB
+::
+Valued
+measure
+=>
+Video
+ lk
+->
+measure
+a
+->
+Tra ker
+measure
+a
+->
+CEvent
+ lk
+a
+runTra kerB
+video
+ma0
+trk
+=
+stepper
+ma0
+(runTra ker
+video
+(valueOf
+ma0)
+trk)
+In
+this
+fun tion,
+w
+e
+need
+a
+measured
+initial
+state
+rather
+than
+an
+unmeasured
+one
+sin e
+the
+initial
+v
+alue
+of
+the
+b
+eha
+vior
+is
+measured.
+The
+ lk
+in
+the
+t
+yp
+e
+of
+runTra ker
+is
+not
+of
+use
+in
+these
+small
+examples
+but
+is
+essen
+tial
+to
+the
+in
+tegrit
+y
+of
+m
+ulti-rate
+systems.
+F
+or
+example,
+ onsider
+an
+animation
+driv
+en
+b
+y
+t
+w
+o
+separate
+video
+sour es:
+s ene
+::
+Video
+ lk1
+->
+Video
+ lk2
+->
+Pi tureB
+The
+t
+yp
+e
+system
+ensures
+that
+the
+syn 
+hronous
+parts
+of
+the
+system,
+tra 
+k
+ers
+ lo
+ 
+k
+ed
+b
+y
+either
+of
+the
+video
+sour es,
+are
+used
+ onsisten
+tly:
+no
+syn 
+hronous
+op
+eration
+ma
+y
+ om
+bine
+streams
+with
+dieren
+t
+ lo
+ 
+k
+rates.
+By
+ on
+v
+erting
+the
+ lo
+ 
+k
+ed
+streams
+to
+b
+eha
+viors,
+w
+e
+ an
+use
+b
+oth
+video
+sour es
+to
+driv
+e
+the
+resulting
+animation.
+3.3
+More
+Complex
+T
+ra 
+k
+ers
+Consider
+an
+animator
+that
+swit 
+hes
+b
+et
+w
+een
+t
+w
+o
+dieren
+t
+images:
+s ene
+::
+Transform2B
+->
+BoolB
+->
+Pi tureB
+s ene
+pla e
+whi h
+=
+transform2
+pla e
+(ifB
+whi h
+pi ture1
+pi ture2)
+
+A
+tra 
+k
+er
+for
+this
+s ene
+m
+ust
+re o
+v
+er
+b
+oth
+the
+lo
+ ation
+of
+the
+pi ture,
+pla e
+(a
+2-D
+transfor-
+mation)
+and
+the
+b
+o
+olean
+that
+sele ts
+the
+pi ture,
+whi h.
+Previously
+,
+w
+e
+in
+v
+erted
+the
+transfor-
+mation
+for
+a
+xed
+pi ture.
+Here
+w
+e
+m
+ust
+also
+in
+v
+ert
+the
+ifB
+fun tion
+to
+determine
+the
+state
+of
+the
+b
+o
+olean.
+W
+e
+also
+w
+e
+wish
+to
+retain
+the
+same
+ omp
+ositional
+program
+st
+yle
+used
+b
+y
+the
+animator:
+our
+tra 
+king
+fun tion
+should
+ha
+v
+e
+a
+stru ture
+similar
+to
+this
+s ene
+fun tion.
+The
+ omp
+osite
+tra 
+k
+er
+m
+ust
+w
+at 
+h
+for
+b
+oth
+images,
+pi ture1
+and
+pi ture2
+at
+all
+times.
+T
+o
+determine
+whi 
+h
+image
+is
+presen
+t,
+w
+e
+examine
+the
+residual
+pro
+du ed
+b
+y
+SSD,
+a
+measure
+of
+the
+o
+v
+erall
+dieren e
+b
+et
+w
+een
+the
+tra 
+k
+ed
+image
+and
+the
+referen e
+image.
+W
+e
+formalize
+this
+notion
+of
+\b
+est
+mat 
+h"
+using
+the
+Ord
+ lass:
+instan e
+Ord
+(Residual
+a)
+where
+r1
+>
+r2
+=
+residual
+r1
+<
+residual
+r2
+This
+states
+that
+smaller
+residuals
+are
+b
+etter
+than
+large
+ones.
+The
+bestOf
+fun tion
+ om
+bines
+a
+pair
+of
+tra 
+k
+ers
+in
+to
+a
+tra 
+k
+er
+that
+follo
+ws
+whi 
+hev
+er
+pro-
+du es
+a
+b
+etter
+measure.
+The
+tra 
+k
+ers
+share
+a
+ ommon
+lo
+ ation:
+in
+the
+original
+s ene
+des ription,
+there
+is
+only
+one
+transformation
+ev
+en
+though
+there
+are
+t
+w
+o
+pi tures.
+The
+resulting
+v
+alues
+are
+augmen
+ted
+b
+y
+a
+b
+o
+olean
+indi ating
+whi 
+h
+of
+the
+t
+w
+o
+underlying
+tra 
+k
+ers
+is
+b
+est
+ orrelated
+with
+the
+presen
+t
+image.
+This
+v
+alue
+ orresp
+onds
+to
+the
+whi h
+of
+the
+animator.
+The
+pro
+je tion
+of
+the
+measured
+v
+alues
+on
+to
+the
+tra 
+k
+er
+output
+t
+yp
+e
+are
+ignored:
+this
+ om
+bines
+the
+in
+ternal
+tra 
+k
+er
+states
+instead
+of
+the
+observ
+ed
+v
+alues
+seen
+from
+outside.
+bestOf
+::
+(Fun tor
+measure,
+Ord
+measure)
+=>
+Tra ker
+measure
+a
+->
+Tra ker
+measure
+a
+->
+Tra ker
+measure
+(a,
+Bool)
+bestOf
+t1
+t2
+=
+\((lo ,
+_),
+v)
+->
+max
+(fmap
+(\x
+->
+(x,
+True))
+(t1
+(lo ,
+v)))
+(fmap
+(\x
+->
+(x,
+False))
+(t2
+(lo ,
+v)))
+The
+stru ture
+of
+bestOf
+is
+simple:
+the
+lo
+ ation
+(min
+us
+the
+additional
+b
+o
+olean)
+is
+passed
+to
+b
+oth
+tra 
+k
+er
+fun tions.
+The
+results
+are
+ om
+bined
+using
+max.
+The
+fmap
+fun tions
+are
+used
+to
+tag
+the
+lo
+ ations,
+exp
+osing
+whi 
+h
+of
+the
+t
+w
+o
+images
+is
+presen
+tly
+on
+target.
+This
+same
+ o
+de
+ an
+b
+e
+used
+on
+stepp
+ers
+as
+w
+ell
+as
+tra 
+k
+ers;
+only
+the
+signature
+restri ts
+bestOf
+to
+use
+tra 
+k
+ers.
+This
+signature
+is
+also
+v
+alid:
+bestOf
+::
+(Fun tor
+measure,
+Ord
+measure)
+=>
+Stepper
+measure
+observation
+a
+->
+Stepper
+measure
+observation
+a
+->
+Stepper
+measure
+observation
+(a,
+Bool)
+Th
+us
+stepp
+ers
+are
+ omp
+osable
+in
+the
+same
+manner
+as
+tra 
+k
+ers.
+This
+is
+quite
+useful:
+b
+y
+ om-
+p
+osing
+stepp
+ers
+rather
+than
+tra 
+k
+ers
+w
+e
+p
+erform
+one
+observ
+ation
+instead
+of
+t
+w
+o.
+Th
+us
+the
+user
+ an
+dene
+a
+more
+eÆ ien
+t
+tra 
+k
+er
+when
+ om
+bining
+tra 
+k
+ers
+with
+a
+ ommon
+observ
+ation.
+Higher-order
+fun tions
+are
+a
+natural
+w
+a
+y
+to
+express
+this
+sort
+of
+abstra tion
+in
+FVision.
+In
+C
++
++
+this
+sort
+of
+abstra tion
+is
+more
+ um
+b
+ersome:
+ losures
+(used
+to
+hold
+partially
+applied
+fun tions)
+m
+ust
+b
+e
+dened
+and
+built
+man
+ually
+.
+3.4
+Adding
+Predi tion
+W
+e
+ma
+y
+to
+impro
+v
+e
+tra 
+king
+a  ura y
+b
+y
+in orp
+orating
+b
+etter
+lo
+ ation
+predi tion
+in
+to
+the
+system.
+When
+tra 
+king
+a
+mo
+ving
+ob
+je t
+w
+e
+ an
+use
+a
+linear
+appro
+ximation
+of
+motion
+to
+more
+a  urately
+predi t
+ob
+je t
+p
+osition
+in
+the
+next
+frame.
+A
+predi tion
+fun tion
+has
+this
+general
+form:
+
+type
+Predi tor
+a
+=
+Behavior
+(Time
+->
+a)
+That
+is,
+at
+a
+time
+t
+the
+predi tor
+denes
+a
+fun tion
+on
+times
+greater
+than
+t
+based
+on
+observ
+ations
+o
+  urring
+b
+efore
+t.
+Adding
+a
+predi tor
+to
+runTra ker
+is
+simple:
+runTra kerPred
+::
+Valued
+measure
+=>
+Video
+ lk
+->
+Tra ker
+measure
+a
+->
+Predi tor
+a
+->
+CEvent
+ lk
+a
+runTra kerPred
+video
+tra ker
+p
+=
+withTimeE
+video
+`snapshot`
+p
+==>
+\((v,t),
+predi tor)
+->
+tra ker
+(predi tor
+t,
+v)
+The
+FRP
+primitiv
+e
+withTimeE
+adds
+an
+expli it
+time
+to
+ea 
+h
+frame
+of
+the
+video.
+Then
+snapshot,
+another
+FRP
+primitiv
+e,
+samples
+the
+predi tor
+at
+the
+ urren
+t
+time
+and
+adds
+sampled
+v
+alues
+of
+the
+predi tion
+fun tion
+to
+the
+stream.
+This
+is
+quite
+dieren
+t
+from
+runTra ker;
+there
+seems
+to
+b
+e
+no
+ onne tion
+from
+output
+of
+the
+tra 
+k
+er
+ba 
+k
+to
+the
+input
+for
+the
+next
+step.
+The
+feedba 
+k
+lo
+op
+is
+no
+w
+outside
+the
+tra 
+k
+er,
+expressed
+b
+y
+the
+predi tor.
+Using
+predi tion,
+a
+tra 
+king
+system
+lo
+oks
+lik
+e
+this:
+followImage
+::
+Video
+ lk
+->
+Image
+->
+Point2
+->
+CEvent
+ lk
+Point2
+followImage
+video
+i
+p0
+=
+let
+ssd
+=
+ssdTra ker
+i
+p
+=
+interp2
+p0
+positions
+positions
+=
+runTra kerPred
+video
+p
+ssd
+interp2
+::
+Point2
+->
+CEvent
+ lk
+Point2
+->
+Predi tor
+Point2
+The
+interp2
+fun tion
+implemen
+ts
+simple
+linear
+predi tion.
+The
+rst
+argumen
+t
+is
+the
+initial
+predi tion
+seen
+b
+efore
+the
+initial
+in
+terp
+olation
+p
+oin
+t
+arriv
+es.
+This
+initial
+v
+alue
+allo
+ws
+the
+p0
+passed
+to
+interp2
+to
+serv
+e
+as
+the
+initial
+observ
+ed
+lo
+ ation.
+4
+Generalized
+Comp
+osite
+T
+ra 
+k
+ers
+W
+e
+ha
+v
+e
+already
+demonstrated
+one
+w
+a
+y
+to
+ omp
+ose
+tra 
+k
+ers:
+bestOf.
+Here,
+w
+e
+explore
+a
+n
+um
+b
+er
+of
+more
+general
+ omp
+ositions.
+4.1
+T
+ra 
+k
+ers
+in
+P
+arallel
+An
+ob
+je t
+in
+an
+animation
+ma
+y
+ on
+tain
+man
+y
+tra 
+k
+able
+features.
+These
+features
+do
+not
+mo
+v
+e
+indep
+enden
+tly:
+their
+lo
+ ations
+are
+related
+to
+ea 
+h
+other
+in
+some
+w
+a
+y
+.
+Consider
+the
+follo
+wing
+fun tion
+for
+animating
+a
+square:
+s ene
+::
+Transform2B
+->
+Pi tureB
+s ene
+t
+=
+transform2
+t
+(polygon
+[(0,0),
+(0,1),
+(1,1),
+(1,0)℄)
+In
+the
+resulting
+animation,
+tra 
+k
+ers
+ an
+dis ern
+four
+dieren
+t
+line
+segmen
+ts
+-
+one
+for
+ea 
+h
+edge
+of
+the
+square.
+The
+p
+ositions
+of
+these
+line
+segmen
+ts
+are
+somewhat
+ orrelated:
+opp
+osite
+edges
+remain
+in
+parallel
+after
+transformation.
+Th
+us
+w
+e
+ha
+v
+e
+a
+lev
+el
+of
+redundan y
+in
+the
+tra 
+k
+able
+features.
+Our
+goal
+is
+to
+exploit
+this
+redundan y
+to
+mak
+e
+our
+tra 
+king
+system
+more
+robust
+b
+y
+utilizing
+relationships
+among
+tra 
+k
+ed
+ob
+je ts.
+
+A
+ omp
+osite
+tra 
+k
+er
+ om
+bines
+tra 
+k
+ers
+for
+individual
+ob
+je t
+features
+in
+to
+a
+tra 
+k
+er
+for
+the
+o
+v
+erall
+ob
+je t.
+The
+relationship
+b
+et
+w
+een
+the
+ob
+je t
+and
+its
+features
+is
+represen
+ted
+using
+a
+pair
+of
+fun tions:
+a
+pr
+oje
+ tion
+and
+an
+emb
+e
+dding.
+These
+fun tions
+map
+b
+et
+w
+een
+the
+mo
+del
+state
+(parameters
+dening
+the
+o
+v
+erall
+ob
+je t)
+and
+the
+states
+of
+the
+ omp
+onen
+t
+tra 
+k
+ers.
+The
+pro
+je tion
+fun tion
+maps
+a
+mo
+del
+state
+on
+to
+a
+set
+of
+ omp
+onen
+t
+states
+and
+the
+em
+b
+edding
+fun tion
+ om
+bines
+the
+ omp
+onen
+t
+states
+in
+to
+a
+mo
+del
+state.
+This
+fun tion
+pair
+is
+denoted
+b
+y
+the
+follo
+wing
+t
+yp
+e:
+type
+EPair
+a
+b
+=
+(a
+->
+b,
+b
+->
+a)
+W
+e
+no
+w
+build
+a
+ omp
+osite
+tra 
+k
+er
+that
+ om
+bines
+the
+states
+of
+t
+w
+o
+ omp
+onen
+t
+tra 
+k
+ers.
+In
+this
+example,
+w
+e
+dene
+a
+ orner
+tra 
+k
+er
+using
+t
+w
+o
+ omp
+onen
+t
+edge
+tra 
+k
+ers.
+Edge
+tra 
+k
+ers
+are
+implemen
+ted
+using
+the
+follo
+wing
+XVision
+stepp
+er:
+edgeStepper
+::
+Stepper
+Sharpness
+Image
+LineSeg
+The
+lo
+ ation
+main
+tained
+b
+y
+the
+tra 
+k
+er
+is
+a
+line
+segmen
+t,
+denoted
+b
+y
+the
+LineSeg
+t
+yp
+e.
+This
+tra 
+k
+er
+observ
+es
+an
+Image
+and
+measures
+the
+qualit
+y
+of
+tra 
+king
+with
+the
+Sharpness
+t
+yp
+e.
+This
+Sharpness
+t
+yp
+e
+has
+the
+same
+stru ture
+as
+the
+Residual
+t
+yp
+e
+but
+is
+mathemati ally
+distin t.
+T
+o
+ om
+bine
+t
+w
+o
+line
+segmen
+ts
+in
+to
+a
+ orner,
+w
+e
+nd
+the
+in
+terse tion
+of
+the
+underlying
+lines
+(p
+ossibly
+outside
+the
+line
+segmen
+ts)
+and
+then
+\n
+udge"
+the
+line
+segmen
+t
+to
+this
+p
+oin
+t.
+This
+is
+ ru ial
+sin e
+the
+edge
+tra 
+k
+ers
+tend
+to
+ reep
+a
+w
+a
+y
+from
+the
+ orner.
+The
+underlying
+geometri 
+t
+yp
+es
+are
+as
+follo
+ws:
+type
+LineSeg
+=
+(Point2,
+Ve tor2)
+type
+Corner
+=
+(Point2,
+Ve tor2,
+Ve tor2)
+W
+e
+for e
+the
+length
+of
+the
+v
+e tor
+dening
+a
+line
+segmen
+t
+to
+remain
+ onstan
+t
+during
+tra 
+king,
+allo
+wing
+the
+use
+of
+a
+xed
+size
+windo
+w
+on
+the
+underlying
+video
+stream.
+The
+pro
+je tion
+and
+em
+b
+edding
+fun tions
+are
+th
+us:
+ ornerToSegs
+::
+Corner
+->
+(LineSeg,
+LineSeg)
+ ornerToSegs
+( orner,
+v1,
+v2)
+=
+(( orner,
+v1),
+( orner,
+v2))
+segsToCorner
+::
+(LineSeg,
+LineSeg)
+->
+Corner
+segsToCorner
+(seg1 (_,v1),
+seg2 (,v2))
+=
+(segInterse t
+seg1
+seg2,
+v1,
+v2)
+Next
+w
+e
+need
+a
+fun tion
+to
+ om
+bine
+t
+w
+o
+tra 
+k
+ers
+using
+a
+pro
+je tion
+/
+em
+b
+edding
+pair.
+join2
+::
+(Joinable
+measure,
+Fun tor
+Measure)
+=>
+Tra ker
+measure
+a
+->
+Tra ker
+measure
+b
+->
+EPair
+(a,b)
+ 
+->
+Tra ker
+measure
+ 
+join2
+t1
+t2
+(fromTup,
+toTup)
+=
+\( ,
+v)
+->
+let
+(a,b)
+=
+toTup
+ 
+ma
+=
+t1
+(a,v)
+mb
+=
+t2
+(b,v)
+in
+fmap
+fromTup
+(joinTup2
+(ma,
+mb))
+The
+stru ture
+of
+this
+fun tion
+is
+the
+same
+as
+the
+bestOf
+fun tion
+dened
+earlier.
+There
+is
+a
+signi an
+t
+addition
+though:
+the
+t
+yp
+e
+ lass
+Joinable.
+Here
+w
+e
+ reate
+a
+measured
+ob
+je t
+from
+more
+than
+one
+measured
+sub-ob
+je ts.
+Th
+us
+w
+e
+m
+ust
+ om
+bine
+the
+measuremen
+ts
+of
+the
+sub-ob
+je ts
+to
+pro
+du e
+an
+o
+v
+erall
+measuremen
+t.
+The
+Joinable
+ lass
+ aptures
+this
+idea:
+ lass
+Joinable
+l
+where
+joinTup2
+::
+(l
+a,l
+b)
+->
+l
+(a,
+b)
+joinTup3
+::
+(l
+a,l
+b,l
+ )
+->
+l
+(a,
+b,
+ )
+--
+and
+so
+on
+instan e
+Joinable
+Sharpness
+where
+...
+
+The
+joinTup2
+fun tion
+joins
+t
+w
+o
+measured
+v
+alues
+in
+to
+a
+single
+one,
+ om
+bining
+the
+measure-
+men
+ts
+in
+some
+appropriate
+w
+a
+y
+.
+Joining
+measuremen
+ts
+in
+a
+systemati 
+manner
+is
+diÆ ult;
+w
+e
+will
+a
+v
+oid
+addressing
+this
+problem
+and
+omit
+instan es
+of
+Joinable.
+Another
+w
+a
+y
+to
+implemen
+t
+joining
+is
+to
+allo
+w
+the
+em
+b
+edding
+fun tion
+to
+see
+the
+underlying
+measuremen
+ts
+and
+return
+a
+p
+oten
+tially
+dieren
+t
+sort
+of
+measuremen
+t:
+join2m
+::
+Tra ker
+measure
+a
+->
+Tra ker
+measure
+b
+->
+((measure
+a,
+measure
+b)
+->
+measure2
+ ,
+ 
+->
+(a,
+b))
+->
+Tra ker
+measure2
+ 
+This
+ an
+b
+e
+further
+generalized
+to
+allo
+w
+all
+of
+the
+ omp
+onen
+t
+tra 
+k
+ers
+to
+use
+dieren
+t
+mea-
+suremen
+ts.
+Ho
+w
+ev
+er,
+in
+most
+ ases
+w
+e
+ an
+hide
+the
+details
+of
+joining
+measured
+v
+alues
+within
+a
+t
+yp
+e
+ lass
+and
+spare
+the
+user
+this
+extra
+ omplexit
+y
+.
+No
+w
+for
+the
+ orner
+tra 
+k
+er:
+tra kCorner
+::
+Tra ker
+Sharpness
+LineSeg
+->
+Tra ker
+Sharpness
+LineSeg
+->
+Tra ker
+Sharpness
+Corner
+tra kCorner
+l1
+l2
+=
+join2
+l1
+l2
+(segsToCorner,
+ ornerToSegs)
+The
+join2
+fun tion
+is
+part
+of
+a
+family
+of
+joining
+fun tions,
+ea 
+h
+in
+tegrating
+some
+sp
+e i 
+n
+um
+b
+er
+of
+underlying
+tra 
+k
+ers.
+The
+ orner
+tra 
+k
+er
+in orp
+orates
+\ rosstalk"
+b
+et
+w
+een
+the
+states
+of
+t
+w
+o
+tra 
+k
+ers
+but
+do
+es
+not
+ha
+v
+e
+to
+deal
+with
+redundan
+t
+information.
+W
+e
+no
+w
+return
+to
+tra 
+king
+a
+transformed
+square.
+Giv
+en
+four
+of
+these
+ orner
+tra 
+k
+ers,
+w
+e
+no
+w
+ omp
+ose
+them
+in
+to
+a
+square
+tra 
+k
+er.
+The
+underlying
+datat
+yp
+e
+for
+a
+square
+is
+similar
+to
+the
+ orner:
+type
+Square
+=
+(Point2,
+Point2,
+Point2)
+W
+e
+need
+sp
+e ify
+only
+three
+p
+oin
+ts;
+the
+fourth
+is
+fun tionally
+dep
+enden
+t
+on
+the
+other
+three.
+This
+t
+yp
+e
+denes
+the
+image
+of
+a
+square
+under
+aÆne
+transformation:
+from
+this
+image
+w
+e
+ an
+re onstru t
+the
+transformation
+(lo
+ ation,
+rotation,
+s aling,
+and
+shear).
+Our
+problem
+no
+w
+is
+to
+map
+four
+tra 
+k
+ed
+ orners
+on
+to
+the
+three
+p
+oin
+ts
+dening
+the
+Square
+t
+yp
+e.
+There
+are
+man
+y
+p
+ossibilities:
+for
+example,
+w
+e
+ ould
+thro
+w
+out
+the
+p
+oin
+t
+whose
+edges
+(the
+t
+w
+o
+v
+e tors
+asso
+ iated
+with
+the
+ orner)
+p
+oin
+t
+the
+least
+to
+w
+ards
+the
+other
+ orners,
+probably
+indi ating
+that
+the
+ orner
+tra 
+k
+er
+is
+lost.
+Here,
+w
+e
+presen
+t
+a
+strategy
+based
+on
+the
+Sharpness
+measure
+ oming
+from
+the
+underlying
+tra 
+k
+ers.
+The
+only
+signi an
+t
+dieren e
+b
+et
+w
+een
+the
+previous
+example
+and
+this
+one
+is
+in
+the
+em-
+b
+edding
+fun tion.
+W
+e
+need
+to
+ om
+bine
+measured
+v
+alues
+in
+the
+em
+b
+edding;
+th
+us
+the
+tra 
+k
+er
+is
+dened
+using
+join4m.
+First,
+w
+e
+need
+to
+lift
+a
+fun tion
+in
+to
+the
+domain
+of
+measured
+v
+alues.
+Using
+the
+Joinable
+ lass
+w
+e
+dene
+the
+follo
+wing:
+jLift3
+::
+Joinable
+m
+=>
+(a
+->
+b
+->
+ 
+->
+d)
+->
+(m
+a
+->
+m
+b
+->
+m
+ 
+->
+m
+d)
+jLift3
+f
+=
+\x
+y
+z
+->
+let
+t
+=
+joinTup3
+x
+y
+z
+in
+fmap
+(\(x',y',z')
+->
+f
+x'
+y'
+z')
+t
+Using
+this,
+w
+e
+build
+a
+fun tion
+that
+generates
+a
+measured
+square
+from
+three
+measured
+p
+oin
+ts:
+mkSquare
+::
+Sharpness
+Point2
+->
+Sharpness
+Point2
+->
+Sharpness
+Point2)
+->
+Sharpness
+Square
+mkSquare
+=
+jLift3
+(\x
+y
+z
+->
+(x,y,z))
+No
+w
+w
+e
+generate
+all
+p
+ossible
+squares
+dened
+b
+y
+the
+ orners,
+ea 
+h
+using
+three
+of
+the
+four
+edge
+p
+oin
+ts,
+and
+ 
+ho
+ose
+the
+one
+with
+the
+b
+est
+Sharpness
+measure
+using
+max:
+
+bestSquare
+::
+(Sharpness
+Point2,
+Sharpness
+Point2,
+Sharpness
+Point2,
+Sharpness
+Point2)
+->
+Sharpness
+Square
+bestSquare
+(v1,
+v2,
+v3,
+v4)
+=
+mkSquare
+v1
+v2
+v3
+`max`
+mkSquare
+v1
+v2
+v4
+`max`
+mkSquare
+v1
+v3
+v4
+`max`
+mkSquare
+v2
+v3
+v4
+In
+summary
+,
+the
+family
+of
+join
+fun tions
+ apture
+the
+basi 
+stru ture
+of
+the
+parallel
+tra 
+k
+er
+ omp
+osition.
+While
+this
+strategy
+o
+  asionally
+requires
+somewhat
+ omplex
+em
+b
+edding
+fun tions
+this
+is
+exa tly
+where
+the
+underlying
+domain
+is
+also
+ omplex.
+Also,
+w
+e
+ an
+use
+o
+v
+erloading
+to
+express
+simple
+em
+b
+edding
+strategies
+in
+a
+ on ise
+and
+readable
+w
+a
+y
+.
+4.2
+T
+ra 
+k
+ers
+in
+Series
+Another
+basi 
+strategy
+for
+ om
+bining
+tra 
+k
+ers
+is
+ om
+bine
+slo
+w
+but
+robust
+\wide
+eld"
+tra 
+k
+ers
+with
+fast
+but
+fragile
+\narro
+w-eld"
+tra 
+k
+ers
+to
+yield
+an
+eÆ ien
+t
+robust
+tra 
+king
+net
+w
+ork.
+The
+stru ture
+of
+this
+t
+yp
+e
+of
+tra 
+k
+er
+do
+es
+not
+ orresp
+ond
+to
+an
+animator
+sin e
+this
+deals
+with
+p
+erforman e
+rather
+than
+expressiv
+eness.
+Swit 
+hing
+b
+et
+w
+een
+dieren
+t
+tra 
+k
+ers
+is
+go
+v
+erned
+b
+y
+measures
+that
+determine
+whether
+the
+tra 
+k
+er
+is
+\on
+feature"
+or
+not.
+Consider
+the
+follo
+wing
+three
+tra 
+k
+ers:
+{
+A
+motion
+dete tor
+that
+lo
+ ates
+areas
+of
+motion
+in
+the
+full
+frame.
+{
+A
+ olor
+blob
+tra 
+k
+er
+that
+follo
+ws
+regions
+of
+similarly
+ olored
+pixels.
+{
+A
+SSD
+tra 
+k
+er
+targeted
+at
+a
+sp
+e i 
+image.
+Our
+goal
+is
+to
+ om
+bine
+these
+tra 
+k
+ers
+to
+follo
+w
+a
+sp
+e i 
+fa e
+with
+an
+unkno
+wn
+initial
+lo
+ ation.
+The
+motion
+dete tor
+nds
+an
+area
+of
+mo
+v
+emen
+t.
+In
+this
+area,
+the
+blob
+tra 
+k
+er
+nds
+a
+group
+of
+esh- olored
+pixels.
+Finally
+,
+this
+blob
+is
+mat 
+hed
+against
+the
+referen e
+image.
+Ea 
+h
+of
+these
+tra 
+k
+ers
+suppresses
+the
+one
+immediately
+pro
+ eeding
+it:
+if
+the
+SSD
+tra 
+k
+er
+is
+\on
+feature"
+there
+is
+no
+need
+for
+the
+other
+tra 
+k
+ers
+to
+run.
+The
+t
+yp
+e
+signatures
+of
+these
+tra 
+k
+ers
+are
+relativ
+ely
+simple:
+motionDete t
+::
+Tra ker
+SizeAndPla e
+()
+blob
+::
+Color
+->
+Tra ker
+SizedAndOriented
+Point2
+ssd
+::
+Image
+->
+Tra ker
+Residual
+Transform2
+The
+motionDete t
+tra 
+k
+er
+is
+an
+example
+of
+a
+stateless
+tra 
+k
+er.
+That
+is,
+it
+do
+es
+not
+ arry
+information
+from
+frame
+to
+frame.
+Instead,
+it
+lo
+oks
+at
+the
+en
+tire
+frame
+(a tually
+a
+sparse
+ o
+v
+ering
+of
+the
+en
+tire
+frame)
+at
+ea 
+h
+time
+step.
+Sin e
+there
+is
+no
+lo
+ ation
+to
+feed
+to
+the
+next
+step,
+all
+of
+the
+information
+ oming
+out
+of
+motionDete t
+is
+in
+the
+measure.
+F
+or
+the
+blob
+tra 
+k
+er
+w
+e
+get
+b
+oth
+a
+size
+and
+an
+orien
+tation,
+the
+axis
+that
+minimizes
+distan e
+to
+the
+p
+oin
+ts.
+T
+o
+ omp
+ose
+tra 
+k
+ers
+in
+series,
+w
+e
+use
+a
+pair
+of
+state
+pro
+je tion
+fun tions.
+This
+is
+similar
+to
+the
+em
+b
+edding
+pairs
+used
+earlier
+ex ept
+that
+there
+is
+an
+extra
+Maybe
+in
+the
+t
+yp
+es:
+type
+SProje tion
+m1
+a1
+m2
+a2
+=
+(m1
+a1
+->
+Maybe
+s2,
+m2
+a2
+->
+Maybe
+s1)
+These
+fun tions
+lead
+up
+and
+do
+wn
+a
+ladder
+of
+tra 
+k
+ers.
+A
+t
+ev
+ery
+step,
+if
+in
+the
+lo
+w
+er
+state
+w
+e
+go
+\up"
+if
+the
+ urren
+t
+tra 
+k
+er
+ an
+pro
+du e
+an
+a  eptable
+state
+for
+the
+next
+higher
+tra 
+k
+er.
+If
+w
+e
+are
+in
+the
+higher
+state,
+w
+e
+drop
+do
+wn
+if
+the
+ urren
+t
+tra 
+k
+er
+is
+not
+in
+a
+suitable
+situation.
+The
+tra 
+k
+er
+t
+yp
+es
+ree t
+the
+union
+of
+the
+underlying
+tra 
+k
+er
+set.
+T
+o
+handle
+measures,
+w
+e
+need
+a
+higher
+order
+v
+ersion
+of
+Either:
+
+data
+EitherT
+t1
+t2
+a
+=
+LeftT
+(t1
+a)
+|
+RightT
+(t2
+a)
+instan e
+(Valued
+t1,
+Valued
+t2)
+=>
+Valued
+(EitherT
+t1
+t2)
+where
+valueOf
+(LeftT
+x)
+=
+valueOf
+x
+valueOf
+(RightT
+x)
+=
+valueOf
+x
+No
+w
+w
+e
+ om
+bine
+t
+w
+o
+tra 
+k
+ers
+in
+series:
+tower
+::
+Tra ker
+m1
+a1
+->
+Tra ker
+m2
+a2
+->
+SProje tion
+m1
+a1
+m2
+a2
+->
+Tra ker
+(EitherT
+m1
+m2)
+(Either
+a1
+a2)
+tower
+low
+high
+(up,
+down)
+=
+\(a,
+v)
+->
+ ase
+a
+of
+Left
+a1
+->
+let
+ma1
+=
+low
+(a1,
+v)
+in
+ ase
+up
+ma1
+of
+Nothing
+->
+LeftT
+(fmap
+Left
+ma1)
+Just
+a2
+->
+let
+ma2
+=
+high
+(a2,
+v)
+in
+ ase
+down
+ma2
+of
+Nothing
+->
+RightT
+(fmap
+Right
+ma2)
+Just
+_
+->
+LeftT
+(fmap
+Left
+ma1)
+Right
+a2
+->
+let
+ma2
+=
+high
+(a2,
+v)
+in
+ ase
+down
+ma2
+of
+Nothing
+->
+RightT
+(fmap
+Right
+ma2)
+Just
+a1
+->
+LeftT
+(fmap
+Left
+(low
+ma1))
+This
+ alls
+ea 
+h
+of
+the
+sub-tra 
+k
+ers
+no
+more
+than
+on e
+p
+er
+time
+step.
+The
+in
+v
+arian
+ts
+here
+are
+that
+w
+e
+alw
+a
+ys
+attempt
+to
+ lim
+b
+higher
+if
+in
+the
+lo
+w
+er
+state
+and
+that
+w
+e
+nev
+er
+return
+a
+v
+alue
+in
+the
+higher
+state
+if
+the
+down
+fun tion
+reje ts
+it.
+Before
+using
+the
+tower
+fun tion,
+w
+e
+m
+ust
+ onstru t
+the
+state
+pro
+je tions.
+Without
+sho
+wing
+a tual
+ o
+de,
+they
+fun tion
+as
+follo
+ws:
+{
+Mo
+v
+e
+from
+motionDete t
+to
+blob
+whenev
+er
+the
+size
+of
+the
+area
+in
+motion
+is
+greater
+than
+some
+threshold
+(normally
+set
+fairly
+small).
+Use
+the
+ en
+ter
+of
+the
+area
+in
+motion
+at
+the
+initial
+state
+in
+the
+blob
+tra 
+k
+er.
+{
+Alw
+a
+ys
+try
+to
+mo
+v
+e
+from
+blob
+to
+SSD.
+Use
+the
+blob
+size
+and
+orien
+tation
+to
+ reate
+the
+initial
+transformation
+for
+the
+SSD
+tra 
+k
+er
+state.
+{
+Drop
+from
+ssd
+to
+blob
+when
+the
+residual
+is
+greater
+than
+some
+threshold.
+Use
+the
+p
+osition
+in
+the
+transformation
+an
+the
+initial
+state
+for
+blob.
+{
+Drop
+from
+blob
+to
+motionDete t
+when
+the
+group
+of
+esh-toned
+pixels
+is
+to
+o
+small.
+The
+ omp
+osite
+tra 
+k
+er
+has
+the
+follo
+wing
+stru ture:
+fa eTra k
+::
+Image
+->
+Tra ker
+(EitherT
+(EitherT
+SizeAndPla e
+SizedAndOriented)
+Residual)
+(Either
+(Either
+()
+Point2)
+Transform2)
+fa eTra k
+image
+=
+tower
+(tower
+motionDete t
+blob
+(upFromMD,
+downFromBlob))
+ssd
+onlyRight
+(upFromBlob,
+downFromSSD)
+where
+upFromMD
+mt
+=
+if
+mArea
+mt
+>
+mdThreshold
+then
+Just
+mCenter
+mt
+else
+Nothing
+downFromBlob
+mt
+=
+
+if
+blobSize
+mt
+<
+bThreshold
+then
+Just
+(blobCenter
+mt)
+else
+Nothing
+upFromBlob
+mt
+=
+Just
+(translate2
+(blobCenter
+mt)
+` ompose2`
+rotate2
+(blobOrientation
+mt))
+downFromSSD
+mt
+=
+if
+residual
+mt
+>
+ssdthreshold
+then
+Just
+(origin2
+`transform2`
+(valueOf
+mt))
+else
+Nothing
+The
+onlyRight
+fun tion
+is
+needed
+b
+e ause
+the
+ omp
+osition
+of
+motion
+dete tion
+and
+blob
+tra 
+king
+yields
+an
+Either
+t
+yp
+e
+instead
+of
+a
+blob
+t
+yp
+e.
+The
+onlyRight
+fun tion
+(not
+sho
+wn)
+k
+eeps
+the
+ssd
+tra 
+k
+er
+from
+pulling
+on
+the
+underlying
+tra 
+k
+er
+when
+it
+is
+lo
+oking
+for
+motion
+rather
+than
+at
+a
+blob.
+The
+output
+of
+this
+tra 
+k
+er
+w
+ould
+normally
+b
+e
+ltered
+to
+remo
+v
+e
+states
+from
+the
+\ba 
+kup"
+tra 
+k
+ers.
+That
+is,
+the
+ultimate
+result
+of
+this
+tra 
+k
+er
+w
+ould
+probably
+b
+e
+Behavior
+(Maybe
+Point2)
+rather
+that
+Behavior
+Point2.
+Th
+us
+when
+the
+ omp
+osite
+tra 
+k
+er
+is
+h
+un
+ting
+for
+a
+fa e
+rather
+than
+on
+the
+fa e
+this
+will
+b
+e
+ree ted
+in
+the
+output
+of
+the
+tra 
+k
+er.
+5
+P
+erforman e
+Programs
+written
+in
+FVision
+tend
+to
+run
+at
+least
+90%
+as
+fast
+as
+the
+nativ
+e
+C
++
++
+ o
+de,
+ev
+en
+though
+they
+are
+b
+eing
+run
+b
+y
+a
+Hask
+ell
+in
+terpreter.
+This
+ an
+b
+e
+attributed
+to
+the
+fa t
+that
+the
+b
+ottlene 
+k
+in
+vision
+pro
+ essing
+programs
+is
+not
+in
+the
+high-lev
+el
+algorithms,
+as
+implemen
+ted
+in
+Hask
+ell,
+but
+in
+the
+lo
+w-lev
+el
+image
+pro
+ essing
+algorithms
+written
+in
+C
++
++
+.
+As
+a
+result,
+w
+e
+ha
+v
+e
+found
+that
+FVision
+is
+a
+realisti 
+alternativ
+e
+to
+C
++
++
+for
+protot
+yping
+or
+ev
+en
+deliv
+ering
+appli ations.
+While
+there
+are,
+no
+doubt,
+situations
+in
+whi 
+h
+the
+p
+erforman e
+of
+Hask
+ell
+ o
+de
+ma
+y
+require
+migration
+to
+C
++
++
+for
+eÆ ien y
+,
+it
+is
+often
+the
+ ase
+that
+the
+use
+of
+a
+de larativ
+e
+language
+to
+express
+high-lev
+el
+organization
+of
+a
+vision
+system
+has
+no
+appre iable
+impa t
+on
+p
+erforman e.
+F
+urthermore,
+the
+Hask
+ell
+in
+terpreter
+used
+in
+our
+exp
+erimen
+t,
+Hugs,
+has
+a
+v
+ery
+small
+fo
+otprin
+t
+and
+ an
+b
+e
+in luded
+in
+an
+appli ation
+without
+seriously
+in reasing
+the
+o
+v
+erall
+size
+of
+vision
+library
+.
+6
+Related
+W
+ork
+W
+e
+are
+not
+a
+w
+are
+of
+an
+y
+other
+eorts
+to
+ reate
+a
+de larativ
+e
+language
+for
+ omputer
+vision,
+although
+there
+do
+es
+exist
+a
+DSL
+for
+writing
+video
+devi e
+driv
+ers
+[12℄
+whi 
+h
+is
+at
+a
+lo
+w
+er
+lev
+el
+than
+that
+this
+w
+ork.
+There
+are
+man
+y
+on
+to
+ols
+for
+building
+domain-sp
+e i 
+languages
+su 
+h
+as
+FVision
+from
+s rat 
+h,
+but
+most
+relev
+an
+t
+are
+previous
+eorts
+of
+our
+o
+wn
+on
+emb
+e
+dde
+d
+DSL's
+[5
+,
+4
+℄
+that
+use
+an
+existing
+de larativ
+e
+language
+as
+the
+basi 
+framew
+ork.
+General
+dis ussions
+of
+the
+adv
+an
+tages
+of
+programming
+with
+pure
+fun tions
+are
+also
+quite
+n
+umerous;
+t
+w
+o
+of
+parti ular
+relev
+an e
+to
+our
+w
+ork
+are
+one
+using
+fun tional
+languages
+for
+rapid
+protot
+yping
+[3℄
+and
+one
+that
+des rib
+es
+the
+p
+o
+w
+er
+of
+higher-order
+fun tions
+and
+lazy
+ev
+aluation
+as
+the
+\glue"
+needed
+for
+mo
+dular
+programming[6
+℄.
+
+7
+Con lusions
+FVision
+has
+pro
+v
+en
+to
+b
+e
+a
+p
+o
+w
+erful
+soft
+w
+are
+engineering
+to
+ol
+that
+in reases
+pro
+du tivit
+y
+and
+exibilit
+y
+in
+the
+design
+of
+systems
+using
+visual
+tra 
+king.
+As
+ ompared
+to
+XVision,
+the
+original
+C
++
++
+library
+,
+FVision
+rev
+eals
+the
+essen
+tial
+stru ture
+of
+tra 
+king
+algorithms
+m
+u 
+h
+more
+ learly
+.
+Some
+of
+the
+lessons
+learned
+in
+this
+pro
+je t
+in lude:
+1.
+Visual
+tra 
+king
+oers
+fertile
+ground
+for
+the
+deplo
+ymen
+t
+of
+de larativ
+e
+programming
+te 
+h-
+nology
+.
+The
+underlying
+problems
+are
+so
+diÆ ult
+that
+the
+pa
+y
+o
+in
+this
+domain
+is
+v
+ery
+high.
+FVision
+is
+signi an
+tly
+b
+etter
+for
+protot
+yping
+tra 
+king-based
+appli ations
+than
+the
+original
+XVision
+system.
+2.
+The
+pro
+ ess
+ reating
+FVision
+un o
+v
+ered
+in
+teresting
+insigh
+ts
+that
+w
+ere
+not
+previously
+ap-
+paren
+t
+ev
+en
+to
+original
+XVision
+dev
+elop
+ers.
+W
+orking
+from
+the
+\b
+ottom
+up"
+to
+dev
+elop
+a
+new
+language
+for es
+the
+domain
+sp
+e ialists
+to
+examine
+(or
+re-examine)
+the
+underlying
+domain
+for
+the
+righ
+t
+abstra tions
+and
+in
+terfa es.
+3.
+The
+prin ipal
+features
+of
+Hask
+ell,
+a
+ri 
+h
+p
+olymorphi 
+t
+yp
+e
+system
+and
+higher-order
+fun -
+tions,
+w
+ere
+a
+signi an
+t
+adv
+an
+tage
+in
+FVision.
+4.
+FRP
+pro
+vides
+a
+ri 
+h
+framew
+ork
+for
+in
+ter-op
+eration
+among
+the
+v
+arious
+system
+ omp
+o-
+nen
+ts.
+By
+ asting
+tra 
+k
+ers
+in
+terms
+of
+b
+eha
+viors
+and
+ev
+en
+ts
+w
+e
+w
+ere
+able
+to
+in
+tegrate
+them
+smo
+othly
+in
+to
+other
+systems.
+This
+w
+ork
+w
+as
+supp
+orted
+b
+y
+NSF
+gran
+t
+CCR-9706747
+in
+exp
+erimen
+tal
+soft
+w
+are
+systems.
+Referen es
+[1℄
+Conal
+Elliott
+and
+P
+aul
+Hudak.
+F
+un tional
+rea tiv
+e
+animation.
+In
+International
+Confer
+en 
+e
+on
+F
+un tional
+Pr
+o
+gr
+amming,
+pages
+163{173,
+June
+1997.
+[2℄
+G.
+D.
+Hager
+and
+P
+.
+N.
+Belh
+umeur.
+EÆ ien
+t
+region
+tra 
+king
+of
+with
+parametri 
+mo
+dels
+of
+illumi-
+nation
+and
+geometry
+.
+T
+o
+app
+ear
+in
+IEEE
+P
+AMI.,
+O tob
+er
+1998.
+[3℄
+P
+.
+Henderson.
+F
+un tional
+programming,
+formal
+sp
+ep
+ i ation,
+and
+rapid
+protot
+yping.
+IEEE
+T
+r
+ansa tions
+on
+SW
+Engine
+ering,
+SE-12(2):241{250,
+1986.
+[4℄
+P
+.
+Hudak.
+Building
+domain
+sp
+e i 
+em
+b
+edded
+languages.
+A
+CM
+Computing
+Surveys,
+28A:(ele troni ),
+De em
+b
+er
+1996.
+[5℄
+P
+aul
+Hudak.
+Mo
+dular
+domain
+sp
+e i 
+languages
+and
+to
+ols.
+In
+Pr
+o
+ 
+e
+e
+dings
+of
+Fifth
+International
+Confer
+en 
+e
+on
+Softwar
+e
+R
+euse,
+pages
+134{142.
+IEEE
+Computer
+So
+ iet
+y
+,
+June
+1998.
+[6℄
+J.
+Hughes.
+Wh
+y
+fun tional
+programming
+matters.
+T
+e 
+hni al
+Rep
+ort
+16,
+Programming
+Metho
+d-
+ology
+Group,
+Chalmers
+Univ
+ersit
+y
+of
+T
+e 
+hnology
+,
+No
+v
+em
+b
+er
+1984.
+[7℄
+In
+tel
+vision
+libraries.
+http://developer.intel. om/re
+sear
+ h/mr
+l/re
+sear 
+h/ v
+lib/
+.
+[8℄
+R.E.
+Kahn,
+M.J.
+Sw
+ain,
+P
+.N.
+Prok
+op
+o
+wi z,
+and
+R.J.
+Firb
+y
+.
+Gesture
+re ognition
+using
+P
+erseus
+ar 
+hite ture.
+In
+Pr
+o
+ .
+IEEE
+Conf.
+Comp.
+Vision
+and
+Patt.
+R
+e
+ 
+o
+g.,
+pages
+734{741,
+1996.
+[9℄
+J.L.
+Mundy
+.
+The
+image
+understanding
+en
+vironmen
+t
+program.
+IEEE
+EXPER
+T,
+10(6):64{73,
+De em
+b
+er
+1995.
+[10℄
+J.
+P
+eterson,
+P
+.
+Hudak,
+and
+C.
+Elliott.
+Lam
+b
+da
+in
+motion:
+Con
+trolling
+rob
+ots
+with
+hask
+ell.
+In
+Pr
+o
+ 
+e
+e
+dings
+of
+P
+ADL
+99:
+Pr
+a ti 
+al
+Asp
+e
+ ts
+of
+De
+ lar
+ative
+L
+anguages,
+pages
+91{105,
+Jan
+1999.
+[11℄
+A.
+Reid,
+J.
+P
+eterson,
+P
+.
+Hudak,
+and
+G.
+Hager.
+Protot
+yping
+real-time
+vision
+systems.
+In
+Pr
+o
+ 
+e
+e
+d-
+ings
+of
+ICSE
+99:
+Intl.
+Conf.
+on
+Softwar
+e
+Engine
+ering,
+Ma
+y
+1999.
+[12℄
+C.
+Consel
+S.
+Thibault,
+R.
+Marlet.
+A
+domain-sp
+e i 
+language
+for
+video
+devi e
+driv
+ers:
+F
+rom
+design
+to
+implemen
+tation.
+In
+Pr
+o
+ 
+e
+e
+dings
+of
+the
+rst
+ 
+onfer
+en 
+e
+on
+Domain-Sp
+e
+ i 
+L
+anguages,
+pages
+11{26.
+USENIX,
+O tob
+er
+1997.
+[13℄
+The
+Khoros
+Group.
+The
+Khor
+os
+Users
+Manual.
+The
+Univ
+ersit
+y
+of
+New
+Mexi o,
+Albuquerque,
+NM,
+1991.
+

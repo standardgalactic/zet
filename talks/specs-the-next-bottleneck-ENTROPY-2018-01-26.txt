@@ -1,0 +1,1284 @@
+© 2017 Arm Limited 
+Specifications: The Next 
+Verification Bottleneck
+Alastair Reid
+Arm Research
+@alastair_d_reid
+
+© 2017 Arm Limited 
+2
+Overview
+1. What specifications do we need? 
+2. ARM's formal processor specifications 
+3. Three steps I took to create good specifications
+
+© 2017 Arm Limited 
+3
+ARM
+Designs processors, designs architecture, licenses architecture 
+16B processors / year 
+(also GPUs, IoT, ...) 
+Security Research Group 
+- Develop and analyse security extensions 
+- Create framework for verifying products 
+- We are hiring: full time, research internships
+
+© 2017 Arm Limited 
+4
+Applications
+Libraries
+Runtimes
+Secure Services
+C Compiler / Linker
+MicroKernel
+HAL
+Architecture
+MicroArchitecture
+RTLD
+
+© 2017 Arm Limited 
+5
+Specifications we need
+Linux sys calls 
+C stdlib 
+ISO C 
+Gcc/LLVM extensions 
+Inline assembly 
+ELF / linkerscript 
+Weak memory model
+Processor page tables 
+Interrupt handler 
+Device driver API 
+Filesystem format
+TCP/IP, UDP, ... 
+TSL 
+NTP, DNS, NFS, ... 
+WiFi, Bluetooth, Zigbee, ... 
+USB, SD card, ...
+X11/Gtk+/... 
+Javascript, CSS, SVG, ... 
+PHP, ...
+
+© 2017 Arm Limited 
+6
+Trusted Computing Base    (!=  Trustworthy Computing Base)
+a small amount of software and hardware that security depends on and 
+that we distinguish from a much larger amount that can misbehave 
+without aﬀecting security 
+— Lampson 
+the totality of protection mechanisms within it, including hardware, 
+ﬁrmware, and software, the combination of which is responsible for 
+enforcing a computer security policy 
+— Orange Book (US DoD)
+
+© 2017 Arm Limited 
+7
+Specifications for real world software/hardware
+Unavoidable 
+Multiple implementations 
+Multiple versions of each implementation 
+Spec must include all quirks of recent versions of major implementations to be useful 
+Existing specification = English + Tables + Pseudocode 
+Existing community may not value formal spec at first
+
+© 2017 Arm Limited 
+Creating trustworthy 
+specifications
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+
+© 2017 Arm Limited 
+9
+The state of most processor specifications
+Large (1000s of pages) 
+Broad (10+ years of implementations, multiple manufacturers) 
+Complex (exceptions, weak memory, ...) 
+Informal (mostly English prose) 
+We are all just learning how to (retrospectively) formalize specifications
+
+© 2017 Arm Limited 
+10
+Arm Processor Specifications
+A-class (phones, tablets, servers, ...)
+M-class (microcontrollers, IoT)
+6,000 pages 
+40,000 line formal specification  
+Instructions (32/64-bit) 
+Exceptions / Interrupts 
+Memory protection 
+Page tables 
+Multiple privilege levels 
+System control registers 
+Debug / trace
+1,200 pages 
+15,000 line formal specification  
+Instructions (32-bit) 
+Exceptions / Interrupts 
+Memory protection 
+Page tables 
+Multiple privilege levels 
+System control registers 
+Debug / trace
+
+© 2017 Arm Limited 
+11
+English prose
+
+© 2017 Arm Limited 
+12
+Pseudocode
+
+ARMResearch
+System Architecture Speciﬁcation
+13
+
+© 2017 Arm Limited 
+14
+Arm Architecture Specification Language (ASL)
+Indentation-based syntax 
+Imperative 
+First-order 
+Strongly typed (type inference, polymorphism, dependent types) 
+Bit-vectors 
+Unbounded integers 
+Infinite precision reals 
+Arrays, Records, Enumerations 
+Exceptions
+
+ARMResearch
+15
+v8-A
+v8-M
+Instructions
+Int/FP/SIMD
+26,000
+6,000
+Exceptions
+4,000
+3,000
+Memory
+3,000
+1,000
+Debug
+3,000
+1,000
+Misc
+5,500
+2,000
+(Test support)
+1,500
+2,000
+Total
+43,000
+15,000
+ARM Spec (lines of code)
+
+ARMResearch
+System Register Spec
+16
+v8-A
+v8-M
+Registers
+586
+186
+Fields
+3951
+622
+  Constant
+985
+177
+  Reserved
+940
+208
+  Impl. Deﬁned
+70
+10
+  Passive
+1888
+165
+  Active
+68
+62
+Operations
+112
+10
+
+ARMResearch
+Trustworthiness
+17
+
+ARMResearch
+Trustworthiness
+ARM's speciﬁcation is correct by deﬁnition
+17
+
+ARMResearch
+Trustworthiness
+ARM's speciﬁcation is correct by deﬁnition
+17
+
+ARMResearch
+Trustworthiness
+Does the speciﬁcation match the behaviour
+of all ARM processors?
+18
+
+© 2017 Arm Limited 
+19
+Interpreter
+C 
+Backend
+ASL Spec
+Lexer 
+Parser 
+Typechecker
+
+© 2017 Arm Limited 
+20
+Architectural Conformance Suite
+Processor architectural compliance sign-off 
+Large 
+• v8-A 11,000 test programs, > 2 billion instructions 
+• v8-M 3,500 test programs, > 250 million instructions 
+Thorough 
+• Tests dark corners of specification
+
+© 2017 Arm Limited 
+21
+© 2017 Arm Limited 
+Progress in testing Arm specification
+-
+Does not parse, does not typecheck
+-
+Can't get out of reset
+-
+Can't execute first instruction
+-
+Can't execute first 100 instructions
+-
+...
+-
+Passes 90% of tests
+-
+Passes 99% of tests
+-
+...
+0
+50
+100
+
+© 2017 Arm Limited 
+22
+Measuring architecture coverage of tests
+Untested: op1*op2 == -3.0, FPCR.RND=-Inf 
+
+ARMResearch
+Creating a Virtuous Cycle
+23
+ARM 
+Spec
+Fuzzing 
+Firmware
+ARM 
+Conformance 
+TestSuite
+Processor 
+Veriﬁcanon
+Boot 
+OS
+Informanon 
+Flow 
+Analysis
+Random 
+Instrucnon 
+Sequences
+Testcase 
+Generanon
+Speciﬁcanon 
+Veriﬁcanon
+
+© 2017 Arm Limited 
+Formal validation 
+of processors
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+ARMResearch
+Checking an instrucnon
+25
+ADD
+
+ARMResearch
+Checking an instrucnon
+25
+ADD
+CMP LDR
+STR BNE
+Context
+
+© 2017 Arm Limited 
+26
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+© 2017 Arm Limited 
+26
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+
+© 2017 Arm Limited 
+26
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+Pre
+Post_spec
+Post_cpu
+Spec
+==?
+
+ARMResearch
+Errors ISA-Formal can catch
+• Errors in decode
+• Errors in data path
+• Errors in forwarding logic
+• Errors in register renaming
+• Errors in exception handling
+• Errors in speculative execution
+27
+No Context
+Context
+{
+{
+
+ARMResearch
+Specifying ADD
+assign ADD_retiring = (pre.opcode & 16'b1111_1110_0000_0000) 
+                                      == 16'b0001_1000_0000_0000; 
+assign ADD_result   = pre.R[pre.opcode[8:6]] + pre.R[pre.opcode[5:3]]; 
+assign ADD_Rd       = pre.opcode[2:0]; 
+assert property (@(posedge clk) disable iﬀ (~reset_n) 
+        ADD_retiring |-> (ADD_result == post.R[ADD_Rd]));
+28
+
+ARMResearch
+ISA Formal
+• Finds complex bugs in processor pipelines
+• Applied to wide range of μArchitectures
+• Uses translation of ARM's internal ISA speciﬁcation
+29
+
+ARMResearch
+30
+
+ARMResearch
+30
+
+ARMResearch
+Challenges
+• Complex Functional Units
+• FP
+• Memory
+• Dual Issue
+• Instruction Fusion
+• Register Renaming
+• Out-of-order Retire
+31
+
+ARMResearch
+32
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+ARMResearch
+33
+
+ARMResearch
+33
+Memory
+TLB
+Prefetch
+PTW
+Coherence
+Cache
+
+ARMResearch
+33
+Memory
+TLB
+Prefetch
+PTW
+Coherence
+Cache
+FPU
+FMUL
+FADD
+FDIV
+FSQRT
+
+ARMResearch
+34
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+R0 
+- 
+R15
+Memory
+FPU
+
+ARMResearch
+FP Subset Behaviour
+35
+-∞
+-1
+0
+1
+∞
+-∞
+-∞
+-∞
+-∞
+-∞
+-1
+-∞
+-1
+0
+∞
+0
+-∞
+-1
+0
+1
+∞
+1
+-∞
+0
+1
+∞
+∞
+∞
+∞
+∞
+∞
+FPAdd
+
+ARMResearch
+ISA Formal
+• Finds complex bugs in processor pipelines
+• Applied to wide range of μArchitectures
+• Uses translation of ARM's internal ISA speciﬁcation
+36
+
+ARMResearch
+ISA-Formal Properties
+37
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+NZCV
+SP
+PC
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+38
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+NZCV
+SP
+✔
+PC
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+39
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+NZCV
+SP
+✔
+PC
+✔
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+40
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+NZCV
+✔
+SP
+✔
+✔
+PC
+✔
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+But this is slow
+and inconsistent
+41
+
+ARMResearch
+ISA-Formal Properties
+42
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+SP
+PC
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+43
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+44
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+45
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+✔
+✔
+✔
+✔
+✔
+MemWrite
+✔
+✔
+✔
+✔
+✔
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+46
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+✔
+✔
+✔
+✔
+✔
+MemWrite
+✔
+✔
+✔
+✔
+✔
+SysRegRW
+✔
+✔
+✔
+✔
+✔
+ELR
+✔
+✔
+✔
+✔
+✔
+ESR
+✔
+✔
+✔
+✔
+✔
+...
+
+ARMResearch
+47
+Combinational
+Verilog
+ASL to 
+Verilog
+Architecture
+Speciﬁcation
+Specialize 
+Monomorphize 
+Constant Propagation 
+Width Analysis 
+Exception Handling 
+...
+
+ARMResearch
+48
+
+© 2017 Arm Limited 
+49
+Arm CPUs verified with ISA-Formal
+A-class 
+Cortex-A53 
+Cortex-A32 
+Cortex-A35 
+Cortex-A55 
+Next generation
+R-class 
+Cortex-R52 
+Next generation
+M-class 
+Cortex-M4 
+Cortex-M7 
+Cortex-M33 
+Next generation
+Cambridge Projects
+Rolling out globally to other design centres 
+Sophia, France - Cortex-A75 (partial) 
+Austin, USA - TBA 
+Chandler, USA - TBA
+
+© 2017 Arm Limited 
+Formal validation 
+of specifications
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+
+© 2017 Arm Limited 
+51
+One Specification to rule them all?
+Architecture Spec
+Compliance Tests
+Processors
+Reference Simulator
+
+© 2017 Arm Limited 
+52
+Creating a redundant specification
+Where to get a list of redundant properties from? 
+How to formalise this list? 
+How to formally validate specification against properties? 
+(This may look familiar from formal specification of software)
+
+© 2017 Arm Limited 
+53
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+
+© 2017 Arm Limited 
+53
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+
+© 2017 Arm Limited 
+53
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+And cannot happen any other way
+
+© 2017 Arm Limited 
+53
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+Rule R:    X → A ∨ B ∨ C ∨ D
+And cannot happen any other way
+
+© 2017 Arm Limited 
+54
+State Change X
+Exit from lockup
+Fell(LockedUp)
+Event A
+A Cold reset
+Called(TakeColdReset)
+Event B
+A Warm reset
+Called(TakeReset)
+State Change C
+Entry to Debug state
+Rose(Halted)
+Event D
+Preemption by a higher 
+priority processor 
+exception
+Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+55
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+56
+Rule VGNW 
+Entry to lockup from an exception causes 
+• Any Fault Status Registers associated with the exception 
+to be updated. 
+• No update to the exception state, pending or active. 
+• The PC to be set to 0xEFFFFFFE. 
+• EPSR.IT to become UNKNOWN. 
+In addition, HFSR.FORCED is not set to 1.
+Out of date
+Misleading
+Ambiguous
+Untestable
+
+© 2017 Arm Limited 
+57
+Counterexample
+v8-M Spec
+Rules
+Proof
+Z3 
+SMT 
+Solver
+
+© 2017 Arm Limited 
+58
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+Temporal Operators
+Event Operators
+
+© 2017 Arm Limited 
+59
+Temporal Operators
+Fell(e) 
+Past(e) > e
+Stable(e) 
+Past(e) = e
+Rose(e) 
+Past(e) < e
+
+© 2017 Arm Limited 
+60
+Temporal Operators
+__Past_LockedUp = LockedUp; 
+FunctionUnderTest(); 
+... __Past_LockedUp > LockedUp ...
+Fell(LockedUp)
+
+© 2017 Arm Limited 
+61
+Event Operators
+TakeReset() 
+{ 
+    __Called_TakeReset = TRUE; 
+    ... 
+}
+Called(TakeReset)
+
+© 2017 Arm Limited 
+62
+__Called_TakeColdReset      = FALSE; 
+__Called_TakeReset          = FALSE; 
+__Called_TakeExceptionEntry = FALSE; 
+__Past_LockedUp = LockedUp; 
+__Past_Halted   = Halted; 
+FunctionUnderTest(); 
+assert((__Past_LockedUp > LockedUp) 
+       ==> 
+       (  __Called_TakeColdReset 
+       || __Called_TakeReset 
+       || __Past_Halted < Halted 
+       || __Called_ExceptionEntry));
+
+© 2017 Arm Limited 
+63
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+__Called_TakeColdReset      = FALSE; 
+__Called_TakeReset          = FALSE; 
+__Called_TakeExceptionEntry = FALSE; 
+__Past_LockedUp = LockedUp; 
+__Past_Halted   = Halted; 
+assert((__Past_LockedUp > LockedUp) 
+       ==> 
+       (  __Called_TakeColdReset 
+       || __Called_TakeReset 
+       || __Past_Halted < Halted 
+       || __Called_ExceptionEntry));
+
+© 2017 Arm Limited 
+64
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays  
+Functions 
+Local Variables 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+Arm Specification 
+Language
+SMT
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays  
+Functions 
+Local Variables 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+
+© 2017 Arm Limited 
+65
+Results (more in OOPSLA paper)
+Most properties proved in under 100 seconds 
+Found 12 bugs in specification: 
+- debug, exceptions, system registers, security 
+Found bugs in English prose: 
+- ambiguous, imprecise, incorrect, ...
+
+© 2017 Arm Limited 
+66
+Lexer 
+Parser 
+Typechecker
+Interpreter
+Verilog 
+Backend
+C 
+Backend
+Test 
+Coverage
+Simulation 
+Trace
+ASL Spec
+SMT 
+Backend
+ARM 
+Test Suite
+Architecture 
+Properties
+Bounded 
+Model Checker
+SMT 
+Solver
+Arm 
+Processor
+
+© 2017 Arm Limited 
+67
+Public release of machine readable Arm specification
+Enable formal veriﬁcanon of sotware and tools 
+Releases 
+April 2017: v8.2 
+July 2017: v8.3 
+Working with Cambridge University REMS group to convert to SAIL 
+Backends for HOL, OCaml, Memory model, (hopefully Coq too) 
+Speciﬁcanon: hvps://developer.arm.com/products/architecture/a-proﬁle/exploranon-tools 
+Tools: hvps://github.com/alastairreid/mra_tools 
+(See also: hvps://github.com/herd/herdtools7/blob/master/herd/libdir/aarch64.cat) 
+Talk to me about how I can help you use it
+
+© 2017 Arm Limited 
+68
+Specifications: The next bottleneck
+Test the specifications you depend on 
+Formally validate/verify implementations 
+Create redundant specifications 
+Ensure specifications have many uses 
+   Don't write spec in Coq/HOL/ACL2/... 
+   Try to influence official specification
+Spec 
+We will need a lot of specs 
+   Of real world s/w + h/w 
+Specs are a large part of TCB 
+How are we going to create them? 
+How are we going to trust them? 
+
+© 2017 Arm Limited 
+69
+Thanks
+Alasdair Armstrong (Cambridge U.)
+Alex Chadwick (ARM)
+Ali Zaidi (ARM)
+Anastasios Deligiannis (ARM)
+Anthony Fox (Cambridge U.)
+Ashan Pathirane (ARM)
+Belaji Venu (ARM)
+Bradley Smith (ARM)
+Brian Foley (ARM)
+Curtis Dunham (ARM)
+David Gilday (ARM)
+David Hoyes (ARM)
+David Seal (ARM)
+Daniel Bailey (ARM)
+Erin Shepherd (ARM)
+Francois Botman (ARM)
+George Hawes (ARM)
+Graeme Barnes (ARM)
+Isobel Hooper (ARM)
+Jack Andrews (ARM)
+Jacob Eapen (ARM)
+Jon French (Cambridge U.)
+Kathy Gray (Cambridge U.)
+Krassy Gochev (ARM)
+Lewis Russell (ARM)
+Matthew Leach (ARM)
+Meenu Gupta (ARM)
+Michele Riga (ARM)
+Milosch Meriac (ARM)
+Nigel Stephens (ARM)
+Niyas Sait (ARM)
+Peng Wang (ARM)
+Peter Sewell (Cambridge U.)
+Peter Vrabel (ARM)
+Richard Grisenthwaite (ARM)
+Rick Chen (ARM)
+Simon Bellew (ARM)
+Thomas Grocutt (ARM)
+Will Deacon (ARM)
+Will Keen (ARM)
+Wojciech Meyer (ARM)
+(and others)
+
+Thank You! 
+Danke! 
+Merci! 
+谢谢! 
+ありがとう! 
+Gracias! 
+Kiitos!
+© 2017 Arm Limited 
+70
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+

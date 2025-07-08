@@ -1,0 +1,571 @@
+ARMResearch
+Trusting Large Speciﬁcations:
+The Virtuous Cycle
+Alastair Reid 
+alastair.reid@arm.com
+@alastair_d_reid
+
+ARMResearch
+2
+
+ARMResearch
+3
+
+ARMResearch
+Correctness
+Portability / Predictability
+Security
+Commercial pressures
+"It's nice not to suck" — Adam Langley
+4
+
+ARMResearch
+Speciﬁcations
+What to build
+What to test
+What to expect
+5
+
+ARMResearch
+6
+Applica'on
+Library
+OS
+Compiler
+Processor
+
+ARMResearch
+Speciﬁcations:  The New Bottleneck
+Qualities of Speciﬁcations
+Applicability
+Scope
+Trustworthiness
+Testing and Using Speciﬁcations
+The Virtuous Cycle
+7
+
+ARMResearch
+Applicability
+1985
+2015
+1990
+1995
+2000
+2005
+2010
+v1
+v2
+v3
+v4
+v5
+v6
+v7-M
+v7-A
+v7-R
+v6-M
+v8-R
+v8.0-A
+v8-M
+v8.1-A
+v8.2-A
+
+ARMResearch
+Scope
+Compiler targeted instructions?
+User-level instructions?
+User+Supervisor?
+User+Supervisor+Hypervisor+Secure Monitor?
+9
+
+ARMResearch
+ISA Speciﬁcation - ASL
+10
+Decode
+Execute
+Opcode
+
+ARMResearch
+System Architecture Speciﬁcation
+11
+
+ARMResearch
+12
+v8-A
+v8-M
+Instructions
+Int/FP/SIMD
+26,000
+6,000
+Exceptions
+4,000
+3,000
+Memory
+3,000
+1,000
+Debug
+3,000
+1,000
+Misc
+5,500
+2,000
+(Test support)
+1,500
+2,000
+Total
+43,000
+15,000
+ARM Spec (lines of code)
+
+ARMResearch
+System Register Spec
+13
+v8-A
+v8-M
+Registers
+586
+186
+Fields
+3951
+622
+  Constant
+985
+177
+  Reserved
+940
+208
+  Impl. Deﬁned
+70
+10
+  Passive
+1888
+165
+  Active
+68
+62
+Operations
+112
+10
+
+ARMResearch
+Trustworthiness
+14
+
+ARMResearch
+Trustworthiness
+ARM's speciﬁcation is correct by deﬁnition
+14
+
+ARMResearch
+Trustworthiness
+ARM's speciﬁcation is correct by deﬁnition
+14
+
+ARMResearch
+Trustworthiness
+Does the speciﬁcation match the behaviour
+of all ARM processors?
+15
+
+ARMResearch
+Qualities of Speciﬁcations
+Testing and Using Speciﬁcations
+Testing Speciﬁcations (FMCAD 2016)
+Verifying Processors (CAV 2016)
+Generating Testcases
+Security Checking
+Booting an OS
+Fuzzing an OS
+The Virtuous Cycle
+16
+
+ARMResearch
+17
+ARM Spec
+Oracle
+Test S'mulus
+=?=
+
+ARMResearch
+Architecture Conformance Suite
+Processor architectural compliance sign-off
+Large
+v8-A 11,000 test programs, > 2 billion instructions
+v8-M 3,500 test programs, > 250 million instructions
+Thorough
+Tests dark corners of speciﬁcation
+18
+
+ARMResearch
+Test Suite
+Testing Speciﬁcations
+19
+v8-A/M Speciﬁca'on
+ASL Interpreter/Compiler
+Test Program
+Bug in Spec
+Bug in Test
+Test Suite
+Test Suite
+Test Suite
+Test Suite
+
+ARMResearch
+Verifying Processors
+20
+Model Checker
+Bug in 
+Processor
+Bug in 
+Speciﬁca'on 
+ARM 
+Processor
+ARM 
+Speciﬁca'on
+CEX
+CEX
+
+ARMResearch
+Veriﬁcation Challenges
+Detect the hard-to-ﬁnd bugs
+Large Speciﬁcations / Processors
+Fit the development ﬂow
+21
+
+ARMResearch
+22
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+ARMResearch
+23
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+ARMResearch
+Checking an instruction
+24
+ADD
+
+ARMResearch
+Checking an instruction
+24
+ADD
+CMPLDR
+STR BNE
+Context
+
+ARMResearch
+25
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+ARMResearch
+25
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+
+ARMResearch
+25
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+Pre
+Post_spec
+Post_cpu
+Spec
+==?
+
+ARMResearch
+ISA-Formal Properties
+26
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+✔
+✔
+✔
+✔
+✔
+MemWrite
+✔
+✔
+✔
+✔
+✔
+SysRegRW
+✔
+✔
+✔
+✔
+✔
+ELR
+✔
+✔
+✔
+✔
+✔
+ESR
+✔
+✔
+✔
+✔
+✔
+...
+
+ARMResearch
+Automation
+27
+Combinational
+Verilog
+ASL to 
+Verilog
+Architecture
+Speciﬁcation
+Specialize 
+Monomorphize 
+Constant Propagation 
+Width Analysis 
+Exception Handling 
+...
+
+ARMResearch
+Veriﬁcation Progress
+28
+Bugs Found (%)
+0
+25
+50
+75
+100
+Time (weeks)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+
+ARMResearch
+Verifying Processors
+29
+v8-A/M Spec 
+(ASL)
+Model Checker
+Bug in 
+Processor
+Bug in 
+Speciﬁca'on 
+ARM 
+Processor
+ASL to 
+Verilog
+v8-A/M Spec 
+(Verilog)
+CEX
+CEX
+
+ARMResearch
+Testcase Generation
+30
+v8-A/M Speciﬁca'on
+ASL Interpreter
+Branch 
+Coverage
+Symbolic 
+Dataﬂow 
+Graph 
+TestCase
+SMT Solver
+
+ARMResearch
+Security Checking
+31
+v8-M Speciﬁca'on
+ASL Interpreter
+Test Program
+Informa'on 
+Flow
+Symbolic 
+Dataﬂow 
+Graph 
+
+ARMResearch
+Booting an OS
+32
+v8-M Speciﬁca'on
+ASL Interpreter/Compiler
+mbed OS
+Applica'on
+
+ARMResearch
+Fuzzing the mbed OS
+33
+v8-M Speciﬁca'on
+ASL Interpreter/Compiler
+mbed OS
+Random Applica'on
+Crash/Fail
+Branch 
+Coverage
+TestCase
+AFL Fuzzer
+
+ARMResearch
+34
+
+ARMResearch
+Creating a Virtuous Cycle
+35
+ARM 
+Spec
+Fuzzing 
+Firmware
+ARM 
+Conformance 
+TestSuite
+Processor 
+Veriﬁca'on
+Boot 
+OS
+Informa'on 
+Flow 
+Analysis
+Random 
+Instruc'on 
+Sequences
+Testcase 
+Genera'on
+SoUware 
+Veriﬁca'on
+
+ARMResearch
+Preparing public release of ARM v8-A speciﬁcation
+• Enable formal veriﬁcation of software and tools
+• Public release planned for 2016 Q4  2017 Q1
+• Liberal license
+• Cambridge University REMS group currently translating to SAIL
+Talk to me about how I can help you use it
+36
+
+ARMResearch
+The New Bottleneck:  Speciﬁcations
+Required for formal veriﬁcation
+Too large to be "obviously correct"
+Reusable specs enable "virtuous cycle"
+Increases Scope / Applicability requirements
+Converge on correct speciﬁcation
+  
+Looking for interns in Security and Correctness - contact me
+37
+
+End 
+38
+alastair.reid@arm.com
+@alastair_d_reid
+

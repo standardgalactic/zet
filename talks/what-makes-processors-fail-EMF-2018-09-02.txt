@@ -1,0 +1,929 @@
+What makes processors fail
+and how to prevent it
+Alastair Reid
+alastair.reid@arm.com
+@alastair_d_reid
+
+alastair.reid@arm.com @alastair_d_reid
+Processors always work
+!2
+More technical version: h0ps://alastairreid.github.io/papers/CAV_16/ 
+Related talk: Mate Soos "Hacking using SAT and SMT solvers" 
+Related workshop: Jonny AusHn "Be a Computer! DemysHfying assembly language and CPUs"
+
+alastair.reid@arm.com @alastair_d_reid
+Processors always work
+!2
+almost
+More technical version: h0ps://alastairreid.github.io/papers/CAV_16/ 
+Related talk: Mate Soos "Hacking using SAT and SMT solvers" 
+Related workshop: Jonny AusHn "Be a Computer! DemysHfying assembly language and CPUs"
+
+alastair.reid@arm.com @alastair_d_reid
+!3
+Correct
+Fast
+More technical version: h0ps://alastairreid.github.io/papers/CAV_16/ 
+Related talk: Mate Soon "Hacking using SAT and SMT solvers" 
+Related workshop: Jonny AusHn "Be a Computer! DemysHfying assembly language and CPUs"
+
+alastair.reid@arm.com @alastair_d_reid
+!3
+Correct
+Fast
+Designer
+More technical version: h0ps://alastairreid.github.io/papers/CAV_16/ 
+Related talk: Mate Soon "Hacking using SAT and SMT solvers" 
+Related workshop: Jonny AusHn "Be a Computer! DemysHfying assembly language and CPUs"
+
+alastair.reid@arm.com @alastair_d_reid
+!3
+Correct
+Fast
+Designer
+Veriﬁer
+More technical version: h0ps://alastairreid.github.io/papers/CAV_16/ 
+Related talk: Mate Soon "Hacking using SAT and SMT solvers" 
+Related workshop: Jonny AusHn "Be a Computer! DemysHfying assembly language and CPUs"
+
+alastair.reid@arm.com @alastair_d_reid
+!3
+Correct
+Fast
+Designer
+Veriﬁer
+Using SAT solvers 
+And Bounded Model Checkers
+More technical version: h0ps://alastairreid.github.io/papers/CAV_16/ 
+Related talk: Mate Soon "Hacking using SAT and SMT solvers" 
+Related workshop: Jonny AusHn "Be a Computer! DemysHfying assembly language and CPUs"
+
+alastair.reid@arm.com @alastair_d_reid
+!4
+Butchered version of h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+Similar CPUs, see OPC project (h0ps://revaldinho.github.io/opc/)
+
+alastair.reid@arm.com @alastair_d_reid
+What tests to run?
+!5
+Every instruction
+x   Fudge Factor
+ADD 
+CMP 
+LDR 
+STR 
+BNE
+1? 
+50? 
+1000?
+x  Every corner case
+Big 
+Small 
+Equal 
+Min 
+Max
+x
+x
+
+alastair.reid@arm.com @alastair_d_reid
+!6
+
+alastair.reid@arm.com @alastair_d_reid
+!6
+Instr 
+Data 
+Decode
++
+R0 
+- 
+R15
+R0 
+- 
+R15
+Flags
+PC
+Flags
+PC
+Reference
+
+alastair.reid@arm.com @alastair_d_reid
+!6
+Instr 
+Data 
+Decode
++
+R0 
+- 
+R15
+R0 
+- 
+R15
+Flags
+PC
+Flags
+PC
+Reference
+==
+(PC)
+==
+(Memory)
+==
+(Reg)
+
+alastair.reid@arm.com @alastair_d_reid
+Logical Equivalence Check (LEC) / SAT
+!6
+Instr 
+Data 
+Decode
++
+R0 
+- 
+R15
+R0 
+- 
+R15
+Flags
+PC
+Flags
+PC
+Reference
+==
+(PC)
+==
+(Memory)
+==
+(Reg)
+
+alastair.reid@arm.com @alastair_d_reid
+!7
+Fast but 
+broken
+Correct
+but slow
+Make it faster
+Make it work
+
+alastair.reid@arm.com @alastair_d_reid
+!8
+Fetch 1
+Fetch 2
+Fetch 3
+Fetch 4
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+h0ps://en.wikipedia.org/wiki/InstrucHon_pipelining
+
+alastair.reid@arm.com @alastair_d_reid
+Fetch 1
+Fetch 3
+Fetch 5
+Fetch 7
+Fetch 2
+Fetch 4
+Fetch 6
+Fetch 8
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+Exec 5
+Exec 6
+Exec 7
+!8
+Fetch 1
+Fetch 2
+Fetch 3
+Fetch 4
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+h0ps://en.wikipedia.org/wiki/InstrucHon_pipelining
+
+alastair.reid@arm.com @alastair_d_reid
+!9
+Butchered version of h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+Fetch
+Execute
+Fetch
+Execute
+
+alastair.reid@arm.com @alastair_d_reid
+!10
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+
+alastair.reid@arm.com @alastair_d_reid
+!10
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+
+alastair.reid@arm.com @alastair_d_reid
+!10
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+
+alastair.reid@arm.com @alastair_d_reid
+!10
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+
+alastair.reid@arm.com @alastair_d_reid
+!10
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+I
+D
++
+B
+R
+0 
+- 
+R
+0 
+- 
+F
+P
+F
+P
+==
+==
+
+alastair.reid@arm.com @alastair_d_reid
+!11
+BR    PC+100 
+ADD  R0, R0, #1
+
+alastair.reid@arm.com @alastair_d_reid
+!11
+BR    PC+100 
+ADD  R0, R0, #1
+Fetch BR
+Fetch ADD
+Execute BR
+Execute ADD
+
+alastair.reid@arm.com @alastair_d_reid
+!11
+BR    PC+100 
+ADD  R0, R0, #1
+Branch 
+Delay Slot
+Fetch BR
+Fetch ADD
+Execute BR
+Execute ADD
+
+alastair.reid@arm.com @alastair_d_reid
+What tests to run?
+!12
+All the single-stage tests 
+Branches 
+All "interesting" pairs of instructions
+
+alastair.reid@arm.com @alastair_d_reid
+!13
+Fast but 
+broken
+Correct
+but slow
+Make it faster
+Make it work
+
+alastair.reid@arm.com @alastair_d_reid
+Fetch 1
+Fetch 3
+Fetch 5
+Fetch 7
+Fetch 2
+Fetch 4
+Fetch 6
+Fetch 8
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+Exec 5
+Exec 6
+Exec 7
+!14
+Fetch 1
+Fetch 2
+Fetch 3
+Fetch 4
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+
+alastair.reid@arm.com @alastair_d_reid
+!15
+Fetch 1
+Exec 1
+Write 1
+Decode 2
+Decode 1
+Mem 1
+Fetch 2
+Exec 2
+Write 1
+Mem 1
+
+alastair.reid@arm.com @alastair_d_reid
+!15
+Fetch 1
+Exec 1
+Write 1
+Decode 2
+Decode 1
+Mem 1
+Fetch 2
+Exec 2
+Write 1
+Mem 1
+Fetch 1
+Fetch 3
+Fetch 5
+Fetch 7
+Fetch 2
+Fetch 4
+Fetch 6
+Fetch 8
+Decode 1
+Decode 2
+Decode 3
+Decode 4
+Decode 5
+Decode 6
+Decode 7
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+Exec 5
+Exec 6
+Mem 1
+Mem 2
+Mem 3
+Mem 4
+Mem 5
+Write 1
+Write 2
+Write 3
+Write 4
+Fetch 9
+Decode 8
+Exec 7
+Mem 6
+Write 5
+Fetch 10
+Decode 9
+Exec 8
+Mem 7
+Write 6
+
+alastair.reid@arm.com @alastair_d_reid
+!15
+Fetch 1
+Exec 1
+Write 1
+Decode 2
+Decode 1
+Mem 1
+Fetch 2
+Exec 2
+Write 1
+Mem 1
+Fetch 1
+Fetch 3
+Fetch 5
+Fetch 7
+Fetch 2
+Fetch 4
+Fetch 6
+Fetch 8
+Decode 1
+Decode 2
+Decode 3
+Decode 4
+Decode 5
+Decode 6
+Decode 7
+Exec 1
+Exec 2
+Exec 3
+Exec 4
+Exec 5
+Exec 6
+Mem 1
+Mem 2
+Mem 3
+Mem 4
+Mem 5
+Write 1
+Write 2
+Write 3
+Write 4
+Fetch 9
+Decode 8
+Exec 7
+Mem 6
+Write 5
+Fetch 10
+Decode 9
+Exec 8
+Mem 7
+Write 6
+
+alastair.reid@arm.com @alastair_d_reid
+!16
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!17
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+I
+D
+R
+0 
+R
+0 
+F
+P
+F
+P
+==
+
+alastair.reid@arm.com @alastair_d_reid
+Bounded Model Checking
+!18
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+Tools: Yosys h0p://www.cliﬀord.at/yosys/ 
+Talks: h0p://www.cliﬀord.at/papers/2017/smtbmc-sby/slides.pdf 
+Blogs: h0ps://zipcpu.com/blog/2017/10/19/formal-intro.html
+
+alastair.reid@arm.com @alastair_d_reid
+Bounded Model Checking
+!18
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+Tools: Yosys h0p://www.cliﬀord.at/yosys/ 
+Talks: h0p://www.cliﬀord.at/papers/2017/smtbmc-sby/slides.pdf 
+Blogs: h0ps://zipcpu.com/blog/2017/10/19/formal-intro.html
+
+alastair.reid@arm.com @alastair_d_reid
+Bounded Model Checking
+!18
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+R
+R
+==
+Tools: Yosys h0p://www.cliﬀord.at/yosys/ 
+Talks: h0p://www.cliﬀord.at/papers/2017/smtbmc-sby/slides.pdf 
+Blogs: h0ps://zipcpu.com/blog/2017/10/19/formal-intro.html
+
+alastair.reid@arm.com @alastair_d_reid
+!19
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+STR
+LDR
+LDR   R0, [R1] 
+STR   R0, [R2]
+
+alastair.reid@arm.com @alastair_d_reid
+!20
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+STR
+LDR
+LDR   R0, [R1] 
+STR   R0, [R2]
+
+alastair.reid@arm.com @alastair_d_reid
+!20
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+STR
+LDR
+Load 
+Delay Slot
+LDR   R0, [R1] 
+STR   R0, [R2]
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+!21
+h4ps://en.wikipedia.org/wiki/File:MIPS_Architecture_(Pipelined).svg
+
+alastair.reid@arm.com @alastair_d_reid
+What tests to run?
+!22
+All the single-stage tests 
+All the two-stage tests 
+Load followed by <anything> 
+All "interesting" sequences of 5 instructions
+
+alastair.reid@arm.com @alastair_d_reid
+!23
+Fast but 
+broken
+Correct
+but slow
+Make it faster
+Make it work
+
+alastair.reid@arm.com @alastair_d_reid
+!24
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+Formal veriﬁcation is breadth ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+!24
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+Formal veriﬁcation is breadth ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+!24
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+Formal veriﬁcation is breadth ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+!24
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+Formal veriﬁcation is breadth ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+!24
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+Formal veriﬁcation is breadth ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+!24
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+Formal veriﬁcation is breadth ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Idle
+Testing is depth-ﬁrst
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Mixed Mode Veriﬁcation
+Idle
+ADD
+Idle
+CMP
+BNE
+LDR
+STR
+
+alastair.reid@arm.com @alastair_d_reid
+Processors always work
+!27
+almost
+alastair.reid@arm.com
+@alastair_d_reid
+
+alastair.reid@arm.com @alastair_d_reid
+!28
+Correct
+Fast
+Designer
+Veriﬁer
+Using SAT solvers 
+And Bounded Model Checkers
+
+alastair.reid@arm.com @alastair_d_reid
+!29
+Correct
+Fast
+Designer
+Veriﬁer
+Using SAT solvers 
+And Bounded Model Checkers
+
+alastair.reid@arm.com @alastair_d_reid
+!30
+h4ps://images.anandtech.com/doci/8542/pipeline2.JPG
+
+alastair.reid@arm.com @alastair_d_reid
+!30
+h4ps://images.anandtech.com/doci/8542/pipeline2.JPG
+

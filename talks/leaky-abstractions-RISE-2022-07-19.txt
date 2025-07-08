@@ -1,0 +1,401 @@
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R ELeaky Abstractions
+Alastair Reid
+Strategic CAD Labs
+UK Research Institute in Secure Hardware and Embedded Systems
+Summer School, CSIT, Belfast, 20-21 July 2022.
+@alastair_d_reid
+https://alastairreid.github.io/
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+About my research...
+Most projects I work on take 5-10 years to appear in products
+I have been at Intel for 6 months
+|  2
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+ISA specifications - Arm
+|  3
+Verify RTL
+Tools
+Verify specification
+© Arm - AArch64 - DDI0487H
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  4
+https://alastairreid.github.io/
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+ISA specifications - x86
+|  5
+Verify RTL
+Tools
+Verify specification
+Operation
+result = src1 AND src2;
+FLAGS.OF = '0';
+FLAGS.SF = result[datasize-1];
+FLAGS.ZF = if IsZero(result) then '1' else '0';
+FLAGS.AF = bit UNKNOWN;
+FLAGS.PF = if ParityEven(result[0 +: 8]) then '1' else '0';
+FLAGS.CF = '0';
+uOp
+spec
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  6
+Software
+Hardware
+ISA specification
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  7
+Applications
+ISA specification
+Libraries
+OS
+Compiler
+Microarchitecture
+RTL
+Circuits
+Foundry
+uArch spec
+Digital logic
+Layout (GDS II)
+man 3 (library calls)
+ISO C std
+man 2 (system calls)
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Outline
+Example security problems (caused by leaky abstractions)
+What are leaky abstractions?
+What to do about them?
+Sketch of recent work by others
+|  8
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Example 1: Rowhammer
+|  9
+Kim et al., Flipping bits in memory without accessing them: an experimental study 
+of DRAM disturbance errors, ISCA 2014. doi: 10.1145/2678373.2665726
+-
+Level: Circuits
+-
+Manufacturing variation
+-
+Data corruption / privilege 
+escalation
+-
+DRAM interface doesn't 
+describe row layout, write 
+disturbance, ...
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  10
+Exploiting Rowhammer
+-
+Level: Language
+(NaCl sandbox)
+-
+Privilege escalation, ...
+-
+Known memory layout / 
+contents
+https://googleprojectzero.blogspot.com/2015/03/exploiting-dram-rowhammer-bug-to-gain.html
+andl
+$~31, %eax
+addq
+%r15, %rax
+jmp
+*%rax
+The exploit works by triggering bit flips 
+in that code sequence. It knows how to 
+exploit 13% of the possible bit flips.
+...
+For example, if a bit flip occurs in bit 0 of 
+the register number in "jmp *%rax", 
+this morphs to "jmp *%rcx", which is 
+easily exploitable.
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Example 2: Flip Feng Shui
+|  11
+-
+OS / VM + OpenSSH
+-
+Memory deduplication + 
+Rowhammer
+-
+Breaks RSA OpenSSH 
+compromise
+-
+"Private" memory is 
+sometimes shared
+Razavi et al., Flip Feng Shui: hammering a needle in the software stack, SEC 2016. link
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Example 2: Flip Feng Shui
+|  12
+-
+OS / VM + OpenSSH
+-
+Memory deduplication + 
+Rowhammer
+-
+Breaks RSA OpenSSH 
+compromise
+-
+"Private" memory is 
+sometimes shared
+Razavi et al., Flip Feng Shui: hammering a needle in the software stack, SEC 2016. link
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Example 2: Flip Feng Shui
+|  13
+-
+OS / VM + OpenSSH
+-
+Memory deduplication + 
+Rowhammer
+-
+Breaks RSA OpenSSH 
+compromise
+-
+"Private" memory is 
+sometimes shared
+Razavi et al., Flip Feng Shui: hammering a needle in the software stack, SEC 2016. link
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  14
+Example 3: Cache side-channels
+-
+Level: microarchitecture
+-
+Timing side-channel
+-
+Data exfiltration
+-
+GAP: ISA specs don't 
+mention timing variation
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  15
+Example 4: Buffer overflow attacks
+-
+Level: compiler
+-
+No array bounds checks
+-
+DoS, privilege escalation, ...
+-
+GAP: C doesn't enforce 
+object boundaries
+https://doi.org/10.1145/3290380
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  16
+Cache side-channels
+Flip Feng Shui
+ROP/JOP
+Power/clock glitching
+Dopant level hardware trojans
+Buffer overflow
+Flip Feng Shui
+Rowhammer
+Rowhammer
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+What is a leaky abstraction?
+An abstraction that fails to hide all the 
+implementation details of the layer below.
+|  17
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+What implementation details?
+-
+Timing
+-
+Power
+-
+EMF
+-
+Audio
+-
+Memory layout
+-
+...
+|  18
+Vulnerabilities
+-
+power supply, clock signal, ...
+-
+signal crosstalk
+-
+...
+"Non-functional properties"
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+"All non-trivial abstractions, to 
+some degree, are leaky."
+- Joel Spolsky, The law of leaky abstractions
+|  19
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Leaky abstractions
+-
+A rich source of security exploits
+-
+Easy to spot once you start looking
+-
+Impossible to eliminate
+|  20
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Just don't use abstractions?
+How many people deeply understand all of ...
+-
+LLVM?
+-
+Assembly language?
+-
+Out of order execution, branch prediction, prefetching, ...
+-
+Digital logic?
+-
+Power distribution?
+-
+CMOS design?
+-
+Atomic layer deposition
+-
+Quantum Electro Dynamics
+|  21
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  23
+Software
+Hardware
+ISA specification
+=
+Functional specification
++
+upper bound on
+non-functional properties
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+MUL instruction
+|  24
+Operation
+dest = src1 * src2;
+Timing
+Processor Cycles
+Secure?
+A
+1
+Y
+B
+2
+Y
+C
+#SetBits(src1)
+N
+Processor Cycles
+Secure?
+A
+Constant
+Y
+B
+Constant
+Y
+C
+Variable
+N
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+LOAD instruction
+Operation
+dest = Mem[src1];
+Timing
+Processor X with cache
+Variable
+Processor Y with TCM + cache
+Constant if access is to tightly-coupled memory
+Variable otherwise
+|  25
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Challenges
+1. What guarantees do we want to make?
+2. Tools to reason about software?
+3. Tools to show hardware satisfies guarantees?
+|  26
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  27
+S&P 2021, doi: 10.1109/SP40001.2021.00036
+Observations (labels)
+Contracts (non-interference)
+Bounded depth speculation
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  28
+DAC 2017, doi: 10.1145/3061639.3062316
+Label functions
+(dependent types)
+Security 
+labels
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+|  29
+Interface
+What to say?
+Tools that use 
+contract?
+Tools to check 
+contract?
+Library
+???
+???
+???
+OS
+???
+???
+???
+C
+???
+???
+???
+ISA
+25%
+10%
+5%
+uArch
+???
+???
+???
+Digital logic
+???
+???
+???
+Layout++
+???
+???
+???
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+Recap
+Systems built in layers separated by abstractions
+that expose implementation details of layers below
+Many security issues are caused by leaky abstractions
+We can't eliminate the leaks without removing the abstraction
+Can we place useful bounds on the leaks?
+|  30
+
+I N T E L  L A B S  |  T H E  F U T U R E  B E G I N S  H E R E
+"We demand rigidly defined 
+areas of doubt and 
+uncertainty"
+- Vroomfondel in Douglas Adams' "Hitchhikers Guide to the Galaxy"
+|  31
+
+

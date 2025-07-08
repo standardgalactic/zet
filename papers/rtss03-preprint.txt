@@ -1,0 +1,1491 @@
+In Proceedings of the 24th IEEE Real-Time Systems Symposium (RTSS
+2003), pages 25-36, Cancun, Mexico, December 3-5 2003. c
+ 2003 IEEE.
+Evolving real-time systems
+using hierarchical scheduling
+and concurrency analysis
+John Regehr
+Alastair Reid
+Kirk Webb
+Michael Parker
+Jay Lepreau
+School of Computing, University of Utah
+Abstract
+We have developed a new way to look at real-time and
+embedded software: as a collection of execution environ-
+ments created by a hierarchy of schedulers. Common sched-
+ulers include those that run interrupts, bottom-half han-
+dlers, threads, and events. We have created algorithms for
+deriving response times, scheduling overheads, and block-
+ing terms for tasks in systems containing multiple execution
+environments. We have also created task scheduler logic,
+a formalism that permits checking systems for race condi-
+tions and other errors. Concurrency analysis of low-level
+software is challenging because there are typically several
+kinds of locks, such as thread mutexes and disabling inter-
+rupts, and groups of cooperating tasks may need to acquire
+some, all, or none of the available types of locks to create
+correct software. Our high-level goal is to create systems
+that are evolvable: they are easier to modify in response
+to changing requirements than are systems created using
+traditional techniques. We have applied our approach to
+two case studies in evolving software for networked sensor
+nodes.
+1. Introduction
+By focusing on a single abstraction for concurrency,such
+as events or threads, traditional models for real-time and
+embedded software ignore a great deal of the richness and
+complexity that is present in actual systems. For example,
+in a typical embedded system based on an off-the-shelf real-
+time operating system (RTOS),
+ interrupts are prioritized by a preemptive scheduler
+that is implemented in hardware,
+ bottom-half handlers (a.k.a. tasklets, software inter-
+rupts, or deferred procedure calls) are scheduled non-
+preemptively in software,
+ threads are scheduled preemptively by the RTOS, and
+ lightweight events are run by schedulers implemented
+within individual OS-supported threads.
+Each of these schedulers creates a unique execution envi-
+ronment — a context for running code that has particular
+performance characteristics and restrictions on actions that
+can be taken inside it. Furthermore, each pair of interacting
+execution environments has rules that need to be followed to
+implement mutual exclusion between tasks running in them.
+Multiple execution environments exist because develop-
+ers can exploit their diverse properties by mapping each task
+to an appropriate environment. For example, interrupt han-
+dlers incur very little overhead but provide an inconvenient
+programming model: blocking is not permitted and long-
+running interrupts unnecessarily delay other tasks. Threads,
+on the other hand, are more ﬂexible and can block, but incur
+more time and space overhead.
+The concurrency structure of a system is largely deter-
+mined by the execution environments that it supports and
+by the way that tasks are mapped to these environments.
+For example, consider a pair of cooperating tasks. If both
+tasks are mapped to an event-driven execution environment
+then the tasks are mutually atomic — they run to completion
+with respect to each other, regardless of whatever preemp-
+tion occurs in other parts of the system. On the other hand,
+if the tasks are mapped to separate threads, then the tasks
+can potentially preempt the other; they must each acquire
+a mutex before accessing any shared resources. Finally, if
+one task is mapped to a thread and the other is mapped to an
+interrupt handler, then the preemption relation is asymmet-
+rical — the interrupt can preempt the thread, but not vice
+versa. In this case, the thread must disable interrupts when
+accessing a resource shared by the two tasks, but the inter-
+rupt does not need to take any special action.
+Systems tend to evolve over time as features and require-
+ments accumulate, and as the underlying platform changes
+to accommodate newer and better hardware. Also, all too
+often systems are designed in an exploratory way where
+code is initially structured in a simple, apparently adequate
+way, and then it is generalized several times before an en-
+
+tirely working system can be created. As systems evolve
+it is commonplace for a task to be moved into a new exe-
+cution environment. However, small changes such as mov-
+ing a task from an event into its own preemptive thread, or
+from a thread into an interrupt, can easily break a previ-
+ously correct system. For example, if code that is moved
+to interrupt context accesses a blocking lock, the new sys-
+tem risks crashing because it is illegal to block in interrupt
+mode. It is often far from obvious whether it is possible for a
+given piece of code to transitively call a blocking function.
+Similarly, if code that is moved from an event to a thread
+shares a resource with another event that had been run by
+the same scheduler, then the new system contains a poten-
+tial race condition. These problems are often difﬁcult to
+detect: a small change to the structure of execution environ-
+ments in system, which might be implemented by changing
+a few lines of code, suddenly requires that the concurrency
+assumptions made by many thousands of lines of code be
+reexamined and modiﬁed.
+This paper makes three main contributions to the engi-
+neering and analysis of real-time systems. First, in Sec-
+tion 2, we elevate execution environments to a ﬁrst-class
+concept that can be used to better understand and vali-
+date real-time software. Previous work on real-time sys-
+tems focused on a single execution environment, usually
+one based on preemptive multithreading — other environ-
+ments, if present, were distinctly second-class. We present a
+framework for making generalized adjustments to the map-
+ping of tasks to execution environments in order to help
+tasks meet deadlines. Our emphasis is on using real-time
+techniques to guide system design, as opposed to traditional
+real-time analysis that returns a binary result about schedu-
+lability. In particular, we are trying to create evolvable sys-
+tems: those that are ﬂexible and can gracefully adapt when
+faced with the changes in requirements that are inevitable
+as time passes.
+Our second contribution, in Section 3, is to develop anal-
+yses for collections of execution environments. We show
+that it is feasible to compute response times, dispatching
+overheads, and blocking terms for tasks in real-time sys-
+tems that are based on a hierarchy of preemptive and non-
+preemptive priority schedulers.
+We have also developed
+task scheduler logic (TSL): a formalism that can be used
+to derive and check rules for concurrency both within and
+across execution environments.
+Our third contribution, in Section 4, is an empirical eval-
+uation of our approach: we use it to solve two problems in
+meeting real-time deadlines in software for networked sen-
+sor nodes.
+IRQ
+process
+CPU
+high
+low
+low
+high
+p3
+p2
+p1
+mouse
+disk
+network
+clock
+FIFO
+network_bh
+disk_bh
+Figure 1. Scheduling hierarchy for a UNIX-like
+operating system.
+Clock, network, etc. are
+interrupt handlers, network bh and disk bh
+are bottom-half handlers, and p1-p3 are pro-
+cesses.
+2. Hierarchical execution environments
+Most real-time and embedded software is structured as
+a collection of execution environments. In this section, we
+explain this point of view and describe why it is useful. Our
+deﬁnition of execution environment is informal — it is the
+set of properties created by an instance of a scheduler and
+its global context that are of interest to developers.
+2.1. An example
+Because its structure is familiar to most readers, we
+use a generic UNIX-like scheduling hierarchy as an ex-
+ample; it is depicted in Figure 1. In this and subsequent
+ﬁgures, preemptive schedulers are in a bold, oblique font,
+non-preemptive schedulers in an oblique font, and non-
+scheduler entities in the hierarchy in the standard font. At
+the top of the UNIX hierarchy, the root scheduler, CPU,
+runs interrupts whenever possible; at all other times it runs
+a process scheduler in its user-mode context.
+Interrupts
+are prioritized by the IRQ scheduler that is implemented
+in hardware, with a software interrupt running at the low-
+est priority.
+The software interrupt handler contains its
+own scheduler that uses a FIFO scheduling policy: it runs
+bottom-half handlers to completion. The scheduling hierar-
+chies found in many real-time operating systems are nearly
+identical to the one shown here.
+2.2. Why execution environments?
+Viewing a system as a hierarchy of execution environ-
+ments is useful for several reasons. First, it facilitates under-
+standing and reasoning about scheduling and concurrency
+relations. Second, we have found the hierarchical schedul-
+ing view of a system to be a useful and general notation — it
+can succinctly describe many different system architectures
+2
+
+and helps focus attention on the important similarities and
+differences between systems. For example:
+ RTLinux [20] virtualizes the CPU's interrupt con-
+troller, adding a new root and a new thread scheduler
+to the scheduling hierarchy.
+ TinyOS [9] contains execution environments equiva-
+lent to the bottom half of a traditional operating sys-
+tem, lacking a preemptive thread scheduler.
+ Many applications extend the scheduling hierarchy by
+running new schedulers in a process or thread context.
+For example, an event-driven web server adds a new
+non-preemptive scheduler to the hierarchy, and a sci-
+entiﬁc application might add a preemptive user-level
+thread scheduler. Also, UNIX processes have an im-
+plicit signal scheduler that can preempt the main ﬂow
+of control.
+The diversity of execution environments in UNIX that
+Figure 1 illustrates is of little consequence to the majority
+of programmers who only write code that runs in a process
+context. However, people developing embedded and real-
+time applications frequently have the opportunity to write
+code for all available execution environments in order to
+create code that meets timeliness and efﬁciency goals.
+The hierarchies discussed in this paper are superﬁcially
+similar to our previous work on hierarchical CPU schedul-
+ing in HLS [15]: both are concerned with modular reason-
+ing about compositions of schedulers. However, the work
+described in this paper differs in that it addresses hetero-
+geneous mixes of execution environments and safety issues
+such as race conditions. The previous work, on the other
+hand, focused on guarantees about the availability of CPU
+time using reservation-like semantics. It did not address
+concurrency issues and was concerned only with a preemp-
+tive multithreading execution environment. Another signif-
+icant difference is that while HLS speciﬁed a uniform inter-
+face for connecting schedulers, our current work is aimed at
+describing hierarchical schedulers as they "naturally" occur
+in existing systems. In practice, interfaces between sched-
+ulers tend to be non-uniform, are somewhat blurred by at-
+tempts to optimize systems, and may even be implemented
+in hardware.
+2.3. Properties of hierarchical schedulers
+To reason about hierarchical schedulers, we require that
+scheduler and task behavior is restricted in certain ways.
+The scheduling operations performed by a task are limited
+to:
+1. Taking or releasing a lock.
+2. Relinquishing control to its parent. This encompasses
+termination of a task instance as well as voluntary
+blocking.
+3. Releasing a task that is run by a scheduler somewhere
+else in the hierarchy. For example, the clock inter-
+rupt handler in an RTOS might release a thread that
+is blocked waiting for a timer to expire.
+4. Parameterizing schedulers; for example, a task re-
+questing that its priority be raised.
+A task that acts as a scheduler has access to two additional
+operations:
+1. Dispatching a child task.
+2. Suspending the currently running child task and saving
+its state.
+We are working towards formalizing these restrictions; for
+now they remain intuitive. Real systems conform to them
+without modiﬁcation, in our experience.
+However, our
+model cannot yet cope with exotic inter-scheduler protocols
+such as scheduler activations [1].
+With a single exception, schedulers only receive con-
+trol of the CPU from their parent or from one of their
+children. The exception makes preemption possible: con-
+trol can be taken away from the currently running task and
+given to the root scheduler by the arrival of an interrupt.
+The root scheduler can then pass control down the hierar-
+chy; if any scheduler along the way takes the opportunity
+to change its scheduling decision, it must save the context
+of its previously running task before it can dispatch a new
+one. Obviously, only preemptive schedulers can do this —
+non-preemptive schedulers must always wait for their cur-
+rently running task to return control before making another
+scheduling decision.
+To see how this works in practice, assume there is a ma-
+chine that is running the hierarchy in Figure 1, that pro-
+cess p1 is currently running, and p2 is blocked awaiting
+data from the network. When a network interrupt arrives,
+p1 stops running and the root scheduler gives control to the
+IRQ scheduler, which saves a minimal amount of machine
+state and then dispatches the network interrupt handler. The
+network interrupt handler is designed to run very quickly;
+it acknowledges the interrupt and then releases the network
+bottom-half handler by ﬁrst adding an element to the queue
+of tasks to be run by the FIFO scheduler and second, post-
+ing a software interrupt. When the network interrupt returns
+control to its parent, the IRQ scheduler ﬁnds that there is an-
+other interrupt pending — the software interrupt. The IRQ
+scheduler dispatches the FIFO scheduler, which dequeues
+and dispatches the network bottom-half handler. Now, as-
+sume that the packet being processed by the bottom-half
+handler is one that the blocked process p2 is waiting for,
+3
+
+and so the network bottom-half handler releases task p2 by
+calling into the process scheduler. After the software inter-
+rupt returns, the CPU scheduler gives control to the process
+scheduler which, instead of running p1, saves the state of p1
+and dispatches the now-ready process p2.
+In a system with hierarchical schedulers and execution
+environments, each lock is provided by a particular sched-
+uler. Locks have the effect of preventing a scheduler from
+running certain tasks, effectively blocking sub-trees of the
+scheduling hierarchy. Therefore, taking a lock higher in the
+hierarchy potentially blocks more tasks than does a lock
+lower in the hierarchy. So, although root-level locks (like
+disabling interrupts) are often very cheap, holding them for
+too long can easily cause unrelated tasks to miss deadlines.
+This is an instance of the fundamental tension in real-time
+systems between creating code that makes efﬁcient use of
+resources and code that reliably meets real-time deadlines.
+2.4. Heuristics for evolving systems
+A basic premise of this paper is that as systems evolve,
+it is sometimes necessary to restructure them so that tasks
+can meet real-time deadlines. Furthermore, we claim that
+the mapping of tasks to execution environments can usually
+be modiﬁed more easily than can other aspects of a system
+such as its algorithms, requirements, or underlying hard-
+ware.
+As a ﬁrst approximation, problems in meeting real-time
+deadlines can be caused by transient overload, where the
+CPU has spare cycles on average, or by sustained overload
+where the offered load over a long period of time is more
+than the CPU can handle. In either case, it may be possi-
+ble to solve the problem by adjusting the mapping of tasks
+to execution environments using the strategies outlined in
+Figure 2.
+Transient overload
+For a system that is suffering from
+transient overload, developers must identify a task that is
+missing deadlines and also the task or tasks that cause the
+delay. There are then three options: "promote" the code
+that is missing deadlines so that it runs in a higher prior-
+ity execution environment, "demote" the code that is caus-
+ing deadlines to be missed, or adjust priorities within a sin-
+gle execution environment. In Section 4 we give examples
+of applying both promotion and demotion in a real system.
+Promoting code that is already running in an interrupt envi-
+ronment can be accomplished by virtualizing the interrupt
+controller, a technique used in RTLinux [20].
+Sustained overload
+When there is sustained overload,
+the CPU cannot keep up. This is a more difﬁcult problem
+than transient overload because it cannot be solved solely
+promote
+time−critical
+tasks
+demote
+long−running
+tasks
+interrupt
+bottom half
+thread
+thread
+event
+aggregate tasks
+with short WCET 
+or similar periods
+Figure 2. Movement of tasks between execu-
+tion environments in an RTOS
+by adjusting priorities: it can only be dealt with by reduc-
+ing system overhead. Overhead can be reduced by moving
+a task to a place in the scheduling hierarchy where it will be
+dispatched by a scheduler that has less overhead than its cur-
+rent scheduler, or by moving a task to a place where it incurs
+less synchronization overhead. For example, processing in-
+coming network packets in thread context requires frequent,
+expensive thread dispatches. This overhead can be reduced
+by running network code in a bottom-half handler, and in
+fact this is what real operating systems like Linux do. An-
+other example concerns two tightly coupled tasks, each ex-
+ecuting in its own thread. These might beneﬁt from being
+co-located in the same thread in order to avoid the overhead
+of acquiring locks when accessing shared resources.
+3. Reasoning about execution environments
+There are two main challenges in building, analyzing,
+and evolving systems containing hierarchies of execution
+environments. In Section 3.1 we address real-time analysis
+of restricted scheduling hierarchies. Key issues are "ﬂatten-
+ing" the scheduling hierarchy into a form where it can be
+analyzed using traditional real-time analysis and deriving a
+blocking term for each task in the system. In Section 3.2 we
+address concurrency issues — how can we help developers
+create systems that are free of race conditions? The problem
+is difﬁcult because there are often several choices of lock
+implementation, such as thread mutexes and disabling in-
+terrupts. For some critical sections only one choice of lock
+is correct. In other cases there are several valid choices,
+each with different performance characteristics. For exam-
+ple, disabling interrupts instead of taking a thread mutex
+4
+
+may increase overall throughput but also increase the num-
+ber of missed deadlines.
+3.1. Responsetime analysis for hierarchicalpriority
+schedulers
+This section shows how to "ﬂatten" a scheduling hier-
+archy into a form where it can be analyzed using a stan-
+dard static priority analysis [2, 11], and informally argues
+that our algorithms are correct. Since the goal is to encom-
+pass real-time systems as they are typically built — that is,
+primarily using priorities — the analysis that we propose is
+simple when compared to more general frameworks for rea-
+soning about hierarchical scheduling such as PShED [12] or
+HLS [15].
+Algorithm 1: Preemptive priority schedulers
+This al-
+gorithm applies to hierarchies containing only preemptive
+static priority schedulers. It assigns priorities
+0::n
+ 1 to
+a hierarchy with
+n tasks at the leaves, assuming that zero
+is the highest priority and that schedulers consume negligi-
+ble CPU time. View the scheduling hierarchy as a directed
+acyclic graph and perform a depth-ﬁrst traversal, visiting
+the children of each scheduler in order of highest to lowest
+priority. The algorithm maintains a counter that initially has
+value zero. Each time the traversal visits a leaf of the hier-
+archy, it assigns a priority to the task equal to the value of
+the counter, and then increments the counter.
+To see that this algorithm is correct, consider what would
+happen if, initially, all tasks were runnable. The scheduler
+at the root of the hierarchy would select its highest priority
+child and so on until a leaf task was reached. Notice that this
+task is the ﬁrst task that would be visited by our algorithm,
+and hence the task that is assigned priority 0. Next, consider
+what would happen if the highest-priority task completes or
+blocks: the hierarchy selects the next-highest priority task
+and runs it. This task corresponds to the second task visited
+by our algorithm. The argument can be repeated until all
+tasks have been visited.
+Algorithm 2:
+Adding support for non-preemptive
+FIFO and priority schedulers
+Many operating systems,
+such as Windows 2000, Linux, and TinyOS, use a non-
+preemptive scheduler to run tasks that run for too long to be
+placed in interrupt context, but that still require lightweight
+dispatching. These schedulers typically use a FIFO dis-
+cipline to avoid starvation, but may also support prior-
+ities (e.g., the Windows 2000 kernel supports a hybrid
+priority/FIFO discipline for scheduling deferred procedure
+calls). Our second algorithm supports analysis of schedul-
+ing hierarchies containing non-preemptive schedulers with
+the restriction that these schedulers only run leaf tasks, not
+other schedulers.
+We make use of the response time analysis developed
+to analyze task sets scheduled with preemption thresh-
+olds [17]; it is useful because it permits analysis of a
+structured mix of preemptive and non-preemptive schedul-
+ing. For preemptive priority schedulers, proceed as for Al-
+gorithm 1, additionally assigning each task a preemption
+threshold equal to its priority. For each FIFO scheduler, all
+tasks are assigned the same priority, and preemption thresh-
+olds are set to the same value. For each non-preemptive
+priority scheduler, assign priorities as for preemptive sched-
+ulers, but set the preemption threshold for each task to the
+value of the highest priority of any task run by that sched-
+uler.
+Since this algorithm degenerates to Algorithm 1 when
+all schedulers are preemptive, we will only argue the cor-
+rectness of handling non-preemptive schedulers. First, no-
+tice that, at worst, a task scheduled by a FIFO scheduler is
+queued up behind one instance of each other task run by
+that scheduler. This situation can be modeled by assigning
+the same priority to all tasks. However, it is necessary to
+make a small change to Saksena and Wang's response time
+analysis for task sets with preemption thresholds since they
+assumed that priorities are assigned uniquely. This can be
+accomplished in the same way that it has been accomplished
+in other response time analyses: by ensuring that the anal-
+ysis accounts for interference from same-priority tasks in
+addition to interference from higher priority tasks. Second,
+notice that for non-preemptivepriority schedulers, priorities
+are assigned in a continuous range and that their preemption
+threshold is set to the highest priority in that range. This
+gives us two key properties. First, within the set of tasks
+run by a non-preemptive priority scheduler no preemption
+is possible because when a task starts to run its priority is
+elevated to its preemption threshold, which is too high to
+permit any other task run by that scheduler to preempt it.
+Second, the presence of a non-preemptive scheduler does
+not affect preemption relations anywhere else in the sys-
+tem. To see this, notice that while the effect of elevated
+preemption thresholds is to suppress preemption relations,
+no task has a preemption threshold high enough to cause it
+to interfere with a task run by another scheduler.
+The example scheduling hierarchy in Figure 3 shows the
+priority and preemption threshold that would be computed
+for each task using Algorithm 2.
+Accounting for scheduling overhead
+In priority-based
+systems context switch overhead is accounted for by
+"charging" the cost of two context switches to each instance
+of a real-time task. This concept extends straightforwardly
+to hierarchies of priority schedulers. To compute the con-
+text switch cost, add up the costs of a context switch per-
+formed by each scheduler between the root of the schedul-
+ing hierarchy and the given task. So, for example, an in-
+5
+
+e1 (6, 6)
+e3 (8, 6)
+e2 (7, 6)
+IRQ
+CPU
+FIFO
+thread
+t1 (5, 5)
+event
+high
+high
+high
+high
+low
+low
+low
+low
+disk_bh (4, 4)
+network_bh (4, 4)
+clock  (0, 0)
+network  (1, 1)
+disk (2, 2)
+mouse (3, 3)
+Figure 3. Priorities and preemption thresh-
+olds computed by Algorithm 2
+terrupt handler is charged only for the cost of the interrupt
+prologue and epilogue, but event handler e1 in Figure 3 is
+charged for the cost of scheduling a thread and also dis-
+patching an event.
+Computing blocking terms
+Blocking terms [18] account
+for the worst-case duration of priority inversion in a real-
+time system, and they are signiﬁcant in practice because
+different schedulers may have radically different block-
+ing terms. For example, empirical evidence suggests that
+the Linux kernel can delay the execution of high-priority
+threads by up to 50 ms [13], while RTLinux [20] claims
+to have worst-case scheduling latency about three orders of
+magnitude less than this.
+To compute the blocking term for a task in a system
+with hierarchical scheduling, observe that each scheduler
+between the task and the root of the scheduling hierarchy
+has an opportunity to block the task. Label each edge in the
+hierarchy with the blocking term contributed by its parent
+scheduler. The overall blocking term for any task is the sum
+of the blocking terms of all edges between it and the root of
+the hierarchy.
+3.2. Concurrency analysis
+This section describes TSL, a formal system we have
+created to address locking concerns in systems with multi-
+ple execution environments where it is possible to statically
+identify tasks, resources, and locks. Many embedded and
+real-time systems are static in this sense. TSL is based on
+two main ideas. First, a conservative estimation of the exe-
+cution environment or environments that each function may
+execute in can be found by examining the call graph for a
+system. Second, the relationships between execution envi-
+ronments can be expressed in terms of hierarchical schedul-
+ing and asymmetrical preemption relations.
+Tasks
+Tasks are sequential ﬂows of control through a sys-
+tem. Some tasks ﬁnish by returning control to the scheduler
+that invoked them; other tasks encapsulate an inﬁnite loop
+and these never ﬁnish — control only returns to their sched-
+uler through preemption. Some tasks act as schedulers by
+passing control to tasks running below them in the hierar-
+chy. Familiar examples of tasks are interrupt handlers, event
+handlers, and threads.
+Schedulers and preemption
+Schedulers are responsible
+for sequencing the execution of tasks. TSL models sched-
+ulers in a modular way by specifying the preemption rela-
+tions that the scheduler induces between tasks that it sched-
+ules. Preemption relations are represented asymmetrically:
+we write
+t
+1
+ t
+2 when task
+t
+2 may preempt task
+t
+1 in some
+execution of the system. That is, if we cannot rule out the
+possibility that
+t
+2 can start to run after
+t
+1 begins to exe-
+cute but before
+t
+1 ﬁnishes. This simple deﬁnition suits our
+present needs because it is directly related to preemption, a
+main concern of TSL. In the future, to support multipro-
+cessors and other hardware-based forms of concurrency, we
+will likely adopt a deﬁnition of atomicity based on sequen-
+tial consistency.
+The simplest scheduler, a non-preemptive event sched-
+uler, does not permit any child to preempt any other
+child. For any two children
+t
+1 and
+t
+2 of such a scheduler,
+:(t
+1
+ t
+2
+)
+^
+:(t
+2
+ t
+1
+). On the other hand, a generic pre-
+emptive scheduler, such as a UNIX time-sharing scheduler,
+potentially permits each child task to preempt each other
+child task. That is, for any two children of such a sched-
+uler,
+t
+1
+ t
+2
+^
+t
+2
+ t
+1. A third type of scheduler commonly
+found in systems software is a strict priority scheduler such
+as the interrupt controller in a typical PC. It schedules a
+number of tasks
+t
+1
+::t
+n and it is the case that
+t
+j
+ t
+i only when
+i
+<
+j. Most software-based priority schedulers are not strict
+— they permit priority inversion due to blocking.
+Locks
+Preemption can lead to race conditions, and locks
+are used to eliminate problematic preemption relations.
+Tasks in TSL hold a (possibly empty) set of locks at each
+program point.
+We write
+t
+1
+ 
+l
+t
+2 if parts of a task
+t
+2
+that hold a lock
+l can start to run while a task
+t
+1 holds
+l ( t
+1
+ 
+t
+2 should be read as shorthand for
+t
+1
+ 
+?
+t
+2). For
+example, consider two threads that can usually preempt
+each other. If holding a thread lock
+l
+k blocks a task
+t
+2
+from entering critical sections in
+t
+1 protected by
+l
+k, then
+(t
+1
+ 
+?
+t
+2
+)
+^
+:(t
+1
+ 
+lk
+t
+2
+).
+Every lock is provided by some scheduler; the kinds of
+locks provided by a scheduler are part of its speciﬁcation.
+We write
+t
+(
+l if a scheduler
+t provides a lock
+l, and re-
+quire that each lock be provided by exactly one scheduler.
+There are two common kinds of locks. First, locks that re-
+semble disabling interrupts: they prevent any task run by
+6
+
+a particular scheduler from preempting a task that holds the
+lock. Second, locks that resemble thread mutexes: they only
+prevent preemption by tasks the hold the same instance of
+the type of lock. Some tasks, such as interrupt handlers, im-
+plicitly hold locks when they start running. Accounting for
+these locks is a matter of speciﬁcation and needs no special
+support in TSL.
+Resources
+At each program point a task is accessing a
+(possibly empty) set of resources. We write
+t
+!
+L
+r if a
+task
+t potentially uses a resource
+r while holding a set of
+locks
+L. Resources represent data structures or hardware
+devices that must be accessed atomically.
+Races
+The deﬁnition of a race condition is as follows:
+race
+(t
+1
+;
+t
+2
+;
+r
+)
+def
+=
+t
+1
+!
+L
+1
+r
+^
+t
+2
+!
+L
+2
+r
+^
+t
+1
+6=
+t2
+^
+t
+1
+ 
+L
+1
+\L
+2
+t
+2
+That is, a race can occur if two different tasks
+t
+1 and
+t
+2 use a
+common resource
+r with some common set of locks
+L
+1
+\L
+2,
+and if
+t
+2 can preempt
+t
+1 even when
+t
+1 holds those locks.
+For example, if some task
+t
+1 uses a resource
+r with locks
+fl
+1
+;
+l
+2
+;
+l
+3
+g and another task
+t
+2 uses
+r with locks
+fl
+2
+;
+l
+3
+;
+l
+4
+g
+then they hold locks
+fl
+2
+;
+l
+3
+g in common and a race occurs
+if and only if
+t
+1
+ 
+fl
+2
+;l
+3
+g
+t
+2.
+Hierarchical scheduling
+Each scheduler is itself a task
+from the point of view of a scheduler one level higher in
+the hierarchy. For example, when an OS schedules a thread,
+the thread is considered to be a task regardless of whether
+or not an event scheduler is implemented inside the thread.
+We write
+t
+1
+C
+t
+2 if a scheduler
+t
+1 is directly above task
+t
+2 in the hierarchy;
+C is the parent relation. Similarly, the
+ancestor relation
+C
++ is the transitive closure of
+C. TSL's
+deﬁnition of "task" is slightly more general than the sense
+usually used by the real-time community, which does not
+encompass scheduling code.
+TSL gains much of its power by exploiting the properties
+of hierarchies of schedulers. First, the ability or lack of abil-
+ity to preempt is inherited down the scheduling hierarchy:
+if a task
+t
+1 cannot preempt a task
+t
+2, then
+t
+1 cannot preempt
+any descendent of
+t
+2. A useful consequence is that if the
+nearest common scheduler in the hierarchy to two tasks is
+a non-preemptive scheduler, then neither task can preempt
+the other.
+When a task that is the descendent of a particular sched-
+uler requests a lock, the scheduler may have to block the
+task. When this happens, the scheduler does not directly
+block the task that requested the lock, but instead blocks its
+currently running child, which must be transitively schedul-
+ing the task that requested the lock. If a task attempts to
+acquire a lock that is not provided by one of its ancestors in
+the scheduling hierarchy then there is no child task for the
+scheduler to block — an illegal action has occurred. Us-
+ing TSL, we can check for this generalized version of the
+"blocking in interrupt" problem by ensuring that tasks only
+acquire blocking locks provided by their ancestor sched-
+ulers. We formalize this generalization as follows:
+illegal
+(t;
+l
+)
+def
+=
+9
+t
+1
+:
+t
+1
+(
+l
+^
+:(t
+1
+C
++
+t)
+^
+t
+!
+L
+r
+^
+l
+2
+L
+^
+blocking
+(l
+)
+Execution environments
+An execution environment is a
+context for running application code that is created by an
+instance of a scheduler. Our operating deﬁnition of execu-
+tion environment is informal: a list of attributes of the en-
+vironment that are of practical signiﬁcance to software de-
+velopers. The properties of an environment are determined
+primarily by its scheduler, but also by the rest of the sys-
+tem and even the underlying hardware platform. For exam-
+ple, consider an execution environment created by a non-
+preemptive event scheduler that runs in interrupt context:
+ The non-preemptive parent scheduler implies that
+tasks in the environment cannot preempt each other.
+ The lack of an ancestor scheduler that supports block-
+ing implies that tasks cannot block.
+ The details of the compiler and underlying hardware
+platform determine the number of microseconds of
+overhead in taking an interrupt and dispatching an
+event.
+ The longest WCET of any task in the environment,
+added to the longest duration that any task in the sys-
+tem disables interrupts for, determines the worst-case
+scheduling latency for the highest-priority event in the
+environment.
+Reasoning about systems
+In this paper we assume that
+the code used to build a system is annotated with TSL prop-
+erties such as accesses to resources and speciﬁcations for
+schedulers. We currently do this mostly by hand, but in
+the future we plan to develop better tool support for de-
+riving facts about code. To verify that a system does not
+contain any race conditions or illegal blocking we run the
+TSL checker, a lightweight automatic theorem prover. The
+domain of TSL facts is ﬁnite, so simple algorithms can be
+used; our current TSL checker is a forward-chaining evalu-
+ator written in Haskell.
+7
+
+One of our chief goals with TSL is to enable modular,
+reusable speciﬁcations of schedulers, tasks, and applica-
+tions. TSL as it currently exists comes reasonably close
+to this goal but there are two places where we have expe-
+rienced problems. First, on adding a new task to a sched-
+uler, one must add any preemption relations between the
+task and its sibling tasks. In raw TSL this would require
+that we modify the scheduler speciﬁcations as the applica-
+tion changes, or the application speciﬁcations as the sched-
+uler hierarchy changes — neither approach is very modu-
+lar. To avoid this, the TSL checker provides direct support
+for common types of schedulers, automatically generating
+the necessary preemption relations. Second, TSL does not
+account for the ability of tasks to release other tasks. For
+example, although schedulers implement time-slicing using
+timer interrupts, TSL misses the fact that disabling inter-
+rupts suppresses time slicing. At present one needs to add
+non-modular details about task releases to TSL models to
+keep it from returning too many false positives — potential
+race conditions that cannot actually happen. We are work-
+ing on adding support for causality in task releases to make
+it possible to infer these properties from ﬁrst principles.
+In previous work [14] we focused on synchronization in-
+ference: the automatic derivation of an appropriate lock im-
+plementation for each critical section in a system. However,
+in this paper we focus on using TSL only to look for prob-
+lems in a system, relying on the developer to ﬁx these prob-
+lems. TSL reports the presence of illegal locking or race
+conditions; when doing so it provides a list of problematic
+lock acquisitions or preemption relations.
+4. Evolving a real system
+This section demonstrates and validates our approach
+to creating evolvable real-time systems by solving prob-
+lems meeting real-time deadlines in TinyOS [9], a simple
+component-based operating system for networked sensor
+nodes.
+TinyOS runs on "motes," small microcontroller-
+based systems equipped with a wireless packet radio. We
+consider two changes to the base system:
+Adding long running tasks: We show how to support
+long-running sections of code without disrupting on-
+going computations.
+Meeting radio deadlines: We solve a design problem in
+TinyOS where critical sections cause blocking that in-
+terferes with reliable radio reception.
+4.1. TinyOS and the ping/pong application
+The TinyOS scheduling hierarchy, shown in Figure 4, is
+analogous to the bottom half of an RTOS or general-purpose
+IRQ
+AVR
+calc_crc
+packet_sent
+packet_received
+FIFO
+AM_send_task
+low
+high
+spi
+output_compare
+adc
+Figure 4. The TinyOS scheduling hierarchy:
+interrupts are scheduled preemptively by the
+CPU while tasks are scheduled in software
+and have run-to-completion semantics
+operating system. It runs in a single address space and con-
+tains two execution environments: interrupt handlers run-
+ning at high priority and tasks that are scheduled in FIFO
+order at low priority. Tasks provide a level of deferred pro-
+cessing, reserving interrupt context for short, time-critical
+sections of code. In the context of TinyOS, task has a more
+restricted meaning than its usual deﬁnition: it does not refer
+to interrupt handlers or scheduling code.
+Our motivating application is simple, but exercises the
+entire functionality of the TinyOS network stack. The ap-
+plication runs on a pair of motes: the ﬁrst sends out packets
+and counts replies; the second returns any packet it receives
+to the ﬁrst. The performance metric of interest is overall
+throughput: an important factor for networked sensors.
+Modeling the application in TSL
+Since embedded sys-
+tems typically have a relatively small number of schedulers
+and tasks, it is straightforward to develop a model of the
+scheduling aspects of an application. In fact, the ﬁgures
+we have used to illustrate scheduling hierarchies contain al-
+most all of the required information. The main remaining
+challenge in developing a TSL model is tracking the use
+of resources and locks inside the code. One approach is to
+annotate every critical section with which locks it uses and
+which resources it accesses, and then to use a tool that we
+have developed to perform a simple source-code analysis to
+extract the callgraph of the application. This is quite feasi-
+ble; for example, the authors of TinyOS have developed a
+new C-like language nesC [7] in which critical sections are
+explicitly identiﬁed; it would take little more effort from the
+programmer to identify which resources are used by each
+critical section. This approach works best if it is applied as
+the code is written and is maintained with the code. Since
+we did not write most of our application code and wish to
+be able to track future changes with little effort, we judged
+that manually annotating the code in this ﬁne-grained way
+was not desirable.
+8
+
+As an engineering compromise, we developed a coarse-
+grained model of the system based entirely on the schedul-
+ing hierarchy, with the goal of detecting race conditions in-
+troduced by evolving the system, but without the ability to
+detect race conditions that are in the original system. Our
+model consists of a single resource used by all interrupt
+handlers and all TinyOS tasks when they have interrupts
+disabled, and a single resource used by all TinyOS tasks
+that have interrupts enabled. This is a very coarse-grained
+model so it is worth pointing out that coarse-grained mod-
+els are actually more sensitive to race conditions than are
+ﬁne-grained models, since any approximations made must
+be safe ones. As one would expect, when using this simple
+model TSL reported no race conditions in the base applica-
+tion.
+Experimental
+setup
+All
+experiments
+were
+run
+on
+TinyOS version 0.6.
+We used Mica motes based on
+the Atmel ATmega103 8-bit microcontroller running at
+4 MHz with 4 KB of RAM and 128 KB of ﬂash memory.
+These motes have a radio theoretically capable of sending
+115 kbps; TinyOS drives it at 40 kbps. Timing measure-
+ments were taken by setting output pins on the AVR and
+observing the results using a logic analyzer.
+4.2. Supporting long-running tasks
+In this experiment, we investigate how we can add long-
+running tasks while maintaining high radio throughput.
+This is a desirable feature as mote hardware becomes capa-
+ble of running sophisticated algorithms such as those sup-
+porting signal processing and cryptography.
+The experiment
+We used a timer interrupt to post a long-
+running task four times per second. The task is synthetic:
+it makes a copy of the packet most recently received over
+the radio and then spins for the rest of its execution time.
+The experimental procedure was to vary the run-time of the
+long-running task while measuring network throughput.
+The "original TinyOS" data points in Figure 5 show how
+the long-running task interferes with throughput. We do not
+have data points for 10 and 25 ms because the TinyOS net-
+work subsystem consistently crashes in those experiments
+due to a bug, or at 200 ms because no packets were reliably
+returned at (or beyond) this point.
+Our hypothesis was that the drop in throughput was pri-
+marily caused by a delay in returning the packet to the
+sender. We believed that most packet transmission and re-
+ceipt processing runs in interrupt context. Since code run
+in interrupt context is not affected by our long-running task,
+the data clearly indicate that some part of packet processing
+runs as a task. By examining the code, we quickly con-
+ﬁrmed that the pong application posts tasks as part of send-
+ 0
+ 5
+ 10
+ 15
+ 20
+ 25
+ 0
+ 50
+ 100
+ 150
+ 200
+Round Trips per Second
+Task Execution Time (ms)
+Original TinyOS
+TinyOS with added preemption
+Figure 5. Impact of posting a long-running
+task four times per second
+ing and receiving packets. Since TinyOS schedules tasks
+non-preemptively, transmission of the packet will be de-
+layed until the load task completes if the load task is running
+when the packet arrives.
+Restructuring the scheduling hierarchy
+We now illus-
+trate how to apply our method for restructuring a system;
+it was described in Section 2.4.
+The goal is to prevent
+TinyOS radio tasks from missing their deadlines. To see
+where the problems begin, we performed response time
+analysis for the four TinyOS radio tasks and a variable-
+length CPU-intensive task that are run by TinyOS's non-
+preemptive FIFO scheduler. This analysis showed that if
+the long-running task runs for more than 3.68 ms it can-
+not be run in a standard version of TinyOS without caus-
+ing missed radio deadlines. To avoid missed deadlines, the
+long-running task must be demoted or the radio tasks must
+be promoted.
+We decided not to promote radio code into interrupt
+context because the TinyOS task that computes the CRC
+ﬁeld for an outgoing packet runs for too long: more than
+3 ms. Rather, we demoted the long-running task, necessi-
+tating signiﬁcant changes to the structure of execution en-
+vironments in TinyOS. To make these changes, we multi-
+instantiated the TinyOS task scheduler and then ran each
+scheduler instance in a separate preemptive thread provided
+by the AvrX [3] operating system. Unlike TinyOS, which
+does not support threads, AvrX is a typical RTOS: it pro-
+vides preemptive multithreading, mutual exclusion, timers,
+message queues, etc.
+The resulting scheduling hierarchy is depicted in Fig-
+ure 6. It contains two task schedulers: a foreground sched-
+uler that runs high-priority network tasks and a background
+scheduler that runs long-running tasks (of which there is
+only one in our experiment). Tasks running on each sched-
+9
+
+IRQ
+AVR
+AvrX
+calc_crc
+packet_sent
+packet_received
+AM_send_task
+background1
+background2
+low
+high
+high
+low
+FIFO1
+FIFO2
+spi
+adc
+output_compare
+Figure 6. TinyOS scheduling hierarchy after
+demoting long-running tasks
+uler retain run-to-completion semantics with respect to each
+other, but a foreground task can preempt a background task.
+Validating the changed system
+There are two compo-
+nents to validating the system after making a change to its
+execution environments: checking that the real-time prob-
+lem that motivated the change was ﬁxed, and ensuring that
+race conditions were not added to the system. We hypothe-
+sized that network throughput would be restored to its origi-
+nal level if we could avoid delaying the execution of TinyOS
+tasks that support packet processing, and this hypothesis is
+conﬁrmed in Figure 5.
+To check for race conditions we modeled the new
+scheduling hierarchy and the long-running task in TSL.
+Since we wrote the long-running task ourselves, it seemed
+reasonable to use a ﬁner-grained model of resources and
+so we added an additional resource representing the packet
+buffer and noted that it was accessed by both the long-
+running task and a task in the TinyOS network stack. We
+then ran the TSL checker over the modiﬁed system; it told
+us that there was, in fact, a race condition caused by the new
+preemption relation between the radio tasks and the long-
+running task. After ﬁxing this race by protecting the access
+with a mutex and updating the model, TSL was not able to
+ﬁnd any more errors.
+4.3. Meeting radio deadlines
+The original mica radio stack [9] transferred data from
+the radio hardware one bit at a time. Recent TinyOS ver-
+sions use the serial peripheral interface (SPI) hardware to
+implement byte-level transfers from the radio to the host
+CPU, increasing link speed and reducing CPU overhead.
+However, interrupts signaled by the SPI have an extremely
+short deadline: if the SPI interrupt is not handled within 22
+CPU cycles (5.5
+s) of its arrival, a byte of radio data is
+ 0
+ 5
+ 10
+ 15
+ 20
+ 25
+ 10
+ 100
+ 1000
+ 10000
+Round Trips per Second
+Tasks Posted per Second
+Original TinyOS
+TinyOS with virtualized SPI
+Figure 7. Posting tasks interferes with radio
+reception in the standard TinyOS kernel
+lost. Furthermore, losing a byte is almost certain to force
+an entire packet to be lost because it defeats the SEC/DED
+payload-encoding scheme that can tolerate a single cor-
+rupted bit per byte. A consequence of this extremely tight
+real-time deadline is that posting a TinyOS task, which dis-
+ables interrupts for a few cycles in order to be safely callable
+from both interrupt and non-interrupt environments, can
+cause the SPI deadline to be missed. Experiments show
+that posting a task a few hundred times per second causes
+a signiﬁcant drop in radio performance, as demonstrated in
+Figure 7.
+Changing the hierarchy
+To maintain radio throughput
+while posting tasks we promote part of the SPI interrupt
+handler by performing a lightweight virtualization of the in-
+terrupt handling structure of TinyOS in a manner analogous
+to what was done in RTLinux [20]. The virtualization has
+two aspects. First, by default TinyOS enforces mutual ex-
+clusion by disabling interrupts, or in other words, taking
+a lock provided by the scheduler at the root of the hierar-
+chy. As we saw in Section 3.1, this contributes a blocking
+term to every task in the system. To avoid applying a large
+blocking term to the SPI interrupt handler, mutual exclusion
+in TinyOS must be implemented using a lock provided by
+a scheduler one level lower in the scheduling hierarchy —
+the virtual interrupt scheduler. This change is shown in Fig-
+ure 8; it can be effected by modifying several macros in the
+TinyOS header ﬁles.
+Second, the SPI interrupt handler must be split into two
+parts: one that reads a byte from the SPI register and an-
+other that integrates this byte into the ongoing computation.
+The ﬁrst part is time critical and must proceed without de-
+lay no matter what the rest of the system is doing. The
+second part interacts with the rest of the system and there-
+10
+
+IRQ
+AVR
+calc_crc
+packet_sent
+packet_received
+FIFO
+AM_send_task
+low
+high
+spi
+vIRQ
+soft_spi
+adc
+output_compare
+Figure 8. Virtualizing the interrupt scheduler
+exempts the SPI interrupt from being disabled
+by critical sections, and hence it is able to
+reliably meet real-time deadlines
+fore it must be synchronous with respect to TinyOS as a
+whole. It is not time critical. The implementation that we
+chose is for the time critical part of the SPI interrupt handler
+to trigger a software interrupt. If an SPI interrupt arrives
+while TinyOS is not in a critical section, then the software
+interrupt handler runs immediately after the SPI interrupt
+handler returns. However, if an SPI interrupt arrives while
+TinyOS is in a critical section, then the execution of the soft
+interrupt will be delayed until the critical section is ﬁnished.
+The important property of this hierarchy is that interrupts
+run by the vIRQ scheduler are disabled by critical sections
+in TinyOS code, while interrupts run by the IRQ scheduler
+are not.
+Validating the changed system
+Again, to validate the
+changed system we must show that the real-time problem
+has been solved and that no new concurrency errors have
+been added. Since posting a task in our modiﬁed TinyOS
+kernel cannot cause missed SPI interrupts, radio throughput
+should not vary as a function of the frequency at which tasks
+are posted. The data points in Figure 7 that correspond to
+the modiﬁed kernel show that this is the case.
+By introducing many new preemption relations we have
+made a potentially serious change to the scheduling hier-
+archy. Indeed, TSL detected a race condition in the modi-
+ﬁed system. The problem is that the new software interrupt
+handler can be preempted by the SPI interrupt handler and
+they share a small amount of state. Since these two tasks
+are causally related — the software interrupt is triggered
+by the hardware interrupt — we reasoned that this was a
+false alarm since the race condition can only occur if the
+software interrupt is delayed for 200
+s: long enough for
+another byte to arrive. Since the packet will be lost anyway
+in this case, we opted not to eliminate the race condition by
+protecting accesses to the shared variable — this would add
+overhead without providing any beneﬁt.
+5. Related work
+A number of research projects have used hierarchical
+scheduling techniques to create ﬂexible real-time systems.
+These include PShED [12], the open environment for real-
+time applications in Windows NT [4], hierarchical ﬁxed-
+priority scheduling [16], hierarchical virtual real-time re-
+sources [5], and our own HLS [15]. These previous projects
+proposed new hybrid scheduling algorithms that provide
+new and useful reservation-like guarantees to real-time ap-
+plications and collections of applications in open systems
+where task characteristics are not always known in advance.
+Our current work, on the other hand, is fundamentally dif-
+ferent: its goal is to describe and analyze the hierarchical
+priority schedulers that are already present in essentially
+all real-time and embedded systems. It focuses on closed,
+static systems where task characteristics are known in ad-
+vance, and it supports concurrency analysis.
+The trend towards inclusion of concurrency in main-
+stream language deﬁnitions such as Java and towards strong
+static checking for errors is leading programming language
+research in the direction of providing annotations [8] or ex-
+tending type systems to model locking protocols [6]. These
+efforts, however, have not addressed the possibility of mul-
+tiple execution environments as we have in TSL.
+Several RTOSs such as RTLinux [20] and TimeSys
+Linux/GPL [19] have restructured scheduling hierarchies,
+or altered the mapping of tasks to schedulers, in order to
+help software meet real-time deadlines. While these efforts
+have focused on implementing or evaluating a single trans-
+formation, we have developed a general framework and ac-
+companying analyses for restructuring systems code to ﬁx
+problems in meeting real-time deadlines.
+We have also
+made the execution environments created by the hierarchi-
+cal schedulers in a system into a ﬁrst-class concept, which
+had not been done before.
+Some aspects of multiple execution environments have
+been addressed by previous research. For example, it has
+long been known that static priority analysis permits ho-
+mogeneous analysis of the ability of interrupts and threads
+to meet real-time deadlines. Jeffay and Stone analyzed the
+schedulability of a mix of interrupt handlers and threads
+scheduled using EDF [10].
+Saksena and Wang showed
+how to use preemption threshold scheduling to map abstract
+tasks onto both preemptive threads and non-preemptive
+user-level events [17], allocating a minimal number of pre-
+emptive threads. However, these efforts have focused on
+a limited set of execution environments, and none of them
+have addressed the concurrency issues created by a diversity
+of execution environments, as we have with TSL.
+11
+
+6. Conclusion
+We have made several contributions towards the creation
+of evolvable real-time systems. First, we have shown that
+it is useful to look at a system as a collection of execution
+environments with different properties that can be exploited
+by developers. We have also provided heuristics for map-
+ping tasks to execution environments in such a way that
+real-time deadlines are likely to be met. Our second con-
+tribution is two novel algorithms that make it possible to
+perform real-time analysis of hierarchies of schedulers con-
+taining priority and FIFO schedulers. Third, we have shown
+that a whole-program concurrency analysis based on task
+scheduler logic can be used to detect race conditions and
+other concurrency errors resulting from changing the map-
+ping of tasks to environments. Finally, we have validated
+our approach to evolving real-time systems using two case
+studies that evolve the structure of networked sensor node
+software.
+Acknowledgments: The authors would like to thank
+Eric Eide, Mike Hibler, and the reviewers for their helpful
+comments on this paper.
+This work was supported, in part, by the National Sci-
+ence Foundation under award CCR-0209185 and by the
+Defense Advanced Research Projects Agency and the Air
+Force Research Laboratory under agreements F30602-99-
+1-0503 and F33615-00-C-1696.
+References
+[1] T. E. Anderson, B. N. Bershad, E. D. Lazowska, and H. M.
+Levy. Scheduler Activations: Effective kernel support for
+the user-level management of parallelism. In Proc. of the
+13th ACM Symp. on Operating Systems Principles (SOSP),
+pages 95-109, Paciﬁc Grove, CA, Oct. 1991.
+[2] N. Audsley, A. Burns, M. Richardson, K. Tindell, and
+A. Wellings. Applying new scheduling theory to static
+priority pre-emptive scheduling. Software Engineering
+Journal, 8(5):284-292, Sept. 1993.
+[3] L. Barello. The AvrX real time kernel.
+http://barello.net/avrx.
+[4] Z. Deng, J. W.-S. Liu, L. Zhang, S. Mouna, and A. Frei. An
+open environment for real-time applications. Real-Time
+Systems Journal, 16(2/3):165-185, May 1999.
+[5] X. Feng and A. K. Mok. A model of hierarchical real-time
+virtual resources. In Proc. of the 23rd IEEE Real-Time
+Systems Symp. (RTSS), Austin, TX, Dec. 2002.
+[6] C. Flanagan and M. Abadi. Types for safe locking. In
+S. Swierstra, editor, ESOP'99 Programming Languages and
+Systems, volume 1576 of Lecture Notes in Computer
+Science, pages 91-108. Springer-Verlag, Mar. 1999.
+[7] D. Gay, P. Levis, R. von Behren, M. Welsh, E. Brewer, and
+D. Culler. The nesC language: A holistic approach to
+networked embedded systems. In Proc. of Programming
+Language Design and Implementation (PLDI), pages 1-11,
+San Diego, CA, June 2003.
+[8] A. Greenhouse and W. L. Scherlis. Assuring and evolving
+concurrent programs: Annotations and policy. In Proc. of
+the 24th Intl. Conf. on Software Engineering (ICSE), pages
+453-463, Orlando, FL, May 2002.
+[9] J. Hill, R. Szewczyk, A. Woo, S. Hollar, D. Culler, and
+K. Pister. System architecture directions for networked
+sensors. In Proc. of the 9th Intl. Conf. on Architectural
+Support for Programming Languages and Operating
+Systems (ASPLOS), pages 93-104, Cambridge, MA, Nov.
+2000.
+[10] K. Jeffay and D. L. Stone. Accounting for interrupt
+handling costs in dynamic priority task systems. In Proc. of
+the 14th IEEE Real-Time Systems Symp. (RTSS), pages
+212-221, Raleigh-Durham, NC, Dec. 1993.
+[11] M. Klein, T. Ralya, B. Pollak, R. Obenza, and M. G.
+Harbour. A Practitioner's Handbook for Real-Time
+Analysis: Guide to Rate-Monotonic Analysis for Real-Time
+Systems. Kluwer Academic Publishers, 1993.
+[12] G. Lipari, J. Carpenter, and S. K. Baruah. A framework for
+achieving inter-application isolation in multiprogrammed
+hard real-time environments. In Proc. of the 21st IEEE
+Real-Time Systems Symp. (RTSS), pages 217-226, Orlando,
+FL, Nov. 2000.
+[13] J. Regehr. Inferring scheduling behavior with Hourglass. In
+Proc. of the USENIX Annual Technical Conf. FREENIX
+Track, pages 143-156, Monterey, CA, June 2002.
+[14] J. Regehr and A. Reid. Lock inference for systems software.
+In Proc. of the Second AOSD Workshop on Aspects,
+Components, and Patterns for Infrastructure Software
+(ACP4IS), Boston, MA, Mar. 2003.
+[15] J. Regehr and J. A. Stankovic. HLS: A framework for
+composing soft real-time schedulers. In Proc. of the 22nd
+IEEE Real-Time Systems Symp. (RTSS), pages 3-14,
+London, UK, Dec. 2001.
+[16] S. Saewong, R. Rajkumar, J. P. Lehoczky, and M. H. Klein.
+Analysis of hierarchical ﬁxed-priority scheduling. In Proc.
+of the 14th IEEE Euromicro Conf. on Real-Time Systems,
+Vienna, Austria, June 2002.
+[17] M. Saksena and Y. Wang. Scalable real-time system design
+using preemption thresholds. In Proc. of the 21st IEEE
+Real-Time Systems Symp. (RTSS), Orlando, FL, Nov. 2000.
+[18] L. Sha, R. Rajkumar, and J. Lehoczky. Priority inheritance
+protocols: An approach to real-time synchronization. IEEE
+Transactions on Computers, 39(9):1175-1185, Sept. 1990.
+[19] TimeSys Linux/GPL. http://timesys.com.
+[20] V. Yodaiken. The RTLinux manifesto. In Proc. of The 5th
+Linux Expo, Raleigh, NC, Mar. 1999.
+12
+

@@ -1,0 +1,540 @@
+© 2017 Arm Limited 
+Engineering and Use of 
+Large Formal Specifications
+Alastair Reid 
+Arm Research 
+@alastair_d_reid
+
+© 2017 Arm Limited 
+?2
+More
+Less
+Data 
+Performance 
+Machine Learning 
+Internet of Things 
+Smart Homes 
+Self Driving Cars 
+Social Media
+Bugs 
+Crashes 
+Data loss 
+Data corruption 
+Data leaks / theft 
+DDoS attacks 
+Cyber-Physical attacks
+
+© 2017 Arm Limited 
+?3
+Better 
+Programming 
+Languages
+Better 
+System 
+Design
+Hardware 
+Security 
+Enforcement
+Automatic 
+Test 
+Generation
+Fuzz Testing
+Exploit 
+Detection
+Better 
+Bug 
+Finding
+Formal 
+Verification
+Legal / 
+Regulatory
+
+© 2017 Arm Limited 
+?4
+
+© 2017 Arm Limited 
+?5
+Specification
+Specification
+Specification
+Specification
+Specification
+
+© 2017 Arm Limited 
+?6
+What (formal) specifications do we need?
+Libraries: stdio.h, OpenGL, ... 
+Languages: C, C++, ML, Javascript, Verilog, ... 
+Network: TCP/IP, OAuth, DNS, TLS, WiFi, ... 
+Filesystems: FAT32, NTFS, ext4, ... 
+OSes: Posix/Linux system call, Linux device driver, KVM, UEFI, ... 
+Hardware: CPU, PCIe, AMBA, NIC, ...
+
+© 2017 Arm Limited 
+?7
+Critical properties of specifications
+Scope 
+- Completeness 
+- Not abstracting out critical detail 
+Applicability 
+- Version agnostic 
+- Vendor agnostic 
+Trustworthiness
+
+© 2017 Arm Limited 
+?8
+Overcoming the Specification Bottleneck
+Creating formal specifications 
+Testing specifications 
+Getting buy in 
+Using specifications 
+Formal validation of specifications 
+Making your specifications public
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016 
+"End to End Verification of ARM processors with ISA Formal," CAV 2016 
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017 
+"ISA Semantics for ARM v8-A, , RISC-V, and CHERI-MIPS," POPL 2019 
+https://alastairreid.github.io/papers/
+
+© 2017 Arm Limited 
+?9
+Creating formal specifications 
+Testing specifications 
+Getting buy in
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+
+© 2017 Arm Limited 
+?10
+Creating Specifications
+
+© 2017 Arm Limited 
+?10
+Creating Specifications
+
+© 2017 Arm Limited 
+?10
+Creating Specifications
+
+© 2017 Arm Limited 
+?10
+Creating Specifications
+
+© 2017 Arm Limited 
+?10
+Creating Specifications
+
+© 2017 Arm Limited 
+?10
+Creating Specifications
+
+© 2017 Arm Limited 
+?11
+Pseudocode
+
+© 2017 Arm Limited 
+?12
+ARM Pseudocode
+~40,000 lines 
+- 32-bit and 64-bit modes 
+- All 4 encodings: Thumb16, Thumb32, ARM32, ARM64 
+- All instructions (> 1300 encodings) 
+- All 4 privilege levels (User, Supervisor, Hypervisor, Secure Monitor) 
+- Both Security modes (Secure / NonSecure) 
+- MMU, Exceptions, Interrupts, Privilege checks, Debug, TrustZone, ...
+
+© 2017 Arm Limited 
+?13
+Status at the start
+- No language spec 
+- No tools (parser, type checker) 
+- Incomplete (around 15% missing) 
+- Unexecuted, untested 
+- Senior architects believed that an executable spec was 
+- Impossible 
+- Not useful 
+- Less readable 
+- Less correct
+
+© 2017 Arm Limited 
+?14
+Architectural Conformance Suite
+Processor architectural compliance sign-off 
+Large 
+• v8-A 32,000 test programs, billions of instructions 
+• v8-M 3,500 test programs, > 250 million instructions 
+Thorough 
+• Tests dark corners of specification 
+Hard to run 
+• Requires additional testing infrastructure
+
+© 2017 Arm Limited 
+?15
+© 2017 Arm Limited 
+Progress in testing Arm specification
+-
+Does not parse, does not typecheck
+-
+Can't get out of reset
+-
+Can't execute first instruction
+-
+Can't execute first 100 instructions
+-
+...
+-
+Passes 90% of tests
+-
+Passes 99% of tests
+-
+...
+0
+50
+100
+
+© 2017 Arm Limited 
+?16
+Measuring architecture coverage of tests
+Untested: op1*op2 == -3.0, FPCR.RND=-Inf 
+
+© 2017 Arm Limited 
+?17
+Creating a Virtuous Cycle
+ARM 
+Spec
+
+© 2017 Arm Limited 
+?18
+Lessons learned about engineering a specification
+Specifications contain bugs 
+Huge value in being able to run existing test suites 
+- Need to balance against benefits of non-executable specs 
+Find ways to provide direct benefit to other users of spec 
+- They will do some of the testing/debugging for you 
+- They will support getting your changes/spec adopted as master spec 
+- Creates Virtuous Cycle
+
+© 2017 Arm Limited 
+?19
+Using Specifications
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+© 2017 Arm Limited 
+?20
+Verification of Implementations 
+- Bounded Model Checking 
+- Testing (Golden Reference) 
+- Deductive Reasoning
+Verification of Clients 
+- Formally verifying OS code / etc. 
+- Verifying Compilers/Linkers
+Generation 
+- Testsuites (Concolic) 
+- Simulators 
+- Peephole Optimisations 
+- Binary Translators
+Documentation 
+- Generate PDF/HTML 
+- Interactive specifications
+Specification Extension 
+- Testing / Exploration
+Static Analysis 
+- Abstract interpretation of binaries 
+- Decompilation of binaries 
+- Reverse engineering tools
+Instrumented Execution 
+- Measure Coverage 
+- Driving Fuzz Testing
+
+© 2017 Arm Limited 
+?21
+Formally validating ARM processors - using an existing tool
+ARM 
+Specification
+ARM 
+Processor
+Translate 
+to Verilog
+Verilog 
+Model 
+Checker
+
+© 2017 Arm Limited 
+?22
+Checking an instrucpon
+ADD
+
+© 2017 Arm Limited 
+?22
+Checking an instrucpon
+ADD
+CMP LDR
+STR BNE
+Context
+
+© 2017 Arm Limited 
+?23
+Lessons Learned from validating processors
+Very effective way to find bugs in implementations 
+Formally validating implementation is effective at finding bugs in spec 
+- Try to find most of the bugs in your spec before you start 
+Huge value in being able to use spec to validate implementations 
+- Helps get formal specification adopted as part of official spec 
+Spec
+
+© 2017 Arm Limited 
+?24
+Formal Validation of 
+Specifications
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+
+© 2017 Arm Limited 
+?25
+One Specification to rule them all?
+Architecture Spec
+Compliance Tests
+Processors
+Reference Simulator
+
+© 2017 Arm Limited 
+?26
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+
+© 2017 Arm Limited 
+?26
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+
+© 2017 Arm Limited 
+?26
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+Rule R:    X → A ∨ B ∨ C ∨ D
+
+© 2017 Arm Limited 
+?27
+State Change
+Exit from lockup
+Fell(LockedUp)
+Event
+A Cold reset
+Called(TakeColdReset)
+Event
+A Warm reset
+Called(TakeReset)
+State Change
+Entry to Debug state
+Rose(Halted)
+Event
+Preemption by a higher 
+priority processor 
+exception
+Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+?28
+"Eyeball Closeness"
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+?29
+Rule VGNW 
+Entry to lockup from an exception causes 
+• Any Fault Status Registers associated with the exception 
+to be updated. 
+• No update to the exception state, pending or active. 
+• The PC to be set to 0xEFFFFFFE. 
+• EPSR.IT to become UNKNOWN. 
+In addition, HFSR.FORCED is not set to 1.
+Out of date
+Misleading
+Ambiguous
+Untestable
+
+© 2017 Arm Limited 
+?30
+Counterexample
+v8-M Spec
+Rules
+Convert
+Z3 
+SMT 
+Solver
++
+~10,000 lines
+~1,000,000 lines
+
+© 2017 Arm Limited 
+?31
+Lessons Learned from validating specifications
+Redundancy essential for detecting errors 
+- Detected subtle bugs in security, exceptions, debug, ... 
+- Found bugs in English prose 
+Need set of 'orthogonal' properties 
+- Invariants, Security properties, Reachability properties, etc. 
+Eyeball closeness 
+Needed to translate specification to another language to let us use other tools
+
+© 2017 Arm Limited 
+?32
+Making your specification 
+public
+
+© 2017 Arm Limited 
+?33
+Public release of machine readable Arm specification
+Enable formal veriﬁcapon of sotware and tools 
+Machine readable 
+Releases: 
+v8.2 (4/2017) 
+v8.3 (10/2017) 
+v8.4 (6/2018) 
+v8.5 (9/2018) 
+hups://developer.arm.com/products/architecture/a-proﬁle/explorapon-tools 
+hups://github.com/alastairreid/mra_tools 
+hups://github.com/herd/herdtools7/blob/master/herd/libdir/aarch64.cat
+
+© 2017 Arm Limited 
+?34
+Cambridge University Specs/Tools
+From "ISA Semantics for ARM v8-A, , RISC-V, and CHERI-MIPS," POPL 2019 
+Used with permission of REMS Group, Cambridge University
+
+© 2017 Arm Limited 
+?34
+Cambridge University Specs/Tools
+From "ISA Semantics for ARM v8-A, , RISC-V, and CHERI-MIPS," POPL 2019 
+Used with permission of REMS Group, Cambridge University
+x86 (ACL2)
+Missing?
+
+© 2017 Arm Limited 
+?34
+Cambridge University Specs/Tools
+From "ISA Semantics for ARM v8-A, , RISC-V, and CHERI-MIPS," POPL 2019 
+Used with permission of REMS Group, Cambridge University
+x86 (ACL2)
+Missing?
+ ACL2
+Missing?
+
+© 2017 Arm Limited 
+?35
+Work in Progress: 
+Security of Architecture 
+Specifications
+
+© 2017 Arm Limited 
+?36
+Validating security of processor architectures
+Scope 
+- Hardware-based Security Enforcement (HSE) Mechanisms 
+- Confidentiality, Integrity, Availability 
+Challenges 
+- Compositional Attacks 
+- Cyclic dependencies between HSEs 
+- Microarchitectural storage/timing channels
+
+© 2017 Arm Limited 
+?37
+The Specification Bottleneck: Modelling Real World Artifacts
+- Trustworthiness, Scope and Applicability 
+- Significant Engineering Effort 
+- Importance of sharing specifications across many users
+Spec
+
+© 2017 Arm Limited 
+?38
+Thanks
+Alasdair Armstrong (Cambridge U.)
+Alex Chadwick (ARM)
+Ali Zaidi (ARM)
+Anastasios Deligiannis (ARM)
+Anthony Fox (Cambridge U.)
+Ashan Pathirane (ARM)
+Belaji Venu (ARM)
+Bradley Smith (ARM)
+Brian Foley (ARM)
+Curtis Dunham (ARM)
+David Gilday (ARM)
+David Hoyes (ARM)
+David Seal (ARM)
+Daniel Bailey (ARM)
+Erin Shepherd (ARM)
+Francois Botman (ARM)
+George Hawes (ARM)
+Graeme Barnes (ARM)
+Isobel Hooper (ARM)
+Jack Andrews (ARM)
+Jacob Eapen (ARM)
+Jon French (Cambridge U.)
+Kathy Gray (Cambridge U.)
+Krassy Gochev (ARM)
+Lewis Russell (ARM)
+Matthew Leach (ARM)
+Meenu Gupta (ARM)
+Michele Riga (ARM)
+Milosch Meriac (ARM)
+Nigel Stephens (ARM)
+Niyas Sait (ARM)
+Peng Wang (ARM)
+Peter Sewell (Cambridge U.)
+Peter Vrabel (ARM)
+Richard Grisenthwaite (ARM)
+Rick Chen (ARM)
+Simon Bellew (ARM)
+Thomas Grocutt (ARM)
+Will Deacon (ARM)
+Will Keen (ARM)
+Wojciech Meyer (ARM)
+(and others)
+
+Thank You! 
+Danke! 
+Merci! 
+谢谢! 
+ありがとう! 
+Gracias! 
+Kiitos!
+© 2017 Arm Limited 
+?39
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016 
+"End to End Verification of ARM processors with ISA Formal," CAV 2016 
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017 
+"ISA Semantics for ARM v8-A, , RISC-V, and CHERI-MIPS," POPL 2019 
+https://alastairreid.github.io/papers/  
+

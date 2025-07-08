@@ -1,0 +1,277 @@
+ARMResearch
+Trusting Large Speciﬁcations:
+The Virtuous Cycle
+Alastair Reid 
+alastair.reid@arm.com
+@alastair_d_reid
+
+ARMResearch
+2
+Applica'on
+Library
+OS
+Compiler
+Processor
+
+ARMResearch
+Qualities of a Speciﬁcation
+Applicability
+Scope
+Trustworthiness
+3
+
+ARMResearch
+Applicability
+A-class (phones/tablets/servers)
+R-class (real-time, lock-step support)
+M-class (microcontroller)
+4
+v6 (1997)
+v7 (2005)
+v8.0 (2013)
+v8.1 (2015)
+v8.2 (2016)
+
+ARMResearch
+Scope
+Compiler targeted instructions?
+User-level instructions?
+User+Supervisor?
+User+Supervisor+Hypervisor+Secure Monitor?
+5
+
+ARMResearch
+ISA Speciﬁcation - ASL
+6
+Check Validity
+Get Operands
+Set Result Register
+Set Flags
+Opcode
+
+ARMResearch
+System Architecture Speciﬁcation
+7
+
+ARMResearch
+8
+v8-A
+v8-M
+Instructions
+Int/FP/SIMD
+26,000
+6,000
+Exceptions
+4,000
+3,000
+Memory
+3,000
+1,000
+Debug
+3,000
+1,000
+Misc
+5,500
+2,000
+(Test support)
+1,500
+2,000
+Total
+43,000
+15,000
+ARM Spec (lines of code)
+
+ARMResearch
+System Register Spec
+9
+v8-A
+v8-M
+Registers
+586
+186
+Fields
+3951
+622
+  Constant
+985
+177
+  Reserved
+940
+208
+  Impl. Deﬁned
+70
+10
+  Passive
+1888
+165
+  Active
+68
+62
+Operations
+112
+10
+
+ARMResearch
+Trustworthiness
+10
+
+ARMResearch
+Trustworthiness
+ARM's speciﬁcation is correct by deﬁnition
+10
+
+ARMResearch
+Trustworthiness
+ARM's speciﬁcation is correct by deﬁnition
+10
+
+ARMResearch
+Trustworthiness
+Does the speciﬁcation match the behaviour
+of all ARM processors?
+11
+
+ARMResearch
+12
+ARM Spec
+Oracle
+Test S'mulus
+=?=
+
+ARMResearch
+13
+ARM Spec
+Oracle
+Directed Tests 
+Random Tests 
+... 
+Memory Tests 
+IRQ Generators
+=?=
+
+ARMResearch
+14
+ARM Spec
+Oracle
+Directed Tests 
+Random Tests 
+... 
+Memory Tests 
+IRQ Generators
+Self-checking 
+Bus monitors 
+Trace compare
+
+ARMResearch
+Architecture Conformance Suite
+Processor architectural compliance sign-off
+Large
+v8-A 11,000 test programs, > 2 billion instructions
+v8-M 3,500 test programs, > 250 million instructions
+Thorough
+Tests dark corners of speciﬁcation
+15
+
+ARMResearch
+16
+0%
+25%
+50%
+75%
+100%
+v8-A
+v8-M
+0%
+25%
+50%
+75%
+100%
+
+ARMResearch
+17
+ASL Interpreter
+ARM Spec
+ELF Test
+Pass / Fail
+Implementa'on 
+Deﬁned
+Trustworthy Speciﬁca'ons of ARM v8-A and v8-M System Level Architecture, FMCAD 2016
+
+ARMResearch
+18
+Model 
+Checker
+ARM Spec
+ARM CPU
+Counterexample
+Counterexample
+End to End Veriﬁca'on of ARM Processors with ISA-Formal, CAV 2016
+
+ARMResearch
+19
+ASL Interpreter
+ARM Spec
+mbedOS
+Implementa'on 
+Deﬁned
+(Work by Jon French and Nathan Chong)
+
+ARMResearch
+20
+AFL 
+Fuzzer
+ARM Spec
+mbedOS
+Bugs
+(Work by Jon French and Nathan Chong)
+
+ARMResearch
+Creating a Virtuous Cycle
+21
+ARM Spec
+AFL 
+Fuzzer
+ARM 
+Conformance 
+TestSuite
+Processor 
+Veriﬁca'on
+Boot 
+OS
+Informa'on 
+Flow 
+Analysis
+Random 
+Instruc'on 
+Sequences
+Testcase 
+Genera'on
+So_ware 
+Veriﬁca'on
+
+ARMResearch
+Preparing public release of ARM v8-A speciﬁcation
+• Enable formal veriﬁcation of software and tools
+• Public release planned for 2016 Q4
+• Liberal license
+• REMS group currently translating to SAIL
+Talk to me about how I can help you use it
+22
+
+ARMResearch
+CPU Speciﬁcations
+Basis of a lot of formal veriﬁcation
+Too large to be "obviously correct"
+Reusable specs enable "virtuous cycle"
+Greater effort to produce
+Share testing / maintenance effort
+More likely to be correct
+Preparing public release of machine readable ARM Speciﬁcation
+23
+
+End 
+Alastair Reid 
+ARMResearch 
+alastair.reid@arm.com
+@alastair_d_reid
+

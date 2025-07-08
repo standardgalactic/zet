@@ -1,0 +1,412 @@
+© 2017 Arm Limited 
+Who guards the guards? 
+Formal validation of the Arm v8-M 
+Architecture Specification
+Arm Research
+@alastair_d_reid
+OOPLSA 2017
+Alastair Reid
+
+© 2017 Arm Limited 
+2
+Uses of formal processor specifications
+Writing compilers, operating systems, ... 
+Formally verifying compilers, operating systems, ... 
+Program synthesis 
+Security analysis 
+Malware analysis 
+Formally verifying processor implementations
+
+© 2017 Arm Limited 
+3
+The state of most processor specifications
+Large (1000s of pages) 
+Broad (10+ years of implementations, multiple manufacturers) 
+Complex (exceptions, weak memory, ...) 
+Informal (mostly English prose) 
+We are all just learning how to (retrospectively) formalize specifications
+
+© 2017 Arm Limited 
+4
+Arm Processor Specifications
+A-class (phones, tablets, servers, ...)
+M-class (microcontrollers, IoT)
+6,000 pages 
+40,000 line formal specification  
+Instructions (32/64-bit) 
+Exceptions / Interrupts 
+Memory protection 
+Page tables 
+Multiple privilege levels 
+System control registers 
+Debug / trace
+1,200 pages 
+15,000 line formal specification  
+Instructions (32-bit) 
+Exceptions / Interrupts 
+Memory protection 
+Page tables 
+Multiple privilege levels 
+System control registers 
+Debug / trace
+ 
+
+© 2017 Arm Limited 
+5
+Is my specification correct?
+
+© 2017 Arm Limited 
+5
+Is my specification correct?
+Testing
+
+© 2017 Arm Limited 
+5
+Is my specification correct?
+Formal 
+Validation 
+of CPUs
+Testing
+
+© 2017 Arm Limited 
+5
+Is my specification correct?
+Formal 
+Validation 
+of CPUs
+Multiple 
+Users
+Testing
+
+© 2017 Arm Limited 
+6
+Executable Specification
+Defines what is allowed 
+Animation   →  Check spec matches expectation 
+Testable       →  Compare spec against implementation 
+
+© 2017 Arm Limited 
+6
+Executable Specification
+Defines what is allowed 
+Animation   →  Check spec matches expectation 
+Testable       →  Compare spec against implementation 
+Does not define what is not allowed 
+e.g., Impossible states, impossible actions/transitions,  security properties 
+No redundancy 
+Problem when extending specification
+
+© 2017 Arm Limited 
+7
+Creating a specification of disallowed behaviour
+Where to get a list of disallowed behaviour? 
+How to formalise this list? 
+How to formally validate specification against spec of disallowed behaviour? 
+(This may look familiar from formal specification of software)
+
+© 2017 Arm Limited 
+8
+Execute
+
+© 2017 Arm Limited 
+8
+Execute
+Debug 
+Halt
+Halted = FALSE
+Halted = TRUE
+
+© 2017 Arm Limited 
+8
+Execute
+Debug 
+Halt
+Halted = FALSE
+Halted = TRUE
+Lockup
+LockedUp = FALSE
+LockedUp = TRUE
+
+© 2017 Arm Limited 
+8
+Execute
+Debug 
+Halt
+Halted = FALSE
+Halted = TRUE
+Debug 
+Lockup
+Lockup
+LockedUp = FALSE
+LockedUp = TRUE
+
+© 2017 Arm Limited 
+8
+Execute
+Debug 
+Halt
+Halted = FALSE
+Halted = TRUE
+Debug 
+Lockup
+Lockup
+LockedUp = FALSE
+LockedUp = TRUE
+
+© 2017 Arm Limited 
+8
+Execute
+Debug 
+Halt
+Halted = FALSE
+Halted = TRUE
+Debug 
+Lockup
+Lockup
+LockedUp = FALSE
+LockedUp = TRUE
+
+© 2017 Arm Limited 
+9
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+
+© 2017 Arm Limited 
+9
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+
+© 2017 Arm Limited 
+9
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+And cannot happen any other way
+
+© 2017 Arm Limited 
+9
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+Rule R:    X → A ∨ B ∨ C ∨ D
+And cannot happen any other way
+
+© 2017 Arm Limited 
+10
+State Change X
+Exit from lockup
+Fell(LockedUp)
+Event A
+A Cold reset
+Called(TakeColdReset)
+Event B
+A Warm reset
+Called(TakeReset)
+State Change C
+Entry to Debug state
+Rose(Halted)
+Event D
+Preemption by a higher 
+priority processor 
+exception
+Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+11
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+12
+Rule VGNW 
+Entry to lockup from an exception causes 
+• Any Fault Status Registers associated with the exception 
+to be updated. 
+• No update to the exception state, pending or active. 
+• The PC to be set to 0xEFFFFFFE. 
+• EPSR.IT to become UNKNOWN. 
+In addition, HFSR.FORCED is not set to 1.
+Out of date
+Misleading
+Ambiguous
+Untestable
+
+© 2017 Arm Limited 
+13
+Counterexample
+v8-M Spec
+Rules
+Proof
+Z3 
+SMT 
+Solver
+
+© 2017 Arm Limited 
+14
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+Temporal Operators
+
+© 2017 Arm Limited 
+14
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+14
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+Event Operators
+
+© 2017 Arm Limited 
+15
+Temporal Operators
+Fell(e) 
+Past(e) > e
+Stable(e) 
+Past(e) = e
+Rose(e) 
+Past(e) < e
+
+© 2017 Arm Limited 
+16
+Temporal Operators
+__Past_LockedUp = LockedUp; 
+FunctionUnderTest(); 
+... __Past_LockedUp > LockedUp ...
+Fell(LockedUp)
+
+© 2017 Arm Limited 
+17
+Event Operators
+TakeReset() 
+{ 
+    __Called_TakeReset = TRUE; 
+    ... 
+}
+Called(TakeReset)
+
+© 2017 Arm Limited 
+18
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+__Called_TakeColdReset      = FALSE; 
+__Called_TakeReset          = FALSE; 
+__Called_TakeExceptionEntry = FALSE; 
+__Past_LockedUp = LockedUp; 
+__Past_Halted   = Halted; 
+assert((__Past_LockedUp > LockedUp) 
+       ==> 
+       (  __Called_TakeColdReset 
+       || __Called_TakeReset 
+       || __Past_Halted < Halted 
+       || __Called_ExceptionEntry));
+
+© 2017 Arm Limited 
+19
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays  
+Functions 
+Local Variables 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+Arm Specification 
+Language
+SMT
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays  
+Functions 
+Local Variables 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+
+© 2017 Arm Limited 
+20
+Results (more in paper)
+Most properties proved in under 100 seconds 
+Found 12 bugs in specification: 
+- debug, exceptions, system registers, security 
+Found bugs in English prose: 
+- ambiguous, imprecise, incorrect, ...
+
+© 2017 Arm Limited 
+21
+Summary
+Formalization of large, complex specifications 
+Executable specifications have a fatal flaw 
+Need specification of disallowed behaviour 
+Manually formalized structured English prose 
+Used SMT checker to find bugs in both spec and prose 
+
+Thank You! 
+Danke! 
+Merci! 
+谢谢! 
+ありがとう! 
+Gracias! 
+Kiitos!
+© 2017 Arm Limited 
+22
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+See also:
+

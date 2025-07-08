@@ -1,0 +1,428 @@
+The State of Sail
+1
+Alasdair Armstrong
+2
+Department of Computer Science and Technology, University of Cambridge, UK
+3
+Thomas Bauereiss
+4
+Department of Computer Science and Technology, University of Cambridge, UK
+5
+Brian Campbell
+6
+School of Infomatics, University of Edinburgh, UK
+7
+Alastair Reid
+8
+ARM Ltd., Cambridge, UK
+9
+Kathryn E. Gray
+10
+Department of Computer Science and Technology, University of Cambridge (Formerly), UK
+11
+Robert M. Norton
+12
+Department of Computer Science and Technology, University of Cambridge, UK
+13
+Prashanth Mundkur
+14
+SRI International, Menlo Park, US
+15
+Mark Wassell
+16
+Department of Computer Science and Technology, University of Cambridge, UK
+17
+Jon French
+18
+Department of Computer Science and Technology, University of Cambridge, UK
+19
+Christopher Pulte
+20
+Department of Computer Science and Technology, University of Cambridge, UK
+21
+Shaked Flur
+22
+Department of Computer Science and Technology, University of Cambridge, UK
+23
+Ian Stark
+24
+School of Infomatics, University of Edinburgh, UK
+25
+Neel Krishnaswami
+26
+Department of Computer Science and Technology, University of Cambridge, UK
+27
+Peter Sewell
+28
+Department of Computer Science and Technology, University of Cambridge, UK
+29
+Abstract
+30
+Sail is a custom domain-speciﬁc language for ISA semantics, in which we have developed formal
+31
+models for ARMv8-A, RISC-V, and MIPS, as well as CHERI-based capability extensions for
+32
+both RISC-V and MIPS. In particular, our model of ARMv8-A is automatically translated from
+33
+ARM-internal deﬁnitions and tested against the ARM Architecture validation suite. All the above
+34
+models contain enough system-level features to boot various operating systems, including Linux and
+35
+FreeBSD, but also various smaller microkernels and hypervisors.
+36
+In this short paper, we present the ways in which Sail enables us to bridge the gap between our
+37
+various ISA models and the myriad use cases for such models. By using Sail, we are able to generate
+38
+emulators for testing and validation, generate theorem prover deﬁnitions across multiple major tools
+39
+(Isabelle, HOL4, and Coq), translate Sail to SMT for automatic veriﬁcation, and integrate with both
+40
+operational models for relaxed-memory concurrency via our RMEM tool.
+41
+We will also present our current work to extend Sail to support axiomatic concurrency models,
+42
+in the style of Alglave and Maranget's herd7 tool, with the intent being to explore the behaviour of
+43
+concurrent litmus tests that span the full behaviour of the architecture. As an illustrative example,
+44
+one could consider how instruction cache maintenance instructions interact with self-modifying code
+45
+in an axiomatic setting, or other interesting cases that are not well-covered by existing tools.
+46
+© Alasdair Armstrong;
+licensed under Creative Commons License CC-BY
+Leibniz International Proceedings in Informatics
+Schloss Dagstuhl - Leibniz-Zentrum für Informatik, Dagstuhl Publishing, Germany
+
+XX:2
+The State of Sail
+2012 ACM Subject Classiﬁcation Theory of computation →Semantics and reasoning; Computer
+47
+systems organization →Architectures; Software and its engineering →Assembly languages
+48
+Keywords and phrases Instruction Set Architectures, Semantics, Theorem Proving
+49
+Digital Object Identiﬁer 10.4230/LIPIcs...
+50
+1
+Overview
+51
+Sail is a custom pseudocode-like language for specifying the semantics of instruction set
+52
+architectures (ISAs). It is a ﬁrst-order imperative language with a semantics that is as
+53
+straightforward as possible. We have aimed to strike a balance in designing a language that
+54
+is both expressive enough to idiomatically express multiple instruction set architectures,
+55
+which simultaneously being as inexpressive as possible to allow translation to each desired
+56
+target. This balance is partially achieved with a type system that allows dependent types
+57
+for bitvector widths and integer ranges, the typing information from which can be exploited
+58
+by various generic rewrites and backend-speciﬁc optimisations e.g. for monomorphisation.
+59
+Figure 1 gives an overview of our currently supported instruction set architectures and target
+60
+uses, updated with changes since our previous paper [6].
+61
+Sequential
+Emulator (OCaml)
+Sequential
+Emulator (OCaml)
+Isabelle
+Lem
+Definitions
+ELF model
+Lem
+Sequential
+Emulator (C)
+asl_to_sail
+ASL
+ARMv8−A
+Sail
+ARMv8−A
+Sail
+Sail
+Sail
+OCaml,JS,CSS
+UI
+Coq
+HOL4
+OCaml
+Litmus frontend
+Framemaker export
+parse, analyse, patch
+Sail
+Power 2.06B
+Framemaker
+Power 2.06B
+XML
+Test
+Generation
+Sail
+asl_to_sail
+ASL
+CHERI ARM
+Sail
+CHERI ARM
+Sail
+SMT
+Sail
+Sail
+MIPS
+RISC−V
+x86 (core)
+RMEM
+concurrency
+tool
+Concurrency models
+Lem
+Power (core)
+CHERI RISC−V
+CHERI−MIPS
+ARM (core)
+Figure 1 Sail ISA semantics (top) and target use cases (bottom). The greyed out ISAs are from
+previous work we are not actively working on
+This short paper describes the current state of each of our Sail models, and describes
+62
+ongoing work to enhance Sail with automatic veriﬁcation and axiomatic concurrency support
+63
+via a translation from Sail into SMTLIB deﬁnitions for the Z3 and CVC4 SMT solvers. The
+64
+below table summarises the state of most of our models including our CHERI extensions.
+65
+source
+KLoS
+provers
+boots
+ARMv8.5-A
+ASL
+125
+Isa, HOL4, Coq*
+Linux, Hafnium
+MIPS
+hand
+2
+Isa, HOL4, Coq
+FreeBSD
+CHERI MIPS
+hand
++2
+Isa, HOL4, Coq
+FreeBSD, CheriBSD
+RISC-V
+hand
+5
+Isa, HOL4, Coq
+Linux, FreeBSD, FreeRTOS, Hafnium
+CHERI RISC-V
+hand
++2
+Isa, HOL4, Coq
+CHERI ARM
+ASL
+Isa
+66
+
+A. Armstrong et al.
+XX:3
+ARMv8.5-A Our ARMv8-A model is translated from ARM's internal architecture speciﬁ-
+67
+cation language ASL. Our translation has been validated by running our translation against
+68
+the ARM internal architecture validation suite, as previously discussed in [6]. Recently we
+69
+have been improving Sail's translation into Coq. We have continued to work on emulation
+70
+performance for ARM, which was previously slower than our other models due to the size
+71
+of the speciﬁcation, and it now boots Linux in just under 2 minutes (on a Ryzen 5 2600X),
+72
+corresponding to approximately 200 000 instructions per second, roughly a four-fold improve-
+73
+ment over [6]. We have also been working on developing infrastructure for formally proving
+74
+properties of a CHERI ARM speciﬁcation, but this work is in early stages.
+75
+(CHERI) RISC-V We have extended our RISC-V model with CHERI capability support.
+76
+We have ensured our RISC-V model is extensible, so the CHERI extension (and other
+77
+extensions) are able to exist as a separate repository which builds upon the base model. We
+78
+have further validated the RISC-V spec by running FreeRTOS and a port of the Hafnium
+79
+hypervisor atop the RISC-V model, in addition to Linux, FreeBSD, and seL4.
+80
+(CHERI) MIPS Our CHERI-MIPS model continues to be extended with new CHERI
+81
+instructions, and is now an oﬃcial part of the CHERI ISAv7 [10] architecture manual.
+82
+2
+Automatic property veriﬁcation with Sail-SMT
+83
+In addition to translating Sail to interactive theorem provers, we have more recently im-
+84
+plemented a translation from Sail into SMT. This enables QuickCheck-like properties to
+85
+be stated and veriﬁed in Sail itself (provided they are free of loops, in which case they are
+86
+checked up to some iteration bound). For example, Figure 2 shows a property from our
+87
+CHERI RISC-V speciﬁcation, which veriﬁes that if setCapBounds claims to have set c's bounds
+88
+to base and top exactly, then getCapBounds will return the same bounds as were set. While this
+89
+property seems simple, capability bounds are stored using a fairly intricate ﬂoating-point-like
+90
+compressed format, and there are additional subtle edge cases at the top and bottom of the
+91
+address space. Our SMT translation was able to discover bugs in our implementations of
+92
+such capability manipulation functions which had not been found via random testing.
+93
+A major advantage we have found in this style of lightweight veriﬁcation with SMT
+94
+solvers is that it can be used by hardware-designers developing ISA extensions who have
+95
+no experience with interactive theorem proving tools. Another use for hardware-designers
+96
+is to write a Sail version of a function that closely mimics a Bluespec (or other HDL)
+97
+implementation that is complicated due to e.g. timing requirements, and automatically prove
+98
+it equivalent to a simple Sail implementation.
+99
+function set_bounds_exact(c : Capability, base : bits(64), top : bits(65)) -> bool = {
+let (exact, c') = setCapBounds(c, base, top);
+let (base', top') = getCapBounds(c');
+~(exact) | (unsigned(base) >= unsigned(top))
+| (base' == unsigned(base) & top' == unsigned(top))
+}
+Figure 2 An automatically veriﬁed property from CHERI RISC-V
+The basic approach is similar to that used by existing model-checking tools such as
+100
+CBMC [1], and the approach used for ARM's ASL language [9]. We ﬁrst translate the Sail
+101
+source into an intermediate representation (IR) which is shared by the C backend, this is
+102
+then converted into a SSA based control-ﬂow graph, which is then turned into a sequence of
+103
+SMTLIB deﬁnitions which can be used with either Z3 or CVC4.
+104
+
+XX:4
+The State of Sail
+3
+Axiomatic relaxed-memory concurrency with Sail
+105
+Previous work on concurrent behaviours of instruction set architectures using Sail was based
+106
+on our RMEM tool [8] which provides operational-semantics for various memory models.
+107
+However, many architectures, such as RISC-V specify their memory model in an axiomatic-
+108
+style, where the memory model is described in terms of axioms that restrict the set of possible
+109
+candidate executions. Alglave et al's diy7 [3, 4] tool suite, in particular the herd7 [5] tool,
+110
+already provides a framework for evaluating the relaxed-memory behaviour for small assembly
+111
+programs (litmus tests) over several architectures, using a language called cat [2]. However
+112
+the ISA semantics used by herd is hard-coded in OCaml for each supported architecture
+113
+within the tool, plus additional architecture speciﬁc infrastructure for e.g. assembly parsing.
+114
+By combining our Sail to SMT translation with the existing infrastructure for litmus
+115
+tests and cat ﬁles provided by the diy7 tools, we aim to produce a tool similar to herd7,
+116
+except using the Sail instruction semantics and assembly parsing infrastructure (which can
+117
+also be speciﬁed within Sail). This would give us a architecture-agnostic tool that can
+118
+combine an arbitrary memory model speciﬁed in cat, with an ISA speciﬁed in Sail. While
+119
+our implementation is still very experimental, initial results are promising, and prior work
+120
+such as Lau et al's Cerberus-BMC [7] for C11 concurrency demonstrate that the use of a
+121
+SMT solver in this area is practicable.
+122
+References
+123
+1
+CBMC: Bounded Model Checking for Software, 2017. http://www.cprover.org/cbmc/.
+124
+2
+Jade Alglave, Patrick Cousot, and Luc Maranget. Syntax and semantics of the weak consistency
+125
+model speciﬁcation language cat. CoRR, abs/1608.07531, 2016. URL: http://arxiv.org/abs/
+126
+1608.07531, arXiv:1608.07531.
+127
+3
+Jade Alglave and Luc Maranget. The diy7 tool. http://diy.inria.fr/, 2017.
+128
+4
+Jade Alglave, Luc Maranget, Susmit Sarkar, and Peter Sewell. Fences in weak memory
+129
+models. In Proceedings of CAV 2010: the 22nd International Conference on Computer Aided
+130
+Veriﬁcation, LNCS 6174, 2010. doi:10.1007/978-3-642-14295-6_25.
+131
+5
+Jade Alglave, Luc Maranget, and Michael Tautschnig. Herding Cats: Modelling, Simulation,
+132
+Testing, and Data Mining for Weak Memory. ACM TOPLAS, 36(2):7:1-7:74, July 2014.
+133
+6
+Alasdair Armstrong, Thomas Bauereiss, Brian Campbell, Alastair Reid, Kathryn E. Gray,
+134
+Robert M. Norton, Prashanth Mundkur, Mark Wassell, Jon French, Christopher Pulte, Shaked
+135
+Flur, Ian Stark, Neel Krishnaswami, and Peter Sewell. ISA semantics for armv8-a, risc-v, and
+136
+CHERI-MIPS. PACMPL, 3(POPL):71:1-71:31, 2019. doi:10.1145/3290384.
+137
+7
+Stella Lau, Victor B. F. Gomes, Kayvan Memarian, Jean Pichon-Pharabod, and Peter Sewell.
+138
+Cerberus-BMC: a principled reference semantics and exploration tool for concurrent and
+139
+sequential C. In CAV 2019, July 2019. (to appear).
+140
+8
+Christopher Pulte, Shaked Flur, Will Deacon, Jon French, Susmit Sarkar, and Peter Sewell.
+141
+Simplifying ARM Concurrency: Multicopy-atomic Axiomatic and Operational Models for
+142
+ARMv8. In POPL 2018, July 2018. doi:10.1145/3158107.
+143
+9
+Alastair Reid. Who guards the guards? formal validation of the arm v8-m architecture
+144
+speciﬁcation.
+Proc. ACM Program. Lang., 1(OOPSLA):88:1-88:24, October 2017.
+doi:
+145
+10.1145/3133912.
+146
+10
+Robert N. M. Watson, Peter G. Neumann, Jonathan Woodruﬀ, Michael Roe, Hesham Almatary,
+147
+Jonathan Anderson, John Baldwin, David Chisnall, Brooks Davis, Nathaniel Wesley Filardo,
+148
+Alexandre Joannou, Ben Laurie, A. Theodore Markettos, Simon W. Moore, Steven J. Murdoch,
+149
+Kyndylan Nienhuis, Robert Norton, Alex Richardson, Peter Rugg, Peter Sewell, Stacey Son,
+150
+and Hongyan Xia. Capability Hardware Enhanced RISC Instructions: CHERI instruction-set
+151
+architecture (version 7). Technical report, Computer Laboratory, June 2019.
+152
+

@@ -1,0 +1,1328 @@
+Design and Implementation of Turbo Decoders for
+Software Deﬁned Radio
+Yuan Lin, Scott Mahlke, Trevor Mudge
+Advanced Computer Architecture Laboratory
+University of Michigan at Ann Arbor
+{linyz, mahlke, tnm}@umich.edu
+Chaitali Chakrabarti
+Department of Electrical Engineering
+Arizona State University
+chaitali@asu.edu
+Alastair Reid, Kriszti´an Flautner
+ARM, Ltd.
+Cambridge, United Kingdom
+{alastair.reid, krisztian.ﬂautner}@arm.com
+ABSTRACT
+Software Deﬁned Radio(SDR) is an emerging paradigm for
+wireless terminals, in which the physical layer of commu-
+nication protocols is implemented in software rather than
+by ASICs. Many of the current and next generation wire-
+less protocols include Turbo coding because of its superior
+performance.
+However, Turbo decoding is computation-
+ally intensive, and its low power implementations have typ-
+ically been in ASICs. This paper presents a case study of
+algorithm-architecture co-design of Turbo decoder for SDR.
+We present a programmable DSP architecture for SDR that
+includes a set of architectural features to accelerate Turbo
+decoder computations.
+We then present a parallel win-
+dow scheduling for MAX-Log-MAP component decoder that
+matches well with the DSP architecture. Finally, we present
+a software implementation of Turbo decoder for W-CDMA
+on the DSP architecture and show that it achieves 2Mbps
+decoding throughput.
+1.
+INTRODUCTION
+Software Deﬁned Radio (SDR) promises to revolutionize
+the communication industry by delivering low-cost, ﬂexi-
+ble software solutions for wireless communication protocols.
+Turbo coding is an error correction algorithm that has been
+included in many current and next generation wireless proto-
+cols due to its superior Bit Error Ratio(BER) performance.
+However, its implementation in wireless systems is challeng-
+ing because of the high computation and low power require-
+ments. While current commercial implementations use non-
+programmable ASICs, it is highly desirable to design a plat-
+form that is ﬂexible enough to support Turbo decoder as well
+as other DSP algorithms in software, while still maintain-
+ing the energy eﬃciency of algorithm-speciﬁc ASICs. This
+paper presents a Turbo decoder implementation on a SDR
+platform that jointly considers the processor architecture
+and the characteristics of the decoding algorithm.
+Turbo Decoder Overview.
+Turbo decoder consists
+of two component SISO decoders with interleavers between
+them as shown in Figure 1. The observed input sequence,
+y, is split into two streams and fed into the two component
+decoders. Both component decoders receive the systematic
+input ys, and their respective parity inputs yp1 and yp2. In
+each iteration, data ﬁrst goes through the de-interleaver,
+and is decoded by the ﬁrst component decoder. The result
+is then fed into the interleaver, and decoded by the second
+component decoder, the result of which is fed back into the
+De-
+Interleaver
+SISO
+decoder 1
+Interleaver
+SISO
+decoder 2
+Input
+Output
+Demux
+ys &  yp1
+ys &  yp2
+L1ex
+L2ex
+Figure 1: Block Diagram of a Turbo Decoder
+de-interleaver. The extrinsic outputs from the two SISO de-
+coders are labeled L1EX and L2EX. This iterative process is
+repeated several times until the stopping criteria condition
+has been satisﬁed.
+SISO Decoders. SISO decoders based on the MAP al-
+gorithm have superior performance. In our study, we im-
+plemented the MAX-Log-MAP algorithm.
+This is an ap-
+proximation of the MAP algorithm that operates in the log-
+domain, allowing multiplications in the original MAP algo-
+rithms to be implemented by additions. A complete imple-
+mentation study on every type of MAP algorithm is beyond
+the scope of this paper. However, the techniques explained
+in this paper can be applied in the implementation of other
+MAP algorithms.
+Let sk be the trellis state values at time k, then the like-
+lihood values at time k, Lk, is deﬁned by:
+Lk
+=
+αk−1(sk−1) + γk(sk−1, sk) + βk(sk)
+(1)
+The ﬁrst term, αk−1(sk−1), is the alpha metric that calcu-
+lates the probability of the current state based on the input
+values before time k. The second term, γk(sk−1, sk), is the
+branch metric that calculates the probability of the current
+state transition. The third term is the beta metric that cal-
+culates the probability of the current state given the future
+input values after time k. Alpha and beta calculations are
+deﬁned recursively as shown below:
+αk(sk)
+=
+max(αk−1(sk−1) + γk(sk−1, sk))
+(2)
+βk(sk)
+=
+max(βk+1(sk+1) + γk+1(sk, sk+1))
+(3)
+As shown, the alpha computation is forward recursive and
+beta computation is backward recursive. Let s1 and s0 be
+the 1-branch and 0-branch trellis state transitions. The soft
+output value, log-likelihood calculation (LLC) at time k, is
+deﬁned by subtracting the maximum likelihood values of
+the 1-branch state transitions from the maximum likelihood
+
+SIMD
+Register
+File
+E
+X
+SIMD
+ALU+
+Mult
+SIMD
+Shuffle
+Network
+(SSN)
+W
+B
+Scalar
+ALU
+W
+B
+E
+X
+Scalar
+Register
+File
+Scratchpad
+SIMD
+Memory
+Scratchpad
+Scalar
+Memory
+S
+T
+V
+AGU
+Reg. File
+E
+X
+W
+B
+AGU
+Calculation
+1. SIMD pipeline
+2. Scalar pipeline
+4. AGU pipeline
+V
+T
+S
+Pred.
+Regs
+W
+B
+SIMD
+to
+Scalar
+(VtoS)
+ALU
+Register
+File
+DMA
+Global
+Scratchpad
+Memory
+DSP
+5. DMA
+3. Local
+memory
+System Interconnect
+Figure 2:
+DSP Architecture for SDR including a
+processing engine with three pipelines and 4 register
+banks (SIMD 32x16bit, SIMD 32x1bit, scalar 16bit,
+AGU 16bit) and a DMA engine with one pipeline
+and 1 register bank (32bit)
+values of 0-branch state transitions.
+LLCk
+=
+max
+s1 (Lk) −max
+s0 (Lk)
+(4)
+Related Work. There have been numerous studies on
+parallelizing MAX-Log-MAP for ASICs [9], [13]. Although
+these studies provide interesting insights into high perfor-
+mance Turbo decoder design, most of these techniques can-
+not be applied to SDR, as we will show in Section 3. The
+existing software implementations can be separated into two
+groups. The ﬁrst group includes implementations on main-
+stream DSPs, such as TI's C6X that achieves throughput
+of 286Kbps [2], Motorola's Starcore that achieves through-
+put of 1.8Mbps [6], and ST-Microelectronics' ST120 that
+achieves throughput of 540Kbps [10].
+The second group
+includes ASIC and programmable FPGA accelerators for
+RISC processors.
+These include the XiRisc processor im-
+plementation with a throughput of 270Kbps [12] and Ten-
+silica's Xtensa-based microprocessor with a throughput of
+1.48Mbps [3]. Our processor achieves a comparable through-
+put of 2Mbps for W-CDMA. However, a detailed comparison
+with prior solutions is diﬃcult because of lack of implemen-
+tation details.
+The rest of the paper is organized as follows.
+In Sec-
+tion 2, we introduce our SIMD-based (Single Instruction
+Multiple Data) high-performance DSP processor, and high-
+light a set of DSP architectural features to accelerate Turbo
+decoder computation.
+In Section 3, we present a parallel
+window MAX-Log-MAP scheduling scheme that best ﬁts
+our DSP architecture. In Section 4, we describe the soft-
+ware implementation and optimizations for Turbo decoding
+in W-CDMA. Our results show that our DSP implemented
+in 90nm technology is able to achieve 2Mbps throughput
+while consuming sub-watt power.
+2.
+DSP ARCHITECTURAL SUPPORT
+In this section, we present our SIMD-based DSP architec-
+ture, and highlight the key architectural features that result
+in an eﬃcient software implementation of the Turbo decoder.
+In our previous work, we have implemented the complete W-
+CDMA protocol in C, and analyzed the protocol's algorithm
+characteristics [7]. Since our DSP architecture is designed
+to support many wireless protocol algorithms, the architec-
+tural features presented in this section are not speciﬁcally
+built for Turbo decoding, but rather for a large class of DSP
+algorithms.
+Figure 2 shows the overall DSP architectural diagram.
+It consists of 5 major components: 1) a SIMD (Single In-
+struction, Multiple Data) pipeline for supporting Turbo de-
+coder's vector operations; 2) a scalar pipeline for sequential
+operations; 3) two local scratchpad memories for the SIMD
+pipeline and the scalar pipeline; 4) an AGU pipeline for
+providing the addresses for local memory access; and 5) a
+programmable DMA unit to transfer data between mem-
+ories and interface with the outside system.
+The SIMD
+pipeline, scalar pipeline and the AGU pipeline execute in
+VLIW-styled lock-step, controlled with one program counter
+(PC). The DMA unit has its own PC, its main purpose is
+to perform memory transfers and data rearrangement. It is
+also the only unit that can initiate memory access with the
+global scratchpad memory.
+A detailed description of this
+architecture can be found in [8].
+2.1
+SIMD Pipeline
+The SIMD pipeline performs operations on 32 16-bit wide
+elements, in parallel. The register ﬁle has a 2 read port, 1
+write port memory structure. It can only read and write
+data on the 512-bit SIMD bitwidth boundary (32 elements
+of 16-bits). The SIMD pipeline supports ﬁxed-point DSP
+arithmetic and logic operations, such as saturated compu-
+tations and multiply-and-accumulate (MAC) operations.
+32-Wide SIMD Computation. Traditionally, embed-
+ded DSP processors fall under one of two categories: SIMD
+and VLIW. The SIMD approach separates the register ﬁle
+into clusters, reducing the complexity of access ports. How-
+ever, in most commercial solutions, SIMD width is conser-
+vatively limited between 4 to 8, due to data array align-
+ment diﬃculties in general purpose DSP computations [5].
+VLIW architectures support ILP(Instruction Level Paral-
+lelism) very well, as memory operations can be done concur-
+rently with multiple data computations. However, they are
+not very well suited for vector DLP (Data Level Parallelism),
+as each data computation requires its own instruction. The
+majority of computation in Turbo decoder is the trellis state
+update that can be expressed as vector operations with con-
+stant vector length.
+These types of constant-sized vector
+operations are best implemented with SIMD architectures.
+Furthermore, because the Turbo decoder has well-deﬁned
+data shuﬄing patterns (trellis butterﬂy) and regular vector
+width (the number of trellis states is always a power of 2), we
+can scale up the SIMD width without worrying about data-
+alignment constraints. For the W-CDMA Turbo decoder,
+a 400MHz, 32-wide SIMD pipeline is used.
+In our previ-
+ous work [8], we found this conﬁguration to have the lowest
+power consumption among all of the SIMD width and pro-
+cessor frequency combinations that can meet the real-time
+computational requirements of W-CDMA.
+Predicated Add/Subtract Operations.
+In branch
+metric calculations, it is useful to execute addition and sub-
+traction operations concurrently on the diﬀerent elements in
+an SIMD vector. Our SIMD pipeline has been augmented
+
+a) 8 wide Shuffle
+Exchange (SE)
+Network
+b) 8 wide Inverse
+Shuffle Exchange
+(ISE) Network
+c) 8 wide SSN with SE, ISE,
+Exchange-only (EX) and
+iterative feedback path
+16bit Flip-flop
+16bit  2-to-1 MUX
+Figure 3: 8-wide SIMD Shuﬄe Network(SSN)
+to support this operation, in which a bit-vector is used to
+determine whether each element has to perform an addition
+or subtraction.
+SIMD Shuﬄe Network (SSN). In the Turbo decoder,
+SIMD data shuﬄing is needed to implement the trellis but-
+terﬂy. This is supported on many modern DSPs through
+strided memory access, which requires multi-port memory
+structures that are power hungry [11]. Because of the power
+restrictions of SDR architectures, we limit the processor's
+memory to be single-ported with no support for strided ac-
+cess. Instead, the data shuﬄing operations are supported
+through the SSN (see Section 4). Figure 3c shows a simpli-
+ﬁed 8-wide version of the network (In the architecture, the
+SSN has the same width as the SIMD width). The SSN con-
+sists of a shuﬄe exchange (SE) network (Figure 3a), an in-
+verse shuﬄe exchange (ISE) network (Figure 3b), Exchange
+Only (EX), and an iterative feedback path for iterative shuf-
+ﬂing.
+2.2
+Scalar Support
+In addition to SIMD computations, Turbo decoders also
+require scalar operations. Therefore, our processor includes
+a 16-bit scalar pipeline that executes in lock-step with the
+SIMD pipeline, with additional scalar-to-SIMD and SIMD-
+to-scalar operations to transfer values between the two pipelines.
+Scalar-to-SIMD operations. The SIMD operation can
+take one of its source operands from the scalar pipeline. This
+feature is useful in implementing trellis computations. It is
+done through the STV (Scalar-To-Vector) registers, shown
+in the SIMD pipeline portion of Figure 2. The STV contains
+4 16-bit registers, which only the scalar pipeline can write,
+and only the SIMD pipeline can read. The SIMD pipeline
+can read 1, 2, or all 4 STV register values and replicate them
+into 32-element SIMD vectors.
+SIMD-to-Scalar operations.
+SIMD-to-Scalar opera-
+tions transfer values from the SIMD pipeline into the scalar
+pipeline. This is done through the VTS (Vector-To-Scalar)
+registers, shown in Figure 2. There are two diﬀerent SIMD
+reduction operations that are needed for the MAX-Log-MAP
+decoding: 1) ﬁnd the maximum or minimum values of an
+SIMD vector, and 2) transferring one element of the SIMD
+vector into the scalar pipeline.
+2.3
+Programmable DMA
+LLC
+beta metric
+stored
+alpha and beta
+calculation
+alpha and beta
+dummy calculation
+b00
+b01
+b02
+time
+b10
+b11
+b12
+b) Schedule B:
+Parallel Sliding Window for SIMD
+b0
+b1
+b2
+b3
+time
+b4
+b5
+b6
+a) Schedule A:
+Sliding Window
+b20
+b21
+b22
+window
+1
+window
+2
+window
+3
+Figure 4: Parallel MAX-Log-MAP Scheduling
+The DMA controller is responsible for transferring data
+between memories.
+It is the only component in the pro-
+cessor that can access the SIMD, scalar and global memo-
+ries. Traditional DMA controllers perform copies from one
+memory region to another, where regions are either contigu-
+ous or have a simple strided access patterns. It is usually
+implemented as a slave device, controlled through a set of
+DMA registers and synchronization instructions that are ex-
+ecuted on the master processor. In our processor, the DMA
+is also implemented as a slave device controlled by the scalar
+pipeline. However, it has the capability to execute its own
+instructions on its internal register ﬁle and ALU, similar to
+the scalar pipeline. This gives the DMA the ability to access
+the memory in a wide variety of application-speciﬁc patterns
+without assistance from the master processor. This ability
+allows inherently scalar components of the Turbo decoder,
+such as the interleaver, to be implemented eﬃciently on the
+DMA.
+3.
+PARALLEL SISO DECODER DESIGN
+MAX-Log-MAP decoder can be parallelized by dividing
+the decoding block into smaller sub-blocks, and perform-
+ing alpha-beta-LLC computations on each sub-block inde-
+pendently. To account for the potential BER performance
+degradation, additional dummy calculations have to be per-
+formed before the alpha and beta computations in each sub-
+block. Figure 4a shows one possible schedule with the al-
+pha, beta, and dummy beta calculations. For simplicity, the
+length of the dummy calculations in Figure 4 is the same as
+the number of alpha and beta calculations.
+There have been many studies analyzing the trade-oﬀs be-
+tween diﬀerent sliding-window and parallel-window schedul-
+ing algorithms [9]
+[13]
+[1]. Most of these studies assume
+ASIC architectures with one or more dedicated alpha and
+beta processors that can execute concurrently. For a soft-
+ware implementation, concurrent execution requires the al-
+pha and beta calculations be expressed as two independent
+threads.
+If they are implemented as a single thread, we
+would have to rely on the compiler to discover independent
+instructions that can execute in parallel. However, SIMD
+processors cannot process multiple threads or multiple in-
+structions at the same time. For instance, if the schedule in
+Figure 4a is implemented on our DSP processor, the alpha
+and beta calculations would be serialized. The parallel slid-
+ing window schedule, shown in Figure 4b, is better suited
+for a software implementation on SIMD-based processors. In
+
+this schedule, one Turbo decoding block is broken up into
+N parallel windows. These multiple windows are processed
+concurrently with the same instruction sequence.
+Within
+each window, alpha, beta, and dummy calculations are com-
+puted sequentially. Compared to the schedule in Figure 4a,
+this schedule requires N-1 extra dummy alpha calculations
+to initialize the starting alpha metric for all of the windows
+except the ﬁrst one. The number of parallel windows, N,
+is determined by the processor's SIMD width, W, and the
+trellis width, S.
+For W-CDMA Turbo coding, the trellis
+size is 8, and thus for the 32-wide SIMD processor,
+W
+S = 4
+windows can be processed in parallel.
+4.
+TURBO DECODER IMPLEMENTATION
+In this section, we present a case study of a software Turbo
+decoder implementation for W-CDMA: rate
+1
+3, K=4 RSC
+encoder with block interleaving.
+4.1
+Trellis Computation Implementation
+The majority of the Turbo SISO decoder operations are
+spent on trellis state updates. In this section, we present an
+eﬃcient implementation of the trellis computation using the
+architectural features mentioned in Section 2.
+Trellis computation.
+Figure 5a shows the two types
+of trellis computation for an 8-state trellis. The dark and
+light edges correspond to 0- and 1-branch transitions. Fig-
+ure 5b shows the SIMD implementation of the alpha trel-
+lis computation. Beta trellis computation is not shown; it
+follows the same sequence of operations. Trellis computa-
+tion can be divided into two steps, branch-metric calcula-
+tion (BMC) and add-compare-select calculation (ACS). In
+the BMC stage, the inputs are loaded as scalar values from
+the scalar local memory. The scalar value is then duplicated
+into a vector using the STV registers. The input vector, In,
+is correlated with constant metric values, m, to calculate
+the branch metric values for 0-branch and 1-branch. The
+correlation function, shown in the ﬁgure as M, is deﬁned as
+b[i] = In[0] ∗m[i][0] + In[1] ∗m[i][1], i : 0 −7. Since the
+metric values m[i] are either 1 or -1,we can use predicated
+add/subtract instructions, where m is stored as a predicate
+bitvector.
+In the ACS step, the trellis state vector, st, adds both
+0-branch and 1-branch metrics, and compares each pair of
+values to select the next trellis state vector st+1. The SSN
+network is used to rearrange the vectors between SIMD op-
+erations. The rearrangement step and the assembly code are
+shown in Figure 5c. Before this compare-and-select step, we
+ﬁrst interleave the 0-branch and 1-branch metric values (not
+shown in the ﬁgure). Then two SIMD permutation opera-
+tions are performed using the SSN. The ﬁrst permutation
+operation (op1) takes one cycle, using the ISE (Inverse Shuf-
+ﬂe Exchange) pattern. The second permutation operation
+(op2) takes two cycles, with one additional EX (Exchange
+only) permutation. Finally, a SIMD compare-and-select op-
+eration (op3) is performed to choose the next trellis state
+values.
+Parallel Window Trellis Implementation.
+In W-
+CDMA, the trellis state size is 8. Since the SIMD processor
+width is 32, we can process four windows in parallel using
+the schedule shown in Figure 4b. Figure 6 shows an example
+of two 4-state trellis computations stacked together onto a 8-
+wide SIMD processor. The two trellis states are represented
+by the s and t vectors. The SSN's permutation patterns are
+In
+m0
+m1
+m2
+m3
+m4
+m5
+m6
+m7
+b0
+b1
+b2
+b3
+b4
+b5
+b6
+b7
+M
+2 4-bit Inputs
+M
+M
+M
+M
+M
+M
+M
+m0
+m1
+m2
+m3
+m4
+m5
+m6
+m7
+b0
+b1
+b2
+b3
+b4
+b5
+b6
+b7
+M
+M
+M
+M
+M
+M
+M
+M
+b0
+b1
+b2
+b3
+b4
+b5
+b6
+b7
++
++
++
++
++
++
++
++
+b0
+b1
+b2
+b3
+b4
+b5
+b6
+b7
++
++
++
++
++
++
++
++
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+>
+>
+>
+>
+>
+>
+>
+>
+Branch metric calculations
+(BMC)
+Add-Compare-Select calculations
+(ACS)
+b) Vector Implementation of Trellis Computation
+M : b[i] = In[0]*m[i][0] + In[1]*m[i][1]
+Assembly code:
+op1: perm<ftrs8a*> Vstate0, Vstate0
+op2: perm<ftrs8b*> Vstate1, Vstate1
+op3: max Vstate, Vstate0, Vstate1
+*ftrs8a and ftrs8b are predefined
+SSN shuffle patterns
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s2
+s4
+s6
+s1
+s3
+s5
+s7
+s1
+s3
+s5
+s7
+s0
+s2
+s4
+s6
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s2
+s4
+s6
+s1
+s3
+s5
+s7
+s1
+s3
+s5
+s7
+s0
+s2
+s4
+s6
+>
+>
+>
+>
+>
+>
+>
+>
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+op 1
+op 2
+op 3
+ISE
+EX
+t
+t+1
+Time
+Beta trellis computation
+Alpha trellis computation
+Time
+trellis state
+0-branch
+1-branch
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+1
+3
+5
+7
+0
+2
+4
+6
+2
+6
+3
+7
+0
+4
+1
+5
+2
+6
+3
+7
+0
+4
+1
+5
+3
+7
+2
+6
+1
+5
+0
+4
+1
+3
+5
+7
+0
+2
+4
+6
+0
+2
+4
+6
+1
+3
+5
+7
+3
+7
+2
+6
+1
+5
+0
+4
+c) 8-wide Compare-Select using SSN
+ISE
+t
+t+1
+a) 8-wide Trellis Computation
+Figure 5: Trellis state computation, and SIMD im-
+plementation using the SSN
+
+Assembly code:
+op1: perm<ftrs4a*> Vstate0, Vstate0
+op2: perm<ftrs4b*> Vstate1, Vstate1
+op3: max Vstate, Vstate0, Vstate1
+*ftrs4a and ftrs4b are predefined SSN shuffle
+patterns
+s0
+1
+3
+1
+3
+0
+2
+0
+2
+s1
+s2
+s3
+t0
+t1
+t2
+t3
+0
+3
+0
+3
+1
+2
+1
+2
+s0
+s1
+s2
+s3
+t0
+t1
+t2
+t3
+>
+>
+>
+>
+>
+>
+>
+>
+s0
+s1
+s2
+s3
+t0
+t1
+t2
+t3
+op 1
+op 2
+op 3
+s0
+s2
+t0
+t2
+s1
+s3
+t1
+t3
+s1
+s3
+t1
+t3
+s0
+s2
+t0
+t2
+2
+2
+3
+3
+1
+1
+0
+0
+1
+1
+3
+3
+2
+2
+0
+0
+0
+3
+0
+3
+2
+1
+2
+1
+2
+3
+2
+3
+0
+1
+0
+1
+1
+3
+1
+3
+0
+2
+0
+2
+0
+3
+0
+3
+1
+2
+1
+2
+2
+2
+3
+3
+1
+1
+0
+0
+2
+2
+2
+0
+0
+1
+1
+3
+3
+3
+0
+3
+0
+1
+2
+1
+2
+3
+2
+3
+2
+1
+0
+1
+0
+s0
+s2
+t0
+t2
+s1
+s3
+t1
+t3
+s1
+s3
+t1
+t3
+s0
+s2
+t0
+t2
+EX
+SE
+EX
+SE
+Trellis state for
+2nd sub-block
+Trellis state for
+1st sub-block
+Trellis state for
+2nd sub-block
+Trellis state for
+1st sub-block
+ISE
+ISE
+Figure 6: Parallel window trellis compare-select for
+2 4-state trellis on an 8-wide SSN
+time
+Interleaving
+Parallel
+Interleaving
+Interleaving
+Parallel +
+Overlap
+Interleaving
+Dummy+
+Alpha+LLC
+Dummy+
+Beta
+Dummy+
+Alpha+LLC
+Dummy+
+Beta
+Dummy+
+Alpha+LLC
+Dummy+
+Beta
+Dummy+
+Alpha+LLC
+Dummy+
+Beta
+Figure 7: Computation time of 1 iteration of Turbo
+decoding for parallel processing vs. parallel process-
+ing with overlapping interleaving
+diﬀerent from that shown in Figure 5c, with both op1 and
+op2 requiring more iterations to complete. Although pro-
+cessing parallel sub-blocks does not increase the number of
+SIMD operations, additional scalar support is required.
+Interleaver Implementation.
+While the SISO de-
+coder computations can be parallelized, interleaving is a
+data shuﬄing function that cannot utilize the processing
+power of the SIMD pipeline. Figure 7 shows the computa-
+tion time of 1 iteration of the Turbo decoder for two pro-
+cessing scenarios. With SISO parallelization, the interleaver
+underutilizes the processor's resources and limits the overall
+achievable throughput. In order to alleviate this sequential
+bottleneck, we propose a technique to overlap the interleav-
+ing operation in the background of the SISO decoder. This is
+based on the observation that in a MAX-Log-MAP decoder,
+output data is produced one element at a time during the
+LLC computation.
+In this method, the interleaving is done during the mem-
+ory transfer.
+It requires the DMA controller to be pro-
+grammed to generate the source and destination addresses
+for each memory transfer.
+If the memory transfer rate is
+faster than the output rate of SISO decoder, then the latency
+of interleaving can be completely hidden behind the compu-
+tation. In the block interleaving speciﬁed in W-CDMA, each
+block element's address can be calculated by adding the row
+oﬀset and the column oﬀset. In our implementation, this
+requires 2 additions, 3 memory reads, and 1 memory write,
+which translates into 9 cycles. The SISO decoder produces
+an output every 9.25 cycles, enabling us to completely over-
+lap the interleaving latency with the computation latency.
+4.2
+W-CDMA Turbo Implementation Results
+SISO Decoder Throughput Analysis. In this section,
+we examine the achievable SISO decoding throughput as a
+function of algorithm speciﬁcations and architectural conﬁg-
+urations. Let K be the RSC encoder constraint length, then
+the size of trellis state is deﬁned as S = 2K−1. We assume
+that the SIMD width, W, is equal or greater than trellis
+state width: W ≥S. To fully utilize the SIMD pipeline, we
+implemented the parallel sliding window schedule, where N
+windows are processed in parallel, and N =
+W
+S . If we let
+M be the total number of sub-blocks for one block of Turbo
+decoding, then each window computes M
+N sub-blocks. In the
+case where W < S, trellis computation can still be imple-
+mented. The details are omitted due to space limitations.
+Let Tblock be the average number of cycles to compute
+alpha, beta, LLC, and dummy computations for one sub-
+block of size L.
+If we let Tα be the number of cycles to
+compute one SIMD alpha trellis update, then the latency to
+compute one alpha trellis update is Tα
+N + 3CL, where CL is
+the number of cycles to load one scalar value from memory.
+The SIMD alpha trellis latency is divided by N, because
+N windows of trellis are computed at once.
+Three scalar
+loads are needed for loading two inputs (rate
+1
+2 decoding),
+and one extrinsic value. The SIMD beta trellis updates, Tβ,
+follow the same set of operations as the alpha computation,
+with three scalar loads. The SIMD LLC computation, TLLC,
+computes N decoded bits at once. The SIMD dummy trellis
+computations are also done in groups of N windows, with
+each window requiring three scalar memory loads.
+For a
+sub-block of size L, the dummy alpha and beta calculations
+have to be done on at least 5K (K equals 4 here) elements
+to stabilize the trellis states and not aﬀect the overall error
+correction performance. The overall latency Tblock is shown
+in Equation 5, where Td is the total dummy computation
+latency for one sub-block.
+Tblock
+=
+Td + L(Tα + Tβ + TLLC
+N
++ 6CL)
+(5)
+Td
+=
+5K(Tdα + Tdβ
+N
++ 6CL)
+(6)
+As shown in Equation 6, Td is a function of dummy alpha
+and dummy beta computations.
+Let Tdα be the number
+of cycles for one SIMD dummy alpha trellis computation,
+and Tdβ be the number of cycles for one SIMD dummy beta
+trellis computation. In our implementation, Tdα = 10 and
+Tdβ = 10 N
+M .
+Dummy beta calculations are scaled by
+N
+M
+because the beta trellis states of the N sliding windows need
+to be initialized once for every M sub-blocks. In W-CDMA,
+Turbo decoding block size = ML, and ranges from 320 bits
+to 5114 bits [4]. Given L = 100, the number of sub-blocks,
+M, varies from 4 to 52. In our throughput calculation, we
+assume the longest Tdβ latency with M = 4, and the total
+Turbo decoding black size = 400.
+In our implementation, Tβ = 11, Tα + TLLC = 25, Td =
+220 and N, the number of windows processed in parallel, is 4
+
+. Alpha and LLC computations have been grouped together
+because they are executed together. A scalar load takes 3
+cycles, but if we use prefetching instruction, we can shorten
+it to 1 cycle: CL = 1. Six scalar load operations are required
+for alpha and beta. The length of one sub-block, L, is 100.
+Based on the numbers shown above, the overall latency is
+Tblock = 1720.
+Architectural Implications.
+As shown in Equa-
+tion 5, increasing the number of concurrent sub-blocks, N,
+decreases cycle count. This can be achieved by increasing
+the SIMD width W. However, doubling W doubles the size
+of the processor, which also doubles the power consumption.
+The other trade-oﬀis the length of a sub-block, L, as longer
+sub-blocks reduce the relative ratio of dummy calculations
+per decoded output. However, longer sub-blocks also require
+more memory to store alpha metric values. The constraint
+between SIMD memory and sub-block size is Ev ≥2WL,
+where Ev is the size of local SIMD memory. This means
+that we should choose the largest sub-block size that can
+ﬁt in the SIMD memory. Our DSP processor has an 8KB
+SIMD memory, which holds 128 512-bit entries. With 28 en-
+tries reserved for holding spilled temporary register values,
+the sub-block size L is chosen to be 100.
+Throughput Results.
+The overall decoding through-
+put of the Turbo decoder is determined by I times the com-
+bined latencies of the 2 SISO decoders and the 2 interleavers,
+where I is the number of iterations. In our implementation,
+because the interleaver latencies are hidden, the through-
+put is only dependent on the SISO decoders' performance.
+Equation 7 shows the Turbo decoder throughput, RT urbo, as
+a function of the processor's clock speed Cp, the number of
+Turbo iterations I, the average latency for a SISO decoder
+to produce one bit of decoding output T1bit, and additional
+computations for extrinsic value scaling CM.
+RT urbo
+=
+Cp
+2I(T1bit + CM)
+(7)
+Because the Turbo decoder is a block decoder, we deﬁne
+SISO decoder latency as T1bit = Tblock
+L
+= 17.2, where Tblock
+is the latency for processing one data block of size L. With
+our SDR processor running at 400MHZ, Cp = 400M, and
+CM = 2, we are able to achieve 1.73Mbps and 2.08Mbps,
+with I = 6 and I = 5 respectively. Note that W-CDMA's
+DCH (Data CHannel) requires a data rate of 2Mbps.
+If we wish to achieve higher throughput, we will need to
+resort to other optimizations techniques. We can scale up
+the frequency, increase the SIMD width, or map the algo-
+rithm onto multiple processors.
+In particular, our SIMD
+pipeline has a 32-wide 16-bit datapath, but most Turbo de-
+coder computations only require 8-bit precision. With some
+extra hardware logic, we can support two 8-bit computa-
+tion on every 16-bit datapath, making our SIMD pipeline
+a 64-wide 8-bit datapath. This can potentially double the
+overall throughput of the SISO decoder. Compiler optimiza-
+tion techniques, such as software pipelining, are also viable
+options. Finally, our previous study [8] has shown that our
+DSP processor consumes approximately 800mW in 180nm
+technology.
+Scaling down to 90nm, the same throughput
+can be achieved with a power consumption of approximately
+100mW.
+5.
+CONCLUSION
+In this paper, we presented a study on algorithm-architecture
+co-design of Turbo decoder for Software Deﬁne Radio. We
+ﬁrst highlighted key DSP architectural features that beneﬁts
+Turbo decoder processing. We then explain the algorithm
+design trade-oﬀs and software implementation issues of a
+Turbo decoder. As a case study, we implemented a Turbo
+decoder for the W-CDMA standard. Our results show that
+we are able to achieve 2Mbps decoding throughput while
+consuming sub-watt power on our DSP processor running
+at 400MHZ.
+6.
+ACKNOWLEDGMENT
+Yuan Lin is supported by a Motorola University Partner-
+ship in Research Grant. This research is also supported by
+ARM Ltd., the National Science Foundation grants NSF-
+ITR CCR-0325898, CCR-EHS 0615135 and CCR-0325761.
+7.
+REFERENCES
+[1] E. Boutillon, W. Gross, and P. G. Gulak. VLSI
+Architectures for the MAP Algorithm. In IEEE Trans. on
+Communications, volume 51, no. 2, pages 175-185, Feb.
+2003.
+[2] W. Ebel. Turbo-Code Implementation on C6x. In Tech.
+Report, Alexandria Research Inst., Virginia Polytechnic
+Inst. State Univ., 1999.
+[3] F. Gilbert, M. J. Thul, and N. Wehn. Communication
+Centric Architectures for Turbo-Decoding on Embedded
+Multiprocessors. In Proc. Design, Automation and Test
+Europe, pages 356-461, Mar. 2003.
+[4] H. Holma and A. Toskala. WCDMA for UMTS: Radio
+Access For Third Generation Mobile Communications.
+John Wiley and Sons, LTD, New York, New York, 2001.
+[5] H. C. Hunter and J. H. Moreno. A New Look at Exploiting
+Data Parallelism in Embedded System. In Proceedings of
+the 2003 International Conference on Compilers,
+Architecture and Synthesis for Embedded Systems, pages
+159-169, 2003.
+[6] F. Kienle, H. Michel, F. Gilbert, and N. Wehn. Eﬃcient
+MAP-algorithm Implementation on Programmable
+Architectures. In Advances in Radio Science, volume 1,
+pages 259-263, 2003.
+[7] H. Lee et al. Software Deﬁned Radio - A High Performance
+Embedded Challenge. In Proc. 2005 Intl. Conference on
+High Performance Embedded Architectures and Compilers
+(HiPEAC), Nov. 2005.
+[8] Y. Lin et al. SODA: A Low-power Architecture For
+Software Radio. In Proceedings of the 33rd Annual
+International Symposium on Computer Architecture, 2006.
+[9] M. Mansour and N. Shanbhag. VLSI Architectures for
+SISO-APP Decoders. In IEEE Transactions on Very Large
+Scale Integration (VLSI) Systems, volume 11, no. 4, pages
+627-650, Aug. 2003.
+[10] H. Michel, A. Worm, M. Munch, and N. Wehn.
+Hardware/Software Trade-oﬀs for Advanced 3G Channel
+Coding. In Proc. Design, Automation and Test Europe,
+pages 396-401, Mar. 2002.
+[11] S. Rixner et al. Register Organization for Media
+Processing. In Proceedings of the Sixth International
+Symposium on High-Performance Computer Architecture,
+pages 375-386, Jan. 2000.
+[12] A. L. Rosa, L. Lavagno, and C. Passerone. Implementation
+of a UMTS Turbo Decoder on a Dynamically
+Reconﬁgurable Platform. In IEEE Transactions on
+Computer-Aided Design of Integrated Circuits and
+Systems, volume 21, no. 1, pages 100-106, Jan. 2005.
+[13] Z. Wang, Z. Chi, and K. Parhi. Area-Eﬃcient High-Speed
+Decoding Schemes for Turbo Decoders. In IEEE
+Transactions on Very Large Scale Integration (VLSI)
+Systems, volume 10, no. 6, pages 902-912, Dec. 2002.
+

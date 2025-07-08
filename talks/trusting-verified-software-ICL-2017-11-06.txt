@@ -1,0 +1,655 @@
+© 2017 Arm Limited 
+How Can You Trust 
+Formally Verified 
+Software?
+Alastair Reid
+Arm Research
+@alastair_d_reid
+
+© 2017 Arm Limited 
+2
+https://www.theguardian.com/business/2015/may/01/us-aviation-authority-boeing-787-dreamliner-bug-could-cause-loss-of-control
+
+© 2017 Arm Limited 
+3
+Buffer over-read vulnerabilities
+
+© 2017 Arm Limited 
+3
+Buffer over-read vulnerabilities
+Logic error vulnerabilities
+
+© 2017 Arm Limited 
+3
+Buffer over-read vulnerabilities
+Logic error vulnerabilities
+Buffer over-read vulnerabilities
+Null pointer dereference
+
+© 2017 Arm Limited 
+3
+Buffer over-read vulnerabilities
+Logic error vulnerabilities
+Buffer over-read vulnerabilities
+Null pointer dereference
+Use after free
+
+© 2017 Arm Limited 
+3
+Buffer over-read vulnerabilities
+Logic error vulnerabilities
+Buffer over-read vulnerabilities
+Null pointer dereference
+Use after free
+Buffer overflow vulnerabilities
+
+© 2017 Arm Limited 
+4
+Formal verification
+Of libraries and apps
+Of compilers
+Of operating systems
+
+© 2017 Arm Limited 
+5
+Formally 
+Verified 
+Software
+Fonseca et al., An Empirical Study on the Correctness of Formally Verified Distributed Systems, Eurosys '17
+
+© 2017 Arm Limited 
+5
+Formally 
+Verified 
+Software
+Verification
+Tool
+Formal 
+Specifications
+Shim
+Code
+Fonseca et al., An Empirical Study on the Correctness of Formally Verified Distributed Systems, Eurosys '17
+
+© 2017 Arm Limited 
+6
+Takeaway #1: 3 key questions to ask
+1. What specifications does your proof rely on?
+2. Why do you trust those specifications?
+3. Does anybody else use these specifications?
+
+© 2017 Arm Limited 
+7
+Takeaway #2: Specifications must have multiple uses
+
+© 2017 Arm Limited 
+8
+Takeaway #2: Specifications must have multiple uses
+
+© 2017 Arm Limited 
+9
+How can you trust formally verified software?
+How can you trust formally verified software?
+Specifications are part of the TCB
+3 key questions
+Specifications must have multiple users
+How can you trust formal specifications?
+Testing specifications
+Verifying processors
+Verifying specifications
+How can you trust formally verified software?
+
+© 2017 Arm Limited 
+Creating trustworthy 
+specifications
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+
+© 2017 Arm Limited 
+11
+The state of most processor specifications
+Large (1000s of pages)
+Broad (10+ years of implementations, multiple manufacturers)
+Complex (exceptions, weak memory, ...)
+Informal (mostly English prose)
+We are all just learning how to (retrospectively) formalize 
+specifications
+
+© 2017 Arm Limited 
+12
+Arm Processor Specifications
+A-class (phones, tablets, servers, ...)
+M-class (microcontrollers, IoT)
+6,000 pages
+40,000 line formal specification 
+Instructions (32/64-bit)
+Exceptions / Interrupts
+Memory protection
+Page tables
+Multiple privilege levels
+System control registers
+Debug / trace
+1,200 pages
+15,000 line formal specification 
+Instructions (32-bit)
+Exceptions / Interrupts
+Memory protection
+Page tables
+Multiple privilege levels
+System control registers
+Debug / trace
+
+© 2017 Arm Limited 
+13
+English prose
+
+© 2017 Arm Limited 
+14
+Pseudocode
+
+© 2017 Arm Limited 
+15
+Arm Architecture Specification Language (ASL)
+Indentation-based syntax
+Imperative
+First-order
+Strongly typed (type inference, polymorphism, dependent types)
+Bit-vectors
+Unbounded integers
+Infinite precision reals
+Arrays, Records, Enumerations
+Exceptions
+
+© 2017 Arm Limited 
+16
+Interpreter
+C
+Backend
+ASL Spec
+Lexer
+Parser
+Typecheck
+
+© 2017 Arm Limited 
+17
+Architectural Conformance Suite
+Processor architectural compliance sign-off
+Large
+• v8-A 11,000 test programs, > 2 billion instructions
+• v8-M 3,500 test programs, > 250 million instructions
+Thorough
+• Tests dark corners of specification
+
+© 2017 Arm Limited 
+18
+Testing Pass Rate
+0
+25
+50
+75
+100
+ISA
+Supervisor
+Hypervisor/Security
+(Artists Impression)
+Time
+18
+
+© 2017 Arm Limited 
+19
+0%
+25%
+50%
+75%
+100%
+v8-M
+19
+
+© 2017 Arm Limited 
+20
+Measuring architecture coverage of tests
+Untested: op1*op2 == -3.0, FPCR.RND=-Inf 
+
+© 2017 Arm Limited 
+21
+
+© 2017 Arm Limited 
+Formal verification
+of processors
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+ARMResearch
+Checking an instruction
+23
+ADD
+
+ARMResearch
+Checking an instruction
+23
+ADD
+CMP LDR
+STR BNE
+Context
+
+© 2017 Arm Limited 
+24
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+© 2017 Arm Limited 
+24
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+
+© 2017 Arm Limited 
+24
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+Pre
+Post_spe
+Post_cp
+Spec
+==?
+
+ARMResearch
+25
+Combinational
+Verilog
+ASL to 
+Verilog
+Architecture
+Speciﬁcation
+Specialize
+Monomorphize
+Constant Propagation
+Width Analysis
+Exception Handling
+...
+
+© 2017 Arm Limited 
+26
+Arm CPUs verified with ISA-Formal
+A-class
+Cortex-A53
+Cortex-A32
+Cortex-A35
+Cortex-A55
+Next generation
+R-class
+Cortex-R52
+Next generation
+M-class
+Cortex-M4
+Cortex-M7
+Cortex-M33
+Next generation
+Cambridge Projects
+Rolling out globally to other design centres
+Sophia, France - Cortex-A75 (partial)
+Austin, USA - TBA
+Chandler, USA - TBA
+
+© 2017 Arm Limited 
+27
+
+© 2017 Arm Limited 
+Formal validation
+of specifications
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+
+© 2017 Arm Limited 
+29
+Suppose...
+Last year: audited all accesses to privileged registers
+• Specification: Added missing privilege checks
+• Testsuite: Added new tests to test every privilege check
+• Formal testbench: Verify every check
+This year: add new instruction but accidentally omit privilege check
+How many tests in the test suite will fail on new specification?
+
+© 2017 Arm Limited 
+30
+Executable Specification
+Defines what is allowed
+Animation   →  Check spec matches expectation
+Testable      →  Compare spec against implementation
+
+© 2017 Arm Limited 
+30
+Executable Specification
+Defines what is allowed
+Animation   →  Check spec matches expectation
+Testable      →  Compare spec against implementation
+Does not define what is not allowed
+e.g., Impossible states, impossible actions/transitions,  security properties
+No redundancy
+Problem when extending specification
+
+© 2017 Arm Limited 
+31
+Creating a specification of disallowed behaviour
+Where to get a list of disallowed behaviour?
+How to formalise this list?
+How to formally validate specification against spec of disallowed behaviour?
+
+© 2017 Arm Limited 
+32
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+
+© 2017 Arm Limited 
+32
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                 
+R         
+
+© 2017 Arm Limited 
+32
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                 
+R         
+And cannot happen any other way
+
+© 2017 Arm Limited 
+32
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                 
+R         
+Rule R:    X → A ∨ B ∨ C ∨ D
+And cannot happen any other way
+
+© 2017 Arm Limited 
+33
+State Change X
+Exit from lockup
+Fell(LockedUp)
+Event A
+A Cold reset
+Called(TakeColdReset)
+Event B
+A Warm reset
+Called(TakeReset)
+State Change C
+Entry to Debug state
+Rose(Halted)
+Event D
+Preemption by a higher 
+priority processor 
+exception
+Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+34
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+
+© 2017 Arm Limited 
+34
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+Fell(LockedUp) → Called(TakeColdReset)
+                            ∨ Called(TakeReset)
+                            ∨ Rose(Halted)
+                            ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+34
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+Fell(LockedUp) → Called(TakeColdReset)
+                            ∨ Called(TakeReset)
+                            ∨ Rose(Halted)
+                            ∨ Called(ExceptionEntry)
+__Called_TakeColdReset      = FALSE; 
+__Called_TakeReset          = FALSE; 
+__Called_TakeExceptionEntry = FALSE; 
+__Past_LockedUp = LockedUp; 
+__Past_Halted   = Halted; 
+assert((__Past_LockedUp > LockedUp) 
+       ==> 
+       (  __Called_TakeColdReset 
+       || __Called_TakeReset 
+       || __Past_Halted < Halted 
+       || __Called_ExceptionEntry));
+
+© 2017 Arm Limited 
+35
+Rule VGNW 
+Entry to lockup from an exception causes 
+• Any Fault Status Registers associated with the exception 
+to be updated. 
+• No update to the exception state, pending or active. 
+• The PC to be set to 0xEFFFFFFE. 
+• EPSR.IT to become UNKNOWN. 
+In addition, HFSR.FORCED is not set to 1.
+
+© 2017 Arm Limited 
+35
+Rule VGNW 
+Entry to lockup from an exception causes 
+• Any Fault Status Registers associated with the exception 
+to be updated. 
+• No update to the exception state, pending or active. 
+• The PC to be set to 0xEFFFFFFE. 
+• EPSR.IT to become UNKNOWN. 
+In addition, HFSR.FORCED is not set to 1.
+Out of date
+Misleading
+Ambiguous
+Untestable
+
+© 2017 Arm Limited 
+36
+Arithmetic operations
+Boolean operations
+Bit Vectors
+Arrays 
+Functions
+Local Variables
+Statements
+Assignments
+If-statements
+Loops
+Exceptions
+Arm Specification 
+Language
+SMT
+Arithmetic operations
+Boolean operations
+Bit Vectors
+Arrays 
+Functions
+Local Variables
+Statements
+Assignments
+If-statements
+Loops
+Exceptions
+
+© 2017 Arm Limited 
+Bug in Spec
+37
+Formally Validating Specifications
+v8-M Spec
+Verification
+CEX
+Property
+Proof
+
+© 2017 Arm Limited 
+Bug in Spec
+12 Bugs 
+Found
+so far
+37
+Formally Validating Specifications
+v8-M Spec
+Verification
+CEX
+Property
+Proof
+
+© 2017 Arm Limited 
+38
+
+© 2017 Arm Limited 
+39
+Lexer
+Parser
+Typechecker
+Interpreter
+Verilog
+Backend
+C
+Backend
+Test
+Coverage
+Simulation
+Trace
+ASL Spec
+SMT
+Backend
+ARM
+Test Suite
+Architecture
+Properties
+Bounded
+Model 
+SMT
+Solver
+Arm 
+Processor
+
+© 2017 Arm Limited 
+40
+Public release of machine readable Arm specification
+Enable formal veriﬁcation of software and tools
+Releases
+April 2017: v8.2
+July 2017: v8.3
+Working with Cambridge University REMS group to convert to SAIL
+Backends for HOL, OCaml, Memory model, (hopefully Coq too)
+Tools: https://github.com/alastairreid/mra_tools
+Talk to me about how I can help you use it
+
+© 2017 Arm Limited 
+41
+Potential uses of processor specifications
+Verifying compilers
+Verifying OS page table / interrupt / boot code
+Verifying processor pipelines
+Verification and discovery of peephole optimizations
+Automatic generation of binary translators
+Automatic generation of test cases
+Decompilation of binaries
+Abstract interpretation of binaries
+etc.
+
+© 2017 Arm Limited 
+How can you trust formally 
+verified software?
+
+© 2017 Arm Limited 
+43
+How can you trust formal specifications?
+Test the specifications you depend on
+Ensure specifications have multiple uses
+Create meta-specifications
+https://xkcd.com/1416/
+Hiring in Security and Correctness group — contact me
+
+Thank You!
+Danke!
+Merci!
+谢谢!
+ありがとう!
+Gracias!
+Kiitos!
+© 2017 Arm Limited 
+44
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+

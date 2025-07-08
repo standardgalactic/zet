@@ -1,0 +1,552 @@
+Hardware-Software Interfaces 
+Quality and Performance
+Alastair Reid 
+Research 
+Arm Ltd
+!1
+
+Aspects of hw/sw interface
+Quality of speciﬁcation 
+Performance 
+Security 
+Scalability / Flexibility 
+Parallelism 
+Energy eﬃciency 
+Area eﬃciency
+!2
+
+...
+!3
+Architecture
+Reference
+Manual (.pdf)
+Veriﬁcation IP 
+(Verilog)
+ISA Spec
+(HOL)
+ISA Spec
+(Coq)
+ISA Spec
+(.smt2)
+Compiler, JIT, 
+OS, ...
+Simulator
+(.c)
+Testsuite
+(.s)
+
+...
+!3
+Architecture
+Reference
+Manual (.pdf)
+Veriﬁcation IP 
+(Verilog)
+ISA Spec
+(HOL)
+ISA Spec
+(Coq)
+ISA Spec
+(.smt2)
+Compiler, JIT, 
+OS, ...
+Simulator
+(.c)
+Testsuite
+(.s)
+Documentation
+(.pdf)
+Processor
+Speciﬁcation
+(.asl, .xml)
+⚙
+⚙
+⚙
+⚙
+⚙
+⚙
+⚙
+⚙
+
+!4
+Processor
+Speciﬁcation
+
+Challenges
+Increased requirements 
+What speciﬁcation language? 
+Loss of redundancy - all eggs in one basket
+!5
+
+Creating Speciﬁcations
+!6
+
+Creating Speciﬁcations
+!6
+
+Creating Speciﬁcations
+!6
+
+Creating Speciﬁcations
+!6
+
+Creating Speciﬁcations
+!6
+
+Creating Speciﬁcations
+!6
+
+Pseudocode
+!7
+
+Arm Pseudocode
+~40,000 lines 
+- 32-bit and 64-bit modes 
+- All 4 encodings: Thumb16, Thumb32, ARM32, ARM64 
+- All instructions (> 1300 encodings) 
+- All 4 privilege levels (User, Supervisor, Hypervisor, Secure Monitor) 
+- Both Security modes (Secure / NonSecure) 
+- MMU, Exceptions, Interrupts, Privilege checks, Debug, TrustZone, 
+...
+!8
+
+Status at the start
+- Vague, incomplete, inaccurate language description 
+- No tools (parser, type checker) 
+- Incomplete (around 15% missing) 
+- Unexecuted, untested 
+- Senior architects believed that an executable spec was 
+- Impossible 
+- Not useful 
+- Less readable 
+- Less correct
+!9
+
+Architectural Conformance Suite
+Processor architectural compliance sign-oﬀ 
+Large 
+• v8-A 32,000 test programs, billions of instructions 
+• v8-M 3,500 test programs, > 250 million instructions 
+Thorough 
+• Tests dark corners of speciﬁcation 
+Hard to run 
+• Requires additional testing infrastructure
+!10
+
+0
+50
+100
+Progress testing Arm speciﬁcation
+Does not parse, does not type check 
+Can't get out of reset 
+Can't execute ﬁrst instruction 
+Can't execute ﬁrst 100 instructions 
+... 
+Passes 90% of tests 
+Passes 99% of tests
+!11
+
+Formally validating Arm processors
+!12
+Arm 
+Specification
+Arm 
+Processor
+Translate 
+to Verilog
+Verilog 
+Model 
+Checker
+
+!13
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Unbounded integers 
+Arrays  
+Dependent Types 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+Arm Specification 
+Language
+Verilog
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Unbounded integers 
+Arrays  
+Dependent Types 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+
+Checking an instrucKon
+!14
+ADD
+
+Checking an instrucKon
+!14
+ADD
+CMP LDR
+STR BNE
+Context
+
+Lessons Learned from validating processors
+Very eﬀective way to ﬁnd bugs in implementations 
+Applied to commercial processors 
+•
+Cortex-A32, Cortex-A35, Cortex-A53, Cortex-A55, Cortex-A65 
+•
+Cortex-R52 
+•
+Cortex-M4, Cortex-M7, Cortex-M33 
+Formally validating implementations is eﬀective at ﬁnding bugs in spec
+!15
+Spec
+
+!16
+Processor
+Speciﬁcation
+
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+!17
+
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+!17
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                  
+R         
+
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+!17
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                  
+R         
+Rule R:    X → A ∨ B ∨ C ∨ D
+
+!18
+State Change X
+Exit from lockup
+Fell(LockedUp)
+Event A
+A Cold reset
+Called(TakeColdReset)
+Event B
+A Warm reset
+Called(TakeReset)
+State Change C
+Entry to Debug state
+Rose(Halted)
+Event D
+Preemption by a higher 
+priority processor 
+exception
+Called(ExceptionEntry)
+
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+!19
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+
+!20
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays  
+Dependent Types 
+Functions 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+Arm Specification 
+Language
+SMT
+Arithmetic operations 
+Boolean operations 
+Bit Vectors 
+Arrays  
+Dependent Types 
+Functions 
+Statements 
+Assignments 
+If-statements 
+Loops 
+Exceptions
+
+Results
+Most properties proved in under 100 seconds (each) 
+Found 12 bugs in speciﬁcation: 
+- debug, exceptions, system registers, security 
+Found bugs in English prose: 
+- ambiguous, imprecise, incorrect, ...
+!21
+
+Public release of Arm v8-A speciﬁcation
+Enable formal veriﬁcaKon of soUware and tools 
+Machine readable 
+Up to date (v8.5-A architecture released Sept'18) 
+AutomaKc translaKon to Sail and Isabelle with Cambridge University 
+     - Rerun Architecture Conformance Suite 
+     - "ISA SemanKcs for ARM v8-A, , RISC-V, and CHERI-MIPS," POPL 2019 
+h`ps://developer.arm.com/products/architecture/a-proﬁle/exploraKon-tools 
+h`ps://github.com/alastairreid/mra_tools 
+h`ps://github.com/rems-project/sail-arm
+!22
+
+Summary
+Mechanized major commercial architecture speciﬁcation 
+• High quality, broad scope 
+Formal validation of processors 
+• Applied to multiple commercial processors 
+• Adapted for use with other architectures 
+Formal validation of processor speciﬁcation 
+Public release of speciﬁcation 
+• Translation of Arm's speciﬁcation to Sail enabling Isabelle proofs w/ Cambridge
+!23
+"Trustworthy Speciﬁcations of the ARM v8-A and v8-M architecture" FMCAD 2016 
+"End to End Veriﬁcation of ARM processors with ISA Formal" CAV 2016 
+"Who guards the guards?  Formal Validation of ARM v8-M Speciﬁcations" OOPSLA 2017 
+["ISA Semantics for ARM v8-A, RISC-V, and CHERI-MIPS" POPL 2019]
+
+Performance
+!24
+Software
+Hardware
+Instruction Stream
+
+Performance
+!25
+Sequential Instruction Stream
+Sequential Software
+Parallel Hardware
+
+Performance
+!25
+Out-of-Order 
+Execution
+Sequential Instruction Stream
+Sequential Software
+Parallel Hardware
+
+Performance
+!26
+Parallel Hardware
+Parallel Instruction Streams
+Sequential Software
+
+Performance
+!26
+Parallel Hardware
+Parallelizing 
+Compiler
+Parallel Instruction Streams
+Sequential Software
+
+Performance
+!26
+Parallel Hardware
+Parallelizing 
+Compiler
+Parallel Instruction Streams
+Sequential Software
+Annotations
++
+
+Performance
+!27
+Parallel Hardware
+Parallelizing 
+Compiler
+Sequential Software
+Annotations
++
+
+Challenges
+Annotations depend on features of hardware and domain 
+Programmer burden 
+Compiler transformations
+!28
+
+Ardbeg (2006-2008)
+Goal: Build a commercial software deﬁned radio system for LTE protocol 
+Subsystem: 
+• 2-4x 450MHz VLIW processors 
+• 512-bit predicated SIMD 
+• 14.4 Gops @ 250mW (each) 
+• Custom accelerators (Viterbi, Turbo, ...)
+!29
+
+Heterogeneous 
+Specialized cores 
+Local memories per processor 
+Explicit data copying (DMA)
+!30
+Homogeneous 
+General Purpose cores 
+Cache hierarchy 
+Cache coherence
+Asymmetric MP
+Symmetric MP
+
+Heterogeneous 
+Specialized cores 
+Local memories 
+Explicit data copying (DMA)
+!31
+Pipeline Parallelism 
+Explicit function placement (RPC) 
+Explicit data placement 
+Static Distributed Shared Memory
+Language Features
+Don't hide expensive operations 
+Annotations direct restructuring 
+Annotation checking and inference
+Programmer in control 
+Portability 
+Rapid design space exploration
+Hardware + Requirements
+
+!32
+int x[100];  
+int y[100]; 
+int z[100]; 
+while (1) {  
+       get(x); 
+       foo(y,x); 
+       bar(z,y); 
+       baz(z); 
+       put(z); 
+} 
+
+int x[100];  
+int y[100]; 
+int z[100]; 
+while (1) {  
+       get(x); 
+       foo(y,x) @ P0; 
+       SYNC(x) @ DMA; 
+       bar(z,y) @ P1; 
+       baz(z) @ P1; 
+       put(z); 
+} 
+!33
+Remote Procedure Call
+Synchronize data
+
+int x[100];  
+int y[100]; 
+int z[100]; 
+PIPELINE { 
+  while (1) {  
+       get(x); 
+       foo(y,x) @ P0; 
+       SYNC(x) @ DMA; 
+       FIFO(y); 
+       bar(z,y) @ P1; 
+       baz(z) @ P1; 
+       put(z); 
+  } 
+} 
+!34
+Use pipeline 
+Parallelism
+Transfer data 
+between threads
+
+int x[100] @ {M0};  
+int y[100] @ {M0,M1}; 
+int z[100] @ {M1}; 
+PIPELINE { 
+  while (1) {  
+       get(x@M0); 
+       foo(y@M0, x@M0) @ P0; 
+       SYNC(y,M1,M0) @ DMA; 
+       FIFO(y@M1); 
+       bar(z@M1, y@M1) @ P1; 
+       baz(z@M1) @ P1; 
+       put(z@M1); 
+  } 
+} 
+!35
+
+!36
+    int x[100] @ {M0};  
+    int y0[100] @ {M0}; 
+    int y1a[100] @ {M1}; 
+    while (1) {  
+       get(x); 
+       foo(y0, x) @ P0; 
+       memcpy(y1a,y0,...) @ DMA; 
+       ﬁfo_put(&f, y1a); 
+    } 
+    int y1b[100] @ {M1}; 
+    int z[100] @ {M1}; 
+    while (1) { 
+       ﬁfo_get(&f, y1b); 
+       bar(z, y1b) @ P1; 
+       baz(z) @ P1; 
+       put(z); 
+    } 
+
+Summary
+Part of "Ardbeg" Software Deﬁned Radio project 
+• Energy eﬃcient LTE radio modem 
+• Competitive with ﬁxed function hardware 
+Language extensions balance performance and portability 
+• Programmer uses annotations to control software-hardware mapping 
+• Compiler restructures program to implement annotations 
+Deﬁning hw/sw interface at a higher level to enable greater performance
+!37
+"SoC-C: Efficient Programming Abstractions for Heterogeneous Multicore Systems on Chip" CASES 2016 
+"Reducing inter-task latency in a multiprocessor system" US 8,359,588 
+["From SODA to scotch: The evolution of a wireless baseband processor" MICRO 2018]
+
+Hardware-Software Interfaces
+Two aspects of interface explored 
+• High Quality Speciﬁcations 
+• Performance 
+Future work 
+• Security 
+• Can we verify that ISA is "secure"? 
+• Parallelism 
+• Can we apply ideas to other parallelism frameworks?
+!38
+
+Fin
+!39
+

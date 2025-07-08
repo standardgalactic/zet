@@ -1,0 +1,713 @@
+SPEX: A Programming Language for Software Deﬁned Radio
+Yuan Lin1, Robert Mullenix1, Mark Woh1, Scott Mahlke1, Trevor Mudge1,
+Alastair Reid2, and Kriszti´an Flautner2
+1Advanced Computer Architecture Laboratory
+2ARM, Ltd.
+University of Michigan - Ann Arbor, MI
+Cambridge, United Kingdom
+{linyz, rbmullen, mwoh, mahlke, tnm}@umich.edu
+{alastair.reid, krisztian.ﬂautner}@arm.com
+Abstract
+High-throughput, low-power Software Deﬁned Radio(SDR)
+solutions require multi-core SIMD DSP processors to meet
+real-time performance requirements. Given the difﬁculty in
+programming traditional DSPs, these new multi-core signal
+processors provide even greater challenges for programmers
+and compilers. In this paper, we describe SPEX, a program-
+ming language which is aimed at narrowing the semantic
+gap between the description of complex SDR systems and
+their implementations. SPEX supports three different types
+of programming semantics, allowing SDR solutions to be
+developed with a divide-and-conquer approach. For DSP al-
+gorithm kernels, SPEX is able to support DSP arithmetics
+and ﬁrst-class vector and matrix variables with sequential
+language semantics. From wireless protocol channels, it is
+able to support sequences of data-processing computations
+with dataﬂow language semantics. And for protocol sys-
+tems, it is able to support real-time deadlines and concurrent
+executions with synchronous language semantics. The de-
+sign choices are motivated by our experience implementing
+W-CDMA protocol on a reprogrammable substrate. In the
+paper, we also brieﬂy explain SPEX's compilation strate-
+gies.
+1
+Introduction
+There is a growing trend for using multi-core DSP processor
+architectures to support high-throughput, low-power mobile
+Software Deﬁned Radio(SDR) solutions [5] [13] [12]. Un-
+like traditional uniprocessor DSPs, these multi-core DSPs
+have non-uniform memory access latencies, wide SIMD
+units, narrow data width, and the requirement to support
+dynamically changing workloads with real-time deadlines.
+Traditional DSP programming models are designed for
+stand-alone algorithms and uniprocessor architectures. Even
+for uniprocessors, developers are often forced to program in
+assembly language to achieve maximum performance. The
+new multi-core signal processors provide even greater chal-
+lenges for programmers and compilers. To make matters
+worse, the software implementations of wireless protocols
+require a large set of operations that are not natively sup-
+ported in general purpose languages. These include ﬁxed-
+point DSP arithmetics, streaming and concurrent computa-
+tions, and real-time process scheduling. Clearly, there is a
+need for better programming models to bridge the widening
+gap between high-level software developments and efﬁcient
+DSP hardware utilization.
+In Section 2, we ﬁrst describe the software implementa-
+tion of the W-CDMA protocol, and its behaviors and re-
+quirements. We then describe SPEX, a programming lan-
+guage for SDR in Section 3. SPEX includes three differ-
+ent types of programming semantics - Kernel SPEX, Stream
+SPEX, and Synchronous SPEX. This allows SDR solutions
+to be developed with a divide-and-conquer approach, where
+each component can be implemented and veriﬁed indepen-
+dently. Kernel SPEX is an imperative language supporting
+native DSP arithmetics and ﬁrst-class vector and matrix vari-
+ables. It is best used to describe DSP algorithm kernels.
+Stream SPEX is a dataﬂow language for streaming compu-
+tations. It is best used to describe wireless protocol's com-
+munication channels. Synchronous SPEX is a concurrent
+language with real-time support. It is best used to describe
+the overall protocol's system operations. And ﬁnally, in Sec-
+tion 4, SPEX's compilation strategies are described.
+2
+SDR Case Study: W-CDMA
+In order to design a language suited for SDR, we need to
+ﬁrst examine the implementation requirements of wireless
+protocols. In our study, we use W-CDMA as a case study
+because it has many of the characteristics found in a typ-
+ical SDR system, including complex DSP algorithms, real
+time computational requirements, and dynamically chang-
+ing workloads.
+
+ 1 W-CDMA Frame (10ms)
+BCH
+PICH
+PCH
+Channel
+Est.
+DCH
+AICH
+RACH
+FACH
+CPCH
+ADC
+FIR
+a) Protocol System Operations
+descrambler
+despreader
+c
+o
+m
+b
+i
+n
+e
+r
+descrambler
+despreader
+deinteleaver
+Channel
+decoder
+(turbo/viterbi)
+b) Protocol Channel Operations
+Figure 1: W-CDMA Protocol Diagram
+Protocol System. The top diagram in Figure 1 shows
+the W-CDMA wireless protocol's system execution pat-
+terns. W-CDMA's data are divided up into periodic 10msec
+frames. Some channels, such as the frontend ADC, FIR,
+and Channel Estimation, are needed for every frame. Other
+channels are executed based on the protocol operation con-
+ditions. Some channels are periodically executed for every
+frame, whereas others are aperiodic. Some channels have
+hard real-time deadlines, whereas others have soft real-time
+deadlines, or no real-time deadlines. For mobile terminals,
+there may only be one channel active at a time, but base sta-
+tions needs to support multiple users. This requires most of
+the channels to be executed concurrently, with some chan-
+nels having data dependencies. This level of SDR descrip-
+tion can be modeled as a concurrent system with multiple
+real-time deadlines.
+Protocol Channels.
+The bottom diagram in Figure 1
+shows the W-CDMA DCH channel.
+Data ﬁrst travels
+through multiple descramblers and despreaders. They are
+then combined together with the combiner, sent to the dein-
+terleaver, and then to the channel decoder. This level of SDR
+description does not have the notion of real-time. Data is
+processed in a pipelined sequence of DSP kernels. This level
+of SDR description can be modeled as stream computation.
+Protocol Algorithms. Each protocol channel is made up
+of a number of DSP algorithms. Our previous study [11]
+has examined the algorithm characteristics of W-CDMA,
+and we found that the majority of the computations are done
+on vector variables with 8- to 16-bit ﬁxed point precisions.
+Therefore, in SDR DSP algorithms, it is important to support
+ﬁxed-point vector variables and operations.
+3
+SPEX Programming Model
+SPEX supports three different levels of programming se-
+mantics: Synchronous SPEX, Stream SPEX, and Kernel
+SPEX. An implementation of W-CDMA using SPEX is
+shown in Figure 2. At the top level, the programmers use
+Synchronous SPEX to model the wireless protocol as a syn-
+chronous real-time system. Protocols channels are treated
+as concurrent nodes with a set of execution patterns and
+deadlines.
+Inter-channel data dependencies are described
+with communication and synchronization primitives. Syn-
+chronous SPEX nodes are allowed to execute only if both
+of the input data dependencies and timing constraints have
+been met. In the next level, each protocol channel is modeled
+as a dataﬂow stream using the Stream SPEX. This level of
+abstraction still allows concurrent execution, but has no no-
+tion of real-time. Each channel is constructed as a sequence
+of DSP kernels connected together with dataﬂow communi-
+cation primitives. Each kernel is allowed to execute after its
+input data dependencies are met. At the lowest level, Kernel
+SPEX can be used to model DSP kernels. Each DSP algo-
+rithm is described as an sequential kernel consisting of a set
+of functions and local states.
+Static Language. SPEX is a static object-oriented lan-
+guage modeled after C++. Like C++, local variables and
+member functions are supported as part of class declara-
+tions. However, unlike C++, objects cannot be created dy-
+namically. All variables and functions have to be statically
+declared and allocated during compile time. This means that
+C++ features, such as late-binding virtual functions, are not
+supported. This is enforced to increase the efﬁciency of the
+compiled code. Unlike general purpose computing, a SDR
+platform has very high computation requirements and low
+power budget, with little overhead to support dynamic task
+scheduling and memory managements. Therefore, it is de-
+sirable to ofﬂoad these tasks to the compiler. SPEX is de-
+signed to trade off the convenience of dynamism for compi-
+lation efﬁciency.
+3.1
+DSP Data Types
+DSP arithmetics have many intrinsic characteristics that are
+not supported by traditional general purpose programming
+languages, such as C++. For SPEX, we have introduced a
+set of special DSP data types made for DSP computations.
+These include a set of type modiﬁers on top of existing types,
+and a set of ﬁrst class array types for DSP computations.
+DSP Attribute Modiﬁers.
+SPEX supports DSP vari-
+ables with additional type attributes that are not supported by
+general purpose languages. These are modeled after System
+C variable attributes, which include: 1) ﬁxed-point arith-
+metics, 2) data precision, 3) overﬂow mode, and 4) round-
+ing mode. Many embedded DSP processors do not sup-
+
+PCH
+RACH
+DCH
+class viterbi {
+  vec metric;
+  void acs(vec in);
+  ...
+}
+Synchronous SPEX
+Kernel SPEX
+Comb
+RAKE
+RAKE
+Viterbi
+Decoder
+DCH
+RACH
+PCH
+Stream SPEX
+Figure 2: Implementation of W-CDMA using SPEX's three different levels of programming abstraction
+port 32-bit ﬂoating point, but simpler 8- or 16-bit ﬁxed-point
+arithmetic operations instead. Therefore, in addition to inte-
+ger and ﬂoating-point numbers, SPEX supports ﬁxed-point
+numbers with user-deﬁned data precisions. In C, the result of
+overﬂowing ﬁxed-point operations are implicitly wrapped-
+around. In DSP computation, saturation is needed for some
+operations. In ﬁxed-point and ﬂoating point computations,
+different rounding modes also need to be explicitly deﬁned
+in order to preserve the accuracy of the results.
+Vectors and Matrices.
+SPEX supports ﬁrst class arith-
+metic operations on vector, matrix and complex numbers,
+modeled after Matlab data operations. For example, pro-
+grammers can use an add operator on two vectors, instead
+of writing a loop to iterate through each vector element.
+SPEX also supports predication and permutation operations
+on vector and matrix variables, which allows programmers
+to express algorithms more efﬁciently.
+3.2
+Communication Primitives
+Wireless protocols are concurrent real-time embedded sys-
+tems that can be modeled as a set of concurrent nodes con-
+nected together with communication primitives. In SPEX,
+the communication primitives are implicitly deﬁned as the
+function arguments passed between functions. In order to
+distinguish between concurrent and imperative code, SPEX
+provides a set of communication primitives as a method for
+the programmers to explicitly deﬁne concurrency.
+Channels - Message Passing Objects.
+SPEX chan-
+nels are objects build on top of the traditional message pass-
+ing concepts. Like the message passing protocols, channels
+stall on reading from an empty channels and writing to a full
+channel. Each channel is required to have only one writer,
+but can have potentially many readers.
+However, unlike
+message passing protocols, channels are not strictly FIFO
+buffers, and the exact size of data transmission packets and
+communication patterns can be determined by the compiler.
+Channels support streaming computations through im-
+plicit communication. Between functions, the sender and the
+receiver of a channel do not have to enforce strict sequential
+execution order. A channel consists of an array of commu-
+template<class T, TAPS, S>
+class FIR {
+private:
+vector<T, TAPS> coeff;
+public:
+...
+kernel run(channel<T,S+TAPS-1> in, channel<T,S> &out)
+{
+vector<T, TAPS> v;
+for (i = 0; i < S; i++) {
+v = in(i,i+TAPS-1);
+out[i] = sum(v * coeff);
+}
+}
+}
+Figure 3: Kernel SPEX example - FIR ﬁlter
+nicating elements. As long as the element-wise data consis-
+tency is maintained, any execution order between the 2 func-
+tions are allowed. Within a function, channels can be used
+in the same way as vectors with one restriction - all channel
+variables are either read-only or write-only, not both. This
+relaxed form of guarantee allows the compiler to optimize
+the data communications between functions, as streams can
+be established between the caller and callee functions run-
+ning concurrently on two different processors.
+Signals - Shared Memory Objects.
+SPEX signals are
+objects built on top of the shared memory concepts with
+some restrictions. Like shared memory variables, a signal
+can change its value at any time during execution. To pro-
+vide efﬁcient compilation, signals are restricted to have only
+one writer, but can have potentially many readers. Because
+many embedded multi-core processors do not have cache
+structures or support cache coherent protocols, supporting
+software managed shared memory variables is not very efﬁ-
+cient. Signals should only be used for control-related code
+and synchronization mechanisms. Therefore, SPEX restricts
+the declarations of signals to be scalar variables only.
+3.3
+SPEX Objects
+SPEX is an object-oriented language based on C++ seman-
+tics. The three different levels of programming abstractions
+are expressed as three different types of class function dec-
+larations. Three additional keywords: kernel, stream, and
+
+01 template<spex_type T, S>
+02 class DCH
+03 {
+04
+private:
+05
+...
+06
+07
+Rake<T,S> rake[max_rake_fingers];
+08
+Viterbi<256,S> viterbi;
+09
+Combiner<T,S> combiner;
+10
+11
+channel<T,S> ch1[max_rake_fingers];
+12
+channel<T,S> ch2;
+13
+14
+public:
+15
+...
+16
+17
+stream run(channel<T,S> ADC_in,
+18
+channel<T,S> searcher_in,
+19
+channel<T,S> & out_MAC,
+20
+signal<int> & done)
+21
+{
+22
+for (int i = 0; i < num_rake_fingers; i++)
+23
+rake.run(ADC_in, searcher_in, ch1[i]);
+24
+combiner.run(ch1, ch2);
+25
+viterbi.run(ch2, out_MAC);
+26
+27
+barrier;
+28
+done = true;
+29
+}
+30 }
+Figure 4: Stream SPEX example - DCH
+synchronous are added to distinguish the three types of
+functions. The following describe these three types of se-
+mantics.
+Kernel SPEX. Kernel SPEX functions assume a sequen-
+tial execution order, following the semantics of C. They are
+declared with the kernel keyword, as shown in Figure 3.
+Formally, for each instruction i inside a kernel function, the
+results of instruction i can only be updated after all of its
+preceding instructions have ﬁnished their update, and must
+be updated before all of its succeeding instructions start their
+updates. Because of this, channels and signals can be used
+within a kernel function, but they cannot be declared as lo-
+cal variables, or passed as an argument to other functions.
+In addition, kernel functions are only allowed to call other
+functions that are also kernel functions.
+The strict sequential ordering means that the kernel func-
+tions are best ﬁtted for SIMD and VLIW compilations. We
+envision kernel functions being used to describe individual
+DSP algorithms. This provides a clean interface between
+the system engineers that design the protocol channels us-
+ing Stream and Synchronous SPEX, and the DSP algorithm
+engineers that design the algorithms with Kernel SPEX.
+Stream SPEX. Stream SPEX functions are used to sup-
+port concurrent data streaming with a dataﬂow computation
+model. Functions are declared with the stream keyword.
+With the streaming semantics, the strict sequential execution
+order is not enforced between instructions, only data consis-
+tency is required. A pair of communicating instructions can
+execute in any order, as long as the correct data values are
+consumed by the receiving function. Stream functions are
+not allowed to declare signals as local variables, nor pass
+01 class WCDMA
+02 {
+03
+...
+04
+AdcFir<int16, wcdma_frame> adcfir;
+05
+DCH<int16, wcdma_frame> dch;
+06
+Clock<slot, 15> frame_clock;
+07
+Signal<bool> bch_done, dch_done;
+08
+09
+...
+10
+synchronous run()
+11
+{
+12
+when (clock == 0) {
+13
+adcfir(ch1);
+14
+bch(ch1,bch_done);
+15
+chan_est(ch1,ch2,num_fingers);
+16
+if (wcdma_data_mode)
+17
+dch(ch1,ch2,num_fingers,dch_done);
+18
+}
+19
+20
+when (clock == bch_deadline)
+21
+assert(bch_done == true);
+22
+23
+when (clock == dch_deadline)
+24
+assert(dch_done == true);
+25
+}
+26 }
+Figure 5: Synchronous SPEX example - W-CDMA
+them as arguments in function calls.
+Figure 4 shows a simpliﬁed implementation of a W-
+CDMA DCH channel. In the function run, the instructions
+between line 22 and 25 represent a data stream going from
+the rake receiver to the combiner to the viterbi decoder. Each
+algorithm can potentially execute on a different processor
+with the data streamed between them. The barrier keyword
+on line 27 is used in a streaming function to enforce a se-
+quential execution order between instructions. For example,
+in function run, the statement done = true on line 28 is de-
+ﬁned after the barrier instruction. If it is deﬁned before the
+barrier, then the value of done may be set to true before the
+end of the streaming execution. This is because operations
+in a stream function are not guaranteed to start after its pre-
+decessor completes. Therefore, line 28 may start execution
+before the viterbi function call on line 26 has ﬁnished its
+computation. If there is no barrier deﬁned, then we assume
+that the entire function is under one streaming scope.
+Synchronous SPEX. Synchronous SPEX is used to sup-
+port discrete real-time computations, with functions de-
+clared with synchronous keyword. It is modeled after Syn-
+chronous Languages, such as Esterel [3] and Signal [6]. A
+partial implementation of the W-CDMA real-time system
+is implemented as shown in Figure 5. Synchronous func-
+tions are allowed to declare and call stream and kernel func-
+tions, and channel and signal communication primitives. In
+this programming abstraction level, instructions are treated
+as concurrent nodes that can execute in parallel. In the W-
+CDMA example, the three when scopes on line 12, 20, and
+23 can be executed concurrently. In addition, the body of
+the scope on line 12 can also be executed concurrently. The
+expressions on line 12, 20, and 23 stall until the conditions
+evaluate to true.
+
+kernel
+profile
+info
+Kernel SPEX
+class viterbi {
+  vec metric;
+  void acs(vec in);
+  ...
+}
+SIMD &
+VLIW
+Compiler
+Dataflow
+Compiler
+Real-time
+Scheduling
+Real-time
+Compiler
+stream
+profile
+info
+W-CDMA
+Execution
+Binary
+PCH
+RACH
+DCH
+Synchronous SPEX
+SIMD
+Operations
+with VLIW
+Scheduling
+Processor
+Mapping &
+Stream
+Scheduling
+Comb
+RAKE
+RAKE
+Viterbi
+Decoder
+DCH
+RACH
+PCH
+Stream SPEX
+Figure 6: SPEX Compilation Flow - Multi-tier Compilation
+Synchronous SPEX also provides support for periodic
+clock variables.
+In this example, a clock that tracks W-
+CDMA frames is declared on line 6, and used on line 12,
+20, 23. Clock variables are declared with two parameters:
+time step and clock period. Time step is the smallest time
+increment for the clock variable, and it has to be a multiple
+of the clock period of the processor. In this example, it is
+declared to be the length of one W-CDMA slot. Clock vari-
+able's internal time counter is set back to zero at every clock
+period. In this example, the clock period is set to the length
+of one W-CDMA frame, which contains 15 slots. The main
+purpose of the clock is to provide synchronous execution,
+and to describe deadlines.
+4
+SPEX Compilation
+SPEX's three different programming semantics require three
+different compilation techniques. Kernel SPEX functions
+can generally be compiled onto a single DSP processor,
+which requires VLIW and SIMD compilation techniques.
+Stream SPEX functions should be mapped across multiple
+processors for concurrent stream executions, which requires
+dataﬂow compilation with multi-processor assignments and
+DMA scheduling. Synchronous SPEX functions have tim-
+ing constraints, requiring real-time scheduling algorithms.
+Ideally, we should compile these three different types of
+function independently.
+However, in wireless protocols,
+these three types of functions are inter-connected together
+through channels, signals and other types of variables. Fur-
+thermore, the compilation efﬁciencies for these types of
+functions are inter-dependent on each other. For example,
+the quality of the stream scheduling may depend on the pre-
+dictability of its kernel functions' execution times. However,
+the optimal scheduling of a sequential DSP kernel may de-
+pend on the inter-processor network trafﬁc, which is deter-
+mined by the stream compilation. To solve this problem, we
+propose an iterative multi-tier compilation process. We ﬁrst
+compile the kernel functions, and proﬁle their execution be-
+haviors. We then pass these proﬁle information to compile
+stream functions, treating each kernel function as an atomic
+instruction. The stream function's execution behaviors are
+then extracted to compile the synchronous functions. If all
+of the timing conditions are met, then we are done. Other-
+wise, we take this more realistic system assumptions, and
+recompile the kernel functions to reiterate the compilation
+process. This iterative process halts when the system dead-
+lines and met, or if the compiler cannot converge onto a fea-
+sible solution. SPEX's multi-tier compilation is shown in
+Figure 6. The following sections describe the compilation
+process for each of the three types of functions.
+Kernel SPEX Compilation. The process of kernel com-
+pilation aims to map the algorithms onto a speciﬁc DSP plat-
+form efﬁciently. The kernel SPEX representation is passed
+through the compiler that has a speciﬁcation of the pertinent
+characteristics of the DSP. These include SIMD width, arith-
+metic and logical operations, and vector permutation primi-
+tives. The more esoteric data types such as complex should
+be expressed in the simpler constructs of the architecture.
+Vector permutation operations are broken into a series of as-
+sembly operations that perform the equivalent task. Vectors
+speciﬁed at the SPEX level that are larger than the native
+SIMD width must also be broken up into appropriately sized
+chunks.
+Stream SPEX Compilation. For stream compilation, the
+problem can be broken down into three steps. In the ﬁrst
+step, each channel is analyzed to determine its usage pat-
+tern and its streaming rate. In the second step, functions
+that are connected together through channels are match in
+the streaming rate.
+In the third step, functions are par-
+titioned onto multiple processors based on the workloads,
+memory are allocated, and DMA instructions generated, us-
+ing a dataﬂow compilation algorithm.
+Synchronous SPEX Compilation.
+For synchronous
+compilation, the problem involves real-time scheduling.
+According to previous work [9], multiprocessor real-time
+scheduling can be broken into three steps: 1) processor as-
+signments, 2) task ordering, and 3) execution timing. All
+three steps can be done either during compile time or during
+run time. For SDR, we ﬁnd that processor assignments and
+partial task ordering can be done during the compile time.
+But execution timing can not be determined during compile
+time. This is because W-CDMA protocols can execute dif-
+ferent types of channels with different execution conditions.
+Idle mode and data transferring mode use different protocol
+channels. Because the channels have data-dependencies, a
+relative order can be determined during the compile-time.
+
+5
+Related Work
+There have been many research studies on efﬁcient DSP
+languages and programming models. Many of them have
+focused on a single programming semantic.
+DSP-C [1]
+extends the C language to include types with different
+bitwidths, support for saturation mode, and circular buffers.
+While these are useful extensions for DSP programming,
+DSP-C is missing the SIMD-centric data structures as well
+as concurrency support, which are essential for high-through
+multi-core DSP architectures.
+The Kahn process network [7] is a model of computation
+that has been popular in the DSP community. In Kahn's
+model, network nodes communicate concurrently with each
+other through unidirectional inﬁnite-capacity FIFO queues.
+Each network node contains its own internal state. Read-
+ing from FIFO queues is blocking, and writing to the FIFO
+queues is non-blocking. Because of the blocking-read oper-
+ation, the context switching overhead is high. Researchers
+have later proposed dataﬂow process networks [10], which
+is a special case of a Kahn network. In dataﬂow process
+network, the communication between network nodes (called
+actors) are explicitly deﬁned as ﬁring rules. Many variations
+of dataﬂow processor networks have been proposed, includ-
+ing quasi-static dataﬂow [14], and dynamic dataﬂow [4]. We
+think a variation of these dataﬂow models can be used for
+Stream SPEX.
+Stream-C [8] is a C-extensions developed as part of the
+Imagine project [2]. It expresses DSP concurrency through
+streams, very similar to SPEX's stream objects. However,
+it is designed for uniprocessor architecture with no explicit
+real-time constraints. In addition, explicit SIMD object deﬁ-
+nitions and data attribute information are also not supported.
+StreamIt [15] was a dataﬂow language developed for the
+RAW project. Like Stream-C, it lacks explicit SIMD object
+deﬁnitions or data attribute information, making it unsuit-
+able for multi-core SIMD or VLIW DSP architectures. In
+addition, it is also very hard to express real-time constraints
+in dataﬂow. There are also other non-C based approaches;
+SPL [16] is a good example. Although SPL contains SIMD-
+centric vector and matrix data structures, it does not expose
+any concurrency information. In addition, it generates code
+for C or Fortran, which does not ease the compilation efforts.
+6
+Conclusion
+We have presented a programming language designed for
+embedded multi-core DSP system for SDR. SPEX allows
+programmers to efﬁciently express DSP algorithms as well
+as concurrent real-time systems. SPEX support these vastly
+different programmingrequirements by offering three differ-
+ent levels of programming semantics — kernel, stream and
+synchronous functions. Each one is design for a speciﬁc re-
+quirement of the software descriptions of wireless protocols.
+7
+Acknowledgment
+Yuan Lin is supported by a Motorola University Partnership
+in Research Grant. This research is also supported by ARM
+Ltd., the National Science Foundation grants NSF-ITR
+CCR-0325898, CCR-EHS 0615135 and CCR-0325761.
+References
+[1] http://www.dsp-c.org.
+[2] J. H. Ahn et al. Evaluating the Imagine Stream Architecture.
+In Proceedings of the 31st Annual International Symposium
+on Computer Architecture, June 2004.
+[3] F. Boussinot and R. de Simone. The Esterel Language. In
+Proc. IEEE, volume 79, pages 1293-1304, Sept. 1991.
+[4] J. Buck. Static scheduling of code generation from dynamic
+dataﬂow graphs with integer valued control signals. In Asilo-
+mar Conf. on Signals, Systems and Computers, 1994.
+[5] J. Glossner, E. Hokenek, and M. Moudgill. The Sandbridge
+Sandblaster Communications Processor. In 3rd Workshop on
+Application Speciﬁc Processors, pages 53-58, Sept. 2004.
+[6] P. L. Guernic, T. Gautier, and M. L. Borgne. Programming
+Real-time Applications with SIGNAL. In Proc. IEEE, vol-
+ume 79, Sept.
+[7] G. Kahn. The semantics of a simple language for parallel
+programming. J.L. Rosenfeld, Ed. North-Holland Publishing
+Co., 1974.
+[8] U. J. Kapasi et al. Programmable stream processors. IEEE
+Computer, August, 54-62 2003.
+[9] E. Lee and S. Ha. Scheduling Strategies for Multiprocessor
+Real-Time DSP. In Proc. GLOBECOM, Nov. 1989.
+[10] E. Lee and D. Messerschmidt. Synchronous data ﬂow. In
+Proc IEEE, 75, 1235-1245 1987.
+[11] H. Lee et al. Software Deﬁned Radio - A High Performance
+Embedded Challenge.
+In Proc. 2005 Intl. Conference on
+High Performance Embedded Architectures and Compilers
+(HiPEAC), Nov. 2005.
+[12] Y. Lin et al. SODA: A Low-power Architecture For Software
+Radio. In Proceedings of the 33rd Annual International Sym-
+posium on Computer Architecture, 2006.
+[13] B. Mohebbi and F. Kurdahi. Reconﬁgurable parallel dsp -
+rdsp. In Software Deﬁned Radio, 2004.
+[14] T. M. Parks, J. L. Pino, and E. A. Lee. A comparison of syn-
+chronous and cyclo-static dataﬂow. In Asiolmar Conference
+on Signals, Systems and Computers, October 1995.
+[15] W. Thies. Streamit: A compiler infrastructure for stream pro-
+grams. IBM Programming Language Day, 2004.
+[16] J. Xiong et al. SPL: A Language and Compiler for DSP Al-
+gorithms. In PLDI, June 2001.
+

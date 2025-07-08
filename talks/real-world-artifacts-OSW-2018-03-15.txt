@@ -1,0 +1,483 @@
+© 2017 Arm Limited 
+Creating Formal 
+Specifications of Real 
+World Artifacts
+Alastair Reid
+Arm Research
+@alastair_d_reid
+
+© 2017 Arm Limited 
+2
+Overview
+1. What's different about Real World Artifacts? 
+2. ARM's formal processor specifications 
+• Three experiences 
+• Lessons learned 
+3. Conclusions
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016 
+"End to End Verification of ARM processors with ISA Formal," CAV 2016 
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017 
+https://alastairreid.github.io/papers/
+
+© 2017 Arm Limited 
+3
+ARM
+Designs processors 
+Designs architecture 
+Licenses architecture 
+16B processors / year 
+(also GPUs, IoT, ...)
+
+© 2017 Arm Limited 
+4
+Real World Artifacts
+Linux Kernel, C compilers, ARM processors, TCP/IP, WiFi, etc.  
+- Multiple implementations, suppliers, versions, configurations 
+- Important: commercial, security, ... 
+- Long history, initial spec informal 
+- Formal spec not 100% welcome 
+- Backwards compatibility requirements 
+- Spec must include all quirks of recent versions of major implementations to be useful 
+- Conformance suites?
+
+© 2017 Arm Limited 
+5
+Current status of ARM specifications
+- Formal specifications of A, R and M-class processor classes exist 
+- Integrated into ARM's official processor specifications 
+- Maintained by ARM's architecture team 
+- Used by multiple teams within ARM 
+- Formal validation of ARM processors using Bounded Model Checking 
+- Development of test suites 
+- Designing architecture extensions 
+- ... 
+- Publicly released in machine readable form
+
+© 2017 Arm Limited 
+Creating trustworthy 
+specifications
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+
+© 2017 Arm Limited 
+7
+The state of most processor specifications
+Large (1000s of pages) 
+Broad (10+ years of implementations, multiple manufacturers) 
+Complex (exceptions, weak memory, ...) 
+Informal (mostly English prose) 
+Pseudocode (10000s of lines) 
+We are all just learning how to (retrospectively) formalize specifications
+
+© 2017 Arm Limited 
+8
+Unstructured English Prose (A-class spec)
+
+© 2017 Arm Limited 
+9
+Semi-structured English prose (M-class spec)
+
+© 2017 Arm Limited 
+10
+Tables - semistructured, not machine readable
+
+© 2017 Arm Limited 
+11
+Registers - structured, machine-readable
+
+© 2017 Arm Limited 
+12
+Pseudocode
+
+© 2017 Arm Limited 
+12
+Pseudocode
+Type Inference
+Dependent Types
+Enumerations
+Unbounded Integers
+Bit Vectors
+Indentation-based Syntax
+Imperative
+Exceptions
+
+© 2017 Arm Limited 
+13
+Status at the start
+- No tools (parser, type checker) 
+- Incomplete (around 15% missing) 
+- "Document by comment" 
+- Many trivial errors (that confuse tools but not humans) 
+- Unexecuted, untested 
+- Scepticism that executing spec is 
+- Possible 
+- Desirable 
+- Would compromise important aspects of specification
+
+© 2017 Arm Limited 
+14
+Architectural Conformance Suite
+Processor architectural compliance sign-off 
+Large 
+• v8-A 11,000 test programs, > 2 billion instructions 
+• v8-M 3,500 test programs, > 250 million instructions 
+Thorough 
+• Tests dark corners of specification
+
+© 2017 Arm Limited 
+15
+© 2017 Arm Limited 
+Progress in testing Arm specification
+-
+Does not parse, does not typecheck
+-
+Can't get out of reset
+-
+Can't execute first instruction
+-
+Can't execute first 100 instructions
+-
+...
+-
+Passes 90% of tests
+-
+Passes 99% of tests
+-
+...
+0
+50
+100
+
+© 2017 Arm Limited 
+16
+Measuring architecture coverage of tests
+Untested: op1*op2 == -3.0, FPCR.RND=-Inf 
+
+ARMResearch
+Creating a Virtuous Cycle
+17
+ARM 
+Spec
+Fuzzing 
+Firmware
+ARM 
+Conformance 
+TestSuite
+Processor 
+Veriﬁcanon
+Boot 
+OS
+Informanon 
+Flow 
+Analysis
+Random 
+Instrucnon 
+Sequences
+Testcase 
+Generanon
+Speciﬁcanon 
+Veriﬁcanon
+
+© 2017 Arm Limited 
+18
+Lessons (Part 1)
+- Specifications contain bugs 
+- Huge value in being able to run existing test suites 
+- Need to balance against benefits of non-executable specs 
+- Find ways to provide direct benefit to other users of spec 
+- They will do some of the testing/debugging for you 
+- They will support getting your changes/spec adopted as master spec 
+- Creates Virtuous Cycle
+
+© 2017 Arm Limited 
+Formal validation 
+of processors
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+© 2017 Arm Limited 
+20
+Formal/Testing framework (deterministic specs)
+Implementation
+Specification
+Stimulus
+? == ?
+Test vectors 
+Bounded model checker 
+...
+
+© 2017 Arm Limited 
+21
+Formal/Testing framework (non-deterministic specs)
+Implementation
+Specification
+Stimulus
+
+ARMResearch
+Checking an instrucnon
+22
+ADD
+
+ARMResearch
+Checking an instrucnon
+22
+ADD
+CMP LDR
+STR BNE
+Context
+
+ARMResearch
+Specifying ADD
+assign ADD_retiring = (pre.opcode & 16'b1111_1110_0000_0000) 
+                                      == 16'b0001_1000_0000_0000; 
+assign ADD_result   = pre.R[pre.opcode[8:6]] + pre.R[pre.opcode[5:3]]; 
+assign ADD_Rd       = pre.opcode[2:0]; 
+assert property (@(posedge clk) disable iﬀ (~reset_n) 
+        ADD_retiring |-> (ADD_result == post.R[ADD_Rd]));
+23
+
+ARMResearch
+24
+Combinational
+Verilog
+ASL to 
+Verilog
+Architecture
+Speciﬁcation
+Specialize 
+Monomorphize 
+Constant Propagation 
+Width Analysis 
+Exception Handling 
+...
+
+© 2017 Arm Limited 
+25
+Arm CPUs verified with ISA-Formal
+A-class 
+Cortex-A53 
+Cortex-A32 
+Cortex-A35 
+Cortex-A55 
+Next generation
+R-class 
+Cortex-R52 
+Next generation
+M-class 
+Cortex-M4 
+Cortex-M7 
+Cortex-M33 
+Next generation
+Cambridge Projects
+Rolling out globally to other design centres 
+Sophia, France - Cortex-A75 (partial) 
+Austin, USA - TBA 
+Chandler, USA - TBA
+
+© 2017 Arm Limited 
+26
+Lessons Learned (part 2)
+- Very effective way to find bugs in implementations 
+- Very effective at finding bugs in spec 
+- Try to find most of the bugs in your spec before you start 
+- Huge value in being able to use spec to validate implementations 
+- Helps get formal spec adopted as part of official spec 
+- Justifies investment in spec by implementors 
+
+© 2017 Arm Limited 
+Formal validation 
+of specifications
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications" OOPSLA 2017
+
+© 2017 Arm Limited 
+28
+One Specification to rule them all?
+Architecture Spec
+Compliance Tests
+Processors
+Reference Simulator
+
+© 2017 Arm Limited 
+29
+One Specification to rule them all?
+Pro 
+- Authoritative 
+- Easier to maintain 
+Con 
+- No redundancy 
+- Extending specification is harder
+
+© 2017 Arm Limited 
+30
+Creating a redundant specification
+Where to get a list of redundant properties from? 
+How to formalise this list? 
+How to formally validate specification against properties? 
+(This may look familiar from formal specification of software)
+
+© 2017 Arm Limited 
+31
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+
+© 2017 Arm Limited 
+31
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+
+© 2017 Arm Limited 
+31
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+And cannot happen any other way
+
+© 2017 Arm Limited 
+31
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor exception.
+State Change X    
+Event A             
+Event B               
+State Change C                
+Event D                                                                                            
+R         
+Rule R:    X → A ∨ B ∨ C ∨ D
+And cannot happen any other way
+
+© 2017 Arm Limited 
+32
+State Change X
+Exit from lockup
+Fell(LockedUp)
+Event A
+A Cold reset
+Called(TakeColdReset)
+Event B
+A Warm reset
+Called(TakeReset)
+State Change C
+Entry to Debug state
+Rose(Halted)
+Event D
+Preemption by a higher 
+priority processor 
+exception
+Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+33
+"Eyeball Closeness"
+Rule JRJC 
+Exit from lockup is by any of the following: 
+• A Cold reset. 
+• A Warm reset. 
+• Entry to Debug state. 
+• Preemption by a higher priority processor 
+exception.
+Fell(LockedUp) → Called(TakeColdReset) 
+                            ∨ Called(TakeReset) 
+                            ∨ Rose(Halted) 
+                            ∨ Called(ExceptionEntry)
+
+© 2017 Arm Limited 
+34
+Rule VGNW 
+Entry to lockup from an exception causes 
+• Any Fault Status Registers associated with the exception 
+to be updated. 
+• No update to the exception state, pending or active. 
+• The PC to be set to 0xEFFFFFFE. 
+• EPSR.IT to become UNKNOWN. 
+In addition, HFSR.FORCED is not set to 1.
+Out of date
+Misleading
+Ambiguous
+Untestable
+
+© 2017 Arm Limited 
+35
+Counterexample
+v8-M Spec
+Rules
+Convert
+Z3 
+SMT 
+Solver
++
+~10,000 lines
+~1,000,000 lines
+
+© 2017 Arm Limited 
+36
+Results (more in OOPSLA paper)
+Most properties proved in under 100 seconds 
+Found 12 bugs in specification: 
+- debug, exceptions, system registers, security 
+Found bugs in English prose: 
+- ambiguous, imprecise, incorrect, ...
+
+© 2017 Arm Limited 
+37
+Lessons Learned (part 3)
+- Redundancy essential for detecting errors 
+- Need set of 'orthogonal' properties 
+- Invariants 
+- Security properties 
+- Reachability properties 
+- etc. 
+- Eyeball closeness
+
+© 2017 Arm Limited 
+38
+Creating Formal Specifications of Real World Artifacts
+Spec 
+Plan for adoption into official specs 
+Test your specification 
+Build a virtuous cycle 
+- What is "killer app" of your spec? 
+Formally validation of implementations?  
+- Look for early adopters 
+- Ensure specifications have many uses 
+   Don't write spec in Coq/HOL/ACL2/... 
+Create redundant specifications
+
+Thank You! 
+Danke! 
+Merci! 
+谢谢! 
+ありがとう! 
+Gracias! 
+Kiitos!
+© 2017 Arm Limited 
+39
+@alastair_d_reid
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+

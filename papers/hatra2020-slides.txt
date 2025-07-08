@@ -1,0 +1,154 @@
+Alastair Reid, Shaked Flur, Luke Church, Sarah de Haas, Maritza Johnson, Ben Laurie
+HATRA 2020, 18-19 November 2020. https://arxiv.org/abs/2010.16345
+1
+
+2
+Artists impression
+2
+
+3
+Artists impression
+3
+could productively
+
+4
+Benefit
+Cost
+Time
+Artists impression
+Formal today
+1 week?
+months?
+Our goal
+Testing
+
+What do developers do?
+-
+Design
+-
+Coding
+-
+Testing
+-
+Fuzzing
+-
+Static analysis
+-
+Code review
+-
+...
+5
+
+What do developers do?
+-
+Design
+-
+Coding
+-
+Testing
+-
+Fuzzing
+-
+Static analysis
+-
+Code review
+-
+...
+6
+
+∀ a ∈ [1..1,000], b ∈ [1..1,000].
+                               (a    *u32 b) ∈ [1 .. 
+1,000,000]
+(Overly simple example)
+7
+proptest link
+
+(Same overly simple example)
+8
+Released Sept 2020: https://github.com/project-oak/rust-verification-tools
+
+9
+Programmer
+Code Review
+Reviewers
+Tester
+Automated 
+Tests
+Verifier
+Formal
+Verification
+Static
+Analysis
+Verification Tool
+Developer
+ Case Studies,
+Training, etc.
+Analysis Tool
+Developer
+
+10
+   Overcome preconceptions
+   Tool configuration complexity
+   Integration into build system
+   Weekly cost-benefit ratio
+   Bug localization
+   ...
+Code Review
+Automated 
+Tests
+Formal
+Verification
+Static
+Analysis
+
+11
+    Continuous Integration tools?
+    Code Review?
+   Tracking results
+   Standardizing tool configurations
+Code Review
+Automated 
+Tests
+Formal
+Verification
+Static
+Analysis
+
+12
+   What kind of verifier?
+   When to use? What tools?
+   vs. {test, static analysis,
+           code review, ...}
+   →
+   case studies, metrics, ...
+Code Review
+Automated 
+Tests
+Formal
+Verification
+Static
+Analysis
+
+Tool specialization
+  Allows better usability
+  Enables optimization for purpose
+  Tension: local optimization vs. global optimization
+Decidability ceiling
+  Tension: Predictability vs. power
+  How to improve consistency?
+  Profiling to find verification hotspots?
+13
+
+Build on what developers are already doing: testing
+-
+(our work is at an early stage)
+Focus: payback within a week (stretch goal!!!)
+Ecological challenges
+Technical challenges
+14
+More detail in paper
+
+Alastair Reid (@alastair_d_reid)
+Staff Research Scientist
+15
+

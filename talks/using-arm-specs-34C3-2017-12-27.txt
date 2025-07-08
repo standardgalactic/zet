@@ -1,0 +1,666 @@
+© 2017 Arm Limited 
+How Can You Trust 
+Formally Verified 
+Software?
+Alastair Reid
+@alastair_d_reid
+ARM Research
+34th Chaos Communication Congress
+
+© 2017 Arm Limited 
+Arm Processor Architecture
+Widely used in many different areas: phones, tablets, IoT, HDD, ...
+Important to understand what they do
+Important to be able to analyse malware, security analysis, etc.
+April 2011: Started work on formal specifications of ARM processor architectures
+April 2017: Public release in machine readable form
+https://developer.arm.com/products/architecture/a-profile/exploration-tools
+Working with REMS @ Cambridge Uni to translate ARM spec to SAIL to HOL/OCaml/...
+
+© 2017 Arm Limited 
+What can you do with an executable processor specification
+How can you trust formally verified software?
+
+© 2017 Arm Limited 
+ARM Machine Readable Architecture Specification 
+Instructions
+Security features: memory protection, exceptions, privilege checks, TrustZone, ...
+Links
+-
+Official ARM release https://developer.arm.com/products/architecture/a-profile/exploration-tools
+-
+HTML files (part of official release) https://www.meriac.com/archex/
+-
+Tools to dissect the official release (incl. parser) https://github.com/alastairreid/mra_tools
+-
+Blog article about release https://alastairreid.github.io/ARM-v8a-xml-release/
+-
+Papers
+-
+"Trustworthy Specifications of the ARM v8-A and v8-M architecture," FMCAD 2016
+-
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+-
+"Who guards the guards?  Formal Validation of ARM v8-M Specifications," OOPSLA 2017
+
+© 2017 Arm Limited 
+https://www.meriac.com/archex/ARMv83A-SysReg/AArch32-sctlr.xml
+
+© 2017 Arm Limited 
+https://www.meriac.com/archex/ARMv83A-SysReg/AArch32-sctlr.xml
+
+© 2017 Arm Limited 
+https://www.meriac.com/archex/ARMv83A-SysReg/AArch32-sctlr.xml
+
+© 2017 Arm Limited 
+MRC p15, 0, R0, c1, c0, 0
+ORR R0, R0, #0x80000
+MCR p15, 0, R0, c1, c0, 0
+See also: https://github.com/gdelugre/ida-arm-system-highlight
+
+© 2017 Arm Limited 
+MRC p15, 0, R0, c1, c0, 0
+ORR R0, R0, #0x80000
+MCR p15, 0, R0, c1, c0, 0
+MRC R0, SCTLR
+ORR R0, R0, #0x80000
+MCR R0, SCTLR
+See also: https://github.com/gdelugre/ida-arm-system-highlight
+
+© 2017 Arm Limited 
+MRC p15, 0, R0, c1, c0, 0
+ORR R0, R0, #0x80000
+MCR p15, 0, R0, c1, c0, 0
+MRC R0, SCTLR
+ORR R0, R0, #0x80000
+MCR R0, SCTLR
+SCTLR.WXN = 1;
+See also: https://github.com/gdelugre/ida-arm-system-highlight
+
+© 2017 Arm Limited 
+MRC p15, 0, R0, c1, c0, 0
+ORR R0, R0, #0x80000
+MCR p15, 0, R0, c1, c0, 0
+MRC R0, SCTLR
+ORR R0, R0, #0x80000
+MCR R0, SCTLR
+SCTLR.WXN = 1;
+See also: https://github.com/gdelugre/ida-arm-system-highlight
+
+https://www.meriac.com/archex/A64_v83A_ISA/add_addsub_imm.xml
+
+© 2017 Arm Limited 
+[sf:"1"; op:"0"; S:"0"; "10001"; shift:"xx"; imm12:"xxxxxxxxxxxx"; Rn:"xxxxx"; Rd:"xxxxx"] 
+<-> 
+"ADD" " " <Xd|SP> "," " " <Xn|SP> "," " " [ "#" ] <imm> " " [ "," " " <shift> ]
+where
+<Xd|SP> = RegXSP(UInt(Rd));
+<Xn|SP> = RegXSP(UInt(Rn));
+<imm>   = UInt(imm12);
+<shift> = Optional("LSL #0", 
+case shift {
+'00' <-> "LSL #0";
+'01' <-> "LSL #12";
+'1x' <-> RESERVED();
+});
+Assembler / Disassembler
+https://alastairreid.github.io/bidirectional-assemblers/
+See also: https://github.com/agustingianni/retools and https://github.com/nspin/hs-arm
+
+© 2017 Arm Limited 
+https://www.meriac.com/archex/A64_v83A_ISA/add_addsub_imm.xml
+
+sf
+=
+'0'
+imm12
+=
+0x02a
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+n
+=
+3
+datasize
+=
+32
+imm
+=
+0x0002a000
+operand1
+=
+0x00000045
+result
+=
+0x0002a045
+X[5]
+=
+0x0002a045
+
+sf
+=
+'0'
+imm12
+=
+0x02a
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+n
+=
+3
+datasize
+=
+32
+imm
+=
+0x0002a000
+operand1
+=
+0x00000045
+result
+=
+0x0002a045
+X[5]
+=
+0x0002a045
+
+sf
+=
+'0'
+imm12
+=
+0x02a
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+n
+=
+3
+datasize
+=
+32
+imm
+=
+0x0002a000
+operand1
+=
+0x00000045
+result
+=
+0x0002a045
+X[5]
+=
+0x0002a045
+
+sf
+=
+'0'
+imm12
+=
+0x02a
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+n
+=
+3
+datasize
+=
+32
+imm
+=
+0x0002a000
+operand1
+=
+0x00000045
+result
+=
+0x0002a045
+X[5]
+=
+0x0002a045
+
+sf
+=
+'0'
+imm12
+=
+0x02a
+Rd    Rn      imm12
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+Uint(Rd)
+n
+=
+3
+Uint(Rn)
+datasize
+=
+32
+32
+imm
+=
+0x0002a000
+ZeroExtend(imm12, 32)
+operand1
+=
+0x00000045
+X[n]
+result
+=
+0x0002a045
+imm + operand1
+X[d]
+=
+0x0002a045
+result
+
+sf
+=
+'0'
+imm12
+=
+0x02a
+Rd    Rn      imm12
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+Uint(Rd)
+n
+=
+3
+Uint(Rn)
+datasize
+=
+32
+32
+imm
+=
+0x0002a000
+ZeroExtend(imm12, 32)
+operand1
+=
+0x00000045
+X[n]
+result
+=
+0x0002a045
+imm + operand1
+X[d]
+=
+0x0002a045
+result
+
+`
+sf
+=
+'0'
+imm12
+=
+0x02a
+Rd    Rn      imm12
+shift
+=
+'01'
+Rd
+=
+'00101'
+Rn
+=
+'00011'
+d
+=
+5
+Uint(Rd)
+n
+=
+3
+Uint(Rn)
+datasize
+=
+32
+32
+imm
+=
+0x0002a000
+ZeroExtend(imm12, 32)
+operand1
+=
+0x00000045
+X[n]
+result
+=
+0x0002a045
+imm + operand1
+X[d]
+=
+0x0002a045
+result
+
+© 2017 Arm Limited 
+Symbolic Representation
+Feed to constraint solver (e.g., Z3 SMT Solver)
+-
+What is the output given input Y?
+-
+What input X produces output Y?
+-
+What input X produces intermediate value Y?
+-
+Generate a test input that shows X happening
+-
+Cf. KLEE LLVM symbolic execution
+Rd    Rn      imm12
+Uint(Rd)
+Uint(Rn)
+ZeroExtend(imm12, 32)
+X[n]
+imm + operand1
+X[d]
+result
+`
+https://alastairreid.github.io/validating-specs/
+
+
+Full graph for one path through the ADD instruction: 80-90 nodes
+Graph for all paths through entire v8-M specification: 0.5M nodes
+
+© 2017 Arm Limited 
+From instructions to programs...
+Handle Interrupts
+Fetch Instruction
+Execute Instruction
+Handle Exceptions
+
+© 2017 Arm Limited 
+47
+Architectural Conformance Suite
+Processor architectural compliance sign-off
+Large
+• v8-A 11,000 test programs, > 2 billion instructions
+• v8-M 3,500 test programs, > 250 million instructions
+Thorough
+• Tests dark corners of specification
+https://alastairreid.github.io/papers/FMCAD_16/
+
+© 2017 Arm Limited 
+Progress in testing Arm specification
+-
+Does not parse, does not typecheck
+-
+Can't get out of reset
+-
+Can't execute first instruction
+-
+Can't execute first 100 instructions
+-
+...
+-
+Passes 90% of tests
+-
+Passes 99% of tests
+-
+...
+0
+50
+100
+
+© 2017 Arm Limited 
+Fuzz testing Arm binaries
+External fuzzing
+• Branches in Arm binary used to guide fuzz tester's choice of inputs
+• Finds explicit control flow
+Internal fuzzing
+• Branches in Arm specification used to guide fuzz tester's choice of inputs
+• Finds implicit control flow
+(Symbolic execution to escape plateaus)
+
+Memory
+R0
+-
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0
+-
+R15
+cf "End-to-end formal ISA verification of RISC-V processors with riscv-formal", Saal Clarke, 1pm 27th December
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+Memory
+R0
+-
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0
+-
+R15
+πpre
+πpost
+cf "End-to-end formal ISA verification of RISC-V processors with riscv-formal", Saal Clarke, 1pm 27th December
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+Memory
+R0
+-
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0
+-
+R15
+πpre
+πpost
+Pre
+Post_spec
+Post_cpu
+Spec
+==?
+cf "End-to-end formal ISA verification of RISC-V processors with riscv-formal", Saal Clarke, 1pm 27th December
+"End to End Verification of ARM processors with ISA Formal," CAV 2016
+
+© 2017 Arm Limited 
+Do something awesome!
+Known to work
+"Should" work
+-
+Assembler/disassembler
+-
+Interpreter
+-
+Symbolic evaluation
+-
+Generate testcases
+-
+Fuzzing with internal feedback
+-
+Formally validate processor design
+-
+System register plugin
+-
+Fuzzing with symbolic execution
+-
+(Information flow analysis)
+-
+(Test LLVM IR à ARM backend)
+-
+(Superoptimizer
+http://www.eecs.qmul.ac.uk/~gretay/papers/onward2017.pdf)
+-
+(Convert to Coq/HOL/ACL2)
+
+© 2017 Arm Limited 
+How can you trust formally verified software?
+Program
+More formal despair: Denning, Fonseca et al.
+More formal hope: Hyperkernel, Yggdrasil, Milawa, Fiat
+
+© 2017 Arm Limited 
+How can you trust formally verified software?
+Program Specification
+Program
+More formal despair: Denning, Fonseca et al.
+More formal hope: Hyperkernel, Yggdrasil, Milawa, Fiat
+
+© 2017 Arm Limited 
+How can you trust formally verified software?
+Program Specification
+Linux
+specification
+Program
+More formal despair: Denning, Fonseca et al.
+More formal hope: Hyperkernel, Yggdrasil, Milawa, Fiat
+
+© 2017 Arm Limited 
+How can you trust formally verified software?
+Program Specification
+Linux
+specification
+glibc
+specification
+glibc
+specification
+glibc
+specification
+Program
+More formal despair: Denning, Fonseca et al.
+More formal hope: Hyperkernel, Yggdrasil, Milawa, Fiat
+
+© 2017 Arm Limited 
+How can you trust formally verified software?
+Program Specification
+Linux
+specification
+ISO-C
+specification
+glibc
+specification
+glibc
+specification
+glibc
+specification
+Program
+More formal despair: Denning, Fonseca et al.
+More formal hope: Hyperkernel, Yggdrasil, Milawa, Fiat
+
+© 2017 Arm Limited 
+Alasdair Armstrong (Cambridge U.)
+Alex Chadwick (ARM)
+Ali Zaidi (ARM)
+Anastasios Deligiannis (ARM)
+Anthony Fox (Cambridge U.)
+Ashan Pathirane (ARM)
+Belaji Venu (ARM)
+Bradley Smith (ARM)
+Brian Foley (ARM)
+Curtis Dunham (ARM)
+David Gilday (ARM)
+David Hoyes (ARM)
+David Seal (ARM)
+Daniel Bailey (ARM)
+Erin Shepherd (ARM)
+Francois Botman (ARM)
+George Hawes (ARM)
+Graeme Barnes (ARM)
+Isobel Hooper (ARM)
+Jack Andrews (ARM)
+Jacob Eapen (ARM)
+Jon French (Cambridge U.)
+Kathy Gray (Cambridge U.)
+Krassy Gochev (ARM)
+Lewis Russell (ARM)
+Matthew Leach (ARM)
+Meenu Gupta (ARM)
+Michele Riga (ARM)
+Milosch Meriac (ARM)
+Nigel Stephens (ARM)
+Niyas Sait (ARM)
+Peng Wang (ARM)
+Peter Sewell (Cambridge U.)
+Peter Vrabel (ARM)
+Richard Grisenthwaite (ARM)
+Rick Chen (ARM)
+Simon Bellew (ARM)
+Thomas Grocutt (ARM)
+Will Deacon (ARM)
+Will Keen (ARM)
+Wojciech Meyer (ARM)
+(and others)
+Do something awesome with the spec
+Ask me questions  alastair.reid@arm.com @alastair_d_reid https://alastairreid.github.io
+Talk to me or Milosch Meriac (@FoolsDelight) about white hacker jobs at ARM
+Thanks to those who helped get here
+

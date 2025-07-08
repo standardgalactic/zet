@@ -1,0 +1,637 @@
+ARMResearch
+End-to-End Veriﬁcation of ARM
+® 
+Processors with ISA-Formal
+Alastair Reid,  Rick Chen,  Anastasios Deligiannis,  David Gilday,  David Hoyes, 
+Will Keen,  Ashan Pathirane,  Owen Shepherd,  Peter Vrabel,  Ali Zaidi
+alastair.reid@arm.com
+@alastair_d_reid
+
+ARMResearch
+Scale
+Large Speciﬁcations
+Large Implementations
+2
+
+ARMResearch
+Checking an instruction
+3
+ADD
+
+ARMResearch
+Checking an instruction
+3
+ADD
+CMPLDR
+STR BNE
+Context
+
+ARMResearch
+4
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+ARMResearch
+4
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+
+ARMResearch
+4
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+πpre
+πpost
+Pre
+Post_spec
+Post_cpu
+Spec
+==?
+
+ARMResearch
+Errors ISA-Formal can catch
+• Errors in decode
+• Errors in data path
+• Errors in forwarding logic
+• Errors in register renaming
+• Errors in exception handling
+• Errors in speculative execution
+5
+No Context
+Context
+{
+{
+
+ARMResearch
+Specifying ADD
+assign ADD_retiring = (pre.opcode & 16'b1111_1110_0000_0000) 
+                                      == 16'b0001_1000_0000_0000; 
+assign ADD_result   = pre.R[pre.opcode[8:6]] + pre.R[pre.opcode[5:3]]; 
+assign ADD_Rd       = pre.opcode[2:0]; 
+assert property (@(posedge clk) disable iﬀ (~reset_n) 
+        ADD_retiring |-> (ADD_result == post.R[ADD_Rd]));
+6
+
+ARMResearch
+ISA Formal
+• Finds complex bugs in processor pipelines
+• Applied to wide range of μArchitectures
+• Uses translation of ARM's internal ISA speciﬁcation
+7
+
+ARMResearch
+8
+
+ARMResearch
+8
+
+ARMResearch
+Challenges
+• Complex Functional Units
+• FP
+• Memory
+• Dual Issue
+• Instruction Fusion
+• Register Renaming
+• Out-of-order Retire
+9
+
+ARMResearch
+10
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+EX
+MEM
+WB
+IF
+ID
+R0 
+- 
+R15
+
+ARMResearch
+11
+
+ARMResearch
+11
+Memory
+TLB
+Prefetch
+PTW
+Coherence
+Cache
+
+ARMResearch
+11
+Memory
+TLB
+Prefetch
+PTW
+Coherence
+Cache
+FPU
+FMUL
+FADD
+FDIV
+FSQRT
+
+ARMResearch
+12
+Memory
+R0 
+- 
+R15
+Decode
+Fetch
+R0 
+- 
+R15
+Memory
+FPU
+
+ARMResearch
+FP Subset Behaviour
+13
+-∞
+-1
+0
+1
+∞
+-∞
+-∞
+-∞
+-∞
+-∞
+-1
+-∞
+-1
+0
+∞
+0
+-∞
+-1
+0
+1
+∞
+1
+-∞
+0
+1
+∞
+∞
+∞
+∞
+∞
+∞
+FPAdd
+
+ARMResearch
+ISA Formal
+• Finds complex bugs in processor pipelines
+• Applied to wide range of μArchitectures
+• Uses translation of ARM's internal ISA speciﬁcation
+14
+
+ARMResearch
+ISA-Formal Properties
+15
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+NZCV
+SP
+PC
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+16
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+NZCV
+SP
+✔
+PC
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+17
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+NZCV
+SP
+✔
+PC
+✔
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+18
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+NZCV
+✔
+SP
+✔
+✔
+PC
+✔
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+But this is slow
+and inconsistent
+19
+
+ARMResearch
+ISA-Formal Properties
+20
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+SP
+PC
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+21
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+FPSR
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+22
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+MemWrite
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+23
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+✔
+✔
+✔
+✔
+✔
+MemWrite
+✔
+✔
+✔
+✔
+✔
+SysRegRW
+ELR
+ESR
+...
+
+ARMResearch
+ISA-Formal Properties
+24
+ADC
+ADD
+B
+...
+YIELD
+R[]
+✔
+✔
+✔
+✔
+✔
+NZCV
+✔
+✔
+✔
+✔
+✔
+SP
+✔
+✔
+✔
+✔
+✔
+PC
+✔
+✔
+✔
+✔
+✔
+S[],D[],V[]
+✔
+✔
+✔
+✔
+✔
+FPSR
+✔
+✔
+✔
+✔
+✔
+MemRead
+✔
+✔
+✔
+✔
+✔
+MemWrite
+✔
+✔
+✔
+✔
+✔
+SysRegRW
+✔
+✔
+✔
+✔
+✔
+ELR
+✔
+✔
+✔
+✔
+✔
+ESR
+✔
+✔
+✔
+✔
+✔
+...
+
+ARMResearch
+Automation
+25
+Combinational
+Verilog
+ASL to 
+Verilog
+Architecture
+Speciﬁcation
+Specialize 
+Monomorphize 
+Constant Propagation 
+Width Analysis 
+Exception Handling 
+...
+
+ARMResearch
+26
+
+ARMResearch
+Summary
+• Finds complex bugs in processor pipelines
+•
+Complete RTL, not just model
+•
+Bug absence not being proved (yet)
+• Applied to wide range of μArchitectures
+•
+3 trials, 6 full deployments.
+• Uses translation of ARM's internal ISA speciﬁcation
+•
+Public release of ISA spec this fall in collaboration w/ Cambridge University
+•
+"Trustworthy Speciﬁcations of ARM
+® v8-A and v8-M System Level Architecture,"        
+to appear, FMCAD 2016
+27
+
+End 
+28
+alastair.reid@arm.com
+@alastair_d_reid
+

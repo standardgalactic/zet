@@ -1,0 +1,203 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Eq
+All except IO, (->)
+Ord
+All except (->)
+IO,  IOError
+Num
+Int, Integer, 
+Float, Double
+Show
+All except
+IO, (->)
+Real
+Int, Integer, 
+Float, Double
+Fractional
+Float, Double
+Enum
+(), Bool, Char, Ordering,
+Int, Integer, Float,
+Double
+RealFrac
+Float, Double
+Floating
+Float, Double
+Integral
+Int, Integer
+RealFloat
+Float, Double
+Read
+All except
+IO, (->)
+Bounded
+Int, Char, Bool, ()
+Ordering, tuples
+Monad
+IO, [], Maybe
+MonadPlus
+IO, [], Maybe
+Functor
+IO, [], Maybe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

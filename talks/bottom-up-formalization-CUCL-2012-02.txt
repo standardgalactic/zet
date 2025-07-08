@@ -1,0 +1,383 @@
+1
+Bottom-up formalization 
+of the ARM architecture
+Alastair Reid
+R&D
+ARM Ltd
+February 2012
+Backwards Compatible
+
+2
+What ARM does
+ARM Holdings is the world's leading semiconductor intellectual 
+property (IP) supplier and as such is at the heart of the 
+development of digital electronic products. Headquartered in 
+Cambridge UK and employing over 2,000 people, ARM has 
+offices around the world, including design centers in Taiwan, 
+France, India, Sweden, and the US.
+Company Highlights
+§ The world's leading semiconductor IP company
+§ Founded in 1990
+§ Over 20 billion ARM based chips shipped to date
+§ 800 processor licenses sold to more than 250 companies
+§ Royalties received on all ARM-based chips
+§ Gaining market share in long-term secular growth markets
+§ ARM revenues typically grow faster than overall semiconductor industry revenues
+
+3
+Outline
+§ Challenges in creating a formal ISA specification
+§ 2 "Technical" issues
+§ 2 "Social/Business" issues
+§ Bottom-up formalization
+§ Process
+§ Sketch(es) of semantics
+§ Work in progress
+
+4
+Challenge #1: Pick a language
+Many choices
+§ Custom ISA specification language
+§ E.g., LISA (Ishtiaq)
+§ General purpose formal specification language
+§ E.g., HOL (Fox), Coq (Chong & Ishtiaq)
+§ Golden Verilog reference
+§ E.g., ARM CPU Validation teams
+§ Frontend for multiple specification languages
+§ E.g., LEM (Owens et al.)
+
+5
+#2: ISA Spec is deliberately broad
+
+6
+#3: A lot of history
+§ 1984: Simulator (BBC BASIC)
+§ 26 April 1985: First Silicon
+§ 1990: ARM Ltd founded
+§ Architecture Reference Manual
+§ 1996: v4, 328 pages, book
+§ 2000: v5, 816 pages, book
+§ 2005: v6, 1138 pages, PDF
+§ 2007: v7, 2158 pages, PDF
+§ 2011: v7, 2668 pages+supplements, PDF
+§ 2011: ARM Architecture version 8 announced
+
+7
+#3: And a lot of processors
+
+8
+#4: What is formal spec used for?
+CPU
+• Verification
+Dev.
+Tools
+• Verify as, ld
+• Verify cc
+Programs
+• Microkernel 
+verification
+• OS verification
+• App verification
+
+9
+#4: What ARM uses ISA spec for 
+CPU
+• Design
+• Licensing
+• Validation
+• Test suites
+• Test tools
+Models
+• Design
+• Validation
+Dev
+Tools
+• Asm/dasm/ld
+• Compiler
+• Debugger
+• Validation
+
+10
+Requirements
+§ Can be used as a formal specification?
+§ Range of languages to choose from
+§ Broad enough to express full range of legal behaviour?
+§ Captures deliberate looseness of specification
+§ Equivalent to existing spec?
+§ Doesn't rule out existing or legitimate implementations
+§ Does rule in unacceptable future implementations
+§ Readable by all the teams inside and outside ARM who need 
+a spec?
+§ Hardware engineers, compiler engineers, OS writers, ...
+
+11
+Bottom-up formalization
+§ Start with existing semi-formal specification
+§ Change (slightly) to make it a formal spec
+§ Test against existing CPUs, test suites, etc.
+§ Prototypes generated from current spec+semantics
+§ Automatically generate code/data/specs
+§ Traditional formal spec (e.g., in Coq/HOL/LEM/...)
+§ Reference Verilog
+§ Simulators
+§ Instrumented interpreters
+§ Assembler, disassembler, ...
+§ Random Instruction Sequence tester
+§ Tables of system registers (for debugger)
+
+12
+The ARM ARM
+
+13
+ARMv5 pseudocode
+
+14
+ARMv7 specification
+
+15
+ARMv7 support functions
+Type Inference
+Dependent Types
+Enumerations
+Unbounded Precision Ints
+(and Rationals)
+Bounded Precision Ints
+Indentation-based Syntax
+Imperative
+Exceptions
+
+16
+Revised Goal
+Evolve existing specification into formal specification
+§ With a precise (but non-deterministic) meaning
+§ Without excluding existing interpretations
+§ Without losing readability
+§ Without making too many changes
+
+17
+Formalizing Existing Specification
+1. Write a parser 
+è Fix syntax errors in specification
+è Fix specification of language syntax
+2. Write a typechecker
+è Fix typing errors in specification
+è Fix specification of language typesystem
+3. Write a compiler/interpreter
+è Fix semantic errors in specification
+è Fix specification of language semantics
+
+18
+Highly iterative (and social) process
+Fix 
+ARMARM
+Upstream 
+Fixes
+Fix Tool
+Solitary
+Understand
+Users
+Convince
+Gatekeepers
+
+19
+Iterative process
+Semantics
+Test
+Pseudocode
+
+20
+Iterative process
+Semantics
+Prediction
+Pseudocode
+
+21
+Initial version of semantics
+expr: State à State x Value┴+ Exception
+stmt: State à State x Exception
+
+22
+Overly narrow specification
+Upper bound
+Lower bound
+Sequential Semantics
+Note: Don't yet have a definitive semantics - this is a sketch of one direction it might go.
+
+23
+Limitations of pseudocode
+"The pseudocode descriptions of instructions have a number of 
+limitations.
+These are mainly due to the fact that, for clarity and brevity, the 
+pseudocode is a sequential and mostly deterministic 
+language.
+These limitations include: ... "
+
+24
+Limitation 1a: Memory access order
+Mem[i] = a; Mem[j] = b;
+==
+Mem[j] = b; Mem[i] = a;
+Note: i==j case discussed later
+
+25
+Limitation 1b: Register access order
+R[i] = a; R[j] = b;
+==
+R[j] = b; R[i] = a;
+Note: i==j case discussed later
+
+26
+Pseudocode is not entirely sequential
+§ Language designed by and for hardware engineers
+§ Hardware engineers 'think parallel'
+§ Logic cones
+Inputs1
+Output1
+Inputs2
+Output2
+Inputs3
+Output3
+Inputs3
+Output3
+
+27
+Revised semantics
+§ Each value is tagged with its logic cone
+§ i.e., global variables that the value depends on
+§ Well defined if
+§ At most one value assigned to each global variable
+§ No value depends on a global variable that is assigned to
+R[i] = ┴; R[j] = ┴; if i==j
+R[i] = a; R[j] = b; = 
+R[i] = a;   R[j] = b; if i!=j
+
+28
+Revised semantics
+§ Each value is tagged with its logic cone
+§ i.e., global variables that the value depends on
+§ Well defined if
+§ At most one value assigned to each global variable
+§ No value depends on a global variable that is assigned to
+Mem[i] = ┴;                      if i==j
+Mem[i] = a; Mem[j] = b; = 
+Mem[i] = a;   Mem[j] = b; if i!=j
+
+29
+Revised semantics
+§ Each value is tagged with its logic cone
+§ i.e., global variables that the value depends on
+§ Well defined if
+§ At most one value assigned to each global variable
+§ No value depends on a global variable that is assigned to
+UNPREDICTABLE;            if i==j
+Mem[i] = a; i = Mem[j]= 
+Mem[i] = a;   i = Mem[j]; if i!=j
+
+30
+Revised version of semantics
+expr: State à CState x Cone[Value┴] x Exception
+stmt: State à CState x Exception
+instr: State à State x Exception
+CState = Var à Cone[Value┴]
+Note: expression and statement composition left as an exercise...
+
+31
+Iterative process
+Semantics
+Prediction
+Pseudocode
+
+32
+Testing this semantics #1
+LDM r1!, {r1,r2}
+
+33
+Testing this semantics #1
+LDM Rn!, {registers}
+address = R[n] - 4*BitCount(registers) + 4;
+for i = 0 to 14
+if registers<i> == '1' then R
+R[i] = Mem[address,4]; 
+address = address + 4; 
+if registers<15> == '1' then LoadWritePC(MemA[address,4]); 
+if wback && registers<n> == '0' then R[n] = R[n] - 4*BitCount(registers);
+if wback && registers<n> == '1' then R[n] = bits(32) UNKNOWN;
+
+34
+Testing this semantics #2
+STR R0,[R0]! 
+
+35
+Testing this semantics #2
+STR Rn,[Rm,offset]! 
+offset = Shift(R[m], shift_t, shift_n, APSR.C);
+offset_addr = if add then (R[n] + offset) 
+else (R[n] - offset); 
+address = if index then offset_addr else R[n];
+if t == 15 then data = PCStoreValue(); 
+else data = R[t]; 
+MemU[address,4] = data; 
+if wback then R[n] = offset_addr;
+
+36
+Iterative process
+Semantics
+Prediction
+Pseudocode
+
+37
+Summary of semantics
+§ 'Parallel' semantics of sequential language
+§ Based on data dependencies
+§ Multiple writes to same piece of global state 
+UNKNOWN/UNPREDICTABLE
+§ Iterative development process
+§ Continually test against existing codebase and architecture team
+èChange spec
+èChange semantics 
+§ About to start testing against test suites and CPUs
+
+38
+Generating tools from ARMARM
+§ Translate to C (Simulator)
+§ ARMv6-M (Microcontroller)
+§ ARMv7-R (Real Time, Protected Memory)
+§ ARMv7-A (Applications, Virtual Memory)
+§ ARMv8 (64-bit)
+§ Translate to Verilog (Validation Reference)
+§ ARMv6-M (Microcontroller)
+§ Generate Assembler/Disassembler
+§ ARMv8 (64-bit)
+Current focus: testing existing tools and processors
+(Validating our approach in the process)
+
+39
+Conclusion/Status
+§ Evolving existing semi-formal spec into a formal spec
+§ Avoid large discontinuities
+§ Focus on acceptability to various communities
+§ Focus until now has been on syntax+typesystem
+§ Iterative process: test on codebase + users
+§ Finding semantics will take time and experimentation
+§ Current semantics 'correct' but excludes many legal implementations
+§ Iterative process: test on ARM validation suites + CPUs + users
+§ Some initial experience of building tools
+§ (but no formal specification yet)
+
+40
+Fin
+
+41
+ARMv7 specification language
+§ Syntax
+§ Algol-like
+§ Indentation based
+§ Types
+§ Simple type inference
+§ Dependent types (integer additive expressions)
+§ First order, bits(N), integer, real (== rational), enumerations, records
+§ Semantics
+§ Imperative, mostly sequential
+§ Exceptions: UNDEFINED, etc.
+§ Supplemented by natural language descriptions
+

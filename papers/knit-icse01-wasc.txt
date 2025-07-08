@@ -1,0 +1,520 @@
+Appeared in the Workshop on Advanced Separation of Concerns in Software Engineering at ICSE 2001,
+Toronto, Ontario, May 2001.
+Aspect Weaving as Component Knitting: Separating Concerns with Knit
+Eric Eide
+Alastair Reid
+Matthew Flatt
+Jay Lepreau
+University of Utah, School of Computing
+{eeide,reid,mflatt,lepreau}@cs.utah.edu
+http://www.cs.utah.edu/flux/
+Abstract
+Knit is a new component speciﬁcation and linking lan-
+guage. It was initially designed for low-level systems
+software, which requires especially ﬂexible components
+with especially well-deﬁned interfaces.
+For example,
+threads and virtual memory are typically implemented
+by components within the system, instead of being sup-
+plied by some execution environment.
+Consequently,
+components used to construct the system must expose
+interactions with threads and memory. The component
+composition tool must then check the resulting system
+for correctness, and weave the components together to
+achieve reasonable performance.
+Component composition with Knit thus acts like as-
+pect weaving: component interfaces determine the "join
+points" for weaving, while components (some of which
+may be automatically generated) implement aspects.
+Knit is not limited to the construction of low-level soft-
+ware, and to the degree that a set of components ex-
+poses ﬁne-grained relationships, Knit provides the ben-
+eﬁts of aspect-oriented programming within its compo-
+nent model.
+1
+Introduction
+To ensure the ﬂexibility and usability of components, a
+component model must assign well-speciﬁed interfaces
+to each component, so that programmers know how to
+use or replace them. The mechanism for linking compo-
+nents must give the programmer broad control over the
+way that components are combined, allowing the pro-
+grammer to replace any component with another having
+the same interface, or even to use a particular compo-
+nent multiple times in the same system, each time with
+a different importing context.
+This research was largely supported by the Defense Advanced
+Research Projects Agency and the Air Force Research Laboratory, un-
+der agreement numbers F30602-99-1-0503 and F33615-00-C-1696.
+The U.S. Government is authorized to reproduce and distribute reprints
+for Governmental purposes notwithstanding any copyright annotation
+hereon.
+US Mail contact address: University of Utah, School of Comput-
+ing, 50 S. Central Campus Drive, Room 3190, SLC, UT 84112-9205.
+In addition, to scale component programming to large
+and complex sets of components, the model must also
+address cross-cutting dependencies among components.
+These kinds of relationships occur naturally when build-
+ing reusable software or component kits.
+For exam-
+ple, consider the problems faced by the designer of a
+component kit for operating systems development. At
+the system level, services such as virtual memory and
+threads, which are given a priori in the execution en-
+vironment for applications, must be explicitly imple-
+mented by components. This in turn means that con-
+nections to these basic services should be made ex-
+plicit: e.g., that every component that requires threads
+be designed so that it has an explicit dependency on
+the threading component. As connections become more
+and more exposed, the relationships between compo-
+nents become more and more complex, and often cir-
+cular. The components cannot be organized into discrete
+layers, and the soundness of each connection involves
+dependencies that may span the entire system.
+The need to deﬁne, manage, and check dependencies,
+despite their propagation throughout the system, was
+our motivation to create Knit [11], a new component
+speciﬁcation and linking language that is suited to com-
+plex programming situations such as those encountered
+by systems code, middleware, and other complex and
+reusable software. Knit supports "manifest aspects" that
+involve the insertion of code or components into the
+system, as well as "non-manifest aspects" that involve
+reasoning about the correctness of component composi-
+tions. Knit provides conﬁgure-time ﬂexibility: Knit per-
+forms aspect weaving and checking at system conﬁgure-
+time, to allow for maximum performance and assurance
+at system run-time.
+Because we targeted Knit to the
+needs of systems and middleware code, Knit works on
+C language components.
+Knit is a work in progress. In the following sections
+we summarize the current language and tools (Section 2)
+and show how "aspect weaving" and "component knit-
+ting" are related (Section 3). We then describe planned
+future improvements to Knit to better support aspect-
+oriented programming (Section 4).
+
+#include <stdio.h>
+int main(int argc, char** argv) {
+printf("Hello, world!\n");
+return 0;
+}
+(a) The ﬁle hello.c, the canonical "Hello, world!" program.
+unit Hello = {
+imports [ io: {printf} ];
+exports [ main: {main} ];
+depends { main needs io; };
+files { "hello.c" };
+}
+(b) The ﬁle hello.unit, the unit deﬁnition for "Hello, world!"
+Figure 1: Deﬁning an atomic unit with Knit.
+2
+Knit
+The Knit component speciﬁcation and linking language
+is based on units [5, 6], a model of components in the
+spirit of the Modula-3 [8] and Mesa [10] module sys-
+tems. A unit is a component or model deﬁnition, either
+atomic (with a C implementation) or compound (com-
+posed of other units).
+2.1
+Building Blocks: Atomic Units
+An atomic unit can be thought of as a module with three
+basic parts:
+1. A set of imports, which name the functions and
+variables that must be supplied to the unit.
+2. A set of exports, which name the function and vari-
+ables that are deﬁned by the unit and are made
+available to other units.
+3. A set of top-level C declarations and deﬁnitions,
+which must include a deﬁnition for each exported
+name, and which may use any of the imported
+names as required. Deﬁned names that are not ex-
+ported are inaccessible from outside the unit. (The
+Knit compiler ensures that this is so.)
+Figure 1(a) shows the C code for the canonical "Hello,
+world!" program, and Figure 1(b) shows the correspond-
+ing Knit unit deﬁnition. This simple unit, called Hello,
+imports a single function printf and exports a single
+function main.
+Functions and variables are imported
+and exported from units in groups called bundles. In
+the Hello unit, the printf function is imported as a
+member of the bundle called io, and the main function
+is exported as a member of the bundle called main. Bun-
+dles are critical for deﬁning units with many imported or
+exported functions.
+The unit does not contain the actual C deﬁnition of the
+main function; instead, the unit refers to the ﬁle hello.c
+in which the function is deﬁned. This feature of Knit
+allows one to use Knit generally without modifying ex-
+isting C code. The separation between a unit's deﬁni-
+tion (in a '.unit' ﬁle) and implementation (one or more
+'.c' ﬁles) allows for other kinds of ﬂexibility as well.
+For instance, one can deﬁne units at different levels of
+granularity: one can group several ﬁles into one unit for
+ease of speciﬁcation, or one can make a separate unit for
+each ﬁle, to maximize conﬁgurability.
+In addition to imports, exports, and ﬁles, the Hello
+unit deﬁnition contains a depends speciﬁcation. This
+line provides an initialization constraint for the unit. In
+particular, the speciﬁcation "main needs io" says that
+the functions in the main bundle call the functions that
+are imported from the io bundle. Knit uses this infor-
+mation in order to provide automatic scheduling of unit
+initialization and ﬁnalization, thus ensuring that all the
+unit instances within a compound unit instance will ini-
+tialized and ﬁnalized in a correct order.
+2.2
+Linking: Compound Units
+A set of units can be linked together to form a compound
+unit. The task of linking a set of units into a compound
+unit is to match the imports of each unit either with the
+exports of another unit or with the imports of the com-
+pound unit (to be linked to the exports of some other unit
+at a later time). Optionally, the exports of each unit can
+be propagated as exports of the compound unit. The re-
+sult of composing units is a new unit, which is available
+for further linking.
+Figure 2 shows how a compound unit can be deﬁned
+by combining other units.
+(The units within a com-
+pound unit can be either atomic or compound, but in
+this example, each of the internal units is atomic.) The
+ﬁrst unit, Main, imports two bundles called io and msg.
+These bundle each contain a single function, printf
+and message respectively, as deﬁned by the appropriate
+bundletype deﬁnitions.
+The second unit, NWK, imports nothing but exports a msg
+bundle, meaning that the unit exports a function called
+message.
+However, the code in Figure 2(b), which
+implements the NWK unit, does not deﬁne a function
+called message. Knit allows us to "ﬁt the implemen-
+tation to the interface," however, through the use of a
+2
+
+#include <stdio.h>
+const char *message(void);
+int main(int argc, char** argv) {
+printf("%s", message());
+return 0;
+}
+(a) The ﬁle main.c, implementing unit Main.
+const char *not_worth_knowing(void) {
+return
+("A language that doesn't affect the "
+"way you think about programming is "
+"not worth knowing.\n");
+}
+(b) The ﬁle nwk.c, implementing unit NWK.
+// Define shared bundle types.
+bundletype IO_T
+= { printf }
+bundletype Msg_T
+= { message }
+bundletype Main_T = { main }
+unit Main = {
+imports [ io: IO_T,
+msg: Msg_T ];
+exports [ main: Main_T ];
+depends { main needs (io+msg); };
+files { "main.c" };
+}
+unit NWK = {
+imports [];
+exports [ msg: Msg_T ];
+depends { msg needs {}; };
+files { "nwk.c" };
+rename {
+msg.message to not_worth_knowing;
+};
+}
+unit Program = {
+imports [ io: IO_T ];
+exports [ main: Main_T ];
+link {
+// [exports] <- Unit <- [imports];
+[msg]
+<- NWK
+<- [];
+[main] <- Main <- [io, msg];
+};
+}
+(c) The Knit unit deﬁnitions.
+Figure 2: Deﬁning a compound unit.
+rename declaration. The declaration in NWK says that
+the message member of the msg bundle should be re-
+named, or implemented by, the C function not_worth_
+knowing. Renaming declarations are essential in Knit,
+to match existing code to "standardized" component in-
+terfaces.
+Finally, the Program compound unit is deﬁned by com-
+posing an instance of Main with an instance of NWK. On
+the ﬁrst line of the link section, the exported bundle
+from NWK is called msg. On the second line, this bun-
+dle is listed as an import to the Main unit. The io bun-
+dle comes from the Program unit's list of imports; sim-
+ilarly, the main bundle that is implemented by the Main
+unit is propagated to be an export from the compound
+unit. If Knit is told to compile the Program unit, then
+the functions and variables imported by Program will
+be resolved by deﬁnitions from the environment outside
+Knit's world, e.g., the standard C library. Similarly, the
+exports from Program will be made available to the en-
+vironment.
+2.3
+Constraints
+Knit provides a ﬂexible model for component speciﬁca-
+tion and linking, thus making it easy to compose soft-
+ware units in myriad ways. But even if every single link
+in a system is "correct" according to local constraints
+such as type safety, the system as a whole may be incor-
+rect because it does not meet certain global constraints.
+Consider the task of building an operating system from
+components. Systems programmers are often concerned
+about the execution environment of a piece of code, and a
+simple but important aspect of an execution environment
+is the distinction that most operating systems make be-
+tween top-half code — code called by a user process via
+system calls — and bottom-half code — called by inter-
+rupt handlers or soft interrupts. Top-half code, because
+it is called by a user process, has access to the the calling
+process' context, e.g., the stack. In contrast, bottom-half
+functions do not have access to any process context.
+Thus, a bottom-half function must never call a (top-half)
+function that requires a process context, such as sleeping
+or locking operations. We would like to statically verify
+that this property holds when we create an operating sys-
+tem. Detecting this kind of error in a component-based
+system requires a global view, because whether a func-
+tion is top-half or bottom-half depends on what func-
+tions it calls, and what functions call it. In other words,
+bottom-halfness is a transitive property: a function is a
+bottom-half function if it is called by a bottom-half func-
+tion or by an interrupt handler.
+Knit helps programmers deal with these kinds of "non-
+manifest" aspects of system composition with constraint
+3
+
+annotations that describe the properties of unit imports
+and exports. Constraints can declared explicitly (e.g.,
+that the functions within an export bundle are top-half)
+or by description (e.g., that the unit's exports have
+the same halfness as the unit's imports).
+At system
+conﬁguration-time, Knit propagates constraints to en-
+sure that all are globally satisﬁed. If a constraint is not
+satisﬁed, Knit prints a description of the error.
+3
+Units for Aspects
+Units offer a clear solution to the problem of effectively
+expressing conventional modularity. But we claim fur-
+ther that units are a proper foundation for developing
+the cross-cutting facets of a system in a modular fashion.
+The essential ingredient provided by units is the ability
+to take an arbitrary component and "wrap" it with an-
+other component. In other words, because the links be-
+tween components are explicit, we can modify a linking
+graph as we choose by interposing new units where they
+are needed to introduce aspect-like functionality. This
+interposition can effectively insert code at the beginning
+and/or end of every exported function from a set of com-
+ponents, or it can be used to uniformly apply a class ex-
+tension — in the form of a mixin — to each class im-
+ported or exported by a set of components. In AOP ter-
+minology, the interfaces between units are the join points
+at which we may introduce code.
+This approach to dealing with aspects is particularly
+compelling for systems and middleware code. As dis-
+cussed in Section 1, sometimes no clear line can be
+drawn between modularity at the level of functional sub-
+systems and modularity at the level of cross-cutting as-
+pects. We therefore seek a framework that integrates
+these two facets of systems modularity. We expect the
+Knit approach to help deal with many different aspects
+of systems code, including concurrency, isolation, and
+real-time performance. We are currently exploring these
+aspects in the context of the OSKit [7], a large collection
+of components for building low-level systems.
+Concurrency.
+In the OSKit,
+many components
+are single-threaded because they were extracted from
+single-threaded kernels such as Linux and BSD. How-
+ever, as OSKit components, they are often used in multi-
+threaded environments. When combining many compo-
+nents with different concurrency requirements, it is ex-
+tremely difﬁcult to determine by inspection which com-
+ponents need to be wrapped, or even which combina-
+tions of components can be wrapped by a single concur-
+rency wrapper. We expect Knit to help us solve these
+problems.
+By annotating interfaces and components,
+and then inserting concurrency adapters as needed, Knit
+will help us to build systems that are assurably correct
+with respect to their units' concurrency requirements.
+Isolation. Flexible control of component isolation and
+protection is a novel property in the embedded and op-
+erating systems worlds. Even modern production op-
+erating systems implement at most three conﬁgurations
+of this important aspect: no protection, multiple threads
+sharing the same user process and address space, and en-
+tirely separate user processes. There are many reasons
+to want more ﬂexible control: one may want to impose
+resource limits on particular components, isolate buggy
+components, or impose security restrictions on untrusted
+code. Knit will help us impose these kinds of isolation
+barriers on components in a ﬂexible and reliable way.
+Real-Time Behavior. Finally, we are interested in the
+speciﬁcation and assurance of real-time behavior. One
+way to achieve real-time performance is to insert a small
+real-time kernel "under" an existing operating system:
+this is the approach taken by RT-Linux [2]. The real-time
+kernel interposes on the interrupt handling and manipu-
+lation routines in the host operating system, so that the
+real-time kernel receives all hardware interrupts. This
+approach is a natural ﬁt with Knit's ability to interpose
+on component interfaces. A second approach to provid-
+ing real-time behavior is to incorporate real-time func-
+tionality into the main operating system. In an embed-
+ded system, with a ﬁxed set of real-time tasks, one would
+like to reason about the requirements of the tasks in order
+to see if they can be met: i.e., if the system has enough
+resources to schedule the tasks correctly. We intend to
+extend Knit's constraint language in the future to sup-
+port this kind of reasoning, e.g., to deal with numeric
+constraints.
+4
+Improving Knit for Aspects
+Units provide a plausible foundation for aspects-as-
+components, but we need to extend Knit in certain ways
+to handle aspects well. First, the linking language must
+be extended so that it is easier to describe new link-
+ing graphs (compound units) as modiﬁcations of exist-
+ing units. Second, Knit must be enhanced to generate
+(or help generate) the code for "wrapper" and "adapter"
+units, to relieve programmers of this tedious task.
+4.1
+Unit Composition
+Although explicitly speciﬁed linking for units has the ad-
+vantage of giving the programmer complete control, it
+has the drawback of substantially increasing a program-
+mer's work for linking a program. In the common case
+that a collection of components can be linked in only one
+way (because every import can match exactly one export
+4
+
+among the set of linked units), the linking programmer's
+work is redundant. In the future, we will extend Knit
+to remove much of the burden of linking from the pro-
+grammer, but still allow the programmer to take control
+when necessary. Finding the "right point" between ex-
+plicit and implicit control will be a major issue addressed
+by this work.
+The hierarchical composition of units is also problematic
+in certain situations. Hierarchical linking can provide
+valuable structure to a system, but it can also introduce
+repetitive imports and exports that are propagated across
+the levels of hierarchy. A related problem is that replac-
+ing a unit deep in the hierarchy is difﬁcult. To replace a
+unit U, one might copy the deﬁnition of the compound
+unit C in which U appears, and modify the new com-
+pound unit C' to replace U with some other unit. Un-
+fortunately, one must now "walk up the hierarchy" and
+do the same for C itself: i.e., copy the units in which C
+appears to substitute C', and so on.
+To make replacing components easier, a future version
+of Knit will support composition speciﬁcations that are
+deﬁned in terms of existing composition speciﬁcations,
+but with certain components "overridden" by replace-
+ment components [1, 3]. A subtyping relationship on
+unit interfaces would ensure that such compositions can
+be statically checked by comparing the overridden unit's
+interface with the overriding unit's interface. It may even
+be possible to extend the subtyping relationship to the
+behavior aspects of a unit's speciﬁcation [9].
+4.2
+Wrapper Units
+In addition to new support for modifying unit composi-
+tions, we are now working to improve Knit so that it can
+generate certain kinds of wrapper or adapter units auto-
+matically. A wrapper unit is commonly used to imple-
+ment certain idiomatic behaviors, e.g., to monitor, mod-
+ify, or extend the wrapped unit's interface. While the ba-
+sic unit composition mechanism allows a programmer to
+apply a wrapper to a set of components, manually wrap-
+ping each component is often too unwieldy in practice.
+Because many wrappers follow a pattern, the implemen-
+tation of these wrappers can be automated. For example,
+many conversion tasks involve surrounding every func-
+tion exported by a set of units with a common wrapper.
+(A single unit sufﬁces for this purpose, instantiated once
+for each exported function.) Knit will provide a straight-
+forward way to automatically instantiate the wrapper for
+every export. For more complicated cases, in which ev-
+ery wrapper must tailored to a speciﬁc use, we intend to
+incorporate a ﬂexible code generation scheme into Knit,
+so that Knit can create the implementations and unit def-
+initions for the wrappers. Our previous experience with
+a ﬂexible stub compiler [4] will be useful in this area.
+5
+Conclusion
+Knit is a new component deﬁnition and linking lan-
+guage, designed to handle the "manifest" and "non-
+manifest" aspects of systems and middleware code.
+Component composition in Knit acts like aspect weav-
+ing, and future improvements to Knit will increase its
+utility for aspect-oriented programming.
+Availability
+Source and documentation for our Knit prototype is
+available under http://www.cs.utah.edu/flux/.
+References
+[1] D. Ancona and E. Zucca. An algebraic approach to mix-
+ins and modularity.
+In M. Hanus and M. Rodr´ıguez-
+Artalejo, editors, Proc. Conference on Algebraic and
+Logic Programming, volume 1139 of Lecture Notes
+in Computer Science, pages 179-193. Springer-Verlag,
+1996.
+[2] M. Barabanov and V. Yodaiken. Real-time Linux. Linux
+Journal, 34, Feb. 1997.
+[3] G. Bracha. The Programming Language Jigsaw: Mixins,
+Modularity and Multiple Inheritance. Ph.D. thesis, Dept.
+of Computer Science, University of Utah, Mar. 1992.
+[4] E. Eide, K. Frei, B. Ford, J. Lepreau, and G. Lindstrom.
+Flick: A ﬂexible, optimizing IDL compiler.
+In Proc.
+ACM SIGPLAN '97 Conf. on Programming Language
+Design and Implementation (PLDI), pages 44-56, Las
+Vegas, NV, June 1997.
+[5] M. Flatt. Programming Languages for Component Soft-
+ware. PhD thesis, Rice University, June 1999.
+[6] M. Flatt and M. Felleisen.
+Units:
+Cool units for
+HOT languages.
+In Proc. ACM SIGPLAN '98 Conf.
+on Programming Language Design and Implementation
+(PLDI), pages 236-248, June 1998.
+[7] B. Ford, G. Back, G. Benson, J. Lepreau, A. Lin, and
+O. Shivers.
+The Flux OSKit: A substrate for OS and
+language research. In Proc. of the 16th ACM Symposium
+on Operating Systems Principles, pages 38-51, St. Malo,
+France, Oct. 1997.
+[8] S. P. Harbison. Modula-3. Prentice Hall, 1991.
+[9] B. H. Liskov and J. M. Wing. A behavioral notion of sub-
+typing. ACM Transactions on Programming Languages
+and Systems, 16(6):1811-1841, Nov. 1994.
+[10] J. G. Mitchell, W. Mayberry, and R. Sweet. Mesa Lan-
+guage Manual, 1979.
+[11] A. Reid, M. Flatt, L. Stoller, J. Lepreau, and E. Eide.
+Knit: Component composition for systems software. In
+Proc. of the Fourth Symposium on Operating Systems
+Design and Implementation, pages 347-360, San Diego,
+CA, Oct. 2000. USENIX Association.
+5
+
